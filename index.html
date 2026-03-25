@@ -342,39 +342,39 @@ footer span { color: #F5C842; }
   </header>
 
   <div class="btn-grid">
-    <button class="cat-btn" onclick="toggle('okuma-testleri', this)">
+    <button class="cat-btn" id="btn-okuma-testleri" onclick="toggle('okuma-testleri', this)">
       <span class="emoji">📖</span>
       <span class="label">OKUMA TESTLERİ</span>
     </button>
-    <button class="cat-btn" onclick="toggle('dinleme-testleri', this)">
+    <button class="cat-btn" id="btn-dinleme-testleri" onclick="toggle('dinleme-testleri', this)">
       <span class="emoji">🎧</span>
       <span class="label">DİNLEME TESTLERİ</span>
     </button>
-    <button class="cat-btn" onclick="toggle('a1-kelime', this)">
+    <button class="cat-btn" id="btn-a1-kelime" onclick="toggle('a1-kelime', this)">
       <span class="emoji">🗂️</span>
       <span class="label">A1 KELİME KARTLARI</span>
     </button>
-    <button class="cat-btn" onclick="toggle('b2c1-kelime', this)">
+    <button class="cat-btn" id="btn-b2c1-kelime" onclick="toggle('b2c1-kelime', this)">
       <span class="emoji">📚</span>
       <span class="label">B2/C1 KELİME KARTLARI</span>
     </button>
-    <button class="cat-btn" onclick="toggle('okuma-alistirmalar', this)">
+    <button class="cat-btn" id="btn-okuma-alistirmalar" onclick="toggle('okuma-alistirmalar', this)">
       <span class="emoji">✍️</span>
       <span class="label">OKUMA ALIŞTIRMALARI</span>
     </button>
-    <button class="cat-btn" onclick="toggle('yazma-sorulari', this)">
+    <button class="cat-btn" id="btn-yazma-sorulari" onclick="toggle('yazma-sorulari', this)">
       <span class="emoji">📝</span>
       <span class="label">YAZMA SORULARI</span>
     </button>
-    <button class="cat-btn" onclick="toggle('konusma-sorulari', this)">
+    <button class="cat-btn" id="btn-konusma-sorulari" onclick="toggle('konusma-sorulari', this)">
       <span class="emoji">💬</span>
       <span class="label">KONUŞMA SORULARI</span>
     </button>
-    <button class="cat-btn" onclick="toggle('dinleme-alistirmalar', this)">
+    <button class="cat-btn" id="btn-dinleme-alistirmalar" onclick="toggle('dinleme-alistirmalar', this)">
       <span class="emoji">🎤</span>
       <span class="label">DİNLEME ALIŞTIRMALARI</span>
     </button>
-    <button class="cat-btn" onclick="toggle('okuma-metinleri', this)">
+    <button class="cat-btn" id="btn-okuma-metinleri" onclick="toggle('okuma-metinleri', this)">
       <span class="emoji">📖</span>
       <span class="label">OKUMA METİNLERİ</span>
     </button>
@@ -410,6 +410,10 @@ footer span { color: #F5C842; }
         </a>
         <a class="item-card" href="gunluk_ifadeler_1.html">
           <span class="item-name">Günlük İfadeler 1</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+        <a class="item-card" href="gunluk_ifadeler_2.html">
+          <span class="item-name">Günlük İfadeler 2</span>
           <span class="badge badge-free">✅ Ücretsiz</span>
         </a>
       </div>
@@ -464,10 +468,6 @@ footer span { color: #F5C842; }
           <span class="item-name">Hazırlanıyor...</span>
           <span class="badge badge-coming">🔜 Yakında</span>
         </div>
-        <div class="item-card coming">
-          <span class="item-name">Hazırlanıyor...</span>
-          <span class="badge badge-coming">🔜 Yakında</span>
-        </div>
       </div>
     </div>
   </div>
@@ -478,10 +478,6 @@ footer span { color: #F5C842; }
       <div class="items-grid">
         <div class="item-card coming">
           <span class="item-name">Kompozisyon</span>
-          <span class="badge badge-coming">🔜 Hazırlanıyor</span>
-        </div>
-        <div class="item-card coming">
-          <span class="item-name">Dilekçe Örnekleri</span>
           <span class="badge badge-coming">🔜 Hazırlanıyor</span>
         </div>
       </div>
@@ -516,10 +512,6 @@ footer span { color: #F5C842; }
     <div class="panel-header"><h2>🎤 Dinleme Alıştırmaları</h2></div>
     <div class="panel-body">
       <div class="items-grid">
-        <div class="item-card coming">
-          <span class="item-name">Hazırlanıyor...</span>
-          <span class="badge badge-coming">🔜 Yakında</span>
-        </div>
         <div class="item-card coming">
           <span class="item-name">Hazırlanıyor...</span>
           <span class="badge badge-coming">🔜 Yakında</span>
@@ -560,13 +552,11 @@ footer span { color: #F5C842; }
     <p class="sub">Bu içeriğe erişmek için giriş yapmalısınız.</p>
     <div class="form-group">
       <label>Kullanıcı Adı</label>
-      <input type="text" id="inputUser" placeholder="kullanici_adi"
-             autocomplete="username" onkeydown="enterLogin(event)">
+      <input type="text" id="inputUser" placeholder="kullanici_adi" autocomplete="username" onkeydown="enterLogin(event)">
     </div>
     <div class="form-group">
       <label>Şifre</label>
-      <input type="password" id="inputPass" placeholder="••••••••"
-             autocomplete="current-password" onkeydown="enterLogin(event)">
+      <input type="password" id="inputPass" placeholder="••••••••" autocomplete="current-password" onkeydown="enterLogin(event)">
     </div>
     <button class="btn-login" id="btnLogin" onclick="doLogin()">GİRİŞ YAP</button>
     <div class="error-msg" id="errorMsg"></div>
@@ -591,6 +581,19 @@ function toggle(id, btn) {
     setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
   }
 }
+
+/* ── Sayfa Yüklendiğinde Hash (#) Kontrolü ── */
+// Kartlar sayfasından "index.html#a1-kelime" linkiyle gelindiğinde paneli otomatik açar
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash;
+  if (hash === '#a1-kelime') {
+    const targetPanel = document.getElementById('a1-kelime');
+    const targetBtn = document.getElementById('btn-a1-kelime');
+    if (targetPanel && targetBtn) {
+      toggle('a1-kelime', targetBtn);
+    }
+  }
+});
 
 /* ── Modal ── */
 let targetPage = '';
