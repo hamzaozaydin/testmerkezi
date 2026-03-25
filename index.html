@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamza Hoca ile Türkçe Öğreniyorum</title>
+<style>
+/* ═══════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+}
+
+.page-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 20px 80px;
+}
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+header {
+  text-align: center;
+  margin-bottom: 44px;
+}
+
+header h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: clamp(1.8rem, 6vw, 2.5rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  letter-spacing: 0.02em;
+}
+
+.header-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 14px;
+}
+
+.stars {
+  font-size: 1.2rem;
+  color: #F5C842;
+  letter-spacing: .4em;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════
+   BUTTON GRID
+═══════════════════════════════════════ */
+.btn-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 900px) { .btn-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px) { .btn-grid { grid-template-columns: 1fr; } }
+
+.cat-btn {
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 16px;
+  padding: 20px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: background .22s, transform .18s, box-shadow .22s;
+  width: 100%;
+}
+
+.cat-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.cat-btn.active {
+  background: #2a3a4a;
+  box-shadow: 0 0 0 1px #F5C842, 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.cat-btn .emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.cat-btn .label {
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  font-weight: bold;
+  color: #F5C842;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* ═══════════════════════════════════════
+   CONTENT PANEL
+═══════════════════════════════════════ */
+.content-panel {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height .45s cubic-bezier(.4,0,.2,1), opacity .35s ease, margin .3s ease;
+  margin-bottom: 0;
+  border-radius: 20px;
+}
+
+.content-panel.open {
+  max-height: 700px;
+  opacity: 1;
+  margin-bottom: 16px;
+}
+
+.panel-header {
+  background: #1a2332;
+  padding: 16px 24px;
+  border-radius: 20px 20px 0 0;
+  border-bottom: 2px solid #F5C842;
+}
+
+.panel-header h2 {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  font-weight: bold;
+  color: #F5C842;
+}
+
+.panel-body {
+  background: white;
+  padding: 24px;
+  border-radius: 0 0 20px 20px;
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+/* ═══════════════════════════════════════
+   ITEM CARDS
+═══════════════════════════════════════ */
+.item-card {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 12px 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background .2s, transform .15s;
+}
+
+.item-card:hover {
+  background: #e9ecef;
+  transform: translateX(5px);
+  color: #333;
+}
+
+.item-card.coming {
+  opacity: .65;
+  cursor: default;
+}
+.item-card.coming:hover {
+  transform: none;
+  background: #f8f9fa;
+}
+
+.item-name { flex: 1; font-size: 0.9rem; }
+
+/* ═══════════════════════════════════════
+   BADGES
+═══════════════════════════════════════ */
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: white;
+}
+
+.badge-locked { background: #6c757d; }
+.badge-free   { background: #2a9d8f; }
+.badge-coming { background: #adb5bd; color: #333; }
+
+/* ═══════════════════════════════════════
+   LOGIN MODAL
+═══════════════════════════════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0,0,0,0.8);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.show { display: flex; }
+
+.modal {
+  background: white;
+  border-radius: 24px;
+  padding: 40px;
+  width: min(440px, 94vw);
+  position: relative;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  animation: popIn .3s ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px; right: 20px;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #aaa;
+  cursor: pointer;
+  transition: color .2s;
+  line-height: 1;
+}
+.modal-close:hover { color: #333; }
+
+.modal h2 { font-size: 24px; color: #333; margin-bottom: 6px; text-align: center; }
+.modal .sub { font-size: 0.85rem; color: #888; text-align: center; margin-bottom: 28px; }
+
+.form-group { margin-bottom: 18px; }
+
+.form-group label {
+  display: block;
+  font-size: 0.82rem;
+  color: #555;
+  margin-bottom: 7px;
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+
+.form-group input {
+  width: 100%;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.95rem;
+  color: #333;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.form-group input:focus {
+  border-color: #F5C842;
+  box-shadow: 0 0 0 3px rgba(245,200,66,0.15);
+}
+
+.btn-login {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  border: none;
+  border-radius: 40px;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: opacity .2s, transform .15s;
+  margin-top: 8px;
+}
+
+.btn-login:hover { opacity: .9; transform: translateY(-1px); }
+.btn-login:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+.error-msg {
+  background: #fff0f0;
+  border: 1px solid #f8c8c8;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #d63031;
+  font-size: 0.85rem;
+  margin-top: 14px;
+  display: none;
+  text-align: center;
+}
+.error-msg.show { display: block; }
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+}
+footer span { color: #F5C842; }
+
+/* ═══════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════ */
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.93) translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- ── HEADER ── -->
+  <header>
+    <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+    <div class="header-line"></div>
+    <div class="stars">★ ★ ★ ★ ★</div>
+    <p class="subtitle">Türkçe Öğrenme Platformu</p>
+  </header>
+
+  <!-- ── BUTTON GRID ── -->
+  <div class="btn-grid">
+    <button class="cat-btn" onclick="toggle('okuma-testleri', this)">
+      <span class="emoji">📖</span>
+      <span class="label">OKUMA TESTLERİ</span>
+    </button>
+    <button class="cat-btn" onclick="toggle('dinleme-testleri', this)">
+      <span class="emoji">🎧</span>
+      <span class="label">DİNLEME TESTLERİ</span>
+    </button>
+    <button class="cat-btn" onclick="toggle('a1-kelime', this)">
+      <span class="emoji">🗂️</span>
+      <span class="label">A1 KELİME KARTLARI</span>
+    </button>
+    <button class="cat-btn" onclick="toggle('b2c1-kelime', this)">
+      <span class="emoji">📚</span>
+      <span class="label">B2/C1 KELİME KARTLARI</span>
+    </button>
+    <button class="cat-btn" onclick="toggle('okuma-alistirmalar', this)">
+      <span class="emoji">✍️</span>
+      <span class="label">OKUMA ALIŞTIRMALARI</span>
+    </button>
+    <button class="cat-btn" onclick="toggle('yazma-sorulari', this)">
+      <span class="emoji">📝</span>
+      <span class="label">YAZMA SORULARI</span>
+    </button>
+    <button class="cat-btn" onclick="toggle('konusma-sorulari', this)">
+      <span class="emoji">💬</span>
+      <span class="label">KONUŞMA SORULARI</span>
+    </button>
+    <button class="cat-btn" onclick="toggle('dinleme-alistirmalar', this)">
+      <span class="emoji">🎤</span>
+      <span class="label">DİNLEME ALIŞTIRMALARI</span>
+    </button>
+    <button class="cat-btn" onclick="toggle('okuma-metinleri', this)">
+      <span class="emoji">📖</span>
+      <span class="label">OKUMA METİNLERİ</span>
+    </button>
+  </div>
+
+  <!-- ══ CONTENT PANELS ══ -->
+
+  <!-- 1. Okuma Testleri -->
+  <div class="content-panel" id="okuma-testleri">
+    <div class="panel-header"><h2>📖 Okuma Testleri</h2></div>
+    <div class="panel-body">
+      <div class="items-grid">
+        <div class="item-card" onclick="openLogin('okuma1.html')">
+          <span class="item-name">Okuma Testi 1</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+        <div class="item-card" onclick="openLogin('okuma2.html')">
+          <span class="item-name">Okuma Testi 2</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+        <div class="item-card" onclick="openLogin('okuma3.html')">
+          <span class="item-name">Okuma Testi 3</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. A1 Kelime Kartları -->
+  <div class="content-panel" id="a1-kelime">
+    <div class="panel-header"><h2>🃏 A1 Kelime Kartları</h2></div>
+    <div class="panel-body">
+      <div class="items-grid">
+        <a class="item-card" href="kartlar.html">
+          <span class="item-name">Selamlaşma Kartları</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. B2/C1 Kelime Kartları -->
+  <div class="content-panel" id="b2c1-kelime">
+    <div class="panel-header"><h2>📚 B2/C1 Kelime Kartları</h2></div>
+    <div class="panel-body">
+      <div class="items-grid">
+        <div class="item-card coming">
+          <span class="item-name">Hazırlanıyor...</span>
+          <span class="badge badge-coming">🔜 Yakında</span>
+        </div>
+        <div class="item-card coming">
+          <span class="item-name">Hazırlanıyor...</span>
+          <span class="badge badge-coming">🔜 Yakında</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Dinleme Testleri -->
+  <div class="content-panel" id="dinleme-testleri">
+    <div class="panel-header"><h2>🎧 Dinleme Testleri</h2></div>
+    <div class="panel-body">
+      <div class="items-grid">
+        <div class="item-card" onclick="openLogin('dinleme1.html')">
+          <span class="item-name">Dinleme Testi 1</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+        <div class="item-card" onclick="openLogin('dinleme2.html')">
+          <span class="item-name">Dinleme Testi 2</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+        <div class="item-card" onclick="openLogin('dinleme3.html')">
+          <span class="item-name">Dinleme Testi 3</span>
+          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Okuma Alıştırmaları -->
+  <div class="content-panel" id="okuma-alistirmalar">
+    <div class="panel-header"><h2>✍️ Okuma Alıştırmaları</h2></div>
+    <div class="panel-body">
+      <div class="items-grid">
+        <div class="item-card coming">
+          <span class="item-name">Hazırlanıyor...</span>
+          <span class="badge badge-coming">🔜 Yakında</span>
+        </div>
+        <div class="item-card coming">
+          <span class="item-name">Hazırlanıyor...</span>
+          <span class="badge badge-coming">🔜 Yakında</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Yazma Soruları -->
+  <div class="content-panel" id="yazma-sorulari">
+    <div class="panel-header"><h2>📝 Yazma Soruları</h2></div>
+    <div class="panel-body">
+      <div class="items-grid">
+        <div class="item-card coming">
+          <span class="item-name">Kompozisyon</span>
+          <span class="badge badge-coming">🔜 Hazırlanıyor</span>
+        </div>
+        <div class="item-card coming">
+          <span class="item-name">Dilekçe Örnekleri</span>
+          <span class="badge badge-coming">🔜 Hazırlanıyor</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Konuşma Soruları -->
+  <div class="content-panel" id="konusma-sorulari">
+    <div class="panel-header"><h2>💬 Konuşma Soruları</h2></div>
+    <div class="panel-body">
+      <div class="items-grid">
+        <div class="item-card coming">
+          <span class="item-name">Hazırlanıyor...</span>
+          <span class="badge badge-coming">🔜 Yakında</span>
+        </div>
+        <div class="item-card coming">
+          <span class="item-name">Hazırlanıyor...</span>
+          <span class="badge badge-coming">🔜 Yakında</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Dinleme Alıştırmaları -->
+  <div class="content-panel" id="dinleme-alistirmalar">
+    <div class="panel-header"><h2>🎤 Dinleme Alıştırmaları</h2></div>
+    <div class="panel-body">
+      <div class="items-grid">
+        <div class="item-card coming">
+          <span class="item-name">Hazırlanıyor...</span>
+          <span class="badge badge-coming">🔜 Yakında</span>
+        </div>
+        <div class="item-card coming">
+          <span class="item-name">Hazırlanıyor...</span>
+          <span class="badge badge-coming">🔜 Yakında</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. Okuma Metinleri -->
+  <div class="content-panel" id="okuma-metinleri">
+    <div class="panel-header"><h2>📖 Okuma Metinleri</h2></div>
+    <div class="panel-body">
+      <div class="items-grid">
+        <div class="item-card coming">
+          <span class="item-name">Küresel Isınma</span>
+          <span class="badge badge-coming">🔜 Hazırlanıyor</span>
+        </div>
+        <div class="item-card coming">
+          <span class="item-name">Yapay Zeka</span>
+          <span class="badge badge-coming">🔜 Hazırlanıyor</span>
+        </div>
+        <div class="item-card coming">
+          <span class="item-name">Elektrikli Araçlar</span>
+          <span class="badge badge-coming">🔜 Hazırlanıyor</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 <span>Hamza Hoca</span> — Türkçe Öğrenme Platformu</p>
+  </footer>
+</div>
+
+<!-- ══ GİRİŞ MODALI ══ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>🔐 Giriş Yap</h2>
+    <p class="sub">Bu içeriğe erişmek için giriş yapmalısınız.</p>
+    <div class="form-group">
+      <label>Kullanıcı Adı</label>
+      <input type="text" id="inputUser" placeholder="kullanici_adi"
+             autocomplete="username" onkeydown="enterLogin(event)">
+    </div>
+    <div class="form-group">
+      <label>Şifre</label>
+      <input type="password" id="inputPass" placeholder="••••••••"
+             autocomplete="current-password" onkeydown="enterLogin(event)">
+    </div>
+    <button class="btn-login" id="btnLogin" onclick="doLogin()">GİRİŞ YAP</button>
+    <div class="error-msg" id="errorMsg"></div>
+  </div>
+</div>
+
+<!-- ══ JAVASCRIPT ══ -->
+<script>
+const SHEET_ID  = '1CZAbgcO8mBnEJ_Ay9baiHESirK3C8A1i3C-rDRzLEJE';
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet2`;
+
+/* ── Panel Toggle ── */
+function toggle(id, btn) {
+  const panel  = document.getElementById(id);
+  const isOpen = panel.classList.contains('open');
+
+  document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('open'));
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+
+  if (!isOpen) {
+    panel.classList.add('open');
+    btn.classList.add('active');
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
+  }
+}
+
+/* ── Modal ── */
+let targetPage = '';
+
+function openLogin(page) {
+  if (sessionStorage.getItem('hamzaUser')) { window.location.href = page; return; }
+  targetPage = page;
+  document.getElementById('inputUser').value = '';
+  document.getElementById('inputPass').value  = '';
+  hideError();
+  document.getElementById('modalOverlay').classList.add('show');
+  setTimeout(() => document.getElementById('inputUser').focus(), 120);
+}
+
+function closeModal()          { document.getElementById('modalOverlay').classList.remove('show'); }
+function closeModalOutside(e)  { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+function enterLogin(e)         { if (e.key === 'Enter') doLogin(); }
+function showError(msg)        { const el = document.getElementById('errorMsg'); el.textContent = msg; el.classList.add('show'); }
+function hideError()           { document.getElementById('errorMsg').classList.remove('show'); }
+
+async function doLogin() {
+  const username = document.getElementById('inputUser').value.trim();
+  const password = document.getElementById('inputPass').value.trim();
+
+  if (!username || !password) { showError('Lütfen kullanıcı adı ve şifrenizi girin.'); return; }
+
+  const btn = document.getElementById('btnLogin');
+  btn.disabled = true; btn.textContent = 'Kontrol ediliyor...';
+  hideError();
+
+  try {
+    const res = await fetch(SHEET_URL);
+    if (!res.ok) throw new Error('Ağ hatası');
+    const rows = parseCSV(await res.text());
+    let found = false;
+
+    for (let i = 1; i < rows.length; i++) {
+      const row = rows[i];
+      if (!row || row.length < 2) continue;
+      const [sheetUser, sheetPass, sheetEnd] = row.map(c => (c||'').trim());
+
+      if (sheetUser.toLowerCase() === username.toLowerCase() && sheetPass === password) {
+        found = true;
+        if (sheetEnd) {
+          const today = new Date(); today.setHours(0,0,0,0);
+          const end   = new Date(sheetEnd); end.setHours(0,0,0,0);
+          if (today > end) { showError('⛔ Şifrenizin süresi dolmuştur. Lütfen hocayla iletişime geçin.'); break; }
+        }
+        sessionStorage.setItem('hamzaUser', username);
+        closeModal();
+        window.location.href = targetPage;
+        return;
+      }
+    }
+    if (!found) showError('❌ Kullanıcı adı veya şifre hatalı.');
+  } catch(err) {
+    showError('⚠️ Bağlantı hatası. Lütfen tekrar deneyin.');
+  } finally {
+    btn.disabled = false; btn.textContent = 'GİRİŞ YAP';
+  }
+}
+
+/* ── CSV Parser ── */
+function parseCSV(text) {
+  return text.split('\n').filter(l => l.trim()).map(line => {
+    const cols = []; let cur = '', inQ = false;
+    for (const c of line) {
+      if (c === '"')        { inQ = !inQ; }
+      else if (c===',' && !inQ) { cols.push(cur); cur=''; }
+      else                  { cur += c; }
+    }
+    cols.push(cur);
+    return cols.map(c => c.replace(/^"|"$/g,'').trim());
+  });
+}
+</script>
+</body>
+</html>
