@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamza Hoca - Günlük İfadeler 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F5C842;
+    --gold-dark: #C9960A;
+    --gold-light: #FFF3A3;
+    --bg: #0D1B2A;
+    --text: #F0EAD6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-top: 20px;
+    background-image: radial-gradient(ellipse at 20% 10%, rgba(245,200,66,0.07) 0%, transparent 50%);
+  }
+
+  /* SOL ÜST GERİ BUTONU */
+  .top-left-nav {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+  }
+
+  .back-btn-small {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(245,200,66,0.1);
+    border: 1.5px solid var(--gold);
+    border-radius: 50px;
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: all 0.2s;
+  }
+
+  .back-btn-small:hover {
+    background: var(--gold);
+    color: #0D1B2A;
+  }
+
+  header {
+    text-align: center;
+    padding: 3rem 1rem 1rem;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 4.5vw, 2.2rem);
+    background: linear-gradient(135deg, #F5C842, #FFF3A3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+  }
+
+  .section-title {
+    text-align: center;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 1.5rem 0;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.2rem;
+    padding: 0 1.5rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .card-wrap {
+    height: 140px;
+    cursor: pointer;
+    perspective: 1000px;
+  }
+
+  .card-inner {
+    position: relative;
+    width: 100%; height: 100%;
+    transition: transform 0.6s cubic-bezier(.4,.2,.2,1);
+    transform-style: preserve-3d;
+  }
+
+  .card-wrap.flipped .card-inner { transform: rotateY(180deg); }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 1rem;
+    border: 1px solid rgba(245,200,66,0.2);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    backface-visibility: hidden;
+  }
+
+  .card-front { background: linear-gradient(145deg, #1E3552, #122133); }
+  .card-back { 
+    background: linear-gradient(145deg, #103828, #071E12); 
+    transform: rotateY(180deg);
+  }
+
+  .card-word {
+    font-size: 1.1rem; font-weight: 800;
+    text-align: center; color: #FFF3A3;
+  }
+
+  .card-back .card-word { color: #7EFFF5; }
+
+  .sub-note {
+    font-size: 0.7rem; color: rgba(255,255,255,0.4);
+    margin-top: 8px; text-align: center; font-style: italic;
+  }
+
+  .flip-hint {
+    position: absolute; bottom: 10px;
+    font-size: 0.6rem; opacity: 0.3; text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<div class="top-left-nav">
+  <a href="index.html" class="back-btn-small">← Geri</a>
+</div>
+
+<header>
+  <h1>HAMZA HOCA İLE TÜRKÇE</h1>
+  <div class="section-title">KUNDALIK SUHBAT • GÜNLÜK İFADELER 1</div>
+</header>
+
+<div class="cards-grid" id="cards-grid"></div>
+
+<script>
+const data = [
+  { uz: "Ertaga ko‘rishamiz", tr: "Yarın görüşürüz" },
+  { uz: "O‘zingni ehtiyot qil", tr: "Kendine dikkat et" },
+  { uz: "Xayrli tun", tr: "İyi geceler" },
+  { uz: "Shirin tushlar", tr: "Tatlı rüyalar" },
+  { uz: "Xayrli tong", tr: "Günaydın" },
+  { uz: "Xayrli kech", tr: "İyi akşamlar" },
+  { uz: "Xush kelibsiz", tr: "Hoş geldin" },
+  { uz: "Rahmat, sizga ham xush bo‘ldi", tr: "Hoş bulduk" },
+  { uz: "Yoqimli ishtaha", tr: "Afiyet olsun" },
+  { uz: "Qo‘lingizga rahmat", tr: "Eline sağlık" },
+  { uz: "Ishingiz oson bo‘lsin", tr: "Kolay gelsin", note: "(Ishlayotgan odamga)" },
+  { uz: "Tezroq tuzalib keting", tr: "Geçmiş olsun" },
+  { uz: "Tabriklayman", tr: "Tebrik ederim" },
+  { uz: "Omad tilayman", tr: "Başarılar dilerim" },
+  { uz: "Ko‘p omad", tr: "Bol şans" },
+  { uz: "Ehtiyot bo‘l", tr: "Dikkatli ol" },
+  { uz: "Muammo emas, xavotir olma", tr: "Sorun değil merak etme" },
+  { uz: "Hammasi yaxshi bo‘ladi", tr: "Her şey iyi olacak" },
+  { uz: "Xavotir olma", tr: "Endişelenme" }
+];
+
+const grid = document.getElementById('cards-grid');
+
+data.forEach(item => {
+  const wrap = document.createElement('div');
+  wrap.className = 'card-wrap';
+  wrap.innerHTML = `
+    <div class="card-inner">
+      <div class="card-face card-front">
+        <div class="card-word">${item.uz}</div>
+        ${item.note ? `<div class="sub-note">${item.note}</div>` : ''}
+        <div class="flip-hint">tıklayın</div>
+      </div>
+      <div class="card-face card-back">
+        <div class="card-word">${item.tr}</div>
+        <div class="flip-hint">tıklayın</div>
+      </div>
+    </div>`;
+  wrap.onclick = () => wrap.classList.toggle('flipped');
+  grid.appendChild(wrap);
+});
+</script>
+</body>
+</html>
