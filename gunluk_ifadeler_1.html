@@ -115,20 +115,13 @@
 
   .card-front { background: linear-gradient(145deg, #1E3552, #122133); }
   .card-back { 
-    background: linear-gradient(145deg, #103828, #071E12); 
+    background: linear-gradient(145deg, #4A1E1E, #2A0A0A); 
     transform: rotateY(180deg);
   }
 
   .card-word {
     font-size: 1.1rem; font-weight: 800;
     text-align: center; color: #FFF3A3;
-  }
-
-  .card-back .card-word { color: #7EFFF5; }
-
-  .sub-note {
-    font-size: 0.7rem; color: rgba(255,255,255,0.4);
-    margin-top: 8px; text-align: center; font-style: italic;
   }
 
   .flip-hint {
@@ -140,7 +133,7 @@
 <body>
 
 <div class="top-left-nav">
-  <a href="index.html" class="back-btn-small">← Geri</a>
+  <a href="index.html#a1-kelime" class="back-btn-small">← Geri</a>
 </div>
 
 <header>
@@ -152,25 +145,25 @@
 
 <script>
 const data = [
-  { uz: "Ertaga ko‘rishamiz", tr: "Yarın görüşürüz" },
-  { uz: "O‘zingni ehtiyot qil", tr: "Kendine dikkat et" },
-  { uz: "Xayrli tun", tr: "İyi geceler" },
-  { uz: "Shirin tushlar", tr: "Tatlı rüyalar" },
+  { uz: "Salom", tr: "Merhaba / Selam" },
   { uz: "Xayrli tong", tr: "Günaydın" },
+  { uz: "Xayrli kun", tr: "Tünaydın / İyi günler" },
   { uz: "Xayrli kech", tr: "İyi akşamlar" },
-  { uz: "Xush kelibsiz", tr: "Hoş geldin" },
-  { uz: "Rahmat, sizga ham xush bo‘ldi", tr: "Hoş bulduk" },
-  { uz: "Yoqimli ishtaha", tr: "Afiyet olsun" },
-  { uz: "Qo‘lingizga rahmat", tr: "Eline sağlık" },
-  { uz: "Ishingiz oson bo‘lsin", tr: "Kolay gelsin", note: "(Ishlayotgan odamga)" },
-  { uz: "Tezroq tuzalib keting", tr: "Geçmiş olsun" },
-  { uz: "Tabriklayman", tr: "Tebrik ederim" },
-  { uz: "Omad tilayman", tr: "Başarılar dilerim" },
-  { uz: "Ko‘p omad", tr: "Bol şans" },
-  { uz: "Ehtiyot bo‘l", tr: "Dikkatli ol" },
-  { uz: "Muammo emas, xavotir olma", tr: "Sorun değil merak etme" },
-  { uz: "Hammasi yaxshi bo‘ladi", tr: "Her şey iyi olacak" },
-  { uz: "Xavotir olma", tr: "Endişelenme" }
+  { uz: "Xayrli tun", tr: "İyi geceler" },
+  { uz: "Qalaysiz?", tr: "Nasılsınız? / Ne haber?" },
+  { uz: "Yaxshiman, rahmat", tr: "İyiyim, teşekkürler" },
+  { uz: "Siz-chi?", tr: "Ya siz?" },
+  { uz: "Ismingiz nima?", tr: "İsminiz nedir?" },
+  { uz: "Mening ismim...", tr: "Benim ismim..." },
+  { uz: "Tanishganimdan xursandman", tr: "Tanıştığımıza memnun oldum" },
+  { uz: "Iltimos", tr: "Lütfen" },
+  { uz: "Rahmat", tr: "Teşekkür ederim" },
+  { uz: "Arzimaydi", tr: "Bir şey değil / Rica ederim" },
+  { uz: "Kechirasiz", tr: "Özür dilerim / Affedersiniz" },
+  { uz: "Mayli / Xo'p", tr: "Tamam / Peki" },
+  { uz: "Yordam bera olasizmi?", tr: "Yardım edebilir misiniz?" },
+  { uz: "Tushunmadim", tr: "Anlamadım" },
+  { uz: "Bilmayman", tr: "Bilmiyorum" }
 ];
 
 const grid = document.getElementById('cards-grid');
@@ -182,7 +175,6 @@ data.forEach(item => {
     <div class="card-inner">
       <div class="card-face card-front">
         <div class="card-word">${item.uz}</div>
-        ${item.note ? `<div class="sub-note">${item.note}</div>` : ''}
         <div class="flip-hint">tıklayın</div>
       </div>
       <div class="card-face card-back">
