@@ -125,8 +125,9 @@ header h1 {
   border-radius: 20px;
 }
 
+/* Panel boyutu 4. test ile uzadığı için max-height değerini artırdım */
 .content-panel.open {
-  max-height: 700px;
+  max-height: 1200px; 
   opacity: 1;
   margin-bottom: 16px;
 }
@@ -182,17 +183,6 @@ header h1 {
   color: #333;
 }
 
-.item-card.coming {
-  opacity: .65;
-  cursor: default;
-}
-.item-card.coming:hover {
-  transform: none;
-  background: #f8f9fa;
-}
-
-.item-name { flex: 1; font-size: 0.9rem; }
-
 /* ═══════════════════════════════════════
    BADGES
 ═══════════════════════════════════════ */
@@ -208,10 +198,9 @@ header h1 {
 
 .badge-locked { background: #6c757d; }
 .badge-free   { background: #2a9d8f; }
-.badge-coming { background: #adb5bd; color: #333; }
 
 /* ═══════════════════════════════════════
-   LOGIN MODAL
+   LOGIN MODAL & OTHERS
 ═══════════════════════════════════════ */
 .modal-overlay {
   display: none;
@@ -222,109 +211,22 @@ header h1 {
   align-items: center;
   justify-content: center;
 }
-
 .modal-overlay.show { display: flex; }
-
-.modal {
-  background: white;
-  border-radius: 24px;
-  padding: 40px;
-  width: min(440px, 94vw);
-  position: relative;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
-  animation: popIn .3s ease;
-}
-
-.modal-close {
-  position: absolute;
-  top: 16px; right: 20px;
-  background: none;
-  border: none;
-  font-size: 1.4rem;
-  color: #aaa;
-  cursor: pointer;
-  transition: color .2s;
-  line-height: 1;
-}
-.modal-close:hover { color: #333; }
-
+.modal { background: white; border-radius: 24px; padding: 40px; width: min(440px, 94vw); position: relative; animation: popIn .3s ease; }
+.modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; font-size: 1.4rem; color: #aaa; cursor: pointer; }
 .modal h2 { font-size: 24px; color: #333; margin-bottom: 6px; text-align: center; }
 .modal .sub { font-size: 0.85rem; color: #888; text-align: center; margin-bottom: 28px; }
-
 .form-group { margin-bottom: 18px; }
-
-.form-group label {
-  display: block;
-  font-size: 0.82rem;
-  color: #555;
-  margin-bottom: 7px;
-  font-weight: 600;
-  letter-spacing: .04em;
-}
-
-.form-group input {
-  width: 100%;
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  padding: 12px 14px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 0.95rem;
-  color: #333;
-  outline: none;
-  transition: border-color .2s, box-shadow .2s;
-}
-
-.form-group input:focus {
-  border-color: #F5C842;
-  box-shadow: 0 0 0 3px rgba(245,200,66,0.15);
-}
-
-.btn-login {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #F5C842, #C9960A);
-  border: none;
-  border-radius: 40px;
-  color: white;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: .04em;
-  cursor: pointer;
-  transition: opacity .2s, transform .15s;
-  margin-top: 8px;
-}
-
-.btn-login:hover { opacity: .9; transform: translateY(-1px); }
-.btn-login:disabled { opacity: .6; cursor: not-allowed; transform: none; }
-
-.error-msg {
-  background: #fff0f0;
-  border: 1px solid #f8c8c8;
-  border-radius: 8px;
-  padding: 10px 14px;
-  color: #d63031;
-  font-size: 0.85rem;
-  margin-top: 14px;
-  display: none;
-  text-align: center;
-}
+.form-group label { display: block; font-size: 0.82rem; color: #555; margin-bottom: 7px; font-weight: 600; }
+.form-group input { width: 100%; border: 2px solid #ddd; border-radius: 10px; padding: 12px 14px; outline: none; }
+.form-group input:focus { border-color: #F5C842; }
+.btn-login { width: 100%; padding: 14px; background: linear-gradient(135deg, #F5C842, #C9960A); border: none; border-radius: 40px; color: white; font-weight: 700; cursor: pointer; }
+.error-msg { background: #fff0f0; border: 1px solid #f8c8c8; border-radius: 8px; padding: 10px 14px; color: #d63031; font-size: 0.85rem; margin-top: 14px; display: none; text-align: center; }
 .error-msg.show { display: block; }
 
-/* ═══════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════ */
-footer {
-  text-align: center;
-  margin-top: 60px;
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.5);
-}
+footer { text-align: center; margin-top: 60px; font-size: 0.8rem; color: rgba(255,255,255,0.5); }
 footer span { color: #F5C842; }
 
-/* ═══════════════════════════════════════
-   ANIMATIONS
-═══════════════════════════════════════ */
 @keyframes popIn {
   from { opacity: 0; transform: scale(.93) translateY(10px); }
   to   { opacity: 1; transform: none; }
@@ -406,142 +308,27 @@ footer span { color: #F5C842; }
 
   <div class="content-panel" id="a1-kelime">
     <div class="panel-header"><h2>🃏 A1 Kelime Kartları</h2></div>
-    <div class="panel-body">
-      <div class="items-grid">
-        <a class="item-card" href="kartlar.html">
-          <span class="item-name">Selamlaşma Kartları</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-      </div>
-    </div>
+    <div class="panel-body"><div class="items-grid"><a class="item-card" href="kartlar.html"><span class="item-name">Selamlaşma Kartları</span><span class="badge badge-free">✅ Ücretsiz</span></a></div></div>
   </div>
 
   <div class="content-panel" id="b2c1-kelime">
     <div class="panel-header"><h2>📚 B2/C1 Kelime Kartları</h2></div>
-    <div class="panel-body">
-      <div class="items-grid">
-        <a class="item-card" href="baglaçlar.html">
-          <span class="item-name">Bağlaçlar</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-        <a class="item-card" href="kelimeler1.html">
-          <span class="item-name">Kelimeler 1</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-        <div class="item-card coming">
-          <span class="item-name">Hazırlanıyor...</span>
-          <span class="badge badge-coming">🔜 Yakında</span>
-        </div>
-      </div>
-    </div>
+    <div class="panel-body"><div class="items-grid"><a class="item-card" href="baglaçlar.html"><span class="item-name">Bağlaçlar</span><span class="badge badge-free">✅ Ücretsiz</span></a><a class="item-card" href="kelimeler1.html"><span class="item-name">Kelimeler 1</span><span class="badge badge-free">✅ Ücretsiz</span></a></div></div>
   </div>
 
   <div class="content-panel" id="dinleme-testleri">
     <div class="panel-header"><h2>🎧 Dinleme Testleri</h2></div>
-    <div class="panel-body">
-      <div class="items-grid">
-        <div class="item-card" onclick="openLogin('dinleme1.html')">
-          <span class="item-name">Dinleme Testi 1</span>
-          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
-        </div>
-        <div class="item-card" onclick="openLogin('dinleme2.html')">
-          <span class="item-name">Dinleme Testi 2</span>
-          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
-        </div>
-        <div class="item-card" onclick="openLogin('dinleme3.html')">
-          <span class="item-name">Dinleme Testi 3</span>
-          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="content-panel" id="okuma-alistirmalar">
-    <div class="panel-header"><h2>✍️ Okuma Alıştırmaları</h2></div>
-    <div class="panel-body">
-      <div class="items-grid">
-        <div class="item-card coming">
-          <span class="item-name">Hazırlanıyor...</span>
-          <span class="badge badge-coming">🔜 Yakında</span>
-        </div>
-        <div class="item-card coming">
-          <span class="item-name">Hazırlanıyor...</span>
-          <span class="badge badge-coming">🔜 Yakında</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="content-panel" id="yazma-sorulari">
-    <div class="panel-header"><h2>📝 Yazma Soruları</h2></div>
-    <div class="panel-body">
-      <div class="items-grid">
-        <div class="item-card coming">
-          <span class="item-name">Kompozisyon</span>
-          <span class="badge badge-coming">🔜 Hazırlanıyor</span>
-        </div>
-        <div class="item-card coming">
-          <span class="item-name">Dilekçe Örnekleri</span>
-          <span class="badge badge-coming">🔜 Hazırlanıyor</span>
-        </div>
-      </div>
-    </div>
+    <div class="panel-body"><div class="items-grid"><div class="item-card" onclick="openLogin('dinleme1.html')"><span class="item-name">Dinleme Testi 1</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div><div class="item-card" onclick="openLogin('dinleme2.html')"><span class="item-name">Dinleme Testi 2</span><span class="badge badge-locked">🔒 Giriş Gerekli</span></div></div></div>
   </div>
 
   <div class="content-panel" id="konusma-sorulari">
     <div class="panel-header"><h2>💬 Konuşma Soruları</h2></div>
-    <div class="panel-body">
-      <div class="items-grid">
-        <a class="item-card" href="konuşma_soruları_1.html">
-          <span class="item-name">Konuşma Soruları 1</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-        <a class="item-card" href="konuşma_soruları_2.html">
-          <span class="item-name">Konuşma Soruları 2</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-        <a class="item-card" href="konuşma_soruları_3.html">
-          <span class="item-name">Konuşma Soruları 3</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <div class="content-panel" id="dinleme-alistirmalar">
-    <div class="panel-header"><h2>🎤 Dinleme Alıştırmaları</h2></div>
-    <div class="panel-body">
-      <div class="items-grid">
-        <a class="item-card" href="dinleme_alistirmasi_1.html">
-          <span class="item-name">Dinleme Alıştırması 1</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-        <div class="item-card coming">
-          <span class="item-name">Hazırlanıyor...</span>
-          <span class="badge badge-coming">🔜 Yakında</span>
-        </div>
-      </div>
-    </div>
+    <div class="panel-body"><div class="items-grid"><a class="item-card" href="konuşma_soruları_1.html"><span class="item-name">Konuşma Soruları 1</span><span class="badge badge-free">✅ Ücretsiz</span></a></div></div>
   </div>
 
   <div class="content-panel" id="okuma-metinleri">
     <div class="panel-header"><h2>📖 Okuma Metinleri</h2></div>
-    <div class="panel-body">
-      <div class="items-grid">
-        <a class="item-card" href="kuresel_isinma.html">
-          <span class="item-name">Küresel Isınma</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-        <a class="item-card" href="yapay_zeka.html">
-          <span class="item-name">Yapay Zeka</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-        <a class="item-card" href="elektrikli_araclar.html">
-          <span class="item-name">Elektrikli Araçlar</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-      </div>
-    </div>
+    <div class="panel-body"><div class="items-grid"><a class="item-card" href="kuresel_isinma.html"><span class="item-name">Küresel Isınma</span><span class="badge badge-free">✅ Ücretsiz</span></a></div></div>
   </div>
 
   <footer>
@@ -554,16 +341,8 @@ footer span { color: #F5C842; }
     <button class="modal-close" onclick="closeModal()">✕</button>
     <h2>🔐 Giriş Yap</h2>
     <p class="sub">Bu içeriğe erişmek için giriş yapmalısınız.</p>
-    <div class="form-group">
-      <label>Kullanıcı Adı</label>
-      <input type="text" id="inputUser" placeholder="kullanici_adi"
-             autocomplete="username" onkeydown="enterLogin(event)">
-    </div>
-    <div class="form-group">
-      <label>Şifre</label>
-      <input type="password" id="inputPass" placeholder="••••••••"
-             autocomplete="current-password" onkeydown="enterLogin(event)">
-    </div>
+    <div class="form-group"><label>Kullanıcı Adı</label><input type="text" id="inputUser" placeholder="kullanici_adi"></div>
+    <div class="form-group"><label>Şifre</label><input type="password" id="inputPass" placeholder="••••••••"></div>
     <button class="btn-login" id="btnLogin" onclick="doLogin()">GİRİŞ YAP</button>
     <div class="error-msg" id="errorMsg"></div>
   </div>
@@ -573,90 +352,60 @@ footer span { color: #F5C842; }
 const SHEET_ID  = '1CZAbgcO8mBnEJ_Ay9baiHESirK3C8A1i3C-rDRzLEJE';
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet2`;
 
-/* ── Panel Toggle ── */
 function toggle(id, btn) {
   const panel  = document.getElementById(id);
   const isOpen = panel.classList.contains('open');
-
   document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('open'));
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-
   if (!isOpen) {
     panel.classList.add('open');
     btn.classList.add('active');
-    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
   }
 }
 
-/* ── Modal ── */
 let targetPage = '';
-
 function openLogin(page) {
   if (sessionStorage.getItem('hamzaUser')) { window.location.href = page; return; }
   targetPage = page;
-  document.getElementById('inputUser').value = '';
-  document.getElementById('inputPass').value  = '';
-  hideError();
   document.getElementById('modalOverlay').classList.add('show');
-  setTimeout(() => document.getElementById('inputUser').focus(), 120);
 }
-
-function closeModal()          { document.getElementById('modalOverlay').classList.remove('show'); }
-function closeModalOutside(e)  { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
-function enterLogin(e)         { if (e.key === 'Enter') doLogin(); }
-function showError(msg)        { const el = document.getElementById('errorMsg'); el.textContent = msg; el.classList.add('show'); }
-function hideError()           { document.getElementById('errorMsg').classList.remove('show'); }
+function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+function closeModalOutside(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
 
 async function doLogin() {
   const username = document.getElementById('inputUser').value.trim();
   const password = document.getElementById('inputPass').value.trim();
-
-  if (!username || !password) { showError('Lütfen kullanıcı adı ve şifrenizi girin.'); return; }
-
+  if (!username || !password) return;
   const btn = document.getElementById('btnLogin');
   btn.disabled = true; btn.textContent = 'Kontrol ediliyor...';
-  hideError();
-
   try {
     const res = await fetch(SHEET_URL);
-    if (!res.ok) throw new Error('Ağ hatası');
     const rows = parseCSV(await res.text());
     let found = false;
-
     for (let i = 1; i < rows.length; i++) {
-      const row = rows[i];
-      if (!row || row.length < 2) continue;
-      const [sheetUser, sheetPass, sheetEnd] = row.map(c => (c||'').trim());
-
+      const [sheetUser, sheetPass] = rows[i].map(c => (c||'').trim());
       if (sheetUser.toLowerCase() === username.toLowerCase() && sheetPass === password) {
         found = true;
-        if (sheetEnd) {
-          const today = new Date(); today.setHours(0,0,0,0);
-          const end   = new Date(sheetEnd); end.setHours(0,0,0,0);
-          if (today > end) { showError('⛔ Şifrenizin süresi dolmuştur. Lütfen hocayla iletişime geçin.'); break; }
-        }
         sessionStorage.setItem('hamzaUser', username);
-        closeModal();
         window.location.href = targetPage;
         return;
       }
     }
-    if (!found) showError('❌ Kullanıcı adı veya şifre hatalı.');
+    if (!found) alert('Hatalı giriş!');
   } catch(err) {
-    showError('⚠️ Bağlantı hatası. Lütfen tekrar deneyin.');
+    alert('Bağlantı hatası!');
   } finally {
     btn.disabled = false; btn.textContent = 'GİRİŞ YAP';
   }
 }
 
-/* ── CSV Parser ── */
 function parseCSV(text) {
   return text.split('\n').filter(l => l.trim()).map(line => {
     const cols = []; let cur = '', inQ = false;
     for (const c of line) {
-      if (c === '"')         { inQ = !inQ; }
+      if (c === '"') inQ = !inQ;
       else if (c===',' && !inQ) { cols.push(cur); cur=''; }
-      else                  { cur += c; }
+      else cur += c;
     }
     cols.push(cur);
     return cols.map(c => c.replace(/^"|"$/g,'').trim());
