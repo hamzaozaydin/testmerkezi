@@ -449,6 +449,11 @@ async function doLogin() {
   }
 }
 
+// Geri tuşuyla dönüldüğünde (bfcache) modal açık kalmasın
+window.addEventListener('pageshow', function(e) {
+  closeModal();
+});
+
 function parseCSV(text) {
   return text.split('\n').filter(l => l.trim()).map(line => {
     const cols = []; let cur = '', inQ = false;
