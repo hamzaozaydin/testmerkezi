@@ -259,6 +259,7 @@ footer span { color: #F5C842; }
       <span class="emoji">📚</span>
       <span class="label">B2/C1 KELİME KARTLARI</span>
     </button>
+    <!-- OKUMA ALIŞTIRMALARI butonu: eklendi ve toggle ile paneli açacak -->
     <button class="cat-btn" onclick="toggle('okuma-alistirmalar', this)">
       <span class="emoji">✍️</span>
       <span class="label">OKUMA ALIŞTIRMALARI</span>
@@ -387,13 +388,34 @@ footer span { color: #F5C842; }
     </div>
   </div>
 
-  <!-- ✅ DİNLEME ALIŞTIRMALARI PANELİ -->
+  <!-- DİNLEME ALIŞTIRMALARI PANELİ (mevcut) -->
   <div class="content-panel" id="dinleme-alistirmalar">
     <div class="panel-header"><h2>🎤 Dinleme Alıştırmaları</h2></div>
     <div class="panel-body">
       <div class="items-grid">
         <a class="item-card" href="dinleme_alistirmasi_1.html">
           <span class="item-name">Dinleme Alıştırması 1</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ OKUMA ALIŞTIRMALARI PANELİ (YENİ) - okuma_alistirmasi_1, okuma_alistirmasi_2, okuma_alistirmasi_3 dosyalarına yönlendirir -->
+  <div class="content-panel" id="okuma-alistirmalar">
+    <div class="panel-header"><h2>✍️ Okuma Alıştırmaları</h2></div>
+    <div class="panel-body">
+      <div class="items-grid">
+        <a class="item-card" href="okuma_alistirmasi_1.html">
+          <span class="item-name">Okuma Alıştırması 1</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+        <a class="item-card" href="okuma_alistirmasi_2.html">
+          <span class="item-name">Okuma Alıştırması 2</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+        <a class="item-card" href="okuma_alistirmasi_3.html">
+          <span class="item-name">Okuma Alıştırması 3</span>
           <span class="badge badge-free">✅ Ücretsiz</span>
         </a>
       </div>
@@ -423,7 +445,10 @@ const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tq
 
 function toggle(id, btn) {
   const panel  = document.getElementById(id);
+  // panel varsa ve açık/kapalı işlemini yap
+  if (!panel) return;
   const isOpen = panel.classList.contains('open');
+  // tüm panelleri kapat, tüm butonların active sınıfını kaldır
   document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('open'));
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   if (!isOpen) {
