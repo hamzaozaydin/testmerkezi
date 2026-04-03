@@ -31,6 +31,32 @@
     min-height: 100vh;
   }
   
+  /* ── BACK BUTTON (added from test 4) ── */
+  .back-btn {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(30,36,53,.85);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    padding: 7px 13px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color .15s, border-color .15s, background .15s;
+    z-index: 10;
+  }
+  .back-btn:hover { color: var(--accent); border-color: var(--accent); background: rgba(245,166,35,.08); }
+  .back-btn svg { width: 14px; height: 14px; fill: currentColor; }
+
   /* ── HEADER ── */
   header {
     background: linear-gradient(135deg, #1a1f30 0%, #0f1117 60%);
@@ -324,6 +350,11 @@
 <body>
 
 <header>
+  <!-- Back button added exactly as in test 4 -->
+  <a class="back-btn" onclick="history.back()" href="#">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Geri
+  </a>
   <h1>🎧 Dinleme Testi 3</h1>
   <p>Hamza Hoca ile Türkçe Öğreniyorum</p>
   <div class="audio-bar">
