@@ -312,7 +312,7 @@ footer span { color: #F5C842; }
 
   <div class="content-panel" id="a1-kelime">
     <div class="panel-header"><h2>🃏 A1 Kelime Kartları</h2></div>
-    <div class="panel-body"><div class="items-grid"><a class="item-card" href="kartlar.html"><span class="item-name">Selamlaşma Kartları</span><span class="badge badge-free">✅ Ücretsiz</span></a></div></div>
+    <div class="panel-body"><div class="items-grid"><a class="item-card" href="kartlar.html"><span class="item-name">Selamlaşma Kartları</span><span class="badge badge-free">✅ Ücretsiz</span></a><a class="item-card" href="gunler.html"><span class="item-name">Günler</span><span class="badge badge-free">✅ Ücretsiz</span></a></div></div>
   </div>
 
   <div class="content-panel" id="b2c1-kelime">
@@ -364,6 +364,14 @@ footer span { color: #F5C842; }
           <span class="item-name">Konuşma Soruları 4</span>
           <span class="badge badge-free">✅ Ücretsiz</span>
         </a>
+        <a class="item-card" href="konusma_sorulari_5.html">
+          <span class="item-name">Konuşma Soruları 5</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+        <a class="item-card" href="konusma_sorulari_6.html">
+          <span class="item-name">Konuşma Soruları 6</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
       </div>
     </div>
   </div>
@@ -395,6 +403,10 @@ footer span { color: #F5C842; }
       <div class="items-grid">
         <a class="item-card" href="dinleme_alistirmasi_1.html">
           <span class="item-name">Dinleme Alıştırması 1</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
+        <a class="item-card" href="dinleme_alistirmasi_2.html">
+          <span class="item-name">Dinleme Alıştırması 2</span>
           <span class="badge badge-free">✅ Ücretsiz</span>
         </a>
       </div>
@@ -454,6 +466,9 @@ function toggle(id, btn) {
   if (!isOpen) {
     panel.classList.add('open');
     btn.classList.add('active');
+    setTimeout(() => {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
   }
 }
 
