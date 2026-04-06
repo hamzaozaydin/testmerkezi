@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Günlük İfadeler 3 – Hamza Hoca</title>
+<title>Zıt Anlamlılar – Hamza Hoca</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -199,23 +199,39 @@ header h1 {
   -webkit-transform: rotateY(180deg);
 }
 
+/* Türkçe kelime */
 .card-tr {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 900;
   text-align: center;
   letter-spacing: .3px;
-  line-height: 1.3;
-  color: #F5C842;
+  line-height: 1.2;
 }
 
+.card-front .card-tr { color: #F5C842; }
+.card-back  .card-tr { color: #7EFFF5; }
+
+/* Özbekçe kelime */
 .card-uz {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
   text-align: center;
   letter-spacing: .2px;
-  line-height: 1.3;
-  color: #7EFFF5;
+  line-height: 1.2;
+  opacity: .80;
 }
+
+.card-front .card-uz { color: rgba(245,200,66,0.75); }
+.card-back  .card-uz { color: rgba(126,255,245,0.75); }
+
+.card-sep {
+  width: 40px; height: 2px;
+  border-radius: 2px;
+  opacity: .3;
+  flex-shrink: 0;
+}
+.card-front .card-sep { background: #F5C842; }
+.card-back  .card-sep { background: #7EFFF5; }
 
 .counter {
   position: absolute;
@@ -225,9 +241,16 @@ header h1 {
   letter-spacing: .5px;
 }
 
+.flip-hint {
+  position: absolute; bottom: 8px;
+  font-size: .54rem; opacity: .18;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+
 .speak-btn {
   position: absolute;
-  top: 6px; right: 8px;
+  top: 8px; right: 10px;
   background: none;
   border: none;
   cursor: pointer;
@@ -243,14 +266,12 @@ header h1 {
   transform: scale(1.2);
 }
 
-.speak-btn.playing { color: #F5C842; }
-.card-back .speak-btn.playing { color: #7EFFF5; }
+.speak-btn.playing {
+  color: #F5C842;
+}
 
-.flip-hint {
-  position: absolute; bottom: 8px;
-  font-size: .54rem; opacity: .18;
-  letter-spacing: 1px; text-transform: uppercase;
-  color: rgba(255,255,255,0.6);
+.card-back .speak-btn.playing {
+  color: #7EFFF5;
 }
 
 .card-wrap:hover {
@@ -286,11 +307,11 @@ footer span { color: #F5C842; }
 </div>
 
 <header>
-  <div class="header-badge">✦ Günlük İfadeler ✦</div>
+  <div class="header-badge">✦ A1 Kelime Kartları ✦</div>
   <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
   <div class="header-line"></div>
   <div class="stars">★ ★ ★ ★ ★</div>
-  <p class="subtitle">Günlük İfadeler • Kundalik Suhbat Iboralari</p>
+  <p class="subtitle">Zıt Anlamlı Kelimeler • Antonimlar</p>
 </header>
 
 <div class="telegram-section">
@@ -307,7 +328,7 @@ footer span { color: #F5C842; }
   </div>
 </div>
 
-<div class="section-title">Günlük İfadeler • Kundalik Iboralar</div>
+<div class="section-title">Zıt Anlamlılar • Antonimlar</div>
 <div class="cards-grid" id="cards-grid"></div>
 
 <footer>
@@ -316,27 +337,29 @@ footer span { color: #F5C842; }
 
 <script>
 const words = [
-  { tr: "Sanırım öyle",        uz: "Menimcha shunday"          },
-  { tr: "Emin değilim",        uz: "Ishonchim komil emas"      },
-  { tr: "Eminim",              uz: "Ishonchim komil"           },
-  { tr: "Bence doğru",         uz: "Meningcha to'g'ri"         },
-  { tr: "Bence yanlış",        uz: "Meningcha noto'g'ri"       },
-  { tr: "Düşünmem lazım",      uz: "O'ylab ko'rishim kerak"    },
-  { tr: "Bir fikrim var",      uz: "Menda bir fikr bor"        },
-  { tr: "Deneyelim",           uz: "Sinab ko'raylik"           },
-  { tr: "Olabilir",            uz: "Bo'lishi mumkin"           },
-  { tr: "İmkansız",            uz: "Imkonsiz"                  },
-  { tr: "Bir dakika",          uz: "Bir daqiqa"                },
-  { tr: "Bir saniye",          uz: "Bir soniya"                },
-  { tr: "Şimdi geliyorum",     uz: "Hozir kelayapman"          },
-  { tr: "Az sonra",            uz: "Birozdan keyin"            },
-  { tr: "Şu anda",             uz: "Hozir, ayni paytda"        },
-  { tr: "Bugün",               uz: "Bugun"                     },
-  { tr: "Yarın",               uz: "Ertaga"                    },
-  { tr: "Dün",                 uz: "Kecha"                     },
-  { tr: "Her zaman",           uz: "Har doim"                  },
-  { tr: "Bazen",               uz: "Ba'zan"                    },
+  { frontTr: "Acı",    frontUz: "Achchiq", backTr: "Tatlı",    backUz: "Shirin"   },
+  { frontTr: "Aç",     frontUz: "Och",     backTr: "Tok",      backUz: "To'q"     },
+  { frontTr: "Ağır",   frontUz: "Og'ir",   backTr: "Hafif",    backUz: "Yengil"   },
+  { frontTr: "Alt",    frontUz: "Past",    backTr: "Üst",      backUz: "Ust"      },
+  { frontTr: "Barış",  frontUz: "Tinchlik",backTr: "Savaş",    backUz: "Urush"    },
+  { frontTr: "Büyük",  frontUz: "Katta",   backTr: "Küçük",    backUz: "Kichik"   },
+  { frontTr: "Çalışkan",frontUz:"Mehnatkash",backTr:"Tembel",  backUz: "Dangasa"  },
+  { frontTr: "Dost",   frontUz: "Do'st",   backTr: "Düşman",   backUz: "Dushman"  },
+  { frontTr: "Erken",  frontUz: "Erta",    backTr: "Geç",      backUz: "Kech"     },
+  { frontTr: "Gece",   frontUz: "Tun",     backTr: "Gündüz",   backUz: "Kunduz"   },
+  { frontTr: "Geniş",  frontUz: "Keng",    backTr: "Dar",      backUz: "Tor"      },
+  { frontTr: "Güzel",  frontUz: "Chiroyli",backTr: "Çirkin",   backUz: "Xunuk"    },
+  { frontTr: "Hızlı",  frontUz: "Tez",     backTr: "Yavaş",    backUz: "Sekin"    },
+  { frontTr: "İlk",    frontUz: "Birinchi",backTr: "Son",      backUz: "Oxirgi"   },
+  { frontTr: "İnce",   frontUz: "Ingichka",backTr: "Kalın",    backUz: "Qalin"    },
+  { frontTr: "İyi",    frontUz: "Yaxshi",  backTr: "Kötü",     backUz: "Yomon"    },
+  { frontTr: "Kolay",  frontUz: "Oson",    backTr: "Zor",      backUz: "Qiyin"    },
+  { frontTr: "Önce",   frontUz: "Oldin",   backTr: "Sonra",    backUz: "Keyin"    },
+  { frontTr: "Sağ",    frontUz: "O'ng",    backTr: "Sol",      backUz: "Chap"     },
+  { frontTr: "Sert",   frontUz: "Qattiq",  backTr: "Yumuşak",  backUz: "Yumshoq"  },
 ];
+
+const grid = document.getElementById('cards-grid');
 
 const speakerIcon = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
 
@@ -352,8 +375,6 @@ function speak(text, btn) {
   window.speechSynthesis.speak(utt);
 }
 
-const grid = document.getElementById('cards-grid');
-
 words.forEach((item, i) => {
   const wrap = document.createElement('div');
   wrap.className = 'card-wrap';
@@ -361,14 +382,18 @@ words.forEach((item, i) => {
     <div class="card-inner">
       <div class="card-face card-front">
         <span class="counter">${String(i+1).padStart(2,'0')}</span>
-        <button class="speak-btn" data-text="${item.tr}" title="Dinle">${speakerIcon}</button>
-        <div class="card-tr">${item.tr}</div>
+        <button class="speak-btn" data-text="${item.frontTr}" title="Dinle">${speakerIcon}</button>
+        <div class="card-tr">${item.frontTr}</div>
+        <div class="card-sep"></div>
+        <div class="card-uz">${item.frontUz}</div>
         <span class="flip-hint">bosing / tıklayın</span>
       </div>
       <div class="card-face card-back">
         <span class="counter">${String(i+1).padStart(2,'0')}</span>
-        <button class="speak-btn" data-text="${item.tr}" title="Dinle">${speakerIcon}</button>
-        <div class="card-uz">${item.uz}</div>
+        <button class="speak-btn" data-text="${item.backTr}" title="Dinle">${speakerIcon}</button>
+        <div class="card-tr">${item.backTr}</div>
+        <div class="card-sep"></div>
+        <div class="card-uz">${item.backUz}</div>
         <span class="flip-hint">bosing / tıklayın</span>
       </div>
     </div>`;

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="uz">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Günlük İfadeler 3 – Hamza Hoca</title>
+<title>B2/C1 Kelimeler 2 – Hamza Hoca</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -15,6 +15,9 @@ body {
   overflow-x: hidden;
 }
 
+/* ═══════════════════════════════════════
+   ANA SAYFA BUTONU
+═══════════════════════════════════════ */
 .home-btn-wrap {
   padding: 18px 20px 0;
   max-width: 1200px;
@@ -54,6 +57,9 @@ body {
 
 .home-btn svg { flex-shrink: 0; }
 
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
 header {
   text-align: center;
   padding: 2rem 1rem 1.2rem;
@@ -104,6 +110,9 @@ header h1 {
   text-transform: uppercase;
 }
 
+/* ═══════════════════════════════════════
+   TELEGRAM
+═══════════════════════════════════════ */
 .telegram-section {
   text-align: center;
   padding: 0.5rem 1rem 1rem;
@@ -141,6 +150,9 @@ header h1 {
   box-shadow: 0 8px 28px rgba(34,158,217,.55);
 }
 
+/* ═══════════════════════════════════════
+   SECTION TITLE
+═══════════════════════════════════════ */
 .section-title {
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -149,6 +161,9 @@ header h1 {
   margin: .5rem 0 1rem; opacity: .75;
 }
 
+/* ═══════════════════════════════════════
+   CARDS GRID
+═══════════════════════════════════════ */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -157,6 +172,9 @@ header h1 {
   max-width: 1200px; margin: 0 auto;
 }
 
+/* ═══════════════════════════════════════
+   CARD FLIP
+═══════════════════════════════════════ */
 .card-wrap {
   height: 175px;
   cursor: pointer;
@@ -183,7 +201,7 @@ header h1 {
   border-radius: 16px;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  gap: .45rem; padding: 1rem 1.3rem;
+  gap: .5rem; padding: 1rem 1.3rem;
   border: 1.5px solid rgba(245,200,66,0.20);
   box-shadow: 0 6px 24px rgba(0,0,0,.4);
   -webkit-backface-visibility: hidden;
@@ -199,22 +217,52 @@ header h1 {
   -webkit-transform: rotateY(180deg);
 }
 
-.card-tr {
-  font-size: 1.1rem;
+.card-keyword {
+  font-size: 1.15rem;
   font-weight: 900;
   text-align: center;
   letter-spacing: .3px;
-  line-height: 1.3;
-  color: #F5C842;
+  line-height: 1.2;
 }
 
-.card-uz {
-  font-size: 1.05rem;
-  font-weight: 700;
+.card-front .card-keyword { color: #F5C842; }
+.card-back  .card-keyword { color: #7EFFF5; }
+
+.card-sep {
+  width: 40px; height: 2px;
+  border-radius: 2px;
+  opacity: .3;
+  flex-shrink: 0;
+}
+.card-front .card-sep { background: #F5C842; }
+.card-back  .card-sep { background: #7EFFF5; }
+
+.card-sentence {
+  font-size: .75rem;
+  font-weight: 600;
   text-align: center;
-  letter-spacing: .2px;
-  line-height: 1.3;
+  line-height: 1.5;
+  opacity: .75;
+  letter-spacing: .1px;
+  color: rgba(255,255,255,0.85);
+}
+
+.card-front .card-sentence .hl {
+  font-weight: 900;
+  opacity: 1;
+  color: #F5C842;
+  text-decoration: underline;
+  text-decoration-color: rgba(245,200,66,0.5);
+  text-underline-offset: 2px;
+}
+
+.card-back .card-sentence .hl {
+  font-weight: 900;
+  opacity: 1;
   color: #7EFFF5;
+  text-decoration: underline;
+  text-decoration-color: rgba(58,175,169,0.5);
+  text-underline-offset: 2px;
 }
 
 .counter {
@@ -224,27 +272,6 @@ header h1 {
   color: rgba(255,255,255,0.25);
   letter-spacing: .5px;
 }
-
-.speak-btn {
-  position: absolute;
-  top: 6px; right: 8px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  color: rgba(255,255,255,0.35);
-  transition: color .2s, transform .15s;
-  z-index: 10;
-  line-height: 1;
-}
-
-.speak-btn:hover {
-  color: rgba(255,255,255,0.85);
-  transform: scale(1.2);
-}
-
-.speak-btn.playing { color: #F5C842; }
-.card-back .speak-btn.playing { color: #7EFFF5; }
 
 .flip-hint {
   position: absolute; bottom: 8px;
@@ -258,6 +285,9 @@ header h1 {
   border-radius: 16px;
 }
 
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
 footer {
   text-align: center;
   padding: 0 1rem 2.5rem;
@@ -275,6 +305,7 @@ footer span { color: #F5C842; }
 </head>
 <body>
 
+<!-- GERİ BUTONU -->
 <div class="home-btn-wrap" id="backBtnWrap">
   <button class="home-btn" onclick="history.back()">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -285,14 +316,16 @@ footer span { color: #F5C842; }
   </button>
 </div>
 
+<!-- HEADER -->
 <header>
-  <div class="header-badge">✦ Günlük İfadeler ✦</div>
+  <div class="header-badge">✦ B2 / C1 Kelime Kartları ✦</div>
   <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
   <div class="header-line"></div>
   <div class="stars">★ ★ ★ ★ ★</div>
-  <p class="subtitle">Günlük İfadeler • Kundalik Suhbat Iboralari</p>
+  <p class="subtitle">Akademik Kelimeler • Kelimeler 2</p>
 </header>
 
+<!-- TELEGRAM -->
 <div class="telegram-section">
   <div class="tg-box">
     <div class="tg-logo-wrap">
@@ -307,7 +340,7 @@ footer span { color: #F5C842; }
   </div>
 </div>
 
-<div class="section-title">Günlük İfadeler • Kundalik Iboralar</div>
+<div class="section-title">Akademik So'zlar • Akademik Kelimeler</div>
 <div class="cards-grid" id="cards-grid"></div>
 
 <footer>
@@ -316,40 +349,100 @@ footer span { color: #F5C842; }
 
 <script>
 const words = [
-  { tr: "Sanırım öyle",        uz: "Menimcha shunday"          },
-  { tr: "Emin değilim",        uz: "Ishonchim komil emas"      },
-  { tr: "Eminim",              uz: "Ishonchim komil"           },
-  { tr: "Bence doğru",         uz: "Meningcha to'g'ri"         },
-  { tr: "Bence yanlış",        uz: "Meningcha noto'g'ri"       },
-  { tr: "Düşünmem lazım",      uz: "O'ylab ko'rishim kerak"    },
-  { tr: "Bir fikrim var",      uz: "Menda bir fikr bor"        },
-  { tr: "Deneyelim",           uz: "Sinab ko'raylik"           },
-  { tr: "Olabilir",            uz: "Bo'lishi mumkin"           },
-  { tr: "İmkansız",            uz: "Imkonsiz"                  },
-  { tr: "Bir dakika",          uz: "Bir daqiqa"                },
-  { tr: "Bir saniye",          uz: "Bir soniya"                },
-  { tr: "Şimdi geliyorum",     uz: "Hozir kelayapman"          },
-  { tr: "Az sonra",            uz: "Birozdan keyin"            },
-  { tr: "Şu anda",             uz: "Hozir, ayni paytda"        },
-  { tr: "Bugün",               uz: "Bugun"                     },
-  { tr: "Yarın",               uz: "Ertaga"                    },
-  { tr: "Dün",                 uz: "Kecha"                     },
-  { tr: "Her zaman",           uz: "Har doim"                  },
-  { tr: "Bazen",               uz: "Ba'zan"                    },
+  {
+    uzWord: "Yuzaga kelmoq",
+    uzSentence: "Bu muammo to'satdan <hl>yuzaga keldi</hl>.",
+    trWord: "ortaya çıkmak",
+    trSentence: "Bu sorun aniden <hl>ortaya çıktı</hl>."
+  },
+  {
+    uzWord: "Tushunmoq",
+    uzSentence: "U mavzuni chuqur <hl>tushundi</hl>.",
+    trWord: "kavramak / anlamak",
+    trSentence: "Konuyu derinlemesine <hl>kavradı</hl>."
+  },
+  {
+    uzWord: "Yechim topmoq",
+    uzSentence: "Bu muammoga tezda <hl>yechim topdik</hl>.",
+    trWord: "çözüm bulmak",
+    trSentence: "Bu probleme hızlıca <hl>çözüm bulduk</hl>."
+  },
+  {
+    uzWord: "Oqlamoq",
+    uzSentence: "Uning harakatini hech kim <hl>oqlay olmaydi</hl>.",
+    trWord: "haklı çıkarmak / aklamak",
+    trSentence: "Davranışını kimse <hl>haklı çıkaramaz</hl>."
+  },
+  {
+    uzWord: "Ta'minlamoq",
+    uzSentence: "Kompaniya xavfsizlikni <hl>ta'minladi</hl>.",
+    trWord: "sağlamak / temin etmek",
+    trSentence: "Şirket güvenliği <hl>sağladı</hl>."
+  },
+  {
+    uzWord: "Kutilmoq",
+    uzSentence: "Bu natija allaqachon <hl>kutilgan edi</hl>.",
+    trWord: "beklenmek",
+    trSentence: "Bu sonuç zaten <hl>bekleniyordu</hl>."
+  },
+  {
+    uzWord: "E'tirof etmoq",
+    uzSentence: "U xatosini oxiri <hl>e'tirof etdi</hl>.",
+    trWord: "kabul etmek / itiraf etmek",
+    trSentence: "Hatasını sonunda <hl>kabul etti</hl>."
+  },
+  {
+    uzWord: "To'sqinlik qilmoq",
+    uzSentence: "Yomg'ir rejalarimizga <hl>to'sqinlik qildi</hl>.",
+    trWord: "engel olmak",
+    trSentence: "Yağmur planlarımıza <hl>engel oldu</hl>."
+  },
+  {
+    uzWord: "Ilgari surmoq",
+    uzSentence: "U yangi nazariyani <hl>ilgari surdi</hl>.",
+    trWord: "ileri sürmek (iddia etmek)",
+    trSentence: "Yeni bir teori <hl>ileri sürdü</hl>."
+  },
+  {
+    uzWord: "Kuchaytirmoq",
+    uzSentence: "Iqtisodiy aloqalar <hl>kuchaytirildi</hl>.",
+    trWord: "güçlendirmek / artırmak",
+    trSentence: "Ekonomik ilişkiler <hl>güçlendirildi</hl>."
+  },
+  {
+    uzWord: "O'zlashtirmoq",
+    uzSentence: "U yangi bilimlarni tezda <hl>o'zlashtirdi</hl>.",
+    trWord: "benimsemek / öğrenip içselleştirmek",
+    trSentence: "Yeni bilgileri hızlıca <hl>benimsedi</hl>."
+  },
+  {
+    uzWord: "Aks ettirmoq",
+    uzSentence: "Bu rasm rassomning his-tuyg'ularini <hl>aks ettiradi</hl>.",
+    trWord: "yansıtmak",
+    trSentence: "Bu tablo sanatçının duygularını <hl>yansıtıyor</hl>."
+  },
+  {
+    uzWord: "Bartaraf etmoq",
+    uzSentence: "Muammolarni butunlay <hl>bartaraf etdik</hl>.",
+    trWord: "ortadan kaldırmak",
+    trSentence: "Sorunları tamamen <hl>ortadan kaldırdık</hl>."
+  },
+  {
+    uzWord: "Kafolatlamoq",
+    uzSentence: "Bu usul muvaffaqiyatni <hl>kafolatlamaydi</hl>.",
+    trWord: "garanti etmek",
+    trSentence: "Bu yöntem başarıyı <hl>garanti etmez</hl>."
+  },
+  {
+    uzWord: "Tayanmoq",
+    uzSentence: "Bu nazariya mustahkam ma'lumotlarga <hl>tayanadi</hl>.",
+    trWord: "dayanmak / güvenmek",
+    trSentence: "Bu teori sağlam verilere <hl>dayanıyor</hl>."
+  },
 ];
 
-const speakerIcon = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
-
-function speak(text, btn) {
-  window.speechSynthesis.cancel();
-  const utt = new SpeechSynthesisUtterance(text);
-  utt.lang = 'tr-TR';
-  utt.rate = 0.9;
-  document.querySelectorAll('.speak-btn').forEach(b => b.classList.remove('playing'));
-  btn.classList.add('playing');
-  utt.onend = () => btn.classList.remove('playing');
-  utt.onerror = () => btn.classList.remove('playing');
-  window.speechSynthesis.speak(utt);
+function highlight(text) {
+  return text.replace(/<hl>(.*?)<\/hl>/g, '<span class="hl">$1</span>');
 }
 
 const grid = document.getElementById('cards-grid');
@@ -361,38 +454,36 @@ words.forEach((item, i) => {
     <div class="card-inner">
       <div class="card-face card-front">
         <span class="counter">${String(i+1).padStart(2,'0')}</span>
-        <button class="speak-btn" data-text="${item.tr}" title="Dinle">${speakerIcon}</button>
-        <div class="card-tr">${item.tr}</div>
+        <div class="card-keyword">${item.uzWord}</div>
+        <div class="card-sep"></div>
+        <div class="card-sentence">${highlight(item.uzSentence)}</div>
         <span class="flip-hint">bosing / tıklayın</span>
       </div>
       <div class="card-face card-back">
         <span class="counter">${String(i+1).padStart(2,'0')}</span>
-        <button class="speak-btn" data-text="${item.tr}" title="Dinle">${speakerIcon}</button>
-        <div class="card-uz">${item.uz}</div>
+        <div class="card-keyword">${item.trWord}</div>
+        <div class="card-sep"></div>
+        <div class="card-sentence">${highlight(item.trSentence)}</div>
         <span class="flip-hint">bosing / tıklayın</span>
       </div>
     </div>`;
-
-  wrap.querySelectorAll('.speak-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      speak(btn.dataset.text, btn);
-    });
-  });
-
   wrap.addEventListener('click', () => wrap.classList.toggle('flipped'));
   grid.appendChild(wrap);
 });
 
+// Geri butonu scroll'da kaybolsun
 const btnWrap = document.getElementById('backBtnWrap');
+let lastScroll = 0;
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 60) {
+  const currentScroll = window.scrollY;
+  if (currentScroll > 60) {
     btnWrap.style.opacity = '0';
     btnWrap.style.pointerEvents = 'none';
   } else {
     btnWrap.style.opacity = '1';
     btnWrap.style.pointerEvents = 'auto';
   }
+  lastScroll = currentScroll;
 });
 </script>
 </body>
