@@ -440,31 +440,46 @@ footer span { color: #F5C842; }
   <div class="content-panel" id="konusma-sorulari">
     <div class="panel-header"><h2>💬 Konuşma Soruları</h2></div>
     <div class="panel-body">
-      <div class="items-grid">
-        <a class="item-card" href="konuşma_soruları_1.html">
-          <span class="item-name">Konuşma Soruları 1</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-        <a class="item-card" href="konuşma_soruları_2.html">
-          <span class="item-name">Konuşma Soruları 2</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-        <div class="item-card" onclick="openLogin('konuşma_soruları_3.html')">
-          <span class="item-name">Konuşma Soruları 3</span>
-          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+      <div class="two-col-grid">
+
+        <!-- Sol: Ücretsizler -->
+        <div>
+          <div class="col-label col-label-free">✅ Ücretsiz</div>
+          <div class="col-items">
+            <a class="item-card" href="konuşma_soruları_1.html">
+              <span class="item-name">Konuşma Soruları 1</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="konuşma_soruları_2.html">
+              <span class="item-name">Konuşma Soruları 2</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+          </div>
         </div>
-        <div class="item-card" onclick="openLogin('konuşma_soruları_4.html')">
-          <span class="item-name">Konuşma Soruları 4</span>
-          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+
+        <!-- Sağ: Giriş Gerekliler -->
+        <div>
+          <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
+          <div class="col-items">
+            <div class="item-card" onclick="openLogin('konuşma_soruları_3.html')">
+              <span class="item-name">Konuşma Soruları 1</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openLogin('konuşma_soruları_4.html')">
+              <span class="item-name">Konuşma Soruları 2</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openLogin('konusma_sorulari_5.html')">
+              <span class="item-name">Konuşma Soruları 3</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openLogin('konusma_sorulari_6.html')">
+              <span class="item-name">Konuşma Soruları 4</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+          </div>
         </div>
-        <div class="item-card" onclick="openLogin('konusma_sorulari_5.html')">
-          <span class="item-name">Konuşma Soruları 5</span>
-          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
-        </div>
-        <div class="item-card" onclick="openLogin('konusma_sorulari_6.html')">
-          <span class="item-name">Konuşma Soruları 6</span>
-          <span class="badge badge-locked">🔒 Giriş Gerekli</span>
-        </div>
+
       </div>
     </div>
   </div>
@@ -501,6 +516,10 @@ footer span { color: #F5C842; }
           <span class="item-name">Dinleme Alıştırması 2</span>
           <span class="badge badge-free">✅ Ücretsiz</span>
         </a>
+        <a class="item-card" href="dinleme_alistirmasi_3.html">
+          <span class="item-name">Dinleme Alıştırması 3</span>
+          <span class="badge badge-free">✅ Ücretsiz</span>
+        </a>
       </div>
     </div>
   </div>
@@ -521,7 +540,7 @@ footer span { color: #F5C842; }
           <span class="item-name">Okuma Alıştırması 3</span>
           <span class="badge badge-free">✅ Ücretsiz</span>
         </a>
-<a class="item-card" href="okuma_alistirmasi_4.html">
+        <a class="item-card" href="okuma_alistirmasi_4.html">
           <span class="item-name">Okuma Alıştırması 4</span>
           <span class="badge badge-free">✅ Ücretsiz</span>
         </a>
