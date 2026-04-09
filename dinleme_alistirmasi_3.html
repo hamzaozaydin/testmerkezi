@@ -361,9 +361,36 @@
     .player-card { padding: 20px; }
     .radio-option { padding: 8px 12px; }
   }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: var(--shadow);
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .back-btn:hover {
+    background: var(--accent-light);
+    transform: translateX(-2px);
+  }
 </style>
 </head>
 <body>
+<a class="back-btn" onclick="history.back()">&#8592; Geri</a>
 <div class="page">
   <div class="header">
     <div class="eyebrow">Dinleme Anlama · 8 Konuşma</div>
