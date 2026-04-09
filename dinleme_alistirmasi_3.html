@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dinleme Anlama – Günlük Konuşmalar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --surface: #fff;
+    --ink: #1a1612;
+    --muted: #7a6e62;
+    --border: #e4ddd3;
+    --accent: #8b4513;
+    --accent-light: #f5ede4;
+    --gold: #c8963e;
+    --correct: #2d7a50;
+    --correct-bg: #edf7f1;
+    --wrong: #b93a3a;
+    --wrong-bg: #fdf0f0;
+    --shadow: 0 2px 16px rgba(80,50,20,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 52px 28px 80px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .subheading {
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .rule {
+    width: 48px;
+    height: 3px;
+    background: var(--accent);
+    margin: 18px auto 0;
+    border-radius: 2px;
+  }
+
+  /* Player kartı - sadeleştirildi, metin gösterilmiyor */
+  .player-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+
+  .player-status {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+
+  .timer-info {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 12px 0;
+    font-weight: 500;
+  }
+
+  .btn-play {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    font-size: 16px;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+
+  .btn-play:hover {
+    background: #6b3510;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(139,69,19,0.3);
+  }
+
+  .btn-play:disabled {
+    background: #b9a28c;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .questions-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin: 32px 0 20px 0;
+  }
+
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    transition: border-color 0.3s;
+  }
+
+  .question-card.correct {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+  }
+
+  .question-card.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+  }
+
+  .q-stem {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 16px;
+    line-height: 1.45;
+  }
+
+  .q-num {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+
+  /* Radio grup stilleri - şıklar açık görünüyor */
+  .options-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .radio-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--bg);
+  }
+
+  .radio-option:hover:not(.disabled) {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .radio-option.selected-radio {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .radio-option.disabled {
+    cursor: default;
+    opacity: 0.7;
+  }
+
+  .radio-option.correct-highlight {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+  }
+
+  .radio-option.wrong-highlight {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+  }
+
+  .radio-input {
+    margin-top: 2px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  .radio-input:disabled {
+    cursor: default;
+  }
+
+  .radio-label {
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--ink);
+    cursor: pointer;
+    flex: 1;
+  }
+
+  .disabled .radio-label,
+  .disabled .radio-input {
+    cursor: default;
+  }
+
+  .feedback-row {
+    display: none;
+    margin-top: 14px;
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  .question-card.correct .feedback-row {
+    display: block;
+    background: rgba(45,122,80,0.08);
+    color: var(--correct);
+  }
+
+  .question-card.wrong .feedback-row {
+    display: block;
+    background: rgba(185,58,58,0.08);
+    color: var(--wrong);
+  }
+
+  .controls {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  button {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .btn-check {
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn-check:hover {
+    background: #6b3510;
+  }
+
+  .btn-answers {
+    background: transparent;
+    color: var(--gold);
+    border: 1.5px solid var(--gold);
+  }
+
+  .btn-reset {
+    background: transparent;
+    color: var(--muted);
+    border: 1.5px solid var(--border);
+  }
+
+  .score-banner {
+    display: none;
+    text-align: center;
+    margin-top: 28px;
+    padding: 24px;
+    background: var(--surface);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+  }
+
+  .score-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .answer-key {
+    display: none;
+    margin-top: 28px;
+    background: var(--surface);
+    border: 1.5px solid var(--gold);
+    border-radius: 14px;
+    padding: 24px;
+  }
+
+  .answer-key.visible { display: block; }
+
+  .ak-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 8px;
+  }
+
+  .ak-item {
+    padding: 8px 12px;
+    background: var(--bg);
+    border-radius: 7px;
+    font-size: 14px;
+  }
+
+  .footer {
+    margin-top: 48px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 28px 16px; }
+    .player-card { padding: 20px; }
+    .radio-option { padding: 8px 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="eyebrow">Dinleme Anlama · 8 Konuşma</div>
+    <h1>Günlük Konuşmalar</h1>
+    <p class="subheading">Her konuşmayı dikkatle dinleyin ve doğru cevabı işaretleyin</p>
+    <div class="rule"></div>
+  </div>
+
+  <div class="player-card">
+    <div class="player-status">🎧 DİNLEME MODÜLÜ</div>
+    <div class="timer-info" id="timerInfo">⏳ Hazır</div>
+    <button class="btn-play" id="playBtn">▶ DİNLEMEYİ BAŞLAT</button>
+  </div>
+
+  <div class="questions-label">SORULAR (S1 – S8)</div>
+  <div id="questionsContainer"></div>
+
+  <div class="controls">
+    <button class="btn-check" onclick="checkAllAnswers()">KONTROL ET</button>
+    <button class="btn-answers" onclick="toggleAnswerKey()">CEVAPLAR</button>
+    <button class="btn-reset" onclick="resetAll()">SIFIRLA</button>
+  </div>
+
+  <div class="score-banner" id="scoreBanner">
+    <div class="score-big" id="scoreNumber">0/8</div>
+    <div class="score-sub">doğru cevap</div>
+  </div>
+
+  <div class="answer-key" id="answerKey">
+    <div class="ak-title">📋 Cevap Anahtarı</div>
+    <div class="ak-grid">
+      <div class="ak-item">S1 → B) Sinemaya gitmeyi ve biraz kafa dinlemeyi planlıyorum.</div>
+      <div class="ak-item">S2 → A) Yemek yapmaya hiç vaktim kalmıyor, işler çok yoğun.</div>
+      <div class="ak-item">S3 → C) Evet, özellikle gece çekimleri inanılmaz kaliteli.</div>
+      <div class="ak-item">S4 → B) Bence dürüstlük ve güven her şeyden önce gelir.</div>
+      <div class="ak-item">S5 → B) Yeni bir diziye başladım, bölümleri izlerken geceyi sabah ediyorum.</div>
+      <div class="ak-item">S6 → A) Sanatçının sesini pek beğenmedim ama ışık şovları harikaydı.</div>
+      <div class="ak-item">S7 → C) Genelde mutfağa girip yeni tarifler denemeyi seviyorum.</div>
+      <div class="ak-item">S8 → C) Yeni teknikler öğrendim ve iş yerindeki verimliliğim arttı.</div>
+    </div>
+  </div>
+  <div class="footer">Hamza Hoca ile Türkçe Öğreniyorum · Dinleme Etkinliği</div>
+</div>
+
+<script>
+  // Konuşma listesi - her biri 1 defa okunacak, öncesinde 4 saniye bekleme
+  const speakers = [
+    { id: 1, text: "Birinci konuşmacı. Hafta sonu pilanın ne, neler yapmayı düşünüyorsun? Birinci konuşmacı. Hafta sonu pilanın ne, neler yapmayı düşünüyorsun?" },
+    { id: 2, text: "İkinci konuşmacı. Bu aralar neden sürekli dışarıdan yemek sipaariş ediyorsun? İkinci konuşmacı. Bu aralar neden sürekli dışarıdan yemek sipaariş ediyorsun?" },
+    { id: 3, text: "Üçüncü konuşmacı. Yeni aldığın telefonun kamerasından memnun musun? Üçüncü konuşmacı. Yeni aldığın telefonun kamerasından memnun musun?" },
+    { id: 4, text: "Dördüncü konuşmacı. Sence bir arkadaşta olması gereken en önemli özellik ne? Dördüncü konuşmacı. Sence bir arkadaşta olması gereken en önemli özellik ne?" },
+    { id: 5, text: "Beşinci konuşmacı. Bugünlerde sürekli uykusuz görünüyorsun, hayırdır? Beşinci konuşmacı. Bugünlerde sürekli uykusuz görünüyorsun, hayırdır?" },
+    { id: 6, text: "Altıncı konuşmacı. En son gittiğin konserde atmosfer nasıldı, eğlendin mi? Altıncı konuşmacı. En son gittiğin konserde atmosfer nasıldı, eğlendin mi?" },
+    { id: 7, text: "Yedinci konuşmacı. Evde tek başınayken vaktini nasıl geçiriyorsun? Yedinci konuşmacı. Evde tek başınayken vaktini nasıl geçiriyorsun?" },
+    { id: 8, text: "Sekizinci konuşmacı. Kendini geliştirmek için izlediğin onlayn eğitimler sana neler kattı? Sekizinci konuşmacı. Kendini geliştirmek için izlediğin onlayn eğitimler sana neler kattı?" }
+  ];
+
+  // Doğru cevaplar
+  const correctAnswers = {
+    1: 'B', 2: 'A', 3: 'C', 4: 'B', 5: 'B', 6: 'A', 7: 'C', 8: 'C'
+  };
+
+  // Seçenek listeleri
+  const optionsData = {
+    1: [
+      { val: 'A', label: 'Hafta sonları genellikle marketler çok kalabalık olur.' },
+      { val: 'B', label: 'Sinemaya gitmeyi ve biraz kafa dinlemeyi planlıyorum.' },
+      { val: 'C', label: 'Geçen hafta sonu hava çok yağmurluydu.' }
+    ],
+    2: [
+      { val: 'A', label: 'Yemek yapmaya hiç vaktim kalmıyor, işler çok yoğun.' },
+      { val: 'B', label: 'Mutfak alışverişini dün akşam yaptım.' },
+      { val: 'C', label: 'Lokantaların fiyatları son zamanlarda çok arttı.' }
+    ],
+    3: [
+      { val: 'A', label: 'Bataryası beklediğimden daha çabuk bitiyor.' },
+      { val: 'B', label: 'Telefonun rengine karar vermek benim için zor oldu.' },
+      { val: 'C', label: 'Evet, özellikle gece çekimleri inanılmaz kaliteli.' }
+    ],
+    4: [
+      { val: 'A', label: 'Arkadaşlarım genelde futbol oynamayı çok sever.' },
+      { val: 'B', label: 'Bence dürüstlük ve güven her şeyden önce gelir.' },
+      { val: 'C', label: 'Yarın akşam eski bir dostumla buluşacağım.' }
+    ],
+    5: [
+      { val: 'A', label: 'Sabahları erken kalkınca kendimi daha enerjik hissediyorum.' },
+      { val: 'B', label: 'Yeni bir diziye başladım, bölümleri izlerken geceyi sabah ediyorum.' },
+      { val: 'C', label: 'Yatağımı değiştirdiğimden beri çok daha rahat uyuyorum.' }
+    ],
+    6: [
+      { val: 'A', label: 'Sanatçının sesini pek beğenmedim ama ışık şovları harikaydı.' },
+      { val: 'B', label: 'Konser biletleri bu sene çok pahalıydı.' },
+      { val: 'C', label: 'Müzik dinlemek insanı gerçekten dinlendiriyor.' }
+    ],
+    7: [
+      { val: 'A', label: 'Apartmanda tadilat olduğu için çok gürültü var.' },
+      { val: 'B', label: 'Evde arkadaşlarımla vakit geçirmek beni çok eğlendiriyor.' },
+      { val: 'C', label: 'Genelde mutfağa girip yeni tarifler denemeyi seviyorum.' }
+    ],
+    8: [
+      { val: 'A', label: 'Bilgisayarın ekranı uzun süre bakınca gözlerimi yoruyor.' },
+      { val: 'B', label: 'İnternet bağlantım sürekli koptuğu için dersleri izleyemedim.' },
+      { val: 'C', label: 'Yeni teknikler öğrendim ve iş yerindeki verimliliğim arttı.' }
+    ]
+  };
+
+  let selected = {};
+  let checkedState = {};
+  let isPlaying = false;
+  let currentSpeakerIndex = 0;
+  let speechSynth = window.speechSynthesis;
+  let isSpeaking = false;
+
+  // Soruları oluştur (radio button ile, şıklar açık görünüyor)
+  function buildQuestions() {
+    const container = document.getElementById('questionsContainer');
+    container.innerHTML = '';
+    for (let q = 1; q <= 8; q++) {
+      const card = document.createElement('div');
+      card.className = 'question-card';
+      card.id = `qcard-${q}`;
+
+      const stem = document.createElement('div');
+      stem.className = 'q-stem';
+      stem.innerHTML = `<span class="q-num">S${q}</span> Cevap seçiniz`;
+
+      const optionsDiv = document.createElement('div');
+      optionsDiv.className = 'options-group';
+      optionsDiv.id = `options-${q}`;
+
+      optionsData[q].forEach(opt => {
+        const radioDiv = document.createElement('div');
+        radioDiv.className = 'radio-option';
+        radioDiv.setAttribute('data-q', q);
+        radioDiv.setAttribute('data-val', opt.val);
+
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = `q${q}`;
+        radio.value = opt.val;
+        radio.id = `q${q}_${opt.val}`;
+        radio.className = 'radio-input';
+
+        const label = document.createElement('label');
+        label.htmlFor = `q${q}_${opt.val}`;
+        label.className = 'radio-label';
+        label.textContent = `${opt.val}) ${opt.label}`;
+
+        radioDiv.appendChild(radio);
+        radioDiv.appendChild(label);
+
+        radio.addEventListener('change', (e) => {
+          if (checkedState[q]) return;
+          if (radio.checked) {
+            selected[q] = opt.val;
+            // kartın doğru/yanlış sınıfını temizle
+            card.classList.remove('correct', 'wrong');
+            const fb = document.getElementById(`fb-${q}`);
+            if (fb) fb.textContent = '';
+            // diğer radio-option'ların selected-radio sınıfını temizle
+            const allRadios = document.querySelectorAll(`#options-${q} .radio-option`);
+            allRadios.forEach(rd => rd.classList.remove('selected-radio'));
+            radioDiv.classList.add('selected-radio');
+          }
+        });
+
+        optionsDiv.appendChild(radioDiv);
+      });
+
+      const feedback = document.createElement('div');
+      feedback.className = 'feedback-row';
+      feedback.id = `fb-${q}`;
+
+      card.appendChild(stem);
+      card.appendChild(optionsDiv);
+      card.appendChild(feedback);
+      container.appendChild(card);
+    }
+  }
+
+  // Konuşma sırasını yürüt - her konuşma 1 defa, öncesinde 4 saniye bekleme
+  function speakText(text, onEnd) {
+    if (speechSynth.speaking) speechSynth.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'tr-TR';
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    utterance.onend = () => {
+      isSpeaking = false;
+      if (onEnd) onEnd();
+    };
+    utterance.onerror = () => {
+      isSpeaking = false;
+      if (onEnd) onEnd();
+    };
+    isSpeaking = true;
+    speechSynth.speak(utterance);
+  }
+
+  function playNextSpeaker() {
+    if (!isPlaying) return;
+    if (currentSpeakerIndex >= speakers.length) {
+      // tüm konuşmacılar bitti
+      isPlaying = false;
+      const playBtn = document.getElementById('playBtn');
+      playBtn.disabled = false;
+      playBtn.textContent = '▶ DİNLEMEYİ BAŞLAT';
+      const timerInfo = document.getElementById('timerInfo');
+      timerInfo.textContent = '✅ Dinleme tamamlandı. Soruları cevaplayabilirsiniz.';
+      return;
+    }
+    
+    const speaker = speakers[currentSpeakerIndex];
+    const textToSpeak = speaker.text;
+    const timerInfo = document.getElementById('timerInfo');
+    timerInfo.textContent = `🎤 ${currentSpeakerIndex+1}. konuşmacı konuşuyor...`;
+    
+    // Her konuşmadan önce 4 saniye bekle
+    setTimeout(() => {
+      if (!isPlaying) return;
+      speakText(textToSpeak, () => {
+        // konuşma bitti, bir sonraki konuşmacıya geç
+        currentSpeakerIndex++;
+        playNextSpeaker();
+      });
+    }, 4000);
+  }
+
+  function startListening() {
+    if (isPlaying) return;
+    
+    // Önce ses sentezini durdur
+    if (speechSynth.speaking) speechSynth.cancel();
+    
+    isPlaying = true;
+    currentSpeakerIndex = 0;
+    const playBtn = document.getElementById('playBtn');
+    playBtn.disabled = true;
+    playBtn.textContent = 'DİNLEME DEVAM EDİYOR...';
+    const timerInfo = document.getElementById('timerInfo');
+    timerInfo.textContent = '⏳ Soruları okumanız için 30 saniye süreniz başlamıştır...';
+    
+    // "Soruları okumanız için 30 saniye süreniz başlamıştır" cümlesini sesli söyle (ekranda gösterme)
+    const initialMsg = "Soruları okumanız için 30 saniye süreniz başlamıştır.";
+    const initialUtterance = new SpeechSynthesisUtterance(initialMsg);
+    initialUtterance.lang = 'tr-TR';
+    initialUtterance.rate = 0.9;
+    speechSynth.speak(initialUtterance);
+    
+    // 30 saniye bekle
+    setTimeout(() => {
+      if (!isPlaying) return;
+      timerInfo.textContent = '🎤 Konuşmalar başlıyor...';
+      playNextSpeaker();
+    }, 30000);
+  }
+
+  function checkAllAnswers() {
+    let score = 0;
+    for (let q = 1; q <= 8; q++) {
+      const selectedAns = selected[q];
+      const card = document.getElementById(`qcard-${q}`);
+      const fb = document.getElementById(`fb-${q}`);
+      const optionsContainer = document.getElementById(`options-${q}`);
+      const allRadioDivs = optionsContainer ? optionsContainer.querySelectorAll('.radio-option') : [];
+      
+      if (!selectedAns) {
+        card.classList.add('wrong');
+        fb.textContent = '⚠ Cevap seçilmemiş.';
+        checkedState[q] = true;
+        // radio'ları devre dışı bırak
+        allRadioDivs.forEach(div => {
+          div.classList.add('disabled');
+          const radio = div.querySelector('.radio-input');
+          if (radio) radio.disabled = true;
+        });
+        continue;
+      }
+      
+      checkedState[q] = true;
+      
+      // radio'ları devre dışı bırak
+      allRadioDivs.forEach(div => {
+        div.classList.add('disabled');
+        const radio = div.querySelector('.radio-input');
+        if (radio) radio.disabled = true;
+      });
+      
+      if (selectedAns === correctAnswers[q]) {
+        card.classList.add('correct');
+        fb.textContent = '✓ Doğru cevap!';
+        score++;
+        // doğru cevabın olduğu radio-option'u vurgula
+        allRadioDivs.forEach(div => {
+          const val = div.getAttribute('data-val');
+          if (val === correctAnswers[q]) {
+            div.classList.add('correct-highlight');
+          }
+        });
+      } else {
+        card.classList.add('wrong');
+        const correctLetter = correctAnswers[q];
+        const correctText = optionsData[q].find(opt => opt.val === correctLetter)?.label || correctLetter;
+        fb.textContent = `✗ Yanlış. Doğru cevap: ${correctLetter}) ${correctText}`;
+        // yanlış işaretleneni ve doğru olanı vurgula
+        allRadioDivs.forEach(div => {
+          const val = div.getAttribute('data-val');
+          if (val === selectedAns) {
+            div.classList.add('wrong-highlight');
+          }
+          if (val === correctAnswers[q]) {
+            div.classList.add('correct-highlight');
+          }
+        });
+      }
+    }
+    const banner = document.getElementById('scoreBanner');
+    banner.style.display = 'block';
+    document.getElementById('scoreNumber').textContent = `${score}/8`;
+    banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function toggleAnswerKey() {
+    const key = document.getElementById('answerKey');
+    key.classList.toggle('visible');
+    if (key.classList.contains('visible')) key.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function resetAll() {
+    // dinleme devam ediyorsa durdur
+    if (isPlaying) {
+      if (speechSynth.speaking) speechSynth.cancel();
+      isPlaying = false;
+      const playBtn = document.getElementById('playBtn');
+      playBtn.disabled = false;
+      playBtn.textContent = '▶ DİNLEMEYİ BAŞLAT';
+    }
+    
+    selected = {};
+    checkedState = {};
+    
+    for (let q = 1; q <= 8; q++) {
+      const card = document.getElementById(`qcard-${q}`);
+      if (card) {
+        card.classList.remove('correct', 'wrong');
+      }
+      const fb = document.getElementById(`fb-${q}`);
+      if (fb) fb.textContent = '';
+      
+      const optionsContainer = document.getElementById(`options-${q}`);
+      if (optionsContainer) {
+        const radioDivs = optionsContainer.querySelectorAll('.radio-option');
+        radioDivs.forEach(div => {
+          div.classList.remove('disabled', 'selected-radio', 'correct-highlight', 'wrong-highlight');
+          const radio = div.querySelector('.radio-input');
+          if (radio) {
+            radio.checked = false;
+            radio.disabled = false;
+          }
+        });
+      }
+    }
+    
+    const banner = document.getElementById('scoreBanner');
+    banner.style.display = 'none';
+    const answerKey = document.getElementById('answerKey');
+    answerKey.classList.remove('visible');
+    const timerInfo = document.getElementById('timerInfo');
+    timerInfo.textContent = '⏳ Hazır';
+  }
+
+  // Sayfa yüklendiğinde soruları oluştur
+  buildQuestions();
+  
+  // Play butonu
+  document.getElementById('playBtn').addEventListener('click', startListening);
+</script>
+</body>
+</html>
