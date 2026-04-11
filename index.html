@@ -262,6 +262,9 @@ header h1 {
 .error-msg { background: #fff0f0; border: 1px solid #f8c8c8; border-radius: 8px; padding: 10px 14px; color: #d63031; font-size: 0.85rem; margin-top: 14px; display: none; text-align: center; }
 .error-msg.show { display: block; }
 
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
 footer {
   margin-top: 60px;
   font-size: 0.8rem;
@@ -269,6 +272,8 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
   position: relative;
 }
 footer p { text-align: center; }
@@ -286,8 +291,6 @@ footer span { color: #F5C842; }
   border-radius: 20px;
   padding: 4px 12px;
   font-size: 0.75rem;
-  position: absolute;
-  right: 0;
 }
 
 .visitor-counter .vc-icon {
@@ -697,9 +700,8 @@ function parseCSV(text) {
 
 /* ═══════════════════════════════════════
    ZİYARETÇİ SAYACI
-   - Benzersiz ziyaretçi kimliği: localStorage'da kalıcı UUID
-   - Günlük ziyaretçi: localStorage'da tarih+sayı (her gün sıfırlanır)
-   - Toplam ziyaretçi: countapi.xyz ile sunucu tarafında
+   - Günlük: localStorage'da tarih bazlı benzersiz ziyaretçi listesi
+   - Toplam: countapi.mileshilliard.com (countapi.xyz yerine — ücretsiz alternatif)
 ═══════════════════════════════════════ */
 (function() {
   // Bu tarayıcıya özgü kalıcı bir kimlik oluştur veya oku
@@ -712,10 +714,9 @@ function parseCSV(text) {
   const today = new Date().toISOString().split('T')[0]; // "2026-04-11"
 
   // --- GÜNLÜK SAYAÇ (localStorage ile) ---
-  // Her gün için benzersiz ziyaretçi kümesi tutuyoruz
   const dailyKey = 'hamzaDaily_' + today;
   const prevDayKeys = Object.keys(localStorage).filter(k => k.startsWith('hamzaDaily_') && k !== dailyKey);
-  prevDayKeys.forEach(k => localStorage.removeItem(k)); // Eski günleri temizle
+  prevDayKeys.forEach(k => localStorage.removeItem(k));
 
   let dailyVisitors = [];
   try { dailyVisitors = JSON.parse(localStorage.getItem(dailyKey) || '[]'); } catch(e) { dailyVisitors = []; }
@@ -730,25 +731,25 @@ function parseCSV(text) {
   const dailyCount = dailyVisitors.length;
   document.getElementById('vcDaily').textContent = dailyCount;
 
-  // --- TOPLAM SAYAÇ (countapi.xyz ile — tamamen ücretsiz, kayıt gerektirmez) ---
-  // Namespace: hamzahoca-turkce, key: total-visitors
-  const NAMESPACE = 'hamzahoca-turkce-platform';
-  const KEY = 'total-ziyaretci';
+  // --- TOPLAM SAYAÇ (countapi.mileshilliard.com — countapi.xyz'nin ücretsiz alternatifi) ---
+  const API_KEY = 'hamzahoca-total-ziyaretci';
+  const BASE_URL = 'https://countapi.mileshilliard.com/api/v1';
 
   async function updateTotalCounter() {
     try {
       let url;
       if (isNewToday) {
         // Yeni ziyaretçi → sayacı artır
-        url = `https://api.countapi.xyz/hit/${NAMESPACE}/${KEY}`;
+        url = `${BASE_URL}/hit/${API_KEY}`;
       } else {
         // Daha önce gelmiş → sadece oku
-        url = `https://api.countapi.xyz/get/${NAMESPACE}/${KEY}`;
+        url = `${BASE_URL}/get/${API_KEY}`;
       }
       const res = await fetch(url);
       const data = await res.json();
-      if (data && typeof data.value === 'number') {
+      if (data && (typeof data.value === 'number' || typeof data.value === 'string')) {
         document.getElementById('vcTotal').textContent = data.value;
+        localStorage.setItem('hamzaTotalEst', data.value);
       }
     } catch(e) {
       // API erişilemezse localStorage'daki tahmini değeri göster
