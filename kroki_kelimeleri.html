@@ -290,174 +290,34 @@ footer span { color: #F5C842; }
 
 <script>
 const words = [
-  {
-    uzWord: "⬅️ Chap – O'ng ➡️",
-    uzSentence: "Burchakda <hl>chapga</hl> buring.",
-    trWord: "⬅️ Sol – Sağ ➡️",
-    trSentence: "Köşede <hl>sola</hl> dönün."
-  },
-  {
-    uzWord: "⬆️ Yuqorida – Pastda ⬇️",
-    uzSentence: "Kitob <hl>yuqorida</hl>, javonda turibdi.",
-    trWord: "⬆️ Üstte – Altta ⬇️",
-    trSentence: "Kitap <hl>üstte</hl>, rafta duruyor."
-  },
-  {
-    uzWord: "↖️ Shimoli-g'arb",
-    uzSentence: "Shamol <hl>shimoli-g'arbdan</hl> esmoqda.",
-    trWord: "↖️ Kuzeybatı",
-    trSentence: "Rüzgar <hl>kuzeybatıdan</hl> esiyor."
-  },
-  {
-    uzWord: "↗️ Shimoli-sharq",
-    uzSentence: "Qishloq <hl>shimoli-sharqda</hl> joylashgan.",
-    trWord: "↗️ Kuzeydoğu",
-    trSentence: "Köy <hl>kuzeydoğuda</hl> yer alıyor."
-  },
-  {
-    uzWord: "↙️ Janubi-g'arb",
-    uzSentence: "Dengiz <hl>janubi-g'arbda</hl> ko'rinadi.",
-    trWord: "↙️ Güneybatı",
-    trSentence: "Deniz <hl>güneybatıda</hl> görünüyor."
-  },
-  {
-    uzWord: "↘️ Janubi-sharq",
-    uzSentence: "Temir yo'l <hl>janubi-sharqqa</hl> ketadi.",
-    trWord: "↘️ Güneydoğu",
-    trSentence: "Demiryolu <hl>güneydoğuya</hl> gidiyor."
-  },
-  {
-    uzWord: "⬆️ Shimol  ⬇️ Janub",
-    uzSentence: "Qushlar <hl>janubga</hl> uchib ketdi.",
-    trWord: "⬆️ Kuzey  ⬇️ Güney",
-    trSentence: "Kuşlar <hl>güneye</hl> doğru uçtu."
-  },
-  {
-    uzWord: "➡️ Sharq  ⬅️ G'arb",
-    uzSentence: "Quyosh <hl>sharqdan</hl> chiqadi.",
-    trWord: "➡️ Doğu  ⬅️ Batı",
-    trSentence: "Güneş <hl>doğudan</hl> doğar."
-  },
-  {
-    uzWord: "⬛️ O'rtasida / Orasida",
-    uzSentence: "Maktab ikki ko'cha <hl>orasida</hl>.",
-    trWord: "⬛️ Arasında",
-    trSentence: "Okul iki sokak <hl>arasında</hl>."
-  },
-  {
-    uzWord: "🔄 Qarshisida",
-    uzSentence: "Doʻkon kasalxona <hl>qarshisida</hl>.",
-    trWord: "🔄 Karşısında",
-    trSentence: "Dükkan hastanenin <hl>karşısında</hl>."
-  },
-  {
-    uzWord: "⭐️ Markazida",
-    uzSentence: "Fontan maydonning <hl>markazida</hl> turibdi.",
-    trWord: "⭐️ Merkezinde",
-    trSentence: "Çeşme meydanın <hl>merkezinde</hl> duruyor."
-  },
-  {
-    uzWord: "🔼 Ustida  ⬇️ Ostida",
-    uzSentence: "Kalit stol <hl>ustida</hl> qoldi.",
-    trWord: "🔼 Üstünde  ⬇️ Altında",
-    trSentence: "Anahtar masanın <hl>üstünde</hl> kaldı."
-  },
-  {
-    uzWord: "🔲 Ichida  ⬜️ Tashqarisida",
-    uzSentence: "Bola uyning <hl>ichida</hl> o'ynayapti.",
-    trWord: "🔲 İçinde  ⬜️ Dışında",
-    trSentence: "Çocuk evin <hl>içinde</hl> oynuyor."
-  },
-  {
-    uzWord: "◀️ Oldida  ▶️ Orqasida",
-    uzSentence: "Men uning <hl>orqasida</hl> turibman.",
-    trWord: "◀️ Önünde  ▶️ Arkasında",
-    trSentence: "Onun <hl>arkasında</hl> duruyorum."
-  },
-  {
-    uzWord: "↔️ Yonida  ➕ Tutash",
-    uzSentence: "Do'stim men <hl>yonimda</hl> o'tirdi.",
-    trWord: "↔️ Yanında  ➕ Bitişik",
-    trSentence: "Arkadaşım <hl>yanımda</hl> oturdu."
-  },
-  {
-    uzWord: "⛔️ Boshi berk ko'cha",
-    uzSentence: "Bu <hl>boshi berk ko'cha</hl>, orqaga qayt.",
-    trWord: "⛔️ Çıkmaz sokak",
-    trSentence: "Bu <hl>çıkmaz yol</hl>, geri dön."
-  },
-  {
-    uzWord: "↪️ O'ngga buril  ↩️ Chapga buril",
-    uzSentence: "Chorraxada <hl>o'ngga buril</hl>.",
-    trWord: "↪️ Sağa dön  ↩️ Sola dön",
-    trSentence: "Kavşakta <hl>sağa dön</hl>."
-  },
-  {
-    uzWord: "➡️➡️ To'g'ri yura ber",
-    uzSentence: "Ko'cha oxirigacha <hl>to'g'ri yura ber</hl>.",
-    trWord: "➡️➡️ Dümdüz git",
-    trSentence: "Sokağın sonuna kadar <hl>dümdüz git</hl>."
-  },
-  {
-    uzWord: "🛣 Bo'ylab",
-    uzSentence: "Daryo <hl>bo'ylab</hl> yurish juda yoqimli.",
-    trWord: "🛣 Boyunca",
-    trSentence: "Nehir <hl>boyunca</hl> yürümek çok keyifli."
-  },
-  {
-    uzWord: "⚫️ Chorraha",
-    uzSentence: "<hl>Chorrahada</hl> to'xtab, signalni kuting.",
-    trWord: "⚫️ Kavşak",
-    trSentence: "<hl>Kavşakta</hl> durun, sinyali bekleyin."
-  },
-  {
-    uzWord: "🧭 Boshqa tomonda",
-    uzSentence: "Shifoxona ko'chaning <hl>boshqa tomonida</hl>.",
-    trWord: "🧭 Diğer tarafta",
-    trSentence: "Hastane sokağın <hl>diğer tarafında</hl>."
-  },
-  {
-    uzWord: "⬅️➡️ Narida",
-    uzSentence: "Tog' <hl>narida</hl> kichik bir qishloq bor.",
-    trWord: "⬅️➡️ Ötesinde",
-    trSentence: "Dağın <hl>ötesinde</hl> küçük bir köy var."
-  },
-  {
-    uzWord: "⬅️➡️ Yaqinida",
-    uzSentence: "Avtobus bekati uy <hl>yaqinida</hl>.",
-    trWord: "⬅️➡️ Yakınında",
-    trSentence: "Otobüs durağı evin <hl>yakınında</hl>."
-  },
-  {
-    uzWord: "↘️ Biroz narida",
-    uzSentence: "Kafé <hl>biroz narida</hl>, piyoda borsa bo'ladi.",
-    trWord: "↘️ Biraz ilerisinde",
-    trSentence: "Kafe <hl>biraz ilerisinde</hl>, yürüyerek gidilir."
-  },
-  {
-    uzWord: "⏩ Hozirgina o'tganingizdan keyin",
-    uzSentence: "Eski ko'prikdan <hl>o'tganingizdan keyin</hl> buling.",
-    trWord: "⏩ Hemen geçtikten sonra",
-    trSentence: "Eski köprüyü <hl>hemen geçtikten sonra</hl> dönün."
-  },
-  {
-    uzWord: "⏳ Yetib bormasdan oldin",
-    uzSentence: "Stansiyaga <hl>yetib bormasdan oldin</hl> o'ngga buring.",
-    trWord: "⏳ Varmadan/Ulaşmadan önce",
-    trSentence: "İstasyona <hl>ulaşmadan önce</hl> sağa dönün."
-  },
-  {
-    uzWord: "⬅️ Chap tomonda  ➡️ O'ng tomonda",
-    uzSentence: "Bank ko'chaning <hl>chap tomonida</hl>.",
-    trWord: "⬅️ Sol tarafta  ➡️ Sağ tarafta",
-    trSentence: "Banka sokağın <hl>sol tarafında</hl>."
-  },
-  {
-    uzWord: "◻️ Burchak",
-    uzSentence: "<hl>Burchakda</hl> qizil bino ko'rinadi.",
-    trWord: "◻️ Köşe",
-    trSentence: "<hl>Köşede</hl> kırmızı bir bina görünüyor."
-  },
+  { uzWord: "⬅️ Chap – O'ng ➡️", trWord: "⬅️ Sol – Sağ ➡️" },
+  { uzWord: "⬆️ Yuqorida – Pastda ⬇️", trWord: "⬆️ Üstte – Altta ⬇️" },
+  { uzWord: "↖️ Shimoli-g'arb", trWord: "↖️ Kuzeybatı" },
+  { uzWord: "↗️ Shimoli-sharq", trWord: "↗️ Kuzeydoğu" },
+  { uzWord: "↙️ Janubi-g'arb", trWord: "↙️ Güneybatı" },
+  { uzWord: "↘️ Janubi-sharq", trWord: "↘️ Güneydoğu" },
+  { uzWord: "⬆️ Shimol  ⬇️ Janub", trWord: "⬆️ Kuzey  ⬇️ Güney" },
+  { uzWord: "➡️ Sharq  ⬅️ G'arb", trWord: "➡️ Doğu  ⬅️ Batı" },
+  { uzWord: "⬛️ O'rtasida / Orasida", trWord: "⬛️ Arasında" },
+  { uzWord: "🔄 Qarshisida", trWord: "🔄 Karşısında" },
+  { uzWord: "⭐️ Markazida", trWord: "⭐️ Merkezinde" },
+  { uzWord: "🔼 Ustida  ⬇️ Ostida", trWord: "🔼 Üstünde  ⬇️ Altında" },
+  { uzWord: "🔲 Ichida  ⬜️ Tashqarisida", trWord: "🔲 İçinde  ⬜️ Dışında" },
+  { uzWord: "◀️ Oldida  ▶️ Orqasida", trWord: "◀️ Önünde  ▶️ Arkasında" },
+  { uzWord: "↔️ Yonida  ➕ Tutash", trWord: "↔️ Yanında  ➕ Bitişik" },
+  { uzWord: "⛔️ Boshi berk ko'cha", trWord: "⛔️ Çıkmaz yol" },
+  { uzWord: "↪️ O'ngga buril  ↩️ Chapga buril", trWord: "↪️ Sağa dön  ↩️ Sola dön" },
+  { uzWord: "➡️➡️ To'g'ri yura ber", trWord: "➡️➡️ Dümdüz git" },
+  { uzWord: "🛣 Bo'ylab", trWord: "🛣 Boyunca" },
+  { uzWord: "⚫️ Chorraha", trWord: "⚫️ Kavşak" },
+  { uzWord: "🧭 Boshqa tomonda", trWord: "🧭 Diğer tarafta" },
+  { uzWord: "⬅️➡️ Narida", trWord: "⬅️➡️ Ötesinde" },
+  { uzWord: "⬅️➡️ Yaqinida", trWord: "⬅️➡️ Yakınında" },
+  { uzWord: "↘️ Biroz narida", trWord: "↘️ Biraz ilerisinde" },
+  { uzWord: "⏩ Hozirgina o'tganingizdan keyin", trWord: "⏩ Hemen geçtikten sonra" },
+  { uzWord: "⏳ Yetib bormasdan oldin", trWord: "⏳ Ulaşmadan önce" },
+  { uzWord: "⬅️ Chap tomonda  ➡️ O'ng tomonda", trWord: "⬅️ Sol tarafta  ➡️ Sağ tarafta" },
+  { uzWord: "◻️ Burchak", trWord: "◻️ Köşe" },
 ];
 
 function highlight(text) {
