@@ -23,15 +23,11 @@ body {
   padding: 48px 20px 80px;
 }
 
-/* GERİ BUTONU - NORMAL AKIŞTA, SABİT DEĞİL */
-.back-button-container {
-  margin-bottom: 30px;
-}
-
+/* GERİ BUTONU - SOL ÜST KÖŞEDE SABİT (KAYDIRILINCA KAYBOLUR) */
 .back-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  position: relative;
+  top: 0;
+  left: 0;
   background: #1a2332;
   border: 2px solid #F5C842;
   border-radius: 40px;
@@ -41,6 +37,12 @@ body {
   font-weight: bold;
   font-size: 0.9rem;
   transition: all 0.2s;
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  margin-bottom: 20px;
 }
 
 .back-button:hover {
@@ -208,7 +210,7 @@ header h1 {
   font-size: 0.95rem;
 }
 
-/* E-POSTA DETAY BÖLÜMÜ */
+/* E-POSTA DETAY BÖLÜMÜ - DAHA GÜZEL GÖRÜNÜM */
 .eposta-detay {
   background: linear-gradient(135deg, #fef5e8 0%, #fff7e8 100%);
   padding: 18px;
@@ -253,9 +255,7 @@ footer span { color: #F5C842; }
 <body>
 <div class="page-wrapper">
 
-  <div class="back-button-container">
-    <a href="javascript:history.back()" class="back-button">← Geri</a>
-  </div>
+  <a href="javascript:history.back()" class="back-button">← Geri</a>
 
   <header>
     <h1>📝 YAZMA SORULARI</h1>
@@ -287,6 +287,7 @@ footer span { color: #F5C842; }
   <div class="content-panel" id="cikmis-kompozisyon">
     <div class="panel-header"><h2>📝 Çıkmış Kompozisyon Soruları</h2></div>
     <div class="panel-body">
+      <div class="soru-grubu"><div class="soru-yili">📅 2026 Nisan</div><div class="soru-metin">Ormanların yok olmasının sebepleri nelerdir? Ormanları korumak için neler yapılmalıdır?</div></div>
       <div class="soru-grubu"><div class="soru-yili">📅 2026 Mart</div><div class="soru-metin">İşe alım süreçlerinde adayın akademik yeterliliği (diploması) mı yoksa mesleki deneyimi (iş tecrübesi) mi daha fazla dikkate alınmalıdır?</div></div>
       <div class="soru-grubu"><div class="soru-yili">📅 2026 Şubat</div><div class="soru-metin">Bazı insanlara göre haftada dört gün çalışmak iş verimliliğini artırmakta ve insan sağlığı üzerinde olumlu etkiler yaratmaktadır. Siz bu görüşe katılıyor musunuz yoksa katılmıyor musunuz? Görüşünüzü nedenleriyle birlikte açıklayınız.</div></div>
       <div class="soru-grubu"><div class="soru-yili">📅 2026 Ocak</div><div class="soru-metin">Şehirlerde hava kirliliğinin artmasının başlıca nedenleri nelerdir ve bu soruna karşı hangi çözüm yolları uygulanabilir?</div></div>
@@ -301,7 +302,16 @@ footer span { color: #F5C842; }
     <div class="panel-header"><h2>📧 Çıkmış E-posta Soruları</h2></div>
     <div class="panel-body">
       
-      <div class="soru-grubu">
+       <div class="soru-grubu">
+        <div class="soru-yili">📅 2026 Nisan</div>
+        <div class="eposta-detay"><strong>📩 Mahalle Yönetimi:</strong> Sevgili Mahalle Sakini, Mahallemizde yaşanan trafik sorunlarını azaltmak amacıyla yolun genişletilmesi planlanmaktadır. Bu projenin ulaşımı kolaylaştıracağı düşünülmektedir. Ancak bazı komşularımız, bu çalışmanın ağaçlara ve yeşil alanlara zarar vereceği konusunda endişelidir.
+Sizce yolun genişletilmesi doğru bir karar mıdır? Bu proje mahalleye ne gibi faydalar veya zararlar getirebilir? Siz olsaydınız nasıl bir çözüm önerirdiniz? Görüşleriniz bizim için önemlidir.
+</div>
+        <div class="soru-metin"><strong>Görev 1.1:</strong> Aynı mahallede yaşayan arkadaşınız Aren Aydın’a bir mesaj yazınız. Bu durum hakkındaki düşüncelerinizi ve duygularınızı ifade ediniz. (Yaklaşık 50 kelime)</div>
+        <div class="soru-metin"><strong>Görev 1.2:</strong> Mahalle yönetimine bir e-posta yazınız. Yolun genişletilmesi hakkındaki görüşlerinizi, önerilerinizi ve beklentilerinizi belirtiniz. (120–150 kelime)</div>
+      </div>
+
+        <div class="soru-grubu">
         <div class="soru-yili">📅 2026 Mart</div>
         <div class="eposta-detay"><strong>📩 Gelen E-posta:</strong> Üniversitenizin rektörlüğünden: Ders sırasında cep telefonu kullanımının yasaklanması planlanmaktadır. Sizce bu yasak doğru bir karar mıdır? Eğitim kalitesini artırmak için başka hangi düzenlemeler yapılabilir?</div>
         <div class="soru-metin"><strong>Görev 1.1:</strong> Arkadaşınız Aren Aydın’a bir mektup yazınız. Duygularınızı ve telefon kullanımının dersleri nasıl etkileyebileceğine dair düşüncelerinizi ifade ediniz. (50 kelime)</div>
