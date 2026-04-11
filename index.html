@@ -262,8 +262,52 @@ header h1 {
 .error-msg { background: #fff0f0; border: 1px solid #f8c8c8; border-radius: 8px; padding: 10px 14px; color: #d63031; font-size: 0.85rem; margin-top: 14px; display: none; text-align: center; }
 .error-msg.show { display: block; }
 
-footer { text-align: center; margin-top: 60px; font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+footer {
+  margin-top: 60px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+footer p { text-align: center; }
 footer span { color: #F5C842; }
+
+/* ═══════════════════════════════════════
+   VISITOR COUNTER
+═══════════════════════════════════════ */
+.visitor-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(245,200,66,0.3);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  position: absolute;
+  right: 0;
+}
+
+.visitor-counter .vc-icon {
+  font-size: 0.8rem;
+}
+
+.visitor-counter .vc-divider {
+  color: rgba(245,200,66,0.4);
+  margin: 0 1px;
+}
+
+.visitor-counter .vc-daily {
+  color: #F5C842;
+  font-weight: 700;
+}
+
+.visitor-counter .vc-total {
+  color: #F5C842;
+  font-weight: 700;
+}
 
 @keyframes popIn {
   from { opacity: 0; transform: scale(.93) translateY(10px); }
@@ -554,6 +598,17 @@ footer span { color: #F5C842; }
 
   <footer>
     <p>© 2026 <span>Hamza Hoca</span> — Türkçe Öğrenme Platformu</p>
+    <div class="visitor-counter">
+      <span class="vc-icon"><span class="vc-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="8" r="4"/>
+    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+  </svg>
+</span></span>
+      <span class="vc-daily" id="vcDaily">—</span>
+      <span class="vc-divider">/</span>
+      <span class="vc-total" id="vcTotal">—</span>
+    </div>
   </footer>
 </div>
 
@@ -640,6 +695,76 @@ function parseCSV(text) {
     return cols.map(c => c.replace(/^"|"$/g,'').trim());
   });
 }
+
+/* ═══════════════════════════════════════
+   ZİYARETÇİ SAYACI
+   - Benzersiz ziyaretçi kimliği: localStorage'da kalıcı UUID
+   - Günlük ziyaretçi: localStorage'da tarih+sayı (her gün sıfırlanır)
+   - Toplam ziyaretçi: countapi.xyz ile sunucu tarafında
+═══════════════════════════════════════ */
+(function() {
+  // Bu tarayıcıya özgü kalıcı bir kimlik oluştur veya oku
+  let visitorId = localStorage.getItem('hamzaVisitorId');
+  if (!visitorId) {
+    visitorId = 'v_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+    localStorage.setItem('hamzaVisitorId', visitorId);
+  }
+
+  const today = new Date().toISOString().split('T')[0]; // "2026-04-11"
+
+  // --- GÜNLÜK SAYAÇ (localStorage ile) ---
+  // Her gün için benzersiz ziyaretçi kümesi tutuyoruz
+  const dailyKey = 'hamzaDaily_' + today;
+  const prevDayKeys = Object.keys(localStorage).filter(k => k.startsWith('hamzaDaily_') && k !== dailyKey);
+  prevDayKeys.forEach(k => localStorage.removeItem(k)); // Eski günleri temizle
+
+  let dailyVisitors = [];
+  try { dailyVisitors = JSON.parse(localStorage.getItem(dailyKey) || '[]'); } catch(e) { dailyVisitors = []; }
+
+  let isNewToday = false;
+  if (!dailyVisitors.includes(visitorId)) {
+    dailyVisitors.push(visitorId);
+    localStorage.setItem(dailyKey, JSON.stringify(dailyVisitors));
+    isNewToday = true;
+  }
+
+  const dailyCount = dailyVisitors.length;
+  document.getElementById('vcDaily').textContent = dailyCount;
+
+  // --- TOPLAM SAYAÇ (countapi.xyz ile — tamamen ücretsiz, kayıt gerektirmez) ---
+  // Namespace: hamzahoca-turkce, key: total-visitors
+  const NAMESPACE = 'hamzahoca-turkce-platform';
+  const KEY = 'total-ziyaretci';
+
+  async function updateTotalCounter() {
+    try {
+      let url;
+      if (isNewToday) {
+        // Yeni ziyaretçi → sayacı artır
+        url = `https://api.countapi.xyz/hit/${NAMESPACE}/${KEY}`;
+      } else {
+        // Daha önce gelmiş → sadece oku
+        url = `https://api.countapi.xyz/get/${NAMESPACE}/${KEY}`;
+      }
+      const res = await fetch(url);
+      const data = await res.json();
+      if (data && typeof data.value === 'number') {
+        document.getElementById('vcTotal').textContent = data.value;
+      }
+    } catch(e) {
+      // API erişilemezse localStorage'daki tahmini değeri göster
+      const localTotal = parseInt(localStorage.getItem('hamzaTotalEst') || '0');
+      if (isNewToday) {
+        localStorage.setItem('hamzaTotalEst', localTotal + 1);
+        document.getElementById('vcTotal').textContent = localTotal + 1;
+      } else {
+        document.getElementById('vcTotal').textContent = localTotal || '—';
+      }
+    }
+  }
+
+  updateTotalCounter();
+})();
 </script>
 </body>
 </html>
