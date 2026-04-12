@@ -517,10 +517,10 @@ footer span { color: #F5C842; }
 
           <div class="col-label col-label-free" style="margin-top: 18px;">🎬 Video Sorular</div>
           <div class="col-items">
-            <a class="item-card" href="https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_1.mp4" target="_blank">
+            <div class="item-card" onclick="openVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_1.mp4')">
               <span class="item-name">Video Sorular 1</span>
               <span class="badge badge-free">✅ Ücretsiz</span>
-            </a>
+            </div>
           </div>
         </div>
 
@@ -626,6 +626,13 @@ footer span { color: #F5C842; }
   </footer>
 </div>
 
+<div class="modal-overlay" id="videoOverlay" onclick="closeVideoOutside(event)" style="z-index:200;">
+  <div style="background:#000; border-radius:16px; padding:12px; width:min(720px,96vw); position:relative;">
+    <button onclick="closeVideo()" style="position:absolute;top:10px;right:14px;background:none;border:none;font-size:1.4rem;color:#fff;cursor:pointer;z-index:1;">✕</button>
+    <video id="videoPlayer" controls style="width:100%;border-radius:10px;display:block;"></video>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -655,6 +662,22 @@ function toggle(id, btn) {
       panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 50);
   }
+}
+
+function openVideo(src) {
+  const player = document.getElementById('videoPlayer');
+  player.src = src;
+  player.load();
+  document.getElementById('videoOverlay').classList.add('show');
+}
+function closeVideo() {
+  const player = document.getElementById('videoPlayer');
+  player.pause();
+  player.src = '';
+  document.getElementById('videoOverlay').classList.remove('show');
+}
+function closeVideoOutside(e) {
+  if (e.target === document.getElementById('videoOverlay')) closeVideo();
 }
 
 let targetPage = '';
