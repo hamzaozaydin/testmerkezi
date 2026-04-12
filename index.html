@@ -509,7 +509,7 @@ footer span { color: #F5C842; }
               <span class="item-name">Konuşma Soruları 2</span>
               <span class="badge badge-free">✅ Ücretsiz</span>
             </a>
-          <a class="item-card" href="konusma_soruları_ucretsiz_3.html">
+            <a class="item-card" href="konusma_soruları_ucretsiz_3.html">
               <span class="item-name">Konuşma Soruları 3</span>
               <span class="badge badge-free">✅ Ücretsiz</span>
             </a>
@@ -704,70 +704,65 @@ function parseCSV(text) {
 
 /* ═══════════════════════════════════════
    ZİYARETÇİ SAYACI
-   - Günlük: localStorage'da tarih bazlı benzersiz ziyaretçi listesi
-   - Toplam: countapi.mileshilliard.com (countapi.xyz yerine — ücretsiz alternatif)
 ═══════════════════════════════════════ */
 (function() {
-  // Bu tarayıcıya özgü kalıcı bir kimlik oluştur veya oku
+  const BASE_URL  = 'https://countapi.mileshilliard.com/api/v1';
+  const TOTAL_KEY = 'hamzahoca-total-ziyaretci';
+
+  // Her tarayıcıya özel kalıcı kimlik
   let visitorId = localStorage.getItem('hamzaVisitorId');
   if (!visitorId) {
     visitorId = 'v_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
     localStorage.setItem('hamzaVisitorId', visitorId);
   }
 
-  const today = new Date().toISOString().split('T')[0]; // "2026-04-11"
+  const today = new Date().toISOString().split('T')[0]; // "2026-04-12"
+  const DAILY_KEY = 'hamzahoca-gunluk-' + today;
 
-  // --- GÜNLÜK SAYAÇ (localStorage ile) ---
-  const dailyKey = 'hamzaDaily_' + today;
-  const prevDayKeys = Object.keys(localStorage).filter(k => k.startsWith('hamzaDaily_') && k !== dailyKey);
-  prevDayKeys.forEach(k => localStorage.removeItem(k));
+  // Bu kullanıcı bugün zaten sayıldı mı?
+  const countedToday = localStorage.getItem('hamzaCountedDay') === today;
 
-  let dailyVisitors = [];
-  try { dailyVisitors = JSON.parse(localStorage.getItem(dailyKey) || '[]'); } catch(e) { dailyVisitors = []; }
-
-  let isNewToday = false;
-  if (!dailyVisitors.includes(visitorId)) {
-    dailyVisitors.push(visitorId);
-    localStorage.setItem(dailyKey, JSON.stringify(dailyVisitors));
-    isNewToday = true;
-  }
-
-  const dailyCount = dailyVisitors.length;
-  document.getElementById('vcDaily').textContent = dailyCount;
-
-  // --- TOPLAM SAYAÇ (countapi.mileshilliard.com — countapi.xyz'nin ücretsiz alternatifi) ---
-  const API_KEY = 'hamzahoca-total-ziyaretci';
-  const BASE_URL = 'https://countapi.mileshilliard.com/api/v1';
-
-  async function updateTotalCounter() {
+  async function updateCounters() {
     try {
-      let url;
-      if (isNewToday) {
-        // Yeni ziyaretçi → sayacı artır
-        url = `${BASE_URL}/hit/${API_KEY}`;
+      // --- GÜNLÜK SAYAÇ ---
+      let dailyUrl;
+      if (!countedToday) {
+        // Yeni ziyaretçi → günlük sayacı artır
+        dailyUrl = `${BASE_URL}/hit/${DAILY_KEY}`;
+        localStorage.setItem('hamzaCountedDay', today);
       } else {
-        // Daha önce gelmiş → sadece oku
-        url = `${BASE_URL}/get/${API_KEY}`;
+        // Aynı gün tekrar gelmiş → sadece oku
+        dailyUrl = `${BASE_URL}/get/${DAILY_KEY}`;
       }
-      const res = await fetch(url);
-      const data = await res.json();
-      if (data && (typeof data.value === 'number' || typeof data.value === 'string')) {
-        document.getElementById('vcTotal').textContent = data.value;
-        localStorage.setItem('hamzaTotalEst', data.value);
+      const dailyRes = await fetch(dailyUrl);
+      const dailyData = await dailyRes.json();
+      if (dailyData && (typeof dailyData.value === 'number' || typeof dailyData.value === 'string')) {
+        document.getElementById('vcDaily').textContent = dailyData.value;
       }
+
+      // --- TOPLAM SAYAÇ ---
+      let totalUrl;
+      if (!countedToday) {
+        totalUrl = `${BASE_URL}/hit/${TOTAL_KEY}`;
+      } else {
+        totalUrl = `${BASE_URL}/get/${TOTAL_KEY}`;
+      }
+      const totalRes = await fetch(totalUrl);
+      const totalData = await totalRes.json();
+      if (totalData && (typeof totalData.value === 'number' || typeof totalData.value === 'string')) {
+        document.getElementById('vcTotal').textContent = totalData.value;
+        localStorage.setItem('hamzaTotalEst', totalData.value);
+      }
+
     } catch(e) {
-      // API erişilemezse localStorage'daki tahmini değeri göster
+      // API erişilemezse localStorage'daki tahmini değerleri göster
       const localTotal = parseInt(localStorage.getItem('hamzaTotalEst') || '0');
-      if (isNewToday) {
-        localStorage.setItem('hamzaTotalEst', localTotal + 1);
-        document.getElementById('vcTotal').textContent = localTotal + 1;
-      } else {
-        document.getElementById('vcTotal').textContent = localTotal || '—';
-      }
+      document.getElementById('vcTotal').textContent = localTotal || '—';
+      document.getElementById('vcDaily').textContent = '—';
     }
   }
 
-  updateTotalCounter();
+  updateCounters();
 })();
 </script>
 </body>
