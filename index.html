@@ -521,6 +521,14 @@ footer span { color: #F5C842; }
               <span class="item-name">Video Sorular 1</span>
               <span class="badge badge-free">✅ Ücretsiz</span>
             </div>
+            <div class="item-card" onclick="openVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretsiz_2.mp4')">
+              <span class="item-name">Video Sorular 2</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </div>
+            <div class="item-card" onclick="openVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretsiz_3.mp4')">
+              <span class="item-name">Video Sorular 3</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </div>
           </div>
         </div>
 
@@ -542,6 +550,30 @@ footer span { color: #F5C842; }
             </div>
             <div class="item-card" onclick="openLogin('konusma_sorulari_6.html')">
               <span class="item-name">Konuşma Soruları 4</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+          </div>
+
+          <div class="col-label col-label-locked" style="margin-top: 18px;">🎬 Video Sorular</div>
+          <div class="col-items">
+            <div class="item-card" onclick="openLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_1.mp4')">
+              <span class="item-name">Video Sorular 1</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_2.mp4')">
+              <span class="item-name">Video Sorular 2</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_3.mp4')">
+              <span class="item-name">Video Sorular 3</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_4.mp4')">
+              <span class="item-name">Video Sorular 4</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_5.mp4')">
+              <span class="item-name">Video Sorular 5</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
           </div>
@@ -681,11 +713,22 @@ function closeVideoOutside(e) {
 }
 
 let targetPage = '';
+let targetVideoSrc = '';
+
 function openLogin(page) {
   if (sessionStorage.getItem('hamzaUser')) { window.location.href = page; return; }
   targetPage = page;
+  targetVideoSrc = '';
   document.getElementById('modalOverlay').classList.add('show');
 }
+
+function openLoginVideo(src) {
+  if (sessionStorage.getItem('hamzaUser')) { openVideo(src); return; }
+  targetVideoSrc = src;
+  targetPage = '';
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
 function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
 function closeModalOutside(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
 
@@ -704,7 +747,12 @@ async function doLogin() {
       if (sheetUser.toLowerCase() === username.toLowerCase() && sheetPass === password) {
         found = true;
         sessionStorage.setItem('hamzaUser', username);
-        window.location.href = targetPage;
+        closeModal();
+        if (targetVideoSrc) {
+          openVideo(targetVideoSrc);
+        } else if (targetPage) {
+          window.location.href = targetPage;
+        }
         return;
       }
     }
