@@ -22,6 +22,51 @@
       min-height: 100vh;
       overflow-x: hidden;
       padding: 0 0 40px;
+      position: relative;
+    }
+
+    /* Geri butonu stili - sol üst köşe */
+    .back-button {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      background: rgba(13, 27, 42, 0.7);
+      backdrop-filter: blur(6px);
+      border: 1.5px solid rgba(245, 200, 66, 0.35);
+      border-radius: 40px;
+      padding: 0.5rem 1.1rem;
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.3px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      font-family: inherit;
+    }
+
+    .back-button:hover {
+      background: rgba(245, 200, 66, 0.2);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(245, 200, 66, 0.25);
+      color: #FFE6A3;
+    }
+
+    .back-button:active {
+      transform: translateY(1px);
+    }
+
+    .back-icon {
+      font-size: 1.2rem;
+      font-weight: 600;
+      line-height: 1;
     }
 
     header {
@@ -300,9 +345,28 @@
     .word-slot.pop-anim {
       animation: pop 0.35s ease;
     }
+
+    /* Mobil uyum: buton konumunu biraz ayarla */
+    @media (max-width: 640px) {
+      .back-button {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.4rem 0.9rem;
+        font-size: 0.75rem;
+      }
+      header {
+        padding-top: 3rem;
+      }
+    }
   </style>
 </head>
 <body>
+
+<!-- Geri butonu: sol üst köşe, sayfa ile kayar -->
+<a href="#" class="back-button" id="backButton">
+  <span class="back-icon">←</span>
+  <span>Geri</span>
+</a>
 
 <header>
   <div class="header-badge">✦ Kelime Sıralama Oyunu ✦</div>
@@ -550,6 +614,17 @@
       completedCount--;
       document.getElementById('celebrate').style.display = 'none';
     }
+  }
+
+  // Geri butonu işlevselliği
+  const backBtn = document.getElementById('backButton');
+  if (backBtn) {
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.history.length > 1) {
+        window.history.back();
+      }
+    });
   }
 </script>
 </body>
