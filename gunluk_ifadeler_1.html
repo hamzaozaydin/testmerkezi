@@ -205,31 +205,17 @@ header h1 {
   text-align: center;
   letter-spacing: .3px;
   line-height: 1.3;
+  color: #F5C842;
 }
 
-.card-front .card-tr { color: #F5C842; }
-.card-back  .card-tr { color: #7EFFF5; }
-
 .card-uz {
-  font-size: 0.9rem;
+  font-size: 1.05rem;
   font-weight: 700;
   text-align: center;
   letter-spacing: .2px;
   line-height: 1.3;
-  opacity: .80;
+  color: #7EFFF5;
 }
-
-.card-front .card-uz { color: rgba(245,200,66,0.75); }
-.card-back  .card-uz { color: rgba(126,255,245,0.75); }
-
-.card-sep {
-  width: 40px; height: 2px;
-  border-radius: 2px;
-  opacity: .3;
-  flex-shrink: 0;
-}
-.card-front .card-sep { background: #F5C842; }
-.card-back  .card-sep { background: #7EFFF5; }
 
 .counter {
   position: absolute;
@@ -300,7 +286,7 @@ footer span { color: #F5C842; }
 </div>
 
 <header>
-  <div class="header-badge">✦ Günlük İfadeler ✦</div>
+  <div class="header-badge">✦ Günlük İfadeler 1 ✦</div>
   <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
   <div class="header-line"></div>
   <div class="stars">★ ★ ★ ★ ★</div>
@@ -330,26 +316,16 @@ footer span { color: #F5C842; }
 
 <script>
 const words = [
-  { tr: "Günaydın",              uz: "Xayrli tong"                     },
-  { tr: "İyi akşamlar",          uz: "Xayrli kech"                     },
-  { tr: "İyi geceler",           uz: "Xayrli tun"                      },
-  { tr: "Tatlı rüyalar",         uz: "Shirin tushlar"                  },
-  { tr: "Yarın görüşürüz",       uz: "Ertaga ko'rishamiz"              },
-  { tr: "Kendine dikkat et",     uz: "O'zingni ehtiyot qil"            },
-  { tr: "Hoş geldin",            uz: "Xush kelibsiz"                   },
-  { tr: "Hoş bulduk",            uz: "Rahmat, sizga ham xush bo'ldi"   },
-  { tr: "Afiyet olsun",          uz: "Yoqimli ishtaha"                 },
-  { tr: "Eline sağlık",          uz: "Qo'lingizga rahmat"              },
-  { tr: "Kolay gelsin",          uz: "Ishingiz oson bo'lsin"           },
-  { tr: "Geçmiş olsun",          uz: "Tezroq tuzalib keting"           },
-  { tr: "Tebrik ederim",         uz: "Tabriklayman"                    },
-  { tr: "Başarılar dilerim",     uz: "Omad tilayman"                   },
-  { tr: "Bol şans",              uz: "Ko'p omad"                       },
-  { tr: "İyi şanslar",           uz: "Omad tilayman"                   },
-  { tr: "Dikkatli ol",           uz: "Ehtiyot bo'l"                    },
-  { tr: "Sorun değil, merak etme", uz: "Muammo emas, xavotir olma"     },
-  { tr: "Her şey iyi olacak",    uz: "Hammasi yaxshi bo'ladi"          },
-  { tr: "Endişelenme",           uz: "Xavotir olma"                    },
+  { tr: "Ağzı kulaklarında!",      uz: "Og'zi qulog'ida!"                },
+  { tr: "Canım sıkıldı",           uz: "Jonim siqildi"                   },
+  { tr: "Kusura bakma",            uz: "Kechirasan / Uzr"                },
+  { tr: "Ne var ne yok?",          uz: "Yangiliklar qalay?"              },
+  { tr: "Aklımda",                 uz: "Yodimda"                         },
+  { tr: "Hadi ya!",                uz: "Voy, rostmi?! / E-e, bo'lmaydi!" },
+  { tr: "Elim kolum bağlı",        uz: "Qo'lim-qo'lim bog'langan"        },
+  { tr: "Boş ver",                 uz: "Qo'yaver / E'tibor bermagin"     },
+  { tr: "Kafam karıştı",           uz: "Boshim qotdi"                   },
+  { tr: "İçim rahat",              uz: "Ko'nglim joyida"                 },
 ];
 
 const speakerIcon = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
@@ -382,7 +358,7 @@ words.forEach((item, i) => {
       <div class="card-face card-back">
         <span class="counter">${String(i+1).padStart(2,'0')}</span>
         <button class="speak-btn" data-text="${item.tr}" title="Dinle">${speakerIcon}</button>
-        <div class="card-uz" style="font-size:1.05rem; opacity:1;">${item.uz}</div>
+        <div class="card-uz">${item.uz}</div>
         <span class="flip-hint">bosing / tıklayın</span>
       </div>
     </div>`;
