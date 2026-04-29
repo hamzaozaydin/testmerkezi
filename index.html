@@ -782,34 +782,61 @@ footer span { color: #F5C842; }
     </div>
   </div>
 
-  <div class="content-panel" id="okuma-metinleri">
+ <div class="content-panel" id="okuma-metinleri">
     <div class="panel-header"><h2>📖 Okuma Metinleri</h2></div>
     <div class="panel-body">
-      <div class="items-grid">
-        <a class="item-card" href="kuresel_isinma.html">
-          <span class="item-name">Küresel Isınma</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-        <a class="item-card" href="elektrikli_araclar.html">
-          <span class="item-name">Elektrikli Araçlar</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-        <a class="item-card" href="yapay_zeka.html">
-          <span class="item-name">Yapay Zeka</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-         <a class="item-card" href="geri_donusum.html">
-          <span class="item-name">Geri Dönüşümün Önemi</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-         <a class="item-card" href="sosyal_medya.html">
-          <span class="item-name">Sosyal Medyanın İnsanlar Üzerindeki Etkisi</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
-         <a class="item-card" href="teknoloji.html">
-          <span class="item-name">Teknolojinin İnsan Hayatındaki Yeri</span>
-          <span class="badge badge-free">✅ Ücretsiz</span>
-        </a>
+      <div class="two-col-grid">
+
+        <!-- Sol: Ücretsizler -->
+        <div>
+          <div class="col-label col-label-free">✅ Ücretsiz</div>
+          <div class="col-items">
+            <a class="item-card" href="kuresel_isinma.html">
+              <span class="item-name">Küresel Isınma</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="elektrikli_araclar.html">
+              <span class="item-name">Elektrikli Araçlar</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="yapay_zeka.html">
+              <span class="item-name">Yapay Zeka</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="geri_donusum.html">
+              <span class="item-name">Geri Dönüşümün Önemi</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="sosyal_medya.html">
+              <span class="item-name">Sosyal Medyanın İnsanlar Üzerindeki Etkisi</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+            <a class="item-card" href="teknoloji.html">
+              <span class="item-name">Teknolojinin İnsan Hayatındaki Yeri</span>
+              <span class="badge badge-free">✅ Ücretsiz</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Sağ: Giriş Gerekliler -->
+        <div>
+          <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
+          <div class="col-items">
+            <div class="item-card" onclick="openLogin('ormanlar.html')">
+              <span class="item-name">Ormanların Yok Olmasının Sebepleri ve Korunma Yolları</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openLogin('ogretmen_yapay_zeka.html')">
+              <span class="item-name">Dil Öğreniminde Öğretmen Rehberliği mi, Yapay Zeka mı Daha Etkilidir?</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+            <div class="item-card" onclick="openLogin('dort_gun_calisma.html')">
+              <span class="item-name">Haftada Dört Gün Çalışma Verimliliği ve Sağlığı Artırır mı?</span>
+              <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
