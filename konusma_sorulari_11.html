@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Türkçe Konuşma Kartları – Hamza Hoca</title>
+<style>
+  :root { --gold:#F5C842; --gold-dark:#C9960A; --bg:#0D1B2A; --bg2:#162032; --text:#F0EAD6; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:linear-gradient(135deg,#0D1B2A 0%,#1a2a3a 100%); color:var(--text); min-height:100vh; overflow-x:hidden; }
+  header { text-align:center; padding:2.5rem 1rem 1.2rem; }
+  .header-badge { display:inline-block; background:linear-gradient(135deg,#F5C842,#C9960A); color:#0D1B2A; font-size:.68rem; font-weight:800; letter-spacing:3px; text-transform:uppercase; padding:.3rem 1.2rem; border-radius:50px; margin-bottom:.9rem; }
+  header h1 { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-size:clamp(1.4rem,4.5vw,2.5rem); font-weight:800; color:#F5C842; line-height:1.3; letter-spacing:.02em; }
+  .stars { text-align:center; font-size:1rem; opacity:.35; letter-spacing:6px; margin:.5rem 0; }
+  .divider { width:80px; height:3px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:.8rem auto; border-radius:2px; }
+  header p { color:rgba(240,234,214,.42); font-size:.82rem; letter-spacing:.4px; }
+  .telegram-section { text-align:center; padding:.5rem 1rem 1rem; }
+  .tg-box { display:inline-flex; align-items:center; gap:1rem; background:rgba(22,32,50,.85); border:1.5px solid rgba(34,158,217,.3); border-radius:60px; padding:.75rem 1.5rem .75rem 1rem; flex-wrap:wrap; justify-content:center; }
+  .tg-logo-wrap { width:44px; height:44px; flex-shrink:0; }
+  .tg-btn { display:inline-flex; align-items:center; gap:.45rem; background:linear-gradient(135deg,#229ED9,#1A7FB0); color:#fff; text-decoration:none; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-weight:800; font-size:.92rem; padding:.65rem 1.5rem; border-radius:50px; box-shadow:0 4px 20px rgba(34,158,217,.4); transition:all .22s; white-space:nowrap; }
+  .tg-btn:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(34,158,217,.55); }
+  .section-block { margin-bottom:2.5rem; }
+  .section-title-main { text-align:center; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-size:1.1rem; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin:1.5rem 0 .4rem; opacity:.9; }
+  .section-divider { width:120px; height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:.4rem auto 1.2rem; border-radius:2px; }
+  .cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:1.2rem; padding:0 1.5rem; max-width:1200px; margin:0 auto; }
+  .card-wrap          { height:260px; cursor:pointer; perspective:1000px; -webkit-perspective:1000px; }
+  .card-wrap.tall     { height:480px; }
+  .card-wrap.multi    { height:400px; }
+  .card-inner { position:relative; width:100%; height:100%; transition:transform .6s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d; -webkit-transform-style:preserve-3d; }
+  .card-wrap.flipped .card-inner { transform:rotateY(180deg); -webkit-transform:rotateY(180deg); }
+  .card-face { position:absolute; top:0; left:0; width:100%; height:100%; border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.45rem; padding:1rem 1.3rem; border:1.5px solid rgba(245,200,66,.15); box-shadow:0 6px 24px rgba(0,0,0,.4); -webkit-backface-visibility:hidden; backface-visibility:hidden; }
+  .card-front, .card-front.s2, .card-front.s3, .card-front.s4 { background:linear-gradient(145deg,#1E3552,#122133); }
+  .card-back, .card-back.s2, .card-back.s3, .card-back.s4 { background:linear-gradient(145deg,#103828,#071E12); border-color:rgba(58,175,169,.25); transform:rotateY(180deg); -webkit-transform:rotateY(180deg); }
+  .card-front .card-keyword { color:#FFF3A3; }
+  .card-front .card-sep    { background:#FFF3A3; }
+  .card-back  .card-keyword { color:#7EFFF5; }
+  .card-back  .card-sep    { background:#7EFFF5; }
+  .card-keyword { font-size:.95rem; font-weight:900; text-align:center; letter-spacing:.3px; line-height:1.3; }
+  .card-sep { width:40px; height:2px; border-radius:2px; opacity:.3; flex-shrink:0; }
+  .counter { position:absolute; top:9px; left:12px; font-size:.56rem; font-weight:800; opacity:.25; letter-spacing:.5px; }
+  .flip-hint { position:absolute; bottom:8px; font-size:.54rem; opacity:.18; letter-spacing:1px; text-transform:uppercase; }
+  .card-wrap:hover { box-shadow:0 0 18px rgba(245,200,66,.22); border-radius:16px; }
+  .timer-btn { display:inline-flex; align-items:center; gap:.4rem; background:linear-gradient(135deg,#F5C842,#C9960A); color:#0D1B2A; border:none; cursor:pointer; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-weight:800; font-size:.78rem; padding:.38rem .9rem; border-radius:50px; box-shadow:0 3px 12px rgba(245,200,66,.4); transition:all .18s; white-space:nowrap; flex-shrink:0; }
+  .timer-btn:hover { transform:translateY(-1px); box-shadow:0 5px 18px rgba(245,200,66,.6); }
+  .timer-btn:disabled { opacity:.5; cursor:default; transform:none; }
+  .timer-display { font-size:.9rem; font-weight:900; color:#F5C842; letter-spacing:1px; min-width:2.4rem; text-align:center; display:none; }
+  .timer-display.warning { color:#FF6B6B; }
+  .timer-row { display:flex; align-items:center; gap:.5rem; margin-top:.3rem; }
+  .multi-front-qs { width:100%; text-align:left; max-height:180px; overflow-y:auto; padding-right:4px; }
+  .multi-front-q-item { font-size:.78rem; font-weight:700; color:#FFF3A3; padding:.3rem 0; border-bottom:1px solid rgba(255,243,163,.1); line-height:1.35; }
+  .multi-front-q-item:last-child { border-bottom:none; }
+  .q-num { opacity:.45; margin-right:.3rem; font-weight:900; }
+  .multi-back-item { width:100%; border-top:1px solid rgba(126,255,245,.12); padding-top:.45rem; margin-top:.4rem; }
+  .multi-back-item:first-child { border-top:none; padding-top:0; margin-top:0; }
+  .multi-back-q { font-size:.65rem; font-weight:800; color:#7EFFF5; opacity:.65; letter-spacing:.3px; margin-bottom:.2rem; }
+  .multi-back-a { font-size:.72rem; font-weight:600; color:var(--text); line-height:1.5; opacity:.88; }
+  .tech-list { font-size:.72rem; text-align:left; width:100%; margin-top:6px; background:rgba(0,0,0,.2); border-radius:12px; padding:8px 10px; }
+  .tech-list p { margin:5px 0; font-weight:bold; color:#F5C842; }
+  .tech-list ul { margin:0 0 8px 18px; }
+  .tech-list li { margin:3px 0; color:#FFF3A3; font-size:.7rem; }
+  .bottom-space { height:3rem; }
+  audio { display: none; }
+  .card-front .tech-list li { color:#FFF3A3; }
+</style>
+</head>
+<body>
+<div style="padding:18px 20px 0; max-width:1200px; margin:0 auto;">
+  <button onclick="history.back()" style="display:inline-flex;align-items:center;gap:8px;background:#1a2332;border:2px solid #F5C842;border-radius:40px;padding:9px 20px;color:#F5C842;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:background .22s,transform .18s,box-shadow .22s;" onmouseover="this.style.background='#2a3a4a';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#1a2332';this.style.transform='none'">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Geri
+  </button>
+</div>
+
+<audio id="dingSound" preload="auto">
+  <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
+</audio>
+
+<header>
+  <div class="header-badge">✦ Soru &amp; Cevap Kartları ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE KONUŞUYORUM</h1>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <div class="divider"></div>
+  <p>Karta tıklayın → Cevabı görün</p>
+</header>
+<div class="telegram-section">
+  <div class="divider"></div><br>
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">Kanala Katıl</a>
+  </div>
+</div>
+<div id="app"></div>
+<div class="bottom-space"></div>
+
+<script>
+// ======================= SES ÇALMA =======================
+function playDing() {
+  const audio = document.getElementById("dingSound");
+  if(audio) {
+    audio.currentTime = 0;
+    audio.play().catch(e => console.log("Ses çalınamadı:", e));
+  }
+}
+
+// Timer + flip + ding
+function attachTimerWithDing(wrap, btn, disp, seconds) {
+  let interval = null, remaining = seconds, running = false;
+  
+  function flipAndDing() {
+    if(!wrap.classList.contains("flipped")) {
+      wrap.classList.add("flipped");
+      playDing();  // Süre dolunca ding sesi
+    }
+    stopTimer();
+  }
+  
+  function stopTimer() { 
+    if(interval){ clearInterval(interval); interval = null; } 
+    running = false; 
+    btn.disabled = true; 
+    btn.textContent = "✓ Süre Bitti"; 
+  }
+  
+  function resetTimer() {
+    if(interval){ clearInterval(interval); interval = null; }
+    running = false;
+    remaining = seconds;
+    btn.disabled = false;
+    btn.textContent = "Süreyi Başlat";
+    disp.style.display = "none";
+    disp.textContent = formatTime(seconds);
+    disp.classList.remove("warning");
+  }
+  
+  function startTimer() {
+    if(running) return;
+    running = true;
+    btn.disabled = true;
+    btn.textContent = "⏱ Çalışıyor";
+    disp.style.display = "inline-block";
+    disp.textContent = formatTime(remaining);
+    interval = setInterval(() => {
+      remaining--;
+      disp.textContent = formatTime(remaining);
+      if(remaining <= 5) disp.classList.add("warning");
+      if(remaining <= 0) {
+        clearInterval(interval);
+        interval = null;
+        running = false;
+        flipAndDing();
+      }
+    }, 1000);
+  }
+  
+  btn.addEventListener("click", (e) => { e.stopPropagation(); if(!running && !wrap.classList.contains("flipped")) startTimer(); });
+  
+  wrap.addEventListener("click", () => {
+    if(!wrap.classList.contains("flipped")) {
+      wrap.classList.add("flipped");
+      if(running && interval) {
+        clearInterval(interval);
+        interval = null;
+        running = false;
+        btn.disabled = true;
+        btn.textContent = "✓ Cevap Görüldü";
+        disp.style.display = "none";
+      } else if (!running && remaining > 0 && btn.disabled === false) {
+        btn.disabled = true;
+        btn.textContent = "✓ Cevap Görüldü";
+        if(disp) disp.style.display = "none";
+      } else if (remaining <= 0) {
+        btn.disabled = true;
+        btn.textContent = "✓ Süre Doldu";
+      }
+    } else {
+      wrap.classList.remove("flipped");
+      resetTimer();
+    }
+  });
+}
+
+function formatTime(sec) {
+  const m = Math.floor(sec / 60), s = sec % 60;
+  return m > 0 ? m + ":" + String(s).padStart(2, "0") : String(s);
+}
+
+function sectionHeader(title) {
+  return `<div class="section-title-main">${title}</div><div class="section-divider"></div>`;
+}
+
+const app = document.getElementById("app");
+
+// =========== BÖLÜM 1.1 - SABAH RUTİNİ (3 kart, her biri 30 saniye) ===========
+(function(){
+  const block = document.createElement("div"); block.className = "section-block";
+  block.innerHTML = sectionHeader("1.1. Bölüm") + `<div class="cards-grid" id="g1"></div>`;
+  app.appendChild(block); const grid = block.querySelector("#g1");
+  const cards = [
+    { q: "Sabahları neler yaparsınız?", a: "Sabahları genellikle erken kalkarım ve güne düzenli bir şekilde başlarım. Önce yüzümü yıkarım ardından kahvaltı hazırlarım. Ayrıca, gün içinde yapacağım işleri planlarım. Bu nedenle, sabah rutinim benim için oldukça önemlidir.", timer: 30 },
+    { q: "Kahvaltıda neler yersiniz?", a: "Kahvaltıda genellikle peynir, zeytin, ekmek ve yumurta yerim. Ayrıca, çay içmeyi de çok severim. Çünkü kahvaltı günün en önemli öğünüdür ve bana enerji verir.", timer: 30 },
+    { q: "Hangi spor türünü seversiniz?", a: "Ben en çok futbol oynamayı severim. Çünkü hem eğlencelidir hem de takım halinde oynandığı için sosyal bir aktivitedir. Ayrıca, spor yapmak sağlığım için de çok faydalıdır.", timer: 30 }
+  ];
+  cards.forEach((card, i) => {
+    const wrap = document.createElement("div"); wrap.className = "card-wrap";
+    wrap.innerHTML = `<div class="card-inner">
+      <div class="card-face card-front">
+        <span class="counter">${String(i+1).padStart(2,"0")}</span>
+        <div class="card-keyword" style="font-size:.95rem;">${card.q}</div>
+        <div class="card-sep"></div>
+        <div class="timer-row"><button class="timer-btn">Süreyi Başlat</button><span class="timer-display">${formatTime(card.timer)}</span></div>
+        <span class="flip-hint">tıklayın → cevap</span>
+      </div>
+      <div class="card-face card-back">
+        <span class="counter">${String(i+1).padStart(2,"0")}</span>
+        <div style="font-size:.88rem;font-weight:600;line-height:1.65;text-align:center;color:var(--text);opacity:.92;">${card.a}</div>
+        <span class="flip-hint">tıklayın → soru</span>
+      </div>
+    </div>`;
+    attachTimerWithDing(wrap, wrap.querySelector(".timer-btn"), wrap.querySelector(".timer-display"), card.timer);
+    grid.appendChild(wrap);
+  });
+})();
+
+// =========== BÖLÜM 1.2 - ŞARKI SÖYLEMEK (1.soru 45sn, 2-3 soru 30sn) ===========
+(function(){
+  const block = document.createElement("div"); block.className = "section-block";
+  block.innerHTML = sectionHeader("1.2. Bölüm") + `<div class="cards-grid" id="g2"></div>`;
+  app.appendChild(block); const grid = block.querySelector("#g2");
+  const cards = [
+    { q: "Resimlerde ne görüyorsunuz?", a: "En son birkaç gün önce şarkı söyledim. Evde yalnızken müzik dinlerken şarkıya eşlik ettim. Bu nedenle, kendimi daha mutlu ve rahat hissettim.", timer: 45, img: "Copilot_20260505_233811.png" },
+    { q: "Arkadaşlarla şarkı söylemek nasıl olur?", a: "Arkadaşlarla şarkı söylemek çok eğlenceli ve keyiflidir. Çünkü birlikte vakit geçirmek insanı mutlu eder ve ortam daha hareketli olur. Ayrıca, bu tür aktiviteler arkadaşlık ilişkilerini güçlendirir.", timer: 30 },
+    { q: "Yalnız şarkı söylemek nasıl olur?", a: "Yalnız şarkı söylemek daha rahat ve özgür bir deneyimdir. Çünkü insan kendini daha rahat ifade edebilir. Ayrıca, kimse olmadığı için hata yapmaktan çekinmez.", timer: 30 }
+  ];
+  cards.forEach((card, i) => {
+    const wrap = document.createElement("div"); wrap.className = "card-wrap";
+    const imgHtml = card.img ? `<img src="${card.img}" alt="" style="width:100%;max-height:110px;object-fit:contain;object-position:center top;border-radius:10px;margin-bottom:4px;flex-shrink:0;">` : "";
+    const frontStyle = card.img ? 'justify-content:flex-start;padding-top:.7rem;' : '';
+    wrap.innerHTML = `<div class="card-inner">
+      <div class="card-face card-front s2" style="${frontStyle}">
+        <span class="counter">${String(i+1).padStart(2,"0")}</span>
+        ${imgHtml}
+        <div class="card-keyword" style="font-size:.95rem;">${card.q}</div>
+        <div class="card-sep"></div>
+        <div class="timer-row"><button class="timer-btn">Süreyi Başlat</button><span class="timer-display">${formatTime(card.timer)}</span></div>
+        <span class="flip-hint">tıklayın → cevap</span>
+      </div>
+      <div class="card-face card-back s2">
+        <span class="counter">${String(i+1).padStart(2,"0")}</span>
+        <div style="font-size:.88rem;font-weight:600;line-height:1.65;text-align:center;color:var(--text);opacity:.92;">${card.a}</div>
+        <span class="flip-hint">tıklayın → soru</span>
+      </div>
+    </div>`;
+    attachTimerWithDing(wrap, wrap.querySelector(".timer-btn"), wrap.querySelector(".timer-display"), card.timer);
+    grid.appendChild(wrap);
+  });
+})();
+
+// =========== BÖLÜM 2 - KÜSMEK (multi kart, 120 saniye) ===========
+(function(){
+  const block = document.createElement("div"); block.className = "section-block";
+  block.innerHTML = sectionHeader("2. Bölüm") + `<div class="cards-grid" id="g3"></div>`;
+  app.appendChild(block); const grid = block.querySelector("#g3");
+  const multiData = {
+    timer: 120,
+    questions: [
+      { q: "Küstüğünüz bir zamanı anlatır mısınız?", a: "Evet, daha önce bir arkadaşımla küstüğüm bir durum yaşadım. Çünkü aramızda bir yanlış anlaşılma olmuştu. Bu durum beni hem üzdü hem de düşündürdü." },
+      { q: "Küstüğünüzde ne yaparsınız?", a: "Küstüğümde genellikle biraz zaman tanırım ve sakinleşmeye çalışırım. Daha sonra, konuşarak sorunu çözmeyi tercih ederim." },
+      { q: "Hiç birini küstürdünüz mü?", a: "Evet, bazen farkında olmadan birini küstürdüğüm de oldu. Ancak, bunu fark ettiğimde özür dilerim ve durumu düzeltmeye çalışırım." },
+      { q: "İnsanlar neden küser?", a: "Bence insanlar genellikle anlaşmazlıklar, yanlış iletişim ve beklentilerin karşılanmaması nedeniyle küser. Bu yüzden, açık iletişim çok önemlidir." }
+    ]
+  };
+  const wrap = document.createElement("div"); wrap.className = "card-wrap multi";
+  const frontQs = multiData.questions.map((q,idx) => `<div class="multi-front-q-item"><span class="q-num">${idx+1}.</span>${q.q}</div>`).join("");
+  const backItems = multiData.questions.map((q,idx) => `<div class="multi-back-item"><div class="multi-back-q">${idx+1}. ${q.q}</div><div class="multi-back-a">${q.a}</div></div>`).join("");
+  wrap.innerHTML = `<div class="card-inner">
+    <div class="card-face card-front s3">
+      <span class="counter">Bölüm 2</span>
+      <div class="multi-front-qs">${frontQs}</div>
+      <div class="card-sep" style="margin-top:.3rem;"></div>
+      <div class="timer-row"><button class="timer-btn">Süreyi Başlat</button><span class="timer-display">${formatTime(multiData.timer)}</span></div>
+      <span class="flip-hint">tıklayın → cevaplar</span>
+    </div>
+    <div class="card-face card-back s3" style="justify-content:flex-start;padding-top:1rem;overflow-y:auto;">
+      <span class="counter">Bölüm 2</span>
+      <div style="width:100%;">${backItems}</div>
+      <span class="flip-hint">tıklayın → sorular</span>
+    </div>
+  </div>`;
+  attachTimerWithDing(wrap, wrap.querySelector(".timer-btn"), wrap.querySelector(".timer-display"), multiData.timer);
+  grid.appendChild(wrap);
+})();
+
+// =========== BÖLÜM 3 - TEKNOLOJİ (2 dakika = 120 saniye, lehte/aleyhte ön yüzde) ===========
+(function(){
+  const block = document.createElement("div"); block.className = "section-block";
+  block.innerHTML = sectionHeader("3. Bölüm") + `<div class="cards-grid" id="g4"></div>`;
+  app.appendChild(block); const grid = block.querySelector("#g4");
+  
+  const techCard = {
+    timer: 120,  // 2 dakika
+    q: "Teknoloji insanların hayatını nasıl değiştirdi?",
+    frontExtra: `<div class="tech-list">
+                    <p>✅ Lehine (Avantajlar)</p>
+                    <ul><li>İletişim kolaylaştı</li><li>Bilgiye erişim arttı</li><li>Zaman tasarrufu sağladı</li></ul>
+                    <p>❌ Aleyhine (Dezavantajlar)</p>
+                    <ul><li>Bağımlılık oluşturdu</li><li>Sosyal ilişkiler zayıfladı</li><li>Sağlık sorunları arttı</li></ul>
+                  </div>`,
+    a: `<b></b><br><br>Bence teknoloji, insanların hayatını büyük ölçüde değiştirdi. Çünkü iletişim artık çok daha hızlı ve kolay hale geldi. İnsanlar dünyanın farklı yerlerindeki kişilerle anında iletişim kurabiliyor.<br><br>
+         Ayrıca, eğitim ve iş hayatında da teknoloji önemli bir rol oynamaktadır. Örneğin, online eğitim ve uzaktan çalışma sayesinde insanlar daha esnek bir yaşam tarzına sahip oldu.<br><br>
+         Ancak, teknolojinin bazı olumsuz etkileri de vardır. Çünkü insanlar fazla teknoloji kullanımı nedeniyle sosyal hayattan uzaklaşabilir. Ayrıca, bağımlılık gibi sorunlar da ortaya çıkabilir.<br><br>
+         <b>Sonuç olarak,</b> teknoloji hayatı kolaylaştırır ancak bilinçli kullanılmalıdır.`
+  };
+  
+  const wrap = document.createElement("div"); wrap.className = "card-wrap tall";
+  wrap.innerHTML = `<div class="card-inner">
+    <div class="card-face card-front s4" style="justify-content:flex-start; padding-top:1rem;">
+      <span class="counter">Bölüm 3</span>
+      <div class="card-keyword" style="font-size:.95rem;line-height:1.4; margin-top:8px;">${techCard.q}</div>
+      ${techCard.frontExtra}
+      <div class="card-sep" style="margin:6px 0;"></div>
+      <div class="timer-row"><button class="timer-btn">Süreyi Başlat</button><span class="timer-display">${formatTime(techCard.timer)}</span></div>
+      <span class="flip-hint">tıklayın → detaylı cevap</span>
+    </div>
+    <div class="card-face card-back s4" style="justify-content:flex-start;padding-top:1.2rem;overflow-y:auto;">
+      <span class="counter">Bölüm 3</span>
+      <div style="width:100%; font-size:.72rem; line-height:1.7; color:var(--text); padding-bottom:1rem;">${techCard.a}</div>
+      <span class="flip-hint">tıklayın → soru</span>
+    </div>
+  </div>`;
+  attachTimerWithDing(wrap, wrap.querySelector(".timer-btn"), wrap.querySelector(".timer-display"), techCard.timer);
+  grid.appendChild(wrap);
+})();
+
+</script>
+
+<footer style="text-align:center;padding:0 1rem 2.5rem;font-size:.8rem;color:rgba(255,255,255,.4);font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;">
+  <p>© 2026 <span style="color:#F5C842;">Hamza Hoca</span> — Türkçe Öğrenme Platformu</p>
+</footer>
+</body>
+</html>
