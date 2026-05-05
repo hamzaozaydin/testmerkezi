@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahalle – Türkiye Türkçesi | Hamza Hoca</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+  overflow-x: hidden;
+}
+
+.home-btn-wrap {
+  padding: 18px 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 40px;
+  padding: 9px 20px;
+  color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .22s, transform .18s, box-shadow .22s;
+}
+
+.home-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  color: #F5C842;
+  text-decoration: none;
+}
+
+.home-btn svg { flex-shrink: 0; }
+
+header {
+  text-align: center;
+  padding: 2rem 1rem 1.2rem;
+}
+
+.header-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.3rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 0.9rem;
+}
+
+header h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.header-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 10px;
+}
+
+.stars {
+  font-size: 1rem;
+  color: #F5C842;
+  letter-spacing: .4em;
+  margin-bottom: 6px;
+  opacity: .7;
+}
+
+.subtitle {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.telegram-section {
+  text-align: center;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.tg-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(26,35,50,0.85);
+  border: 1.5px solid rgba(34,158,217,0.3);
+  border-radius: 60px;
+  padding: .75rem 1.5rem .75rem 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+.tg-btn {
+  display: inline-flex;
+  align-items: center; gap: .45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0);
+  color: #fff; text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800; font-size: .92rem;
+  padding: .65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34,158,217,.4);
+  transition: all .22s; white-space: nowrap;
+}
+
+.tg-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(34,158,217,.55);
+}
+
+.section-title {
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: .85rem; color: #F5C842;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: .5rem 0 1rem; opacity: .75;
+}
+
+/* ===== HİKÂYE ALANI ===== */
+.story-container {
+  max-width: 820px;
+  margin: 0 auto 3rem;
+  padding: 0 1.2rem;
+  animation: popIn .5s ease both;
+}
+
+.story-title {
+  text-align: center;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: 900;
+  color: #F5C842;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.3rem;
+}
+
+.story-author {
+  text-align: center;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.story-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 2rem;
+}
+
+.story-body {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(245,200,66,0.12);
+  border-radius: 16px;
+  padding: 2rem 2.2rem;
+  line-height: 1.9;
+  font-size: 1.02rem;
+  color: rgba(255,255,255,0.88);
+}
+
+.story-body p {
+  margin-bottom: 1.15em;
+  text-align: justify;
+}
+
+.story-body p:last-child { margin-bottom: 0; }
+
+.epigraph {
+  border-left: 2px solid rgba(245,200,66,0.35);
+  padding-left: 1.2rem;
+  margin: 0 0 1.8rem 0.5rem;
+  color: rgba(255,255,255,0.6);
+  font-style: italic;
+  font-size: 0.96rem;
+  line-height: 1.8;
+}
+
+.epigraph .epigraph-author {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.82rem;
+  color: #F5C842;
+  font-style: normal;
+  letter-spacing: 0.05em;
+}
+
+.dialog {
+  color: #F5C842;
+  font-style: italic;
+  padding-left: 1rem;
+  border-left: 2px solid rgba(245,200,66,0.3);
+  margin: 0.6em 0 0.6em 0.5rem;
+}
+
+footer {
+  text-align: center;
+  padding: 0 1rem 2.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+footer span { color: #F5C842; }
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.95) translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ Türkiye Türkçesi • Hikâye ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle">Türkiye Türkçesi • Hikâye Metni</p>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+      Kanala Katıl
+    </a>
+  </div>
+</div>
+
+<div class="section-title">Türkiye Türkçesi Hikâye Metni</div>
+
+<!-- ===== HİKÂYE İÇERİĞİ ===== -->
+<div class="story-container">
+  <div class="story-title">MAHALLE</div>
+  <div class="story-author">Türkiye Türkçesi</div>
+  <div class="story-divider"></div>
+
+  <div class="story-body">
+
+    <div class="epigraph">
+      İnsanla yaşar ancak insan,<br>
+      Muhabbettir hayatın başı,<br>
+      Âdemoğluna bahşeder can,<br>
+      İnsanların sevgi güneşi.
+      <span class="epigraph-author">(Erkin Vahidov)</span>
+    </div>
+
+    <p>Rohat Nine, kocaman siyah sobanın kapağını açmış ayaklarını ısıtırken; pencere önünde gözlüklerini takmış, torununun yırtılan kitabını yapıştıran ihtiyar, ona çıkıştı:</p>
+
+    <p class="dialog">— Seni şu sobaya alıştırmak bir türlü mümkün olmadı... Ne o, yer döşemesini oyup sana tandır mı yapayım? Sobanın kapağını açtın mı, kömür gökyüzünü ısıtıyor demektir!</p>
+
+    <p>Rohat Nine sobanın kapağını kapattı, gidip divana uzandı. Ev soğuk olmasa da birkaç gündür tüyleri ürperiyor, ayakları buz kesiyor ve ağrıyordu. Yaşlı kadın o yattığı yerden ertesi gün de kalkmak istemedi, öbür gün de kalkamadı; üçüncü gün yüreği bir süre hızlıca çarptı ve birden boşalıp ölüverdi.</p>
+
+    <p>Hikmet Dede ne olduğunu anlayamadan, gözüyle gördüğünü aklına sığdıramayarak sersemlemiş bir halde kalakaldı. Oğlu, gelini ve üç torunu içeri girip ağlamaya başladıklarında ancak kendine gelebildi ve titrek bir nefesle fısıldadı: "Ey Allah'ım, ne yaptın? Heybendeki bana ayırdığın daha ne kederlerin varsa dök, hepsini birden başıma döküver!"</p>
+
+    <p>Elli üç yıl! Elli üç yıldır aynı sofradan tuz tatmışlar, aynı yorgana sarılmışlar, birlikte gülüp birlikte ağlamışlardı. Elli üç yıldır minik kediler gibi birbirlerine sokulup yalanarak, birbirlerini incitmeden ısırarak, birbirlerini devirip birbirlerine yenilerek şakalaşmış ve oynaşmışlardı. Elli üç yıldır "merhamet" denilen o yüce duygunun ipini bir ipek böceği gibi aynı tempoda ağır ağır çözerek birbirlerinin kalbini sarıp sarmalamışlardı...</p>
+
+    <p>Tüm adetler ve töreler yerine getirildikten sonra insanlar tabutu kaldırdığında, o bağ birden gerildi ve sanki Hikmet Dede'nin ciğerini söküp aldı. İhtiyar hıçkıra hıçkıra ağladı. Yaşlı kadını çabucak toprağa verip döndüler. Baş sağlığı dilemek için yine bütün mahalle içeri doluştu. Hikmet Dede yaralı bir kumru gibi bir köşede büzülmüş oturuyor; anlaşılan o ki, artık onun için dünyada ne kimse ne de bir şey kalmıştı.</p>
+
+    <p>Öyle ki, Hikmet Dede bir hafta geçmeden bir avuç kemik kalıverdi. İhtiyar uzanıp yattığında ölü mü diri mi olduğunu anlamak zordu; lakin karısının ayaklarını sobanın ateşinde ısıtırken ona çıkıştığı aklına gelse, aslanlar gibi kükrer, kendini oradan oraya atardı.</p>
+
+    <p>Evde onu yalnız bırakmamaya çalışıyorlardı. Küçük torunu bütün oyuncaklarını dedesinin odasına taşıdı, yuvadan geldikten sonra hep burada oynamaya başladı. Büyük torunu her gün onu defalarca, çeşit çeşit şekillerde fotoğrafladı. Oğlu onu otomobile bindirip şehri birkaç kez gezdirdi. İhtiyar sevinmek yerine: "Annen varken yapmadın bu işi," diye söylendi. Gelini ona bir teyp getirip verdi. İhtiyar teyple bir süre oyalandı, sonra gözleri dolarak: "Kızım, şu şeyi daha önce bulup gelseydin de hanımın sesini kaydedebilseydim," dedi...</p>
+
+    <p>Bir gün şiddetli bir yağmur yağıp kıştan kalan karları eritip bitirdi. Avluda direğe yaslanmış yağmur suyunun çağıltısını seyreden ihtiyarın gözü, tandırın ötesinde yatan tek bir eski lastik pabuca takıldı. Yaşlı kadın, bir ayağı ağrıyıp şiştiğinde o pabucun ağzını kesip giymişti. İhtiyar gidip pabucu aldı, özenle sildi ve eve getirdi. Karısı, ihtiyar için sanki yeniden öldü. Akşama kadar ağladı. Akşam oğlu ile gelini işten geldiğinde, "Zavallı kadını bir doktora adamakıllı göstermediniz," diye sızlandı. Hikmet Dede geceleri uyumazdı; ilaç içip uyusa bile gece yarısı uyanır, sabaha kadar otururdu. Evdeki her şey ona karısını ve yalnızlığını hatırlatır, her bir ses bir ölüm tınısı gibi beyninin çeperini tırmalardı.</p>
+
+    <p>İhtiyarın günden güne tükendiğini gören oğlu ve gelini telaşa kapıldı. Bir sabah ihtiyar ortadan kayboldu. Aranmadık yer kalmadı: Eş dost, tanıdık bildik, akraba taallukat; hatta acil servislerden haber alındı, emniyete başvuruldu. Her yer aranmıştı da mezarlıktan haber alınmamıştı; ihtiyar mezarlıktaymış. Hikmet Dede sık sık mezarlığa gider, hanımının başında bir yarım saat oturup dönerdi ama böyle kalıp gitme huyu yoktu.</p>
+
+    <p>İhtiyar bu defa gittiğinde hanımının kabrini ziyaret etmek bir yana, onun yanına kendisi için bir mezar kazdırdı; müdür ve mezarcılar ne kadar itiraz etse de dinlemedi, kavga dövüş kazdırdı. İhtiyar gün batarken bitap bir halde döndü. Birisi onu otobüsten indirip kaldırıma çıkardı. İhtiyarın güçlükle adım atarak geldiğini gören köşedeki boyacı koşup onu yanına aldı ve eline bir bardak çay verdi.</p>
+
+    <p class="dialog">— Üzülmeyin be babacığım... Rahmetli ninem şahane bir kadındı... Siz o gün kendi acınıza gömüldüğünüz için cenazeye gelen kalabalığı fark etmediniz. O ne mahşerdi öyle... Mahalleye sığmadı millet! Mahallemizin sokağı bir metre çöktü adeta! Ninem dünyaya gelip "insan ekmiş" meğer. Dünyaya gelen kişi önce insan ekmeliymiş. Ben bundan ibret aldım...</p>
+
+    <p>Sıcak çay mı yoksa boyacının sözleri mi bilinmez, ihtiyara bir derman oldu. "Evet," dedi ihtiyar biraz gururla, "Hâlâ insanlar ziyarete geliyor... Çalıştığı yer bile bunca yıldır onu unutmamış." İhtiyarın geldiğini duyan hane halkı, konu komşu cıvıltılarla başına doluştu. Kimisi sitem etti, kimisi hüzünlendi, kimisi ise sevindi... İhtiyarı aralarına almış giderlerken, yol kenarında duran mahalle doktoru olayı duyunca ihtiyara biraz çıkıştı, sonra ona dikkatle bakıp hanımından söz açtı:</p>
+
+    <p class="dialog">— Rahmetli annemiz tarife sığmaz bir kadındı, bunca insan boşuna gelmedi! Lakin babacığım, mahallemize şöyle sekiz kovalık büyük bir semaver lazımmış; o gün bu eksiklik çok hissedildi. Mahalleden para toplasak, hane başına kaç kuruş düşer ki?</p>
+
+    <p>İhtiyarın izzeti nefsi kabardı. "Oğlumla gelinimin bir semaver alacak gücü vardır herhalde," dedi. Doktor sanki ondan bu lafı bekliyormuş gibi gülümsedi. İhtiyar, kendine mezar kazdırıp buraya ölmek için gelmiş olsa da, oğlu ve gelini adına mahalleye karşı bir söz vermişti; artık bunu düşünmek zorundaydı. Oğlundan parayı aldı ve semaver aramaya koyuldu.</p>
+
+    <p>Fakat öyle bir semaveri bulmak, madenden bakır kazıp semaver yapmaktan daha zormuş; ihtiyarın gitmediği mağaza, yalvarmadığı mağaza müdürü kalmadı. Oğlu ve gelini onun bu koşturmasına, onca gücü nereden bulduğuna hayret ediyorlardı. Nihayet mahalledeki yetkililerin yardımıyla semaver bulundu; mahalle heyeti bir tutanakla teslim aldı, genel toplantıda başkan Hikmet Dede'ye teşekkürler yağdırdı, herkes alkışladı.</p>
+
+    <p>O toplantıda başka bir mesele daha açıldı: Mahallede her gün olmasa da haftada iki üç kez düğün, mevlid, doğum günü gibi merasimler yapılıyor; kim merasim yapacak olsa kapı kapı gezip ödünç tabak çanak, masa örtüsü istiyordu. Mahalleden para toplayıp şöyle yüz elli kişilik bir mahalle takımı düzülse olmaz mıydı? Bu teklif herkesçe alkışlandı; "Peki bu işin sorumlusu kim olacak?" sorusuna herkes yine Hikmet Dede'yi işaret etti. Hikmet Dede itiraz etmek için ayağa kalkmıştı ki, onca insanın alkışladığını ve gözünün içine baktığını görünce bir şey diyemedi.</p>
+
+    <p>Mahalle kaç hane? Hepsi ihtiyara acıyıp parayı getirip verse ya! Bu evlerin çoğuna gitmek gerekiyordu; keşke bir gidişte verselerdi! Kimi "yarın gel" der, kimi "şu bu kadar vermişken ben niye bu kadar vereyim" diye sızlanır, kimi toplantıda boş boş bakmış, mevzuyu anlamamıştır; ona anlatmak gerekir... İhtiyar her gün sabahtan akşama bir evden bir eve, eldeki parayla bir şeyler alabilmek için bir mağazadan bir mağazaya, derdini anlatmak için bir daireden bir daireye koşturuyor; bu arada fırsat bulup bazen hanımının mezarına da uğruyordu.</p>
+
+    <p>İhtiyar nihayet mahalle takımını tamamlayıp okulun ambarına yerleştirdi. Lakin takımı kurmaktan ziyade onu korumak daha zor oldu: Bazıları aldıkları eşyayı vaktinde getirmiyor, bazıları ise ağzı kırılmış çaydanlık, sigaradan yanmış örtü, lekelenmiş iskemle ya da eğrilmiş çatal geri getiriyor, üstüne bir de "Zaten böyleydi," diye kavga çıkarıyordu. Neyse ki kısa süre sonra insanlar insafa geldi ve ihtiyarın işi hafifledi.</p>
+
+    <p>Bahar geldi. Şehirde ağaç dikme kampanyası başladı. Gazete bir makale yayınlayarak geçen bahar hangi mahallelerin geride kaldığını, hangilerinin örnek olduğunu yazmış; öncü mahalleler arasına "Yangi Mahalle"yi (Yeni Mahalle) de eklemişti. Bunu ihtiyara torunu gülerek gösterdi; çünkü dikilen ağaçların çoğu kurumuştu. İhtiyar dışarı çıkıp mahalleyi dolaştı, ağaçları inceledi. Geçen bahar toplam bin yedi yüz altmış beş fidan dikilmişti; bunlardan sadece sekiz yüz altısı tutmuş, tutanlardan yirmi ikisi kırılmış, sekiz tanesi ise pis kokulu, gevrek ve kısa ömürlü ağaçlardı.</p>
+
+    <p>İhtiyar bu bilgileri alıp doğruca gazete bürosuna gitti; önce çekinerek konuştu, sözünün dinlendiğini fark edince sesini yükseltti. Gazete ertesi sayısında, yanlış bilgi veren muhabirine ceza verdiğini yazdı; muhabiri aldatan mahalle heyeti sekreterini kınadı ve aynı zamanda gazetenin hatasını gösteren Hikmet Buva Normatov'a teşekkür etti.</p>
+
+    <p>Hikmet Dede o gün boyacıda meshlerini yağlatırken, boyacının mahallenin düştüğü bu rezalet hakkındaki sonsuz söylenmelerini dinliyordu. O sırada o yalancı sekreter oradan geçiyordu; ihtiyarı görünce çıkıştı:</p>
+
+    <p class="dialog">— Heh, işte o... Biz kendimiz düzeltirdik zaten; sana ne oluyor, bir ayağın çukurda!</p>
+
+    <p>İhtiyar yavaşça dönüp baktı.</p>
+
+    <p class="dialog">— Benim bir ayağım çukurda da, senin iki ayağın başköşede mi? Öyle deme evladım, kimin önce öleceği belli olmaz...</p>
+
+    <p>İhtiyar daha bir şeyler diyecekti ki, kendine mezar kazdırdığı aklına gelince soluğu kesiliverdi. Sekreter öfkeyle elini sallayıp gitti. İhtiyar ellerini arkasına bağlamış, başı önde, evine doğru ağır ağır adımlarken düşünüyordu: "Acaba bu çocuk mezar kazdırdığımı duymuş mudur? Hayır, duymamıştır ama duyması muhtemeldir..."</p>
+
+    <p>İhtiyar telaşla eve geldi ve oturup bir mektup yazdı: "Mezarlık müdürüne ve mezarcılarına yazıp bildiririm ki; yaşlı çınar altındaki benim adıma kazılmış olan mezarı, ihtiyacı olanların kullanması için mezarlık idaresine devrediyorum."</p>
+
+    <p>Hikmet Dede mektubu torunuyla gönderdi.</p>
+
+  </div><!-- /story-body -->
+</div><!-- /story-container -->
+
+<footer>
+  <p>© Hamza Hoca ile Türkçe Öğreniyorum &nbsp;|&nbsp; <span>@TurkcheOzbekche</span></p>
+</footer>
+
+</body>
+</html>
