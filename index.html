@@ -974,15 +974,30 @@ footer span { color: #F5C842; }
   <div class="panel-header"><h2>🎯 Oyunlar</h2></div>
   <div class="panel-body">
     <div class="two-col-grid">
-      <a class="item-card" href="deyimler_carki.html">
-        <span class="item-name">Deyim Çarkı 1</span>
-        <span class="badge badge-free">✅ Ücretsiz</span>
-      </a>
-       <a class="item-card" href="fiiller_carki_b1_1.unite.html">
-        <span class="item-name">B1-Fiiller Çarkı 1</span>
-        <span class="badge badge-free">✅ Ücretsiz</span>
-      </a>
-      <!-- Diğer kartlar buraya gelecek -->
+      <!-- Sol: Ücretsizler -->
+      <div>
+        <div class="col-label col-label-free">✅ Ücretsiz</div>
+        <div class="col-items">
+          <a class="item-card" href="deyimler_carki.html">
+            <span class="item-name">Deyim Çarkı 1</span>
+            <span class="badge badge-free">✅ Ücretsiz</span>
+          </a>
+          <a class="item-card" href="fiiller_carki_b1_1.unite.html">
+            <span class="item-name">B1-Fiiller Çarkı 1</span>
+            <span class="badge badge-free">✅ Ücretsiz</span>
+          </a>
+        </div>
+      </div>
+      <!-- Sağ: Giriş Gerekliler -->
+      <div>
+        <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
+        <div class="col-items">
+          <div class="item-card" onclick="openLogin('kelimeler_carki_c1_1.unite.html')">
+            <span class="item-name">C1-Kelimeler Çarkı 1</span>
+            <span class="badge badge-locked">🔒 Giriş Gerekli</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
