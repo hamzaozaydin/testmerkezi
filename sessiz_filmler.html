@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Listesi</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #1a1a2e;
+    min-height: 100vh;
+    font-family: 'Crimson Pro', Georgia, serif;
+    color: #f0f0f0;
+    padding: 2.5rem 1rem 3rem;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Subtle background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 20%, rgba(123,47,190,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 80%, rgba(245,200,66,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 700;
+    color: #F5C842;
+    letter-spacing: 2px;
+    text-shadow: 0 0 30px rgba(245,200,66,0.35);
+    margin-bottom: 0.4rem;
+  }
+
+  header p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.5px;
+    font-style: italic;
+  }
+
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #F5C842, transparent);
+    margin: 0.8rem auto 0;
+    border-radius: 2px;
+  }
+
+  .video-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .video-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.4rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    transition: background 0.2s;
+    border-radius: 4px;
+  }
+
+  .video-item:first-child {
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .video-item:hover {
+    background: rgba(245,200,66,0.05);
+  }
+
+  .video-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .video-number {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: rgba(245,200,66,0.45);
+    font-weight: 600;
+    min-width: 22px;
+    text-align: right;
+  }
+
+  .video-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.88);
+    letter-spacing: 0.2px;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .watch-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 18px;
+    background: linear-gradient(135deg, #F5C842, #e0a800);
+    color: #1a1a2e;
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    box-shadow: 0 3px 14px rgba(245,200,66,0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+    letter-spacing: 0.2px;
+  }
+
+  .watch-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(245,200,66,0.55);
+  }
+
+  .watch-btn:active { transform: scale(0.97); }
+
+  .watch-btn svg {
+    width: 13px;
+    height: 13px;
+    fill: #1a1a2e;
+    flex-shrink: 0;
+  }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 2.5rem;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.2);
+    font-style: italic;
+    letter-spacing: 0.3px;
+  }
+
+  #back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50px;
+    padding: 7px 16px 7px 12px;
+    margin-top: 8px;
+    cursor: pointer;
+    color: rgba(255,255,255,0.7);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+    text-decoration: none;
+    outline: none;
+    border-style: solid;
+    width: 100%;
+    justify-content: center;
+  }
+  #back-btn:hover {
+    background: rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.95);
+    transform: translateX(-2px);
+  }
+  #back-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+
+  #info-panel {
+    position: fixed;
+    top: 1.2rem;
+    left: 1.2rem;
+    z-index: 50;
+    width: 300px;
+  }
+  #info-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #F5C842, #e0a800);
+    border: none;
+    border-radius: 12px;
+    padding: 9px 16px;
+    cursor: pointer;
+    color: #1a1a2e;
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    box-shadow: 0 4px 20px rgba(245,200,66,0.4);
+    transition: box-shadow 0.2s, transform 0.15s;
+    width: 100%;
+    text-align: left;
+    outline: none;
+  }
+  #info-toggle:hover { box-shadow: 0 6px 28px rgba(245,200,66,0.6); transform: translateY(-1px); }
+  #info-toggle .arrow { margin-left: auto; transition: transform 0.25s; font-size: 11px; opacity: 0.7; }
+  #info-toggle.open .arrow { transform: rotate(180deg); }
+  #info-body {
+    display: none;
+    background: rgba(22,33,62,0.97);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    margin-top: 8px;
+    padding: 18px 18px 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    backdrop-filter: blur(12px);
+    animation: slideDown 0.22s ease;
+  }
+  #info-body.open { display: block; }
+  @keyframes slideDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+  .info-section { margin-bottom: 14px; }
+  .info-section:last-child { margin-bottom: 0; }
+  .info-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #FECA57;
+    background: rgba(254,202,87,0.12);
+    border: 1px solid rgba(254,202,87,0.3);
+    border-radius: 6px;
+    padding: 2px 8px;
+    margin-bottom: 8px;
+    font-family: 'Crimson Pro', Georgia, serif;
+  }
+  .info-level-badge { color: #48DBFB; background: rgba(72,219,251,0.12); border-color: rgba(72,219,251,0.3); }
+  .info-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 5px; }
+  .info-steps li { display: flex; gap: 8px; font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.5; }
+  .step-num {
+    min-width: 20px; height: 20px; border-radius: 50%;
+    background: #F5C842; color: #1a1a2e;
+    font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .info-goals { display: flex; flex-direction: column; gap: 5px; }
+  .info-goal { display: flex; align-items: flex-start; gap: 7px; font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.45; }
+  .goal-dot { width: 6px; height: 6px; border-radius: 50%; background: #1DD1A1; flex-shrink: 0; margin-top: 5px; }
+</style>
+</head>
+<body>
+
+<div id="info-panel">
+  <button id="info-toggle" onclick="toggleInfo(this)">
+    <span>ℹ️</span>
+    <span>Uygulama Bilgisi</span>
+    <span class="arrow">▼</span>
+  </button>
+  <button id="back-btn" onclick="history.back()">
+    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10.5 3L5 8l5.5 5V3z"/>
+    </svg>
+    Geri
+  </button>
+  <div id="info-body">
+    <div class="info-section">
+      <div class="info-badge info-level-badge">Seviye</div>
+      <div style="font-size:15px;font-weight:700;color:#48DBFB;">B1 &amp; B2</div>
+    </div>
+    <div class="info-section">
+      <div class="info-badge">Uygulama Şekli</div>
+      <ul class="info-steps">
+        <li><span class="step-num">1</span><span>Önce video izlenir.</span></li>
+        <li><span class="step-num">2</span><span>Sonra öğrenciden videoda olanları anlatması istenir.</span></li>
+      </ul>
+    </div>
+    <div class="info-section">
+      <div class="info-badge">Amaç</div>
+      <div class="info-goals">
+        <div class="info-goal"><span class="goal-dot"></span><span>Videodaki olayları ve hareketleri sözlü olarak ifade etmek</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <header>
+    <h1>🎬 Sessiz Film</h1>
+    <p>Videoya gitmek için İzle butonuna tıklayın</p>
+    <div class="divider"></div>
+  </header>
+
+  <div class="video-list" id="videoList">
+    <!-- Videolar buraya JS ile eklenir -->
+  </div>
+
+  <p class="footer-note"></p>
+
+</div>
+
+<script>
+  function toggleInfo(btn) {
+    btn.classList.toggle('open');
+    document.getElementById('info-body').classList.toggle('open');
+  }
+
+  // ============================================================
+  //  YENİ VİDEO EKLEMEK İÇİN: aşağıdaki VIDEOS dizisine
+  //  { name: "Video Adı", url: "https://youtube.com/..." }
+  //  formatında yeni satır ekleyin.
+  // ============================================================
+  const VIDEOS = [
+    {
+      name: "Paylaşmak",
+      url: "https://www.youtube.com/watch?v=38y_1EWIE9I"
+    },
+    {
+      name: "Köprü",
+      url: "https://www.youtube.com/watch?v=oV25aRrK-TM"
+    },
+    {
+      name: "Şanslı / Şanssız",
+      url: "https://www.youtube.com/watch?v=6KjnOKcV9vs"
+    },
+    {
+      name: "Başkalarına Zaman Ayırmak",
+      url: "https://www.youtube.com/watch?v=0Sy4cB1d9Ok"
+    },
+    {
+      name: "Aşk Çeşmesi",
+      url: "https://www.youtube.com/watch?v=Jvts2QpdWkU"
+    },
+  ];
+
+  // Listeyi oluştur
+  const list = document.getElementById('videoList');
+  VIDEOS.forEach((video, i) => {
+    const item = document.createElement('div');
+    item.className = 'video-item';
+    item.innerHTML = `
+      <div class="video-info">
+        <span class="video-number">${String(i + 1).padStart(2, '0')}</span>
+        <span class="video-name">${video.name}</span>
+      </div>
+      <a class="watch-btn" href="${video.url}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 3.5L12.5 8 6 12.5V3.5z"/>
+        </svg>
+        İzle
+      </a>
+    `;
+    list.appendChild(item);
+  });
+</script>
+</body>
+</html>

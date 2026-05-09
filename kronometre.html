@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamza Hoca ile Türkçe Öğreniyorum</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F5C842;
+    --gold-dark: #C9960A;
+    --bg: #0D1B2A;
+    --text: #F0EAD6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(245,200,66,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(58,175,169,0.06) 0%, transparent 50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 1rem;
+  }
+
+  .page-wrap {
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Geri Butonu */
+  .home-btn-wrap {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 999;
+  }
+
+  .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a2332;
+    border: 2px solid #F5C842;
+    border-radius: 40px;
+    padding: 9px 20px;
+    color: #F5C842;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .22s, transform .18s, box-shadow .22s;
+  }
+
+  .home-btn:hover {
+    background: #2a3a4a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    color: #F5C842;
+    text-decoration: none;
+  }
+
+  .home-btn svg { flex-shrink: 0; }
+
+  /* Header */
+  header {
+    text-align: center;
+    padding: 2rem 1rem 1.2rem;
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #F5C842, #C9960A);
+    color: #0D1B2A;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 0.3rem 1.2rem;
+    border-radius: 50px;
+    margin-bottom: 0.9rem;
+  }
+
+  header h1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+    font-weight: 800;
+    color: #F5C842;
+    line-height: 1.3;
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .header-line {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #F5C842, transparent);
+    margin: 0 auto 10px;
+  }
+
+  .stars {
+    font-size: 1rem;
+    color: #F5C842;
+    letter-spacing: .4em;
+    margin-bottom: 6px;
+    opacity: .7;
+  }
+
+  .subtitle {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  /* Telegram */
+  .telegram-section {
+    text-align: center;
+    padding: 0.5rem 1rem 1rem;
+  }
+
+  .tg-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(26,35,50,0.85);
+    border: 1.5px solid rgba(34,158,217,0.3);
+    border-radius: 60px;
+    padding: .75rem 1.5rem .75rem 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+  .tg-btn {
+    display: inline-flex;
+    align-items: center; gap: .45rem;
+    background: linear-gradient(135deg, #229ED9, #1A7FB0);
+    color: #fff; text-decoration: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 800; font-size: .92rem;
+    padding: .65rem 1.5rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(34,158,217,.4);
+    transition: all .22s; white-space: nowrap;
+  }
+
+  .tg-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(34,158,217,.55);
+  }
+
+  /* Stopwatch Card */
+  .stopwatch-card {
+    background: linear-gradient(145deg, #1E3552, #122133);
+    border: 1.5px solid rgba(245,200,66,0.2);
+    border-radius: 20px;
+    padding: 1rem 1.1rem 1.1rem;
+    box-shadow: 0 10px 36px rgba(0,0,0,0.5);
+  }
+
+  /* Presets */
+  .presets-container {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    margin-bottom: 0.65rem;
+    flex-wrap: wrap;
+  }
+
+  .preset-group {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0.32rem;
+  }
+
+  .preset-group-label {
+    font-size: 0.57rem; font-weight: 800;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); opacity: 0.7; text-align: center;
+    border-bottom: 1px solid rgba(245,200,66,0.2);
+    padding-bottom: 2px; width: 100%;
+  }
+
+  .preset-row { display: flex; gap: 0.32rem; flex-wrap: wrap; justify-content: center; }
+
+  .preset-btn {
+    background: rgba(245,200,66,0.1);
+    border: 1.5px solid rgba(245,200,66,0.25);
+    color: var(--gold);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 0.76rem;
+    padding: 0.26rem 0.7rem;
+    border-radius: 50px; cursor: pointer; transition: all .15s;
+  }
+  .preset-btn:hover { background: rgba(245,200,66,0.22); border-color: rgba(245,200,66,0.6); transform: translateY(-1px); }
+  .preset-btn.active {
+    background: linear-gradient(135deg, #F5C842, #C9960A);
+    color: #0D1B2A; border-color: transparent;
+    box-shadow: 0 3px 10px rgba(245,200,66,0.45);
+  }
+
+  /* Selected label */
+  .selected-label {
+    text-align: center; font-size: 0.6rem; font-weight: 700;
+    color: rgba(240,234,214,0.28); letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+
+  /* Progress bar */
+  .progress-bar-wrap {
+    margin-bottom: 0.65rem; height: 5px;
+    background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%; border-radius: 3px;
+    background: linear-gradient(90deg, #F5C842, #2ECC71);
+    transition: width 0.5s linear, background 0.3s; width: 100%;
+  }
+  .progress-bar-fill.warning { background: linear-gradient(90deg, #E74C3C, #FF6B6B); }
+
+  /* Display */
+  .display-box {
+    background: #060E18;
+    border: 2px solid rgba(245,200,66,0.15);
+    border-radius: 14px; padding: 0.7rem 1rem;
+    text-align: center; margin-bottom: 0.8rem;
+    box-shadow: inset 0 4px 20px rgba(0,0,0,0.5);
+    position: relative; overflow: hidden;
+  }
+  .display-box::before {
+    content: ''; position: absolute; top:0; left:0; right:0; bottom:0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+    pointer-events: none;
+  }
+
+  .timer-time {
+    font-family: 'Courier New', monospace;
+    font-size: clamp(2.8rem, 13vw, 4.8rem);
+    font-weight: 900; color: #F5C842;
+    letter-spacing: 4px; line-height: 1;
+    text-shadow: 0 0 28px rgba(245,200,66,0.4), 0 0 55px rgba(245,200,66,0.12);
+    transition: color 0.3s;
+  }
+  .timer-time.warning {
+    color: #FF6B6B;
+    text-shadow: 0 0 28px rgba(255,107,107,0.5);
+    animation: pulse-warn 0.5s ease-in-out infinite alternate;
+  }
+  @keyframes pulse-warn { from { opacity:1; } to { opacity:0.65; } }
+  .timer-time.done {
+    color: #2ECC71;
+    text-shadow: 0 0 28px rgba(46,204,113,0.5); animation: none;
+  }
+
+  /* Controls */
+  .controls-row { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
+
+  .ctrl-btn {
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.88rem;
+    padding: 0.6rem 1.6rem; border-radius: 50px; border: none; cursor: pointer;
+    transition: all .16s; display: inline-flex; align-items: center;
+    gap: 0.3rem; min-width: 115px; justify-content: center;
+  }
+  .ctrl-btn:active { transform: scale(0.96); }
+  .btn-start  { background: linear-gradient(135deg, #2ECC71, #27AE60); color:#fff; box-shadow: 0 4px 16px rgba(46,204,113,.45); }
+  .btn-start:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 7px 22px rgba(46,204,113,.6); }
+  .btn-stop   { background: linear-gradient(135deg, #E74C3C, #C0392B); color:#fff; box-shadow: 0 4px 16px rgba(231,76,60,.45); }
+  .btn-stop:hover { transform: translateY(-2px); box-shadow: 0 7px 22px rgba(231,76,60,.6); }
+  .btn-reset  { background: linear-gradient(135deg, #F1C40F, #D4AC0D); color:#0D1B2A; box-shadow: 0 4px 16px rgba(241,196,15,.4); }
+  .btn-reset:hover { transform: translateY(-2px); box-shadow: 0 7px 22px rgba(241,196,15,.55); }
+  .ctrl-btn:disabled { opacity:.4; cursor:default; transform:none !important; box-shadow:none !important; }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <div class="home-btn-wrap" id="backBtnWrap">
+    <button class="home-btn" onclick="history.back()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"/>
+        <polyline points="12 19 5 12 12 5"/>
+      </svg>
+      Geri
+    </button>
+  </div>
+
+  <header>
+    <div class="header-badge">✦ Kronometre ✦</div>
+    <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+    <div class="header-line"></div>
+    <div class="stars">★ ★ ★ ★ ★</div>
+    <p class="subtitle">Süreyi seç, başlat ve geri say 🎯</p>
+  </header>
+
+  <div class="telegram-section">
+    <div class="tg-box">
+      <div class="tg-logo-wrap">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+          <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+          <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+        </svg>
+      </div>
+      <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">Kanala Katıl</a>
+    </div>
+  </div>
+
+  <div class="stopwatch-card">
+
+    <div class="presets-container">
+      <div class="preset-group">
+        <div class="preset-group-label">SANİYE</div>
+        <div class="preset-row">
+          <button class="preset-btn" data-seconds="5">5</button>
+          <button class="preset-btn active" data-seconds="30">30</button>
+          <button class="preset-btn" data-seconds="45">45</button>
+        </div>
+      </div>
+      <div class="preset-group">
+        <div class="preset-group-label">DAKİKA</div>
+        <div class="preset-row">
+          <button class="preset-btn" data-seconds="60">1</button>
+          <button class="preset-btn" data-seconds="120">2</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="selected-label" id="selectedLabel">Seçili: 30 saniye</div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+
+    <div class="display-box">
+      <div class="timer-time" id="timerDisplay">00:30</div>
+    </div>
+
+    <div class="controls-row">
+      <button class="ctrl-btn btn-start" id="btnStart">▶ BAŞLAT</button>
+      <button class="ctrl-btn btn-reset" id="btnReset">↺ SIFIRLA</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  // Geri butonu: Scroll ile gizle
+  const backBtnWrap = document.getElementById('backBtnWrap');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      backBtnWrap.style.display = 'none';
+    } else {
+      backBtnWrap.style.display = '';
+    }
+  });
+
+  const presetBtns   = document.querySelectorAll('.preset-btn');
+  const timerDisplay = document.getElementById('timerDisplay');
+  const progressFill = document.getElementById('progressFill');
+  const btnStart     = document.getElementById('btnStart');
+  const btnReset     = document.getElementById('btnReset');
+  const selectedLabel= document.getElementById('selectedLabel');
+
+  let totalSeconds = 30, remaining = 30, interval = null, running = false;
+
+  // ── Web Audio bell ──
+  function playBell() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      [[880, 0, 1.1, 0.5], [880, 0.45, 1.1, 0.38], [1320, 0.9, 1.3, 0.5]].forEach(([freq, delay, dur, vol]) => {
+        const osc = ctx.createOscillator(), g = ctx.createGain();
+        osc.connect(g); g.connect(ctx.destination);
+        osc.type = 'sine'; osc.frequency.value = freq;
+        const t = ctx.currentTime + delay;
+        g.gain.setValueAtTime(vol, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+        osc.start(t); osc.stop(t + dur);
+      });
+    } catch(e) {}
+  }
+
+  function fmt(sec) {
+    return String(Math.floor(sec/60)).padStart(2,'0') + ':' + String(sec%60).padStart(2,'0');
+  }
+
+  function updateDisplay() {
+    timerDisplay.textContent = fmt(remaining);
+    progressFill.style.width = (totalSeconds > 0 ? (remaining/totalSeconds)*100 : 100) + '%';
+    timerDisplay.classList.remove('warning','done');
+    progressFill.classList.remove('warning');
+    if (remaining <= 0) { timerDisplay.classList.add('done'); progressFill.style.width='0%'; }
+    else if (remaining <= 5) { timerDisplay.classList.add('warning'); progressFill.classList.add('warning'); }
+  }
+
+  function stopTimer() { if(interval){clearInterval(interval);interval=null;} running=false; }
+
+  function setPreset(s) {
+    stopTimer(); totalSeconds = remaining = s; updateDisplay();
+    selectedLabel.textContent = s<60 ? 'Seçili: '+s+' saniye' : 'Seçili: '+(s/60)+' dakika';
+    presetBtns.forEach(b=>b.classList.remove('active'));
+    document.querySelector(`[data-seconds="${s}"]`).classList.add('active');
+    btnStart.className='ctrl-btn btn-start'; btnStart.textContent='▶ BAŞLAT'; btnStart.disabled=false;
+  }
+
+  function startTimer() {
+    if(running||remaining<=0) return;
+    running=true;
+    btnStart.className='ctrl-btn btn-stop'; btnStart.textContent='⏸ DURDUR';
+    interval=setInterval(()=>{
+      remaining--; updateDisplay();
+      if(remaining<=0){ stopTimer(); playBell(); btnStart.className='ctrl-btn btn-start'; btnStart.textContent='▶ BAŞLAT'; btnStart.disabled=true; }
+    },1000);
+  }
+
+  function resetTimer() {
+    stopTimer(); remaining=totalSeconds; updateDisplay();
+    btnStart.className='ctrl-btn btn-start'; btnStart.textContent='▶ BAŞLAT'; btnStart.disabled=false;
+  }
+
+  btnStart.addEventListener('click', ()=>{
+    if(running){ stopTimer(); btnStart.className='ctrl-btn btn-start'; btnStart.textContent='▶ BAŞLAT'; }
+    else startTimer();
+  });
+  btnReset.addEventListener('click', resetTimer);
+  presetBtns.forEach(b=>b.addEventListener('click',()=>setPreset(parseInt(b.dataset.seconds))));
+
+  updateDisplay();
+</script>
+</body>
+</html>
