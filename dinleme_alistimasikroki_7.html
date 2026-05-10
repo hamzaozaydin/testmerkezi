@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kroki Sorusu - Sanat Okulu Zemin Kat Planı</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+  overflow-x: hidden;
+}
+
+.home-btn-wrap {
+  padding: 18px 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 40px;
+  padding: 9px 20px;
+  color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .22s, transform .18s, box-shadow .22s;
+}
+
+.home-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  color: #F5C842;
+  text-decoration: none;
+}
+
+.home-btn svg { flex-shrink: 0; }
+
+header {
+  text-align: center;
+  padding: 2rem 1rem 1.2rem;
+}
+
+.header-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.3rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 0.9rem;
+}
+
+header h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.header-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 10px;
+}
+
+.stars {
+  font-size: 1rem;
+  color: #F5C842;
+  letter-spacing: .4em;
+  margin-bottom: 6px;
+  opacity: .7;
+}
+
+.subtitle {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.telegram-section {
+  text-align: center;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.tg-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(26,35,50,0.85);
+  border: 1.5px solid rgba(34,158,217,0.3);
+  border-radius: 60px;
+  padding: .75rem 1.5rem .75rem 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+.tg-btn {
+  display: inline-flex;
+  align-items: center; gap: .45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0);
+  color: #fff; text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800; font-size: .92rem;
+  padding: .65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34,158,217,.4);
+  transition: all .22s; white-space: nowrap;
+}
+
+.tg-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(34,158,217,.55);
+}
+
+.section-title {
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: .85rem; color: #F5C842;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: .5rem 0 1rem; opacity: .75;
+}
+
+footer {
+  text-align: center;
+  padding: 0 1rem 2.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+footer span { color: #F5C842; }
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.95) translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ===== Kroki Sorusu styles ===== */
+:root{
+  --bg:#0D1B2A; --ink:#F5C842; --line:#F5C842; --muted:#a0aec0;
+  --accent:#F5C842; --ok:#16a34a; --bad:#dc2626; --paper:rgba(26,35,50,0.85);
+  --glow:#fbbf24;
+}
+main{max-width:1100px;margin:0 auto;padding:20px;display:grid;gap:20px}
+.panel{background:rgba(26,35,50,0.9);border:2px solid rgba(245,200,66,0.3);padding:16px;border-radius:8px}
+.panel h2{color:#F5C842;margin:0 0 8px;font-size:18px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button{font:inherit;padding:10px 16px;border:2px solid #F5C842;background:#F5C842;color:#0D1B2A;
+       cursor:pointer;border-radius:6px;transition:transform .15s, background .2s;font-weight:700}
+button:hover{transform:translateY(-2px)}
+button.secondary{background:transparent;color:#F5C842}
+button:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.quiz{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px 18px;margin-top:12px}
+.quiz label{display:flex;align-items:center;gap:10px;font-weight:600;color:rgba(255,255,255,0.85)}
+.quiz label > span{flex:0 0 130px}
+.quiz select{padding:6px 8px;border:2px solid rgba(245,200,66,0.4);background:#1a2332;color:#fff;font:inherit;width:90px;flex:0 0 90px;border-radius:4px}
+.result{margin-top:12px;font-weight:700}
+.legend{font-size:13px;color:var(--muted);margin-top:6px}
+svg{width:100%;height:auto;display:block}
+.room{fill:rgba(13,27,42,0.7);stroke:#F5C842;stroke-width:3;cursor:default;transition:fill .3s}
+.room.selectable{cursor:pointer}
+.room.selectable:hover{fill:rgba(245,200,66,0.15)}
+.room.correct{fill:rgba(187,247,208,0.3)}
+.room.wrong{fill:rgba(254,202,202,0.3)}
+.room.target{animation:pulseRoom 1s ease-in-out 3}
+@keyframes pulseRoom{0%,100%{fill:rgba(13,27,42,0.7)}50%{fill:rgba(245,200,66,0.2)}}
+.label{font-weight:700;font-size:18px;text-anchor:middle;dominant-baseline:central;pointer-events:none;fill:#F5C842}
+.label.small{font-size:13px;fill:rgba(255,255,255,0.7)}
+.corridor-text{font-size:14px;font-weight:600;fill:rgba(255,255,255,0.4);text-anchor:middle}
+.room-tag{font-size:12px;font-weight:700;fill:#F5C842;text-anchor:middle;pointer-events:none}
+.footer-tag{font-size:14px;font-weight:700;fill:rgba(255,255,255,0.4)}
+details{margin-top:10px}
+summary{cursor:pointer;font-weight:700;color:#F5C842}
+.text-block{white-space:pre-wrap;background:rgba(13,27,42,0.8);border-left:4px solid #F5C842;
+            padding:12px 14px;margin-top:10px;font-size:14px;color:rgba(255,255,255,0.85);border-radius:4px}
+.score{font-size:18px}
+
+/* Course buttons */
+.course-buttons{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:8px}
+.course-btn{
+  background:rgba(26,35,50,0.9);
+  color:#F5C842;border:2px solid rgba(245,200,66,0.4);padding:14px 12px;
+  font-weight:700;letter-spacing:.3px;position:relative;overflow:hidden;border-radius:6px;
+}
+.course-btn:hover{background:rgba(245,200,66,0.15);border-color:#F5C842;color:#F5C842}
+.course-btn.active{background:rgba(245,200,66,0.2);border-color:#F5C842;color:#F5C842;
+  box-shadow:0 0 0 3px rgba(245,200,66,0.3), 0 0 20px rgba(245,200,66,.3)}
+.course-btn .ans{display:block;font-size:11px;font-weight:600;opacity:.75;margin-top:2px}
+
+/* Light path animations */
+.light-trail{
+  fill:none;
+  stroke:url(#trailGrad);
+  stroke-width:8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  filter:url(#glowFilter);
+  opacity:.95;
+}
+.light-head{
+  fill:#fff;
+  filter:url(#glowFilter);
+}
+@keyframes drawTrail{ to { stroke-dashoffset:0; } }
+@keyframes fadeTrail{ to { opacity:0; } }
+@keyframes pulseHead{
+  0%,100%{ r:7; opacity:1 }
+  50%{ r:11; opacity:.85 }
+}
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap" id="backBtnWrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ Kroki Alıştırması ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle">Kroki Sorusu • Sanat Okulu Zemin Kat Planı</p>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+      Kanala Katıl
+    </a>
+  </div>
+</div>
+
+<main>
+  <section class="panel">
+    <div class="controls">
+      <button id="play">▶ Dinleme Metnini Seslendir</button>
+      <button id="pause" class="secondary">⏸ Duraklat / Devam</button>
+      <button id="stop" class="secondary">⏹ Durdur</button>
+      <span class="legend"></span>
+    </div>
+    <details>
+      <summary>Dinleme Metnini Oku</summary>
+      <div class="text-block" id="textBlock"></div>
+    </details>
+  </section>
+
+  <section class="panel">
+    <h2 style="margin:0 0 8px;font-size:18px">Zemin Kat Krokisi</h2>
+    <svg id="map" viewBox="0 0 900 520" role="img" aria-label="Sanat okulu zemin kat krokisi">
+      <defs>
+        <filter id="glowFilter" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feMerge>
+            <feMergeNode in="b"/>
+            <feMergeNode in="b"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <linearGradient id="trailGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#fbbf24"/>
+          <stop offset="50%" stop-color="#fde68a"/>
+          <stop offset="100%" stop-color="#fff7cc"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Outer frame -->
+      <rect x="10" y="10" width="880" height="470" fill="none" stroke="#F5C842" stroke-width="4"/>
+
+      <!-- Top row rooms -->
+      <rect class="room selectable" data-room="G" x="10"  y="10"  width="170" height="170"/>
+      <rect class="room"            data-room="HIZMETLI" x="180" y="10" width="120" height="170"/>
+      <rect class="room selectable" data-room="A" x="300" y="10"  width="200" height="170"/>
+      <rect class="room selectable" data-room="D" x="500" y="10"  width="200" height="170"/>
+      <rect class="room selectable" data-room="F" x="700" y="10"  width="190" height="170"/>
+
+      <!-- Left middle: Müdür Yrd. -->
+      <rect class="room" data-room="MUDUR" x="10" y="240" width="160" height="80"/>
+
+      <!-- Bottom-left: C -->
+      <rect class="room selectable" data-room="C" x="10" y="370" width="160" height="110"/>
+
+      <!-- Danışma -->
+      <rect class="room" data-room="DANISMA" x="180" y="360" width="120" height="80"/>
+      <!-- Giriş -->
+      <rect class="room" data-room="GIRIS"   x="180" y="420" width="120" height="60"/>
+
+      <!-- Bottom-right rooms -->
+      <rect class="room selectable" data-room="H" x="300" y="240" width="200" height="240"/>
+      <rect class="room selectable" data-room="B" x="500" y="240" width="200" height="240"/>
+      <rect class="room selectable" data-room="E" x="700" y="240" width="190" height="240"/>
+
+      <!-- Labels -->
+      <text class="label" x="95"  y="95">G</text>
+      <text class="label small" x="240" y="85">HİZMETLİ</text>
+      <text class="label small" x="240" y="105">ODASI</text>
+      <text class="label" x="400" y="95">A</text>
+      <text class="label" x="600" y="95">D</text>
+      <text class="label" x="795" y="95">F</text>
+
+      <text class="label small" x="90" y="270">MÜDÜR</text>
+      <text class="label small" x="90" y="295">YRD.</text>
+
+      <text class="label small" x="220" y="270">HOL</text>
+      <text class="corridor-text" x="600" y="215">KORİDOR</text>
+
+      <text class="label" x="90"  y="425">C</text>
+      <text class="label small" x="240" y="380">DANIŞMA</text>
+      <text class="label small" x="240" y="450">GİRİŞ</text>
+
+      <text class="label" x="400" y="360">H</text>
+      <text class="label" x="600" y="360">B</text>
+      <text class="label" x="795" y="360">E</text>
+
+      <text class="footer-tag" x="880" y="505" text-anchor="end">ZEMİN KAT PLANI</text>
+
+      <!-- Animated light path layer -->
+      <g id="lightLayer"></g>
+
+      <!-- Course tags overlay (filled after check) -->
+      <g id="tags"></g>
+    </svg>
+  </section>
+
+  <section class="panel">
+    <h2 style="margin:0 0 8px;font-size:18px">Kurs Yolunu Göster</h2>
+    <p class="legend">Bir butona basın; giriş kapısından ilgili odaya kadar ışıklı yol çizilsin.</p>
+    <div class="course-buttons" id="courseButtons"></div>
+  </section>
+
+  <section class="panel">
+    <h2 style="margin:0 0 8px;font-size:18px">Hangi kurs hangi odada?</h2>
+    <p class="legend">Her kurs için doğru odayı seçin, sonra <b>Kontrol Et</b>'e basın.</p>
+    <div class="quiz" id="quiz"></div>
+    <div class="controls" style="margin-top:14px">
+      <button id="check">✓ Kontrol Et</button>
+      <button id="reset" class="secondary">↺ Sıfırla</button>
+      <button id="reveal" class="secondary">👁 Cevap Anahtarını Göster</button>
+    </div>
+    <p class="result" id="result"></p>
+  </section>
+</main>
+
+<script>
+const TEXT = `Önünüzdeki krokide yeni açılan sanat okulunun zemin kat krokisini görüyorsunuz. Şimdi sizlere bu sanat okulunda hangi kursun hangi odada verildiği anlatılacaktır.
+
+Mesela piyano kursu almak istiyorsanız giriş kapısından girin ve danışmadan geçerek koridora ulaşın. Koridora girdiğinizde sol tarafınızdaki ilk kapı Piyano kursunun kapısıdır. Bu odada piyano kursu verilmektedir.
+
+Sanat okulumuzdaki keman kursları haftada üç gün olup sabah saat onda başlamaktadır. Keman kursu odasına gitmek için Giriş kapısından girin ve danışmayı geçince hemen sol tarafa dönün. Köşedeki odaya girin. Burası keman kursunun verildiği odadır.
+
+Sanat okulumuzun gitar hocamız ise çok ünlü bir gitarist olup özel dersler vermektedir. Onun ders verdiği odaya gitmek için Giriş kapısından içeri girin, danışmayı geçtikten sonra koridora dönün. Koridora girdiğinizde sağ tarafınızdaki ikinci odada ders vermektedir.
+
+Gitar kursunuz bittikten sonra Türk halk müziğinin en önemli enstrümanlarından olan bağlama üzerine de dersler almak istiyorsanız Gitar kursu odasından çıkın, sağa dönün ve koridorun sonuna vardığınızda sol tarafınızdaki odada bağlama kursu verilmektedir.
+
+Ayrıca kursumuzda Türk tasavvuf müziğinin vazgeçilmez enstrümanı olan ney üzerine kurs ise neyzen Fikret tarafından verilmektedir. Neyzen Fikret'ten ders almak isterseniz danışmayı geçtikten sonra koridorun en sonunda sağdaki odaya gitmelisiniz.
+
+Son olarak sanat okulumuzda bateri kursu da verilmektedir. Çok gürültü çıkacağı için diğer odalara uzak bir yerdedir. Bateri kursuna gitmek için Giriş kapısından girin, danışmayı geçerek holün ortasına gelin. Bateri kursu holün kuzeybatı köşesinde kalmaktadır.
+
+Soru bitmiştir. Cevaplarınızı kontrol ediniz.`;
+
+document.getElementById('textBlock').textContent = TEXT;
+
+// --- TTS ---
+const synth = window.speechSynthesis;
+let utter = null;
+function pickTrVoice(){
+  const vs = synth.getVoices();
+  return vs.find(v=>/tr(-|_)?TR/i.test(v.lang)) || vs.find(v=>/^tr/i.test(v.lang)) || null;
+}
+document.getElementById('play').onclick = ()=>{
+  synth.cancel();
+  utter = new SpeechSynthesisUtterance(TEXT);
+  const v = pickTrVoice();
+  if(v) utter.voice = v;
+  utter.lang = 'tr-TR';
+  utter.rate = 0.95;
+  synth.speak(utter);
+};
+document.getElementById('pause').onclick = ()=>{
+  if(synth.speaking && !synth.paused) synth.pause();
+  else if(synth.paused) synth.resume();
+};
+document.getElementById('stop').onclick = ()=>synth.cancel();
+if(typeof speechSynthesis!=='undefined') speechSynthesis.onvoiceschanged = ()=>{};
+
+// --- Quiz ---
+const COURSES = [
+  {key:'piyano', label:'Piyano kursu', answer:'A'},
+  {key:'keman',  label:'Keman kursu',  answer:'C'},
+  {key:'gitar',  label:'Gitar kursu',  answer:'B'},
+  {key:'baglama',label:'Bağlama kursu',answer:'F'},
+  {key:'ney',    label:'Ney kursu',    answer:'E'},
+  {key:'bateri', label:'Bateri kursu', answer:'G'},
+];
+const ROOMS = ['A','B','C','D','E','F','G','H'];
+
+const quizEl = document.getElementById('quiz');
+COURSES.forEach(c=>{
+  const wrap = document.createElement('label');
+  wrap.innerHTML = `<span style="min-width:120px">${c.label}</span>
+    <select data-course="${c.key}">
+      <option value="">Seçiniz</option>
+      ${ROOMS.map(r=>`<option value="${r}">${r}</option>`).join('')}
+    </select>`;
+  quizEl.appendChild(wrap);
+});
+
+const tagsG = document.getElementById('tags');
+const roomCenters = {
+  A:[400,135], B:[600,360], C:[90,425], D:[600,135],
+  E:[795,360], F:[795,135], G:[95,135],  H:[400,360]
+};
+
+function clearMarks(){
+  document.querySelectorAll('rect.room').forEach(r=>{
+    r.classList.remove('correct','wrong');
+  });
+  tagsG.innerHTML = '';
+}
+
+function check(reveal=false){
+  clearMarks();
+  let correct = 0;
+  COURSES.forEach(c=>{
+    const sel = document.querySelector(`select[data-course="${c.key}"]`);
+    const val = reveal ? c.answer : sel.value;
+    if(reveal) sel.value = c.answer;
+    if(!val) return;
+    const rect = document.querySelector(`rect[data-room="${val}"]`);
+    const ok = val === c.answer;
+    if(ok) correct++;
+    if(rect) rect.classList.add(ok?'correct':'wrong');
+    const [cx,cy] = roomCenters[val] || [0,0];
+    const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('class','room-tag');
+    t.setAttribute('x',cx);
+    t.setAttribute('y',cy+24);
+    t.textContent = c.label;
+    tagsG.appendChild(t);
+  });
+  const total = COURSES.length;
+  const res = document.getElementById('result');
+  if(reveal){
+    res.innerHTML = `<span class="score">Cevap anahtarı gösterildi.</span>`;
+    res.style.color = '#F5C842';
+  } else {
+    res.innerHTML = `<span class="score">Doğru: ${correct} / ${total}</span>`;
+    res.style.color = correct===total ? '#16a34a' : '#dc2626';
+  }
+}
+
+document.getElementById('check').onclick = ()=>check(false);
+document.getElementById('reveal').onclick = ()=>check(true);
+document.getElementById('reset').onclick = ()=>{
+  document.querySelectorAll('#quiz select').forEach(s=>s.value='');
+  clearMarks();
+  document.getElementById('result').textContent = '';
+};
+
+// ====== ANIMATED LIGHT PATHS ======
+const SVGNS = 'http://www.w3.org/2000/svg';
+const ENTRANCE = [240, 495];
+
+const PATHS = {
+  piyano: [ENTRANCE,[240,400],[240,210],[400,210],[400,180],[400,135]],
+  keman:  [ENTRANCE,[240,420],[240,395],[170,400],[90,425]],
+  gitar:  [ENTRANCE,[240,400],[240,210],[600,210],[600,240],[600,360]],
+  baglama:[ENTRANCE,[240,400],[240,210],[600,210],[600,240],[600,360],
+           [600,240],[600,210],[795,210],[795,180],[795,135]],
+  ney:    [ENTRANCE,[240,400],[240,210],[795,210],[795,240],[795,360]],
+  bateri: [ENTRANCE,[240,400],[240,300],[180,270],[95,135]],
+};
+
+const ROOM_OF = { piyano:'A', keman:'C', gitar:'B', baglama:'F', ney:'E', bateri:'G' };
+const LABELS  = { piyano:'Piyano', keman:'Keman', gitar:'Gitar', baglama:'Bağlama', ney:'Ney', bateri:'Bateri' };
+
+function pointsToPath(pts){
+  return pts.map((p,i)=> (i===0?'M':'L')+p[0]+' '+p[1]).join(' ');
+}
+
+const lightLayer = document.getElementById('lightLayer');
+let activeAnim = null;
+
+function clearLight(){
+  lightLayer.innerHTML = '';
+  document.querySelectorAll('rect.room.target').forEach(r=>r.classList.remove('target'));
+  document.querySelectorAll('.course-btn.active').forEach(b=>b.classList.remove('active'));
+}
+
+function animateRoute(courseKey, btn){
+  clearLight();
+  btn.classList.add('active');
+  const pts = PATHS[courseKey];
+  if(!pts) return;
+  const d = pointsToPath(pts);
+
+  const guide = document.createElementNS(SVGNS,'path');
+  guide.setAttribute('d', d);
+  guide.setAttribute('fill','none');
+  guide.setAttribute('stroke','#fde68a');
+  guide.setAttribute('stroke-width','3');
+  guide.setAttribute('stroke-dasharray','4 6');
+  guide.setAttribute('opacity','0.5');
+  lightLayer.appendChild(guide);
+
+  const trail = document.createElementNS(SVGNS,'path');
+  trail.setAttribute('d', d);
+  trail.setAttribute('class','light-trail');
+  lightLayer.appendChild(trail);
+
+  const len = trail.getTotalLength();
+  const duration = Math.max(1800, len * 4);
+  trail.style.strokeDasharray = len;
+  trail.style.strokeDashoffset = len;
+  trail.style.animation = `drawTrail ${duration}ms ease-in-out forwards`;
+
+  const head = document.createElementNS(SVGNS,'circle');
+  head.setAttribute('r','8');
+  head.setAttribute('class','light-head');
+  head.setAttribute('cx', pts[0][0]);
+  head.setAttribute('cy', pts[0][1]);
+  head.style.animation = 'pulseHead 0.8s ease-in-out infinite';
+  lightLayer.appendChild(head);
+
+  const halo = document.createElementNS(SVGNS,'circle');
+  halo.setAttribute('r','16');
+  halo.setAttribute('fill','rgba(251,191,36,.35)');
+  halo.setAttribute('cx', pts[0][0]);
+  halo.setAttribute('cy', pts[0][1]);
+  lightLayer.appendChild(halo);
+
+  const start = performance.now();
+  function tick(now){
+    const t = Math.min(1, (now - start) / duration);
+    const eased = t<.5 ? 2*t*t : 1 - Math.pow(-2*t+2,2)/2;
+    const pt = trail.getPointAtLength(eased * len);
+    head.setAttribute('cx', pt.x);
+    head.setAttribute('cy', pt.y);
+    halo.setAttribute('cx', pt.x);
+    halo.setAttribute('cy', pt.y);
+    if(t < 1){
+      activeAnim = requestAnimationFrame(tick);
+    } else {
+      const room = document.querySelector(`rect[data-room="${ROOM_OF[courseKey]}"]`);
+      if(room) room.classList.add('target');
+      setTimeout(()=>{
+        head.style.transition = 'opacity .8s';
+        halo.style.transition = 'opacity .8s';
+        head.style.opacity = '0';
+        halo.style.opacity = '0';
+      }, 1500);
+    }
+  }
+  activeAnim = requestAnimationFrame(tick);
+}
+
+// Build course buttons
+const cbWrap = document.getElementById('courseButtons');
+COURSES.forEach(c=>{
+  const b = document.createElement('button');
+  b.className = 'course-btn';
+  b.dataset.course = c.key;
+  b.innerHTML = `${c.label}`;
+  b.onclick = ()=>{
+    if(activeAnim) cancelAnimationFrame(activeAnim);
+    animateRoute(c.key, b);
+  };
+  cbWrap.appendChild(b);
+});
+</script>
+</body>
+</html>
