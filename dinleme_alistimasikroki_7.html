@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kroki Sorusu - Sanat Okulu Zemin Kat Planı</title>
+<title>Kroki Sorusu - Ev Zemin Kat Planı</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -174,7 +174,7 @@ button.secondary{background:transparent;color:#F5C842}
 button:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .quiz{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px 18px;margin-top:12px}
 .quiz label{display:flex;align-items:center;gap:10px;font-weight:600;color:rgba(255,255,255,0.85)}
-.quiz label > span{flex:0 0 130px}
+.quiz label > span{flex:0 0 140px}
 .quiz select{padding:6px 8px;border:2px solid rgba(245,200,66,0.4);background:#1a2332;color:#fff;font:inherit;width:90px;flex:0 0 90px;border-radius:4px}
 .result{margin-top:12px;font-weight:700}
 .legend{font-size:13px;color:var(--muted);margin-top:6px}
@@ -189,7 +189,7 @@ svg{width:100%;height:auto;display:block}
 .label{font-weight:700;font-size:18px;text-anchor:middle;dominant-baseline:central;pointer-events:none;fill:#F5C842}
 .label.small{font-size:13px;fill:rgba(255,255,255,0.7)}
 .corridor-text{font-size:14px;font-weight:600;fill:rgba(255,255,255,0.4);text-anchor:middle}
-.room-tag{font-size:12px;font-weight:700;fill:#F5C842;text-anchor:middle;pointer-events:none}
+.room-tag{font-size:11px;font-weight:700;fill:#F5C842;text-anchor:middle;pointer-events:none}
 .footer-tag{font-size:14px;font-weight:700;fill:rgba(255,255,255,0.4)}
 details{margin-top:10px}
 summary{cursor:pointer;font-weight:700;color:#F5C842}
@@ -247,7 +247,7 @@ summary{cursor:pointer;font-weight:700;color:#F5C842}
   <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
   <div class="header-line"></div>
   <div class="stars">★ ★ ★ ★ ★</div>
-  <p class="subtitle">Kroki Sorusu • Sanat Okulu Zemin Kat Planı</p>
+  <p class="subtitle">Kroki Sorusu • Ev Zemin Kat Planı</p>
 </header>
 
 <div class="telegram-section">
@@ -280,7 +280,25 @@ summary{cursor:pointer;font-weight:700;color:#F5C842}
 
   <section class="panel">
     <h2 style="margin:0 0 8px;font-size:18px">Zemin Kat Krokisi</h2>
-    <svg id="map" viewBox="0 0 900 520" role="img" aria-label="Sanat okulu zemin kat krokisi">
+    <!--
+      PLAN LAYOUT (viewBox 0 0 960 540):
+      Top row (y=10, h=200):
+        A: x=10,  w=185  → kuzeybatı köşe (Salon)
+        G: x=195, w=175  → (Banyo/Merdiven yanı)
+        Merdiven: x=370, w=80
+        B: x=450, w=155  → (Mutfak)
+        I: x=605, w=80   → küçük oda
+        D: x=685, w=275  → kuzeydoğu köşe (Misafir odası)
+
+      Bottom row (y=255, h=230):
+        H: x=10,  w=305  → sol büyük oda (Çocuk odası)
+        E: x=315, w=135  → (Giriş / hol girişi)
+        F: x=450, w=155  → (Çalışma ofisi)
+        C: x=605, w=355  → güneydoğu köşe (Yatak odası)
+
+      HOL: x=195, y=210, w=470, h=45 (yatay koridor)
+    -->
+    <svg id="map" viewBox="0 0 960 540" role="img" aria-label="Ev zemin kat krokisi">
       <defs>
         <filter id="glowFilter" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="4" result="b"/>
@@ -298,72 +316,96 @@ summary{cursor:pointer;font-weight:700;color:#F5C842}
       </defs>
 
       <!-- Outer frame -->
-      <rect x="10" y="10" width="880" height="470" fill="none" stroke="#F5C842" stroke-width="4"/>
+      <rect x="10" y="10" width="940" height="470" fill="none" stroke="#F5C842" stroke-width="4"/>
 
-      <!-- Top row rooms -->
-      <rect class="room selectable" data-room="G" x="10"  y="10"  width="170" height="170"/>
-      <rect class="room"            data-room="HIZMETLI" x="180" y="10" width="120" height="170"/>
-      <rect class="room selectable" data-room="A" x="300" y="10"  width="200" height="170"/>
-      <rect class="room selectable" data-room="D" x="500" y="10"  width="200" height="170"/>
-      <rect class="room selectable" data-room="F" x="700" y="10"  width="190" height="170"/>
+      <!-- TOP ROW ROOMS -->
+      <!-- A: Salon (kuzeybatı) -->
+      <rect class="room selectable" data-room="A" x="10"  y="10"  width="185" height="200"/>
+      <!-- G: Banyo (kuzey, merdiven yanı sol) -->
+      <rect class="room selectable" data-room="G" x="195" y="10"  width="175" height="200"/>
+      <!-- Merdiven (not selectable) -->
+      <rect class="room" data-room="MRD" x="370" y="10"  width="80"  height="200" style="stroke-dasharray:6 4"/>
+      <!-- B: Mutfak -->
+      <rect class="room selectable" data-room="B" x="450" y="10"  width="155" height="200"/>
+      <!-- I: küçük oda -->
+      <rect class="room selectable" data-room="I" x="605" y="10"  width="80"  height="200"/>
+      <!-- D: Misafir odası (kuzeydoğu) -->
+      <rect class="room selectable" data-room="D" x="685" y="10"  width="265" height="200"/>
 
-      <!-- Left middle: Müdür Yrd. -->
-      <rect class="room" data-room="MUDUR" x="10" y="240" width="160" height="80"/>
+      <!-- HOL - sadece yazı, rect yok -->
 
-      <!-- Bottom-left: C -->
-      <rect class="room selectable" data-room="C" x="10" y="370" width="160" height="110"/>
+      <!-- BOTTOM ROW ROOMS -->
+      <!-- H: Çocuk odası (sol büyük) -->
+      <rect class="room selectable" data-room="H" x="10"  y="255" width="305" height="225"/>
+      <!-- E: Giriş / hol -->
+      <rect class="room" data-room="E" x="315" y="255" width="135" height="225" style="fill:rgba(13,27,42,0.4)"/>
+      <!-- F: Çalışma ofisi -->
+      <rect class="room selectable" data-room="F" x="450" y="255" width="155" height="225"/>
+      <!-- C: Yatak odası (güneydoğu) -->
+      <rect class="room selectable" data-room="C" x="605" y="255" width="345" height="225"/>
 
-      <!-- Danışma -->
-      <rect class="room" data-room="DANISMA" x="180" y="360" width="120" height="80"/>
-      <!-- Giriş -->
-      <rect class="room" data-room="GIRIS"   x="180" y="420" width="120" height="60"/>
+      <!-- LABELS - TOP ROW -->
+      <text class="label" x="102"  y="110">A</text>
+      <text class="label" x="282"  y="110">G</text>
+      <!-- Merdiven label -->
+      <text class="label small" x="410" y="100">Mer-</text>
+      <text class="label small" x="410" y="120">diven</text>
+      <!-- Merdiven hatch lines -->
+      <line x1="370" y1="50"  x2="450" y2="50"  stroke="#F5C842" stroke-width="1.5" opacity="0.4"/>
+      <line x1="370" y1="70"  x2="450" y2="70"  stroke="#F5C842" stroke-width="1.5" opacity="0.4"/>
+      <line x1="370" y1="90"  x2="450" y2="90"  stroke="#F5C842" stroke-width="1.5" opacity="0.4"/>
+      <line x1="370" y1="110" x2="450" y2="110" stroke="#F5C842" stroke-width="1.5" opacity="0.4"/>
+      <line x1="370" y1="130" x2="450" y2="130" stroke="#F5C842" stroke-width="1.5" opacity="0.4"/>
+      <line x1="370" y1="150" x2="450" y2="150" stroke="#F5C842" stroke-width="1.5" opacity="0.4"/>
+      <line x1="370" y1="170" x2="450" y2="170" stroke="#F5C842" stroke-width="1.5" opacity="0.4"/>
+      <line x1="370" y1="190" x2="450" y2="190" stroke="#F5C842" stroke-width="1.5" opacity="0.4"/>
 
-      <!-- Bottom-right rooms -->
-      <rect class="room selectable" data-room="H" x="300" y="240" width="200" height="240"/>
-      <rect class="room selectable" data-room="B" x="500" y="240" width="200" height="240"/>
-      <rect class="room selectable" data-room="E" x="700" y="240" width="190" height="240"/>
+      <text class="label" x="527"  y="110">B</text>
+      <text class="label" x="645"  y="110">I</text>
+      <text class="label" x="817"  y="110">D</text>
 
-      <!-- Labels -->
-      <text class="label" x="95"  y="95">G</text>
-      <text class="label small" x="240" y="85">HİZMETLİ</text>
-      <text class="label small" x="240" y="105">ODASI</text>
-      <text class="label" x="400" y="95">A</text>
-      <text class="label" x="600" y="95">D</text>
-      <text class="label" x="795" y="95">F</text>
+      <!-- HOL label -->
+      <text class="corridor-text" x="430" y="238">HOL</text>
 
-      <text class="label small" x="90" y="270">MÜDÜR</text>
-      <text class="label small" x="90" y="295">YRD.</text>
+      <!-- LABELS - BOTTOM ROW -->
+      <text class="label" x="162"  y="367">H</text>
+      <!-- Giriş label -->
+      <text class="label small" x="382" y="367">GİRİŞ</text>
+      <text class="label" x="527"  y="367">F</text>
+      <text class="label" x="777"  y="367">C</text>
 
-      <text class="label small" x="220" y="270">HOL</text>
-      <text class="corridor-text" x="600" y="215">KORİDOR</text>
+      <!-- Compass - inside C room (güneydoğu), bottom-right corner -->
+      <g transform="translate(910,455)">
+        <text font-size="10" fill="rgba(255,255,255,0.5)" text-anchor="middle" y="-32">K</text>
+        <text font-size="10" fill="rgba(255,255,255,0.5)" text-anchor="middle" y="14">G</text>
+        <text font-size="10" fill="rgba(255,255,255,0.5)" text-anchor="start"  x="18" y="-8">D</text>
+        <text font-size="10" fill="rgba(255,255,255,0.5)" text-anchor="end"    x="-18" y="-8">B</text>
+        <polygon points="0,-22 5,-4 0,-10 -5,-4" fill="#F5C842" opacity="0.8"/>
+        <polygon points="0,22 5,4 0,10 -5,4"  fill="rgba(255,255,255,0.3)"/>
+        <polygon points="22,0 4,5 10,0 4,-5"  fill="rgba(255,255,255,0.3)"/>
+        <polygon points="-22,0 -4,5 -10,0 -4,-5" fill="rgba(255,255,255,0.3)"/>
+        <circle cx="0" cy="0" r="3" fill="#F5C842"/>
+      </g>
 
-      <text class="label" x="90"  y="425">C</text>
-      <text class="label small" x="240" y="380">DANIŞMA</text>
-      <text class="label small" x="240" y="450">GİRİŞ</text>
-
-      <text class="label" x="400" y="360">H</text>
-      <text class="label" x="600" y="360">B</text>
-      <text class="label" x="795" y="360">E</text>
-
-      <text class="footer-tag" x="880" y="505" text-anchor="end">ZEMİN KAT PLANI</text>
+      <text class="footer-tag" x="940" y="525" text-anchor="end">ZEMİN KAT PLANI</text>
 
       <!-- Animated light path layer -->
       <g id="lightLayer"></g>
 
-      <!-- Course tags overlay (filled after check) -->
+      <!-- Room tags overlay (filled after check) -->
       <g id="tags"></g>
     </svg>
   </section>
 
   <section class="panel">
-    <h2 style="margin:0 0 8px;font-size:18px">Kurs Yolunu Göster</h2>
+    <h2 style="margin:0 0 8px;font-size:18px">Odayı Göster</h2>
     <p class="legend">Bir butona basın; giriş kapısından ilgili odaya kadar ışıklı yol çizilsin.</p>
     <div class="course-buttons" id="courseButtons"></div>
   </section>
 
   <section class="panel">
-    <h2 style="margin:0 0 8px;font-size:18px">Hangi kurs hangi odada?</h2>
-    <p class="legend">Her kurs için doğru odayı seçin, sonra <b>Kontrol Et</b>'e basın.</p>
+    <h2 style="margin:0 0 8px;font-size:18px">Hangi oda hangisi?</h2>
+    <p class="legend">Her oda için doğru harfi seçin, sonra <b>Kontrol Et</b>'e basın.</p>
     <div class="quiz" id="quiz"></div>
     <div class="controls" style="margin-top:14px">
       <button id="check">✓ Kontrol Et</button>
@@ -375,21 +417,26 @@ summary{cursor:pointer;font-weight:700;color:#F5C842}
 </main>
 
 <script>
-const TEXT = `Önünüzdeki krokide yeni açılan sanat okulunun zemin kat krokisini görüyorsunuz. Şimdi sizlere bu sanat okulunda hangi kursun hangi odada verildiği anlatılacaktır.
+const TEXT = `Merhaba! Evimize hoş geldiniz. Şimdi, sizi gezdirmeye başlayacağım. Giriş kapısından içeri adım attığınızda hemen önünüzde geniş bir hol bulunuyor. Solunuza dönerseniz salonu görürsünüz. Salon evin kuzeybatı köşesinde. Oldukça geniş ve gün boyunca bolca doğal ışık alıyor.
 
-Mesela piyano kursu almak istiyorsanız giriş kapısından girin ve danışmadan geçerek koridora ulaşın. Koridora girdiğinizde sol tarafınızdaki ilk kapı Piyano kursunun kapısıdır. Bu odada piyano kursu verilmektedir.
+Mutfağımız holün kuzeydoğu tarafında ve merdivenlerin hemen yanında yer alıyor. Burası modern bir dizayna sahip ve harika bir manzarası var.
 
-Sanat okulumuzdaki keman kursları haftada üç gün olup sabah saat onda başlamaktadır. Keman kursu odasına gitmek için Giriş kapısından girin ve danışmayı geçince hemen sol tarafa dönün. Köşedeki odaya girin. Burası keman kursunun verildiği odadır.
+Mutfaktan çıkarak doğruca devam ederseniz, çalışma ofisini bulabilirsiniz. Ofis holün güneydoğusunda ve girişin doğu tarafındaki ilk oda; Çalışma ofisi oldukça sessiz ve konsantre olmanız için ideal bir alan.
 
-Sanat okulumuzun gitar hocamız ise çok ünlü bir gitarist olup özel dersler vermektedir. Onun ders verdiği odaya gitmek için Giriş kapısından içeri girin, danışmayı geçtikten sonra koridora dönün. Koridora girdiğinizde sağ tarafınızdaki ikinci odada ders vermektedir.
+Çocuk odası da girişin sol tarafında. Hole geldikten sonra sola dönün hemen yanınızdaki ilk oda çocuk odasıdır. Bu oda çocuklar için renkli ve eğlenceli bir atmosferle tasarlanmış.
 
-Gitar kursunuz bittikten sonra Türk halk müziğinin en önemli enstrümanlarından olan bağlama üzerine de dersler almak istiyorsanız Gitar kursu odasından çıkın, sağa dönün ve koridorun sonuna vardığınızda sol tarafınızdaki odada bağlama kursu verilmektedir.
+Giriş kapısından girip hole geldikten sonra sağa dönerseniz holün sonunda, misafir odası karşınıza çıkıyor. Oldukça geniş olan misafir odasında, kalabalık arkadaş grubunuzu misafir edebilirsiniz.
 
-Ayrıca kursumuzda Türk tasavvuf müziğinin vazgeçilmez enstrümanı olan ney üzerine kurs ise neyzen Fikret tarafından verilmektedir. Neyzen Fikret'ten ders almak isterseniz danışmayı geçtikten sonra koridorun en sonunda sağdaki odaya gitmelisiniz.
+Misafir odası ile yan yana olan oda ise ebeveyn yatak odasıdır. Yatak odası evin güneydoğu köşesinde ve güneş ışığını bolca alıyor.
 
-Son olarak sanat okulumuzda bateri kursu da verilmektedir. Çok gürültü çıkacağı için diğer odalara uzak bir yerdedir. Bateri kursuna gitmek için Giriş kapısından girin, danışmayı geçerek holün ortasına gelin. Bateri kursu holün kuzeybatı köşesinde kalmaktadır.
+Son olarak, Banyo ise çocuk odasının tam karşısında evin kuzey tarafında merdivenlerin sol tarafındadır.
 
-Soru bitmiştir. Cevaplarınızı kontrol ediniz.`;
+Cevap anahtarı
+Salon: A
+Mutfak: B
+Çalışma ofisi: F
+Misafir odası: D
+Yatak odası: C`;
 
 document.getElementById('textBlock').textContent = TEXT;
 
@@ -417,31 +464,33 @@ document.getElementById('stop').onclick = ()=>synth.cancel();
 if(typeof speechSynthesis!=='undefined') speechSynthesis.onvoiceschanged = ()=>{};
 
 // --- Quiz ---
-const COURSES = [
-  {key:'piyano', label:'Piyano kursu', answer:'A'},
-  {key:'keman',  label:'Keman kursu',  answer:'C'},
-  {key:'gitar',  label:'Gitar kursu',  answer:'B'},
-  {key:'baglama',label:'Bağlama kursu',answer:'F'},
-  {key:'ney',    label:'Ney kursu',    answer:'E'},
-  {key:'bateri', label:'Bateri kursu', answer:'G'},
+const ROOMS_LIST = [
+  {key:'salon',   label:'Salon',         answer:'A'},
+  {key:'mutfak',  label:'Mutfak',        answer:'B'},
+  {key:'ofis',    label:'Çalışma ofisi', answer:'F'},
+  {key:'misafir', label:'Misafir odası', answer:'D'},
+  {key:'yatak',   label:'Yatak odası',   answer:'C'},
 ];
-const ROOMS = ['A','B','C','D','E','F','G','H'];
+const ROOM_LETTERS = ['A','B','C','D','F','G','H','I'];
 
 const quizEl = document.getElementById('quiz');
-COURSES.forEach(c=>{
+ROOMS_LIST.forEach(c=>{
   const wrap = document.createElement('label');
-  wrap.innerHTML = `<span style="min-width:120px">${c.label}</span>
-    <select data-course="${c.key}">
+  wrap.innerHTML = `<span style="min-width:130px">${c.label}</span>
+    <select data-room="${c.key}">
       <option value="">Seçiniz</option>
-      ${ROOMS.map(r=>`<option value="${r}">${r}</option>`).join('')}
+      ${ROOM_LETTERS.map(r=>`<option value="${r}">${r}</option>`).join('')}
     </select>`;
   quizEl.appendChild(wrap);
 });
 
 const tagsG = document.getElementById('tags');
+
+// Room centers (cx, cy) matching the SVG layout above
 const roomCenters = {
-  A:[400,135], B:[600,360], C:[90,425], D:[600,135],
-  E:[795,360], F:[795,135], G:[95,135],  H:[400,360]
+  A:[102, 110], B:[527, 110], C:[777, 367],
+  D:[817, 110], F:[527, 367], G:[282, 110],
+  H:[162, 367], I:[645, 110]
 };
 
 function clearMarks(){
@@ -454,8 +503,8 @@ function clearMarks(){
 function check(reveal=false){
   clearMarks();
   let correct = 0;
-  COURSES.forEach(c=>{
-    const sel = document.querySelector(`select[data-course="${c.key}"]`);
+  ROOMS_LIST.forEach(c=>{
+    const sel = document.querySelector(`select[data-room="${c.key}"]`);
     const val = reveal ? c.answer : sel.value;
     if(reveal) sel.value = c.answer;
     if(!val) return;
@@ -471,7 +520,7 @@ function check(reveal=false){
     t.textContent = c.label;
     tagsG.appendChild(t);
   });
-  const total = COURSES.length;
+  const total = ROOMS_LIST.length;
   const res = document.getElementById('result');
   if(reveal){
     res.innerHTML = `<span class="score">Cevap anahtarı gösterildi.</span>`;
@@ -492,20 +541,32 @@ document.getElementById('reset').onclick = ()=>{
 
 // ====== ANIMATED LIGHT PATHS ======
 const SVGNS = 'http://www.w3.org/2000/svg';
-const ENTRANCE = [240, 495];
+// Giriş kapısı koordinatı (E odasının alt ortası)
+const ENTRANCE = [382, 480];
 
+/*
+  Paths from entrance (382,480) to each room:
+  - Through E (giriş), into HOL, then to target room
+
+  HOL bant: y≈232 (holün ortası), x=195..665
+  
+  Salon (A): giriş → hol → sola (batı) → A odasına
+  Mutfak (B): giriş → hol → sağa (doğu) → B'ye yukarı
+  Çalışma ofisi (F): giriş → holden hemen doğuya → F'ye aşağı
+  Misafir odası (D): giriş → hol → sağa sona → D'ye yukarı
+  Yatak odası (C): giriş → holden doğuya → C'ye aşağı
+*/
 const PATHS = {
-  piyano: [ENTRANCE,[240,400],[240,210],[400,210],[400,180],[400,135]],
-  keman:  [ENTRANCE,[240,420],[240,350],[90,350],[90,425]],
-  gitar:  [ENTRANCE,[240,400],[240,210],[600,210],[600,240],[600,360]],
-  baglama:[ENTRANCE,[240,400],[240,210],[600,210],[600,240],[600,360],
-           [600,240],[600,210],[795,210],[795,180],[795,135]],
-  ney:    [ENTRANCE,[240,400],[240,210],[795,210],[795,240],[795,360]],
-  bateri: [ENTRANCE,[240,400],[240,300],[180,270],[95,135]],
+  salon:   [ENTRANCE, [382,390], [382,232], [200,232], [102,232], [102,110]],
+  mutfak:  [ENTRANCE, [382,390], [382,232], [527,232], [527,110]],
+  ofis:    [ENTRANCE, [382,390], [382,232], [527,232], [527,110], [527,232], [527,255], [527,367]],
+  misafir: [ENTRANCE, [382,390], [382,232], [660,232], [817,232], [817,110]],
+  yatak:   [ENTRANCE, [382,390], [382,232], [777,232], [777,255], [777,367]],
 };
 
-const ROOM_OF = { piyano:'A', keman:'C', gitar:'B', baglama:'F', ney:'E', bateri:'G' };
-const LABELS  = { piyano:'Piyano', keman:'Keman', gitar:'Gitar', baglama:'Bağlama', ney:'Ney', bateri:'Bateri' };
+const ROOM_OF = {
+  salon:'A', mutfak:'B', ofis:'F', misafir:'D', yatak:'C'
+};
 
 function pointsToPath(pts){
   return pts.map((p,i)=> (i===0?'M':'L')+p[0]+' '+p[1]).join(' ');
@@ -520,10 +581,10 @@ function clearLight(){
   document.querySelectorAll('.course-btn.active').forEach(b=>b.classList.remove('active'));
 }
 
-function animateRoute(courseKey, btn){
+function animateRoute(roomKey, btn){
   clearLight();
   btn.classList.add('active');
-  const pts = PATHS[courseKey];
+  const pts = PATHS[roomKey];
   if(!pts) return;
   const d = pointsToPath(pts);
 
@@ -574,7 +635,7 @@ function animateRoute(courseKey, btn){
     if(t < 1){
       activeAnim = requestAnimationFrame(tick);
     } else {
-      const room = document.querySelector(`rect[data-room="${ROOM_OF[courseKey]}"]`);
+      const room = document.querySelector(`rect[data-room="${ROOM_OF[roomKey]}"]`);
       if(room) room.classList.add('target');
       setTimeout(()=>{
         head.style.transition = 'opacity .8s';
@@ -587,12 +648,12 @@ function animateRoute(courseKey, btn){
   activeAnim = requestAnimationFrame(tick);
 }
 
-// Build course buttons
+// Build room buttons
 const cbWrap = document.getElementById('courseButtons');
-COURSES.forEach(c=>{
+ROOMS_LIST.forEach(c=>{
   const b = document.createElement('button');
   b.className = 'course-btn';
-  b.dataset.course = c.key;
+  b.dataset.room = c.key;
   b.innerHTML = `${c.label}`;
   b.onclick = ()=>{
     if(activeAnim) cancelAnimationFrame(activeAnim);
