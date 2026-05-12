@@ -463,82 +463,101 @@ footer span { color: #F5C842; }
 <script>
 const METIN = "Bu harita, küçük ve düzenli bir yerleşim alanını göstermektedir. Mahallenin merkezinde bir kavşak vardır. Kavşaktan kuzeye doğru ilerleyen ana caddeyi takip ediyorsunuz. Caddenin sonuna varmadan sağa, yani doğuya dönüyorsunuz. Bu yolda birkaç adım ilerlediğinizde sol tarafınızda, yani kuzey cephesinde bir bina göreceksiniz. Burası sağlık ocağıdır. Randevunuz varsa girişte sıraya girmeniz gerekmektedir. Sağlık ocağından çıktıktan sonra belediyeye gitmek için geldiğiniz yoldan geri dönerek ana caddeye varın ve bu kez batıya doğru yürümeye devam edin. Yolun sol tarafında, yani güney tarafta belediye binası vardır. Belediye binasındaki işleriniz için danışmaya uğrayabilirsiniz. Belediye binası ile aynı yol üzerinde fakat doğudaki ilk bina Hamza hocanın kurs merkezidir. Kurs merkezinde Türkçe ile ilgili birçok kaynağa ulaşabilirsiniz. Daha sonra tekrar kavşağa dönün ve bu kez doğu yönüne ilerleyin. Yolun sağ tarafında, yani güney cephesinde yan yana üç küçük dükkan göreceksiniz. Bunlardan kavşağa daha yakın olanı manavdır, doğusundaki ise pastanedir. İhtiyaçlarınızı buradan karşılayabilirsiniz. Manav ve pastanenin ardından yolun biraz ilerisinde bir terzi bulunmaktadır. Son olarak kavşağa geri dönün ve güney yönüne doğru ilerleyin. Bu caddenin sonunda yolun sağ tarafında, yani batı cephesinde spor salonu bulunmaktadır. Spor salonu hafta içi ve hafta sonu sabah sekizden gece on ikiye kadar açıktır. Spor salonu ile aynı hizada ama ana yolun doğusunda ise bir kütüphane yer almaktadır. Böylece mahallenin önemli noktalarını kavşak merkezli olarak keşfetmiş olursunuz.";
 
-let utterance = null;
-let isPlaying = false;
-let charCount = 0;
-let progressInterval = null;
+// iOS için metni cümlelere böl (iOS uzun metni ~15sn sonra keser)
+const CUMLELER = METIN.match(/[^.!?]+[.!?]+/g) || [METIN];
 
-function getVoice() {
-  const voices = window.speechSynthesis.getVoices();
-  return voices.find(v => v.lang.startsWith('tr')) || voices.find(v => v.lang.startsWith('tr-TR')) || null;
+let isPlaying = false;
+let currentIndex = 0;
+let progressInterval = null;
+let voicesLoaded = false;
+let currentUtterance = null;
+
+// Sesleri yükle
+function loadVoices() {
+  return new Promise((resolve) => {
+    const voices = window.speechSynthesis.getVoices();
+    if (voices.length > 0) { resolve(voices); return; }
+    window.speechSynthesis.onvoiceschanged = () => {
+      resolve(window.speechSynthesis.getVoices());
+    };
+    // Bazı tarayıcılarda onvoiceschanged hiç tetiklenmez, 1sn sonra devam et
+    setTimeout(() => resolve(window.speechSynthesis.getVoices()), 1000);
+  });
+}
+
+function getTurkishVoice(voices) {
+  return voices.find(v => v.lang === 'tr-TR') ||
+         voices.find(v => v.lang.startsWith('tr')) ||
+         null;
 }
 
 function togglePlay() {
   if (isPlaying) {
-    pauseAudio();
+    stopAudio();
   } else {
     playAudio();
   }
 }
 
-function playAudio() {
-  if (window.speechSynthesis.paused && utterance) {
-    window.speechSynthesis.resume();
-    setPlayingState(true);
+async function playAudio() {
+  window.speechSynthesis.cancel();
+  currentIndex = 0;
+  setPlayingState(true);
+  document.getElementById('progressWrap').style.display = 'block';
+  startProgressSimulation();
+
+  const voices = await loadVoices();
+  const trVoice = getTurkishVoice(voices);
+  const rate = parseFloat(document.getElementById('speedSelect').value);
+
+  speakChunk(currentIndex, trVoice, rate);
+}
+
+function speakChunk(index, voice, rate) {
+  if (!isPlaying || index >= CUMLELER.length) {
+    if (index >= CUMLELER.length) {
+      // Bitti
+      setPlayingState(false);
+      document.getElementById('progressBar').style.width = '100%';
+      setTimeout(() => {
+        document.getElementById('progressBar').style.width = '0%';
+        document.getElementById('progressWrap').style.display = 'none';
+      }, 800);
+      stopProgressSimulation();
+    }
     return;
   }
 
-  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(CUMLELER[index].trim());
+  utt.lang = 'tr-TR';
+  utt.rate = rate;
+  utt.pitch = 1.0;
+  if (voice) utt.voice = voice;
+  currentUtterance = utt;
 
-  utterance = new SpeechSynthesisUtterance(METIN);
-  utterance.lang = 'tr-TR';
-  utterance.rate = parseFloat(document.getElementById('speedSelect').value);
-  utterance.pitch = 1.0;
-
-  const voice = getVoice();
-  if (voice) utterance.voice = voice;
-
-  utterance.onstart = () => {
-    setPlayingState(true);
-    document.getElementById('progressWrap').style.display = 'block';
-    startProgressSimulation();
+  utt.onend = () => {
+    if (isPlaying) {
+      currentIndex++;
+      speakChunk(currentIndex, voice, rate);
+    }
   };
 
-  utterance.onend = () => {
-    setPlayingState(false);
-    document.getElementById('progressBar').style.width = '100%';
-    setTimeout(() => {
-      document.getElementById('progressBar').style.width = '0%';
-      document.getElementById('progressWrap').style.display = 'none';
-    }, 800);
-    stopProgressSimulation();
-  };
-
-  utterance.onerror = () => {
+  utt.onerror = (e) => {
+    // 'interrupted' hatası durdurma sırasında normaldir, görmezden gel
+    if (e.error === 'interrupted' || e.error === 'canceled') return;
     setPlayingState(false);
     document.getElementById('ttsStatus').textContent = 'Hata oluştu. Tarayıcınız Türkçe sesi desteklemiyor olabilir.';
     stopProgressSimulation();
   };
 
-  utterance.onboundary = (e) => {
-    if (e.name === 'word') {
-      const pct = Math.min(100, Math.round((e.charIndex / METIN.length) * 100));
-      document.getElementById('progressBar').style.width = pct + '%';
-    }
-  };
-
-  window.speechSynthesis.speak(utterance);
-}
-
-function pauseAudio() {
-  window.speechSynthesis.pause();
-  setPlayingState(false);
-  stopProgressSimulation();
+  window.speechSynthesis.speak(utt);
 }
 
 function stopAudio() {
+  isPlaying = false;
+  currentIndex = 0;
   window.speechSynthesis.cancel();
-  utterance = null;
+  currentUtterance = null;
   setPlayingState(false);
   stopProgressSimulation();
   document.getElementById('progressBar').style.width = '0%';
@@ -552,8 +571,8 @@ function setPlayingState(playing) {
   const status = document.getElementById('ttsStatus');
 
   if (playing) {
-    playBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg> Duraklat';
-    stopBtn.style.display = 'inline-flex';
+    playBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg> Durdur';
+    stopBtn.style.display = 'none';
     status.textContent = '▶ Oynatılıyor...';
     status.className = 'tts-status playing';
   } else {
@@ -572,23 +591,19 @@ function changeSpeed() {
 }
 
 function startProgressSimulation() {
-  // Fallback progress animation if onboundary not supported
   let pct = 0;
   const duration = (METIN.length / 15) * (1 / parseFloat(document.getElementById('speedSelect').value)) * 1000;
   const step = 100 / (duration / 200);
   progressInterval = setInterval(() => {
     pct = Math.min(pct + step, 99);
     const bar = document.getElementById('progressBar');
-    if (bar && parseFloat(bar.style.width) < pct) bar.style.width = pct + '%';
+    if (bar && parseFloat(bar.style.width || '0') < pct) bar.style.width = pct + '%';
   }, 200);
 }
 
 function stopProgressSimulation() {
   if (progressInterval) { clearInterval(progressInterval); progressInterval = null; }
 }
-
-// Load voices
-window.speechSynthesis.onvoiceschanged = () => {};
 
 // Exercise
 function checkAnswers() {
