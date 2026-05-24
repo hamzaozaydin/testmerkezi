@@ -412,6 +412,128 @@ footer span { color: #F5C842; }
 @media (max-width:1100px){.corner-logo{width:90px;height:90px;}}
 @media (max-width:700px){.corner-logo{width:60px;height:60px;top:10px;}.corner-logo.left{left:10px;}.corner-logo.right{right:10px;}}
 
+
+/* ═══════════════════════════════════════
+   ÖDEV GÖNDER GİRİŞ MODAL
+═══════════════════════════════════════ */
+#odevLoginOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 101;
+  background: rgba(0,0,0,0.85);
+  align-items: center;
+  justify-content: center;
+}
+#odevLoginOverlay.show { display: flex; }
+
+.odev-modal {
+  background: white;
+  border-radius: 24px;
+  padding: 40px;
+  width: min(420px, 92vw);
+  position: relative;
+  animation: popIn .3s ease;
+  text-align: center;
+}
+
+.odev-modal .modal-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.odev-modal h2 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.odev-modal .sub {
+  font-size: 0.85rem;
+  color: #888;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.odev-form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.odev-form-group label {
+  display: block;
+  font-size: 0.82rem;
+  color: #555;
+  margin-bottom: 7px;
+  font-weight: 600;
+}
+
+.odev-form-group input {
+  width: 100%;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  padding: 12px 14px;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+.odev-form-group input:focus {
+  border-color: #F5C842;
+}
+
+.btn-odev-login {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  border: none;
+  border-radius: 40px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 8px;
+  transition: transform .15s, box-shadow .15s;
+}
+
+.btn-odev-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245,200,66,0.4);
+}
+
+.odev-error {
+  background: #fff0f0;
+  border: 1px solid #f8c8c8;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #d63031;
+  font-size: 0.85rem;
+  margin-top: 14px;
+  display: none;
+  text-align: center;
+}
+
+.odev-error.show { display: block; }
+
+.odev-success {
+  background: #f0fff4;
+  border: 1px solid #c8f8d8;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #2a9d8f;
+  font-size: 0.85rem;
+  margin-top: 14px;
+  display: none;
+  text-align: center;
+}
+
+.odev-success.show { display: block; }
 </style>
 </head>
 <body>
@@ -484,7 +606,7 @@ footer span { color: #F5C842; }
   <span class="emoji">✏️</span>
   <span class="label">YAZMA ALIŞTIRMALARI</span>
 </button>
-    <button class="cat-btn" onclick="window.location.href='https://hamzahocaodevkontrolu.base44.app/'">
+    <button class="cat-btn" id="odevGonderBtn" onclick="odevLoginModal()">
       <span class="emoji">📤</span>
       <span class="label">ÖDEV GÖNDER</span>
     </button>
@@ -1306,6 +1428,135 @@ function parseCSV(text) {
 
   updateCounters();
 })();
+</script>
+
+<!-- ÖDEV GÖNDER GİRİŞ MODAL -->
+<div class="modal-overlay" id="odevLoginOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="odevLoginKapat()">&times;</button>
+    <h2>🔐 Ödev Gönder</h2>
+    <p class="sub">Devam etmek için giriş yapın</p>
+
+    <div class="form-group">
+      <label for="odevKullanici">Kullanıcı Adı</label>
+      <input type="text" id="odevKullanici" placeholder="Kullanıcı adınızı girin">
+    </div>
+
+    <div class="form-group">
+      <label for="odevSifre">Şifre</label>
+      <input type="password" id="odevSifre" placeholder="Şifrenizi girin">
+    </div>
+
+    <button class="btn-login" onclick="odevGirisYap()">Giriş Yap</button>
+
+    <div class="error-msg" id="odevHata"></div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════
+   ÖDEV GÖNDER GİRİŞ SİSTEMİ
+═══════════════════════════════════════ */
+
+// Kullanıcı verileri (Google Sheets'ten)
+const odevKullanicilar = {
+  "hamza": { sifre: "4026", tarih: null },
+  "ali": { sifre: "1234", tarih: "30-05-2026" }
+};
+
+function odevLoginModal() {
+  document.getElementById('odevLoginOverlay').classList.add('show');
+  document.getElementById('odevKullanici').value = '';
+  document.getElementById('odevSifre').value = '';
+  document.getElementById('odevHata').classList.remove('show');
+  document.getElementById('odevKullanici').focus();
+}
+
+function odevLoginKapat() {
+  document.getElementById('odevLoginOverlay').classList.remove('show');
+}
+
+function odevGirisYap() {
+  const kullanici = document.getElementById('odevKullanici').value.trim().toLowerCase();
+  const sifre = document.getElementById('odevSifre').value;
+  const hataDiv = document.getElementById('odevHata');
+
+  hataDiv.classList.remove('show');
+
+  if (!kullanici || !sifre) {
+    hataDiv.textContent = 'Lütfen kullanıcı adı ve şifre girin.';
+    hataDiv.classList.add('show');
+    return;
+  }
+
+  const kullaniciData = odevKullanicilar[kullanici];
+
+  if (!kullaniciData) {
+    hataDiv.textContent = 'Kullanıcı adı bulunamadı.';
+    hataDiv.classList.add('show');
+    return;
+  }
+
+  if (kullaniciData.sifre !== sifre) {
+    hataDiv.textContent = 'Şifre hatalı.';
+    hataDiv.classList.add('show');
+    return;
+  }
+
+  // Tarih kontrolü
+  if (kullaniciData.tarih) {
+    const sonTarih = parseTarih(kullaniciData.tarih);
+    const bugun = new Date();
+    bugun.setHours(0, 0, 0, 0);
+
+    if (bugun > sonTarih) {
+      hataDiv.textContent = 'Giriş süreniz dolmuştur. (' + kullaniciData.tarih + ')';
+      hataDiv.classList.add('show');
+      return;
+    }
+  }
+
+  // Başarılı giriş
+  odevLoginKapat();
+  window.location.href = 'https://hamzahocaodevkontrolu.base44.app/';
+}
+
+function parseTarih(tarihStr) {
+  const parcalar = tarihStr.split('-');
+  const gun = parseInt(parcalar[0], 10);
+  const ay = parseInt(parcalar[1], 10) - 1;
+  const yil = parseInt(parcalar[2], 10);
+  return new Date(yil, ay, gun);
+}
+
+// Enter tuşu desteği
+document.addEventListener('DOMContentLoaded', function() {
+  const sifreInput = document.getElementById('odevSifre');
+  if (sifreInput) {
+    sifreInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        odevGirisYap();
+      }
+    });
+  }
+
+  const kullaniciInput = document.getElementById('odevKullanici');
+  if (kullaniciInput) {
+    kullaniciInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        document.getElementById('odevSifre').focus();
+      }
+    });
+  }
+});
+
+// Overlay dışına tıklama ile kapatma
+document.addEventListener('click', function(e) {
+  const overlay = document.getElementById('odevLoginOverlay');
+  if (overlay && overlay.classList.contains('show') && e.target === overlay) {
+    odevLoginKapat();
+  }
+});
 </script>
 </body>
 </html>
