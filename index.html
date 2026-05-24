@@ -484,7 +484,7 @@ footer span { color: #F5C842; }
   <span class="emoji">✏️</span>
   <span class="label">YAZMA ALIŞTIRMALARI</span>
 </button>
-    <button class="cat-btn" onclick="window.location.href='https://hamzahocaodevkontrolu.base44.app/'">
+    <button class="cat-btn" onclick="openLoginExternal('https://hamzahocaodevkontrolu.base44.app/')">
       <span class="emoji">📤</span>
       <span class="label">ÖDEV GÖNDER</span>
     </button>
@@ -1177,10 +1177,20 @@ function closeVideoOutside(e) {
 
 let targetPage = '';
 let targetVideoSrc = '';
+let targetExternal = '';
 
 function openLogin(page) {
   if (sessionStorage.getItem('hamzaUser')) { window.location.href = page; return; }
   targetPage = page;
+  targetVideoSrc = '';
+  targetExternal = '';
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function openLoginExternal(url) {
+  if (sessionStorage.getItem('hamzaUser')) { window.open(url, '_blank'); return; }
+  targetExternal = url;
+  targetPage = '';
   targetVideoSrc = '';
   document.getElementById('modalOverlay').classList.add('show');
 }
@@ -1189,6 +1199,7 @@ function openLoginVideo(src) {
   if (sessionStorage.getItem('hamzaUser')) { openVideo(src); return; }
   targetVideoSrc = src;
   targetPage = '';
+  targetExternal = '';
   document.getElementById('modalOverlay').classList.add('show');
 }
 
@@ -1213,6 +1224,8 @@ async function doLogin() {
         closeModal();
         if (targetVideoSrc) {
           openVideo(targetVideoSrc);
+        } else if (targetExternal) {
+          window.open(targetExternal, '_blank');
         } else if (targetPage) {
           window.location.href = targetPage;
         }
