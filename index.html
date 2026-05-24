@@ -1188,7 +1188,7 @@ function openLogin(page) {
 }
 
 function openLoginExternal(url) {
-  if (sessionStorage.getItem('hamzaUser')) { window.open(url, '_blank'); return; }
+  if (sessionStorage.getItem('hamzaUser')) { window.location.href = url; return; }
   targetExternal = url;
   targetPage = '';
   targetVideoSrc = '';
@@ -1225,7 +1225,7 @@ async function doLogin() {
         if (targetVideoSrc) {
           openVideo(targetVideoSrc);
         } else if (targetExternal) {
-          window.open(targetExternal, '_blank');
+          window.location.href = targetExternal;
         } else if (targetPage) {
           window.location.href = targetPage;
         }
