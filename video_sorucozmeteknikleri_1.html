@@ -175,6 +175,8 @@
   .section-divider { width:120px; height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:.4rem auto 1.5rem; border-radius:2px; }
   .section-title-main { text-align:center; font-size:1.1rem; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin:1.5rem 0 .4rem; opacity:.9; }
   .bottom-space { height:3rem; }
+  .writing-badge { background: rgba(245,200,66,0.15); border-radius: 20px; padding: 2px 12px; font-size: 11px; font-weight: 600; color: #F5C842; margin-left: 10px; vertical-align: middle; }
+  .dual-badge { background: rgba(100,200,255,0.15); border-radius: 20px; padding: 2px 10px; font-size: 10px; font-weight: 600; color: #88ccff; margin-left: 8px; }
 </style>
 </head>
 <body>
@@ -211,13 +213,13 @@
   <div class="section-title-main">Soru Çözüm Teknikleri</div>
   <div class="section-divider"></div>
 
-  <!-- OKUMA BÖLÜMÜ -->
+  <!-- OKUMA BÖLÜMÜ (SADECE Sayfa 1) -->
   <div class="section-block">
     <div class="accordion-header" onclick="toggleAccordion(this)" id="acc-okuma">
       <div class="acc-left">
         <div class="acc-icon">📖</div>
         <div>
-          <div class="acc-title">Okuma Soruları Nasıl Çözülür?</div>
+          <div class="acc-title">Okuma Soruları Nasıl Çözülür? <span class="dual-badge">1. Sayfa</span></div>
           <div class="acc-subtitle">6 ders · Adım adım okuma stratejileri</div>
         </div>
       </div>
@@ -232,36 +234,36 @@
         <span>Okuma Giriş</span>
         <div class="vbtn-play"><svg width="10" height="10" viewBox="0 0 24 24" fill="#F5C842"><polygon points="5,3 19,12 5,21"/></svg></div>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('thE4jOaBdi4','1. Okuma Sorusu')">
-                <span>1. Okuma Sorusu</span>
+      <button class="video-btn locked" onclick="openLoginModal('thE4jOaBdi4','1. Okuma Sorusu', 'reading')">
+        <span>1. Okuma Sorusu</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('JV6O_ptV_dk','2. Okuma Sorusu')">
-                <span>2. Okuma Sorusu</span>
+      <button class="video-btn locked" onclick="openLoginModal('JV6O_ptV_dk','2. Okuma Sorusu', 'reading')">
+        <span>2. Okuma Sorusu</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('JV6O_ptV_dk','3. Okuma Sorusu')">
-                <span>3. Okuma Sorusu</span>
+      <button class="video-btn locked" onclick="openLoginModal('JV6O_ptV_dk','3. Okuma Sorusu', 'reading')">
+        <span>3. Okuma Sorusu</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('tp5w4YHnajs','4. Okuma Sorusu')">
-                <span>4. Okuma Sorusu</span>
+      <button class="video-btn locked" onclick="openLoginModal('tp5w4YHnajs','4. Okuma Sorusu', 'reading')">
+        <span>4. Okuma Sorusu</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('WBJdKlyvamw','5. Okuma Sorusu')">
-                <span>5. Okuma Sorusu</span>
+      <button class="video-btn locked" onclick="openLoginModal('WBJdKlyvamw','5. Okuma Sorusu', 'reading')">
+        <span>5. Okuma Sorusu</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
     </div>
   </div>
 
-  <!-- DİNLEME BÖLÜMÜ -->
+  <!-- DİNLEME BÖLÜMÜ (SADECE Sayfa 1) -->
   <div class="section-block">
     <div class="accordion-header" onclick="toggleAccordion(this)" id="acc-dinleme">
       <div class="acc-left">
         <div class="acc-icon">🎧</div>
         <div>
-          <div class="acc-title">Dinleme Soruları Nasıl Çözülür?</div>
+          <div class="acc-title">Dinleme Soruları Nasıl Çözülür? <span class="dual-badge">1. Sayfa</span></div>
           <div class="acc-subtitle">7 ders · Adım adım dinleme stratejileri</div>
         </div>
       </div>
@@ -276,40 +278,40 @@
         <span>Dinleme Giriş</span>
         <div class="vbtn-play"><svg width="10" height="10" viewBox="0 0 24 24" fill="#F5C842"><polygon points="5,3 19,12 5,21"/></svg></div>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('Rsw4coCrY2M','1. Dinleme Sorusu')">
-                <span>1. Dinleme Sorusu</span>
+      <button class="video-btn locked" onclick="openLoginModal('Rsw4coCrY2M','1. Dinleme Sorusu', 'reading')">
+        <span>1. Dinleme Sorusu</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('XDWZJ5AFJf4','2. Dinleme Sorusu')">
-                <span>2. Dinleme Sorusu</span>
+      <button class="video-btn locked" onclick="openLoginModal('XDWZJ5AFJf4','2. Dinleme Sorusu', 'reading')">
+        <span>2. Dinleme Sorusu</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('V5a3BWK2ysU','3. Dinleme Sorusu')">
-                <span>3. Dinleme Sorusu</span>
+      <button class="video-btn locked" onclick="openLoginModal('V5a3BWK2ysU','3. Dinleme Sorusu', 'reading')">
+        <span>3. Dinleme Sorusu</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('YWp_M3kjJoM','4. Dinleme Sorusu')">
-                <span>4. Dinleme Sorusu</span>
+      <button class="video-btn locked" onclick="openLoginModal('YWp_M3kjJoM','4. Dinleme Sorusu', 'reading')">
+        <span>4. Dinleme Sorusu</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('ZDqHTSpV6t4','5. Dinleme Sorusu')">
-                <span>5. Dinleme Sorusu</span>
+      <button class="video-btn locked" onclick="openLoginModal('ZDqHTSpV6t4','5. Dinleme Sorusu', 'reading')">
+        <span>5. Dinleme Sorusu</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('-Z6InhPeIbM','6. Dinleme Sorusu')">
-                <span>6. Dinleme Sorusu</span>
+      <button class="video-btn locked" onclick="openLoginModal('-Z6InhPeIbM','6. Dinleme Sorusu', 'reading')">
+        <span>6. Dinleme Sorusu</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
     </div>
   </div>
 
-  <!-- YAZMA BÖLÜMÜ -->
+  <!-- YAZMA BÖLÜMÜ (Sayfa 1 VEYA Sayfa 2) -->
   <div class="section-block">
     <div class="accordion-header" onclick="toggleAccordion(this)" id="acc-yazma">
       <div class="acc-left">
         <div class="acc-icon">✍️</div>
         <div>
-          <div class="acc-title">Yazma Soruları Nasıl Cevaplanır?</div>
+          <div class="acc-title">Yazma Soruları Nasıl Cevaplanır? <span class="dual-badge">1. veya 2. Sayfa</span></div>
           <div class="acc-subtitle">9 ders · E-posta ve kompozisyon stratejileri</div>
         </div>
       </div>
@@ -319,39 +321,39 @@
     </div>
     <div class="accordion-body" id="body-yazma">
       <div style="height:.4rem;"></div>
-      <button class="video-btn locked" onclick="openLoginModal('SJybV32zr3A','Arkadaşa E-posta Nasıl Yazılır?')">
+      <button class="video-btn locked" onclick="openLoginModal('SJybV32zr3A','Arkadaşa E-posta Nasıl Yazılır?', 'writing')">
         <span>Arkadaşa E-posta Nasıl Yazılır?</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('CNKgmWJQP-4','Resmi E-posta Nasıl Yazılır?')">
+      <button class="video-btn locked" onclick="openLoginModal('CNKgmWJQP-4','Resmi E-posta Nasıl Yazılır?', 'writing')">
         <span>Resmi E-posta Nasıl Yazılır?</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('lPxzYpv6DbU','Kompozisyon Nasıl Yazılır? 1')">
+      <button class="video-btn locked" onclick="openLoginModal('lPxzYpv6DbU','Kompozisyon Nasıl Yazılır? 1', 'writing')">
         <span>Kompozisyon Nasıl Yazılır? 1</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('7EJzfc-vdiI','Kompozisyon Nasıl Yazılır? 2')">
+      <button class="video-btn locked" onclick="openLoginModal('7EJzfc-vdiI','Kompozisyon Nasıl Yazılır? 2', 'writing')">
         <span>Kompozisyon Nasıl Yazılır? 2</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('l6_6awRB_iY','Kompozisyon Nasıl Yazılır? 3')">
+      <button class="video-btn locked" onclick="openLoginModal('l6_6awRB_iY','Kompozisyon Nasıl Yazılır? 3', 'writing')">
         <span>Kompozisyon Nasıl Yazılır? 3</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('lEMTrlp79d4','Kompozisyon Nasıl Yazılır? 4')">
+      <button class="video-btn locked" onclick="openLoginModal('lEMTrlp79d4','Kompozisyon Nasıl Yazılır? 4', 'writing')">
         <span>Kompozisyon Nasıl Yazılır? 4</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('bzxLq2hB8eg','Kompozisyon Nasıl Yazılır? 5')">
+      <button class="video-btn locked" onclick="openLoginModal('bzxLq2hB8eg','Kompozisyon Nasıl Yazılır? 5', 'writing')">
         <span>Kompozisyon Nasıl Yazılır? 5</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('WTlVW9BMbWs','Kompozisyon Nasıl Yazılır? 6')">
+      <button class="video-btn locked" onclick="openLoginModal('WTlVW9BMbWs','Kompozisyon Nasıl Yazılır? 6', 'writing')">
         <span>Kompozisyon Nasıl Yazılır? 6</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
-      <button class="video-btn locked" onclick="openLoginModal('7IWGVDcmBgs','Kompozisyon Nasıl Yazılır? 7')">
+      <button class="video-btn locked" onclick="openLoginModal('7IWGVDcmBgs','Kompozisyon Nasıl Yazılır? 7', 'writing')">
         <span>Kompozisyon Nasıl Yazılır? 7</span>
         <span class="vbtn-lock-badge">🔒 Giriş Gerekli</span>
       </button>
@@ -431,50 +433,29 @@ function handleVideoOverlayClick(e) {
 // ===================== GİRİŞ SİSTEMİ =====================
 let pendingVideoId = null;
 let pendingVideoTitle = null;
-const SESSION_KEY = 'hh_auth';
+let pendingSectionType = null; // 'reading' veya 'writing'
 
-function getSession() {
-  try { return JSON.parse(sessionStorage.getItem(SESSION_KEY)); } catch(e) { return null; }
-}
-function setSession(user) {
-  sessionStorage.setItem(SESSION_KEY, JSON.stringify({ user, ts: Date.now() }));
-}
+const READING_SESSION_KEY = 'hh_auth_reading';   // Okuma/Dinleme için session
+const WRITING_SESSION_KEY = 'hh_auth_writing';   // Yazma için session
 
-function openLoginModal(videoId, title) {
-  const sess = getSession();
-  if (sess) { openVideo(videoId, title); return; }
-  pendingVideoId = videoId;
-  pendingVideoTitle = title;
-  document.getElementById('loginSubtitle').textContent = '"' + title + '" için giriş yapın';
-  document.getElementById('loginError').classList.remove('show');
-  document.getElementById('loginLoading').classList.remove('show');
-  document.getElementById('loginUser').value = '';
-  document.getElementById('loginPass').value = '';
-  document.getElementById('loginBtn').disabled = false;
-  document.getElementById('loginModal').classList.add('active');
-  document.body.style.overflow = 'hidden';
-  setTimeout(() => document.getElementById('loginUser').focus(), 350);
+function getSession(sectionType) {
+  try { 
+    const key = (sectionType === 'writing') ? WRITING_SESSION_KEY : READING_SESSION_KEY;
+    return JSON.parse(sessionStorage.getItem(key)); 
+  } catch(e) { return null; }
 }
-function closeLoginModal() {
-  document.getElementById('loginModal').classList.remove('active');
-  document.body.style.overflow = '';
-  pendingVideoId = null; pendingVideoTitle = null;
-}
-function handleLoginOverlayClick(e) {
-  if (e.target === document.getElementById('loginModal')) closeLoginModal();
+function setSession(user, sectionType) {
+  const key = (sectionType === 'writing') ? WRITING_SESSION_KEY : READING_SESSION_KEY;
+  sessionStorage.setItem(key, JSON.stringify({ user, ts: Date.now() }));
 }
 
-// Google Sheets → JSON API
-// ÖNEMLİ: Sheets dosyasının "Herkes görüntüleyebilir" şeklinde paylaşılması gerekir
-const SHEET_ID = '1CZAbgcO8mBnEJ_Ay9baiHESirK3C8A1i3C-rDRzLEJE';
-const GID = '148065819';
-
-async function fetchUsers() {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}&cachebust=${Date.now()}`;
+// Google Sheets'ten veri çekme
+async function fetchUsersFromSheet(gid) {
+  const SHEET_ID = '1CZAbgcO8mBnEJ_Ay9baiHESirK3C8A1i3C-rDRzLEJE';
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${gid}&cachebust=${Date.now()}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error('HTTP ' + res.status);
   const text = await res.text();
-  // Google'ın JSONP sarıcısını soy
   const clean = text.replace(/^[^\(]+\(/, '').replace(/\);\s*$/, '');
   const json = JSON.parse(clean);
   return json.table.rows.map(row => ({
@@ -487,15 +468,12 @@ async function fetchUsers() {
 function parseExpiry(val) {
   if (!val) return null;
   let m;
-  // Google Sheets tarih formatı: "Date(2025,11,31)"
   if ((m = val.match(/Date\((\d+),(\d+),(\d+)\)/))) {
     return new Date(parseInt(m[1]), parseInt(m[2]), parseInt(m[3]));
   }
-  // ISO: 2025-12-31
   if ((m = val.match(/^(\d{4})-(\d{2})-(\d{2})$/))) {
     return new Date(parseInt(m[1]), parseInt(m[2])-1, parseInt(m[3]));
   }
-  // TR formatı: 31.12.2025
   if ((m = val.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/))) {
     return new Date(parseInt(m[3]), parseInt(m[2])-1, parseInt(m[1]));
   }
@@ -520,18 +498,35 @@ async function doLogin() {
   loadEl.classList.add('show');
 
   try {
-    const users = await fetchUsers();
-    const match = users.find(u =>
-      u.user.toLowerCase() === userInput.toLowerCase() && u.pass === passInput
-    );
+    let match = null;
+    let usedSheet = null;
+
+    if (pendingSectionType === 'writing') {
+      // YAZMA: Önce Sayfa 1'i kontrol et (tam erişimli kullanıcılar)
+      const page1Users = await fetchUsersFromSheet('148065819');
+      match = page1Users.find(u => u.user.toLowerCase() === userInput.toLowerCase() && u.pass === passInput);
+      usedSheet = '148065819';
+      
+      // Sayfa 1'de yoksa Sayfa 2'yi kontrol et (sadece yazma erişimli kullanıcılar)
+      if (!match) {
+        const page2Users = await fetchUsersFromSheet('2061679672');
+        match = page2Users.find(u => u.user.toLowerCase() === userInput.toLowerCase() && u.pass === passInput);
+        usedSheet = '2061679672';
+      }
+    } else {
+      // OKUMA/DİNLEME: SADECE Sayfa 1 kontrol et
+      const page1Users = await fetchUsersFromSheet('148065819');
+      match = page1Users.find(u => u.user.toLowerCase() === userInput.toLowerCase() && u.pass === passInput);
+      usedSheet = '148065819';
+    }
 
     if (!match) {
-      errEl.textContent = '❌ Kullanıcı adı veya şifre hatalı.';
+      errEl.textContent = '❌ Kullanıcı adı veya şifre hatalı. Bu bölüme erişim yetkiniz yok.';
       errEl.classList.add('show');
       btn.disabled = false; loadEl.classList.remove('show'); return;
     }
 
-    // Son geçerlilik tarihi kontrolü
+    // Tarih kontrolü
     const expiry = parseExpiry(match.expiry);
     if (expiry) {
       const today = new Date(); today.setHours(0,0,0,0);
@@ -542,8 +537,8 @@ async function doLogin() {
       }
     }
 
-    // Başarılı giriş — oturumu kaydet
-    setSession(match.user);
+    // Başarılı giriş
+    setSession(match.user, pendingSectionType);
     loadEl.classList.remove('show');
     document.getElementById('loginModal').classList.remove('active');
     document.body.style.overflow = '';
@@ -561,6 +556,45 @@ async function doLogin() {
     errEl.classList.add('show');
     btn.disabled = false; loadEl.classList.remove('show');
   }
+}
+
+function openLoginModal(videoId, title, sectionType) {
+  // sectionType: 'reading' (okuma/dinleme) veya 'writing' (yazma)
+  const session = getSession(sectionType);
+  if (session) { 
+    openVideo(videoId, title); 
+    return; 
+  }
+  
+  pendingVideoId = videoId;
+  pendingVideoTitle = title;
+  pendingSectionType = sectionType;
+  
+  let subtitleText = '';
+  if (sectionType === 'writing') {
+    subtitleText = `"${title}" için YAZMA bölümü girişi. Sayfa 1 (tam erişim) veya Sayfa 2 (sadece yazma) ile giriş yapabilirsiniz.`;
+  } else {
+    subtitleText = `"${title}" için OKUMA/DİNLEME bölümü girişi. Sadece Sayfa 1 kullanıcıları erişebilir.`;
+  }
+  
+  document.getElementById('loginSubtitle').textContent = subtitleText;
+  document.getElementById('loginError').classList.remove('show');
+  document.getElementById('loginLoading').classList.remove('show');
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginBtn').disabled = false;
+  document.getElementById('loginModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('loginUser').focus(), 350);
+}
+
+function closeLoginModal() {
+  document.getElementById('loginModal').classList.remove('active');
+  document.body.style.overflow = '';
+  pendingVideoId = null; pendingVideoTitle = null;
+}
+function handleLoginOverlayClick(e) {
+  if (e.target === document.getElementById('loginModal')) closeLoginModal();
 }
 
 document.addEventListener('keydown', function(e) {
