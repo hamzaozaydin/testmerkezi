@@ -23,6 +23,7 @@ body {
   background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
   min-height: 100vh;
   color: white;
+  position: relative;
 }
 
 
@@ -405,18 +406,74 @@ footer span { color: #F5C842; }
   fill: white;
 }
 
-/* LOGO CORNERS */
-.corner-logo{position:absolute;top:18px;width:130px;height:130px;border-radius:50%;object-fit:cover;box-shadow:0 6px 20px rgba(0,0,0,.45);z-index:1000;background:#fff;}
-.corner-logo.left{left:18px;}
-.corner-logo.right{right:18px;}
-@media (max-width:1100px){.corner-logo{width:90px;height:90px;}}
-@media (max-width:700px){.corner-logo{width:60px;height:60px;top:10px;}.corner-logo.left{left:10px;}.corner-logo.right{right:10px;}}
+/* LOGO - Kaydırılınca kaybolacak, sabit değil, kenarlarda, şeffaf */
+.site-logo {
+  position: absolute;
+  top: 20px;
+  width: auto;
+  height: auto;
+  max-width: 130px;
+  max-height: 130px;
+  z-index: 50;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  pointer-events: none; /* Tıklamaları engellemez, sadece görsel */
+}
+
+.site-logo.left {
+  left: 20px;
+}
+
+.site-logo.right {
+  right: 20px;
+}
+
+/* Responsive logo boyutları */
+@media (max-width: 1100px) {
+  .site-logo {
+    max-width: 100px;
+    max-height: 100px;
+  }
+  .site-logo.left { left: 15px; top: 15px; }
+  .site-logo.right { right: 15px; top: 15px; }
+}
+@media (max-width: 700px) {
+  .site-logo {
+    max-width: 70px;
+    max-height: 70px;
+  }
+  .site-logo.left { left: 10px; top: 10px; }
+  .site-logo.right { right: 10px; top: 10px; }
+}
+@media (max-width: 500px) {
+  .site-logo {
+    max-width: 55px;
+    max-height: 55px;
+  }
+}
+
+/* Logo resminin kendisi şeffaf arkaplanlı olsa bile arkaplan rengini almaz, beyazlık yok */
+.site-logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
 
 </style>
 </head>
 <body>
-<img class="corner-logo left" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAeAB4AAD/2wBDAAICAgICAQICAgIDAgIDAwYEAwMDAwcFBQQGCAcJCAgHCAgJCg0LCQoMCggICw8LDA0ODg8OCQsQERAOEQ0ODg7/2wBDAQIDAwMDAwcEBAcOCQgJDg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg7/wAARCAKAAoADASIAAhEBAxEB/8QAHgAAAQMFAQEAAAAAAAAAAAAAAAECAwQGBwgJBQr/xABjEAABAgUCBAMEBQcGBwwFCgcBAgMABAUGEQchCBIxQRNRFSIycYEJFEKRoRUjYnKSgrEWM0JTorLRJDRDU1Vkc4OywuHwJjV0dZOjs7TS8RdIZGSEo7TE0zU2RoWVpP/EABoBAAIDAQEAAAAAAAAAAAAAAAABAgMEBQb/xAAvEQACAgEEAgICAQQCAwEAAAAAAQIRAwQSITEFQRMiUQYyFGFCUnEjM6GBFZGh/9oADAMBAAIRAxEAPwD0DQE3AlADs4VfINiInRhrgx5vI2d/Chq5CzihSMwkC5L3BdUQm+EJBAgMQBAYCEAUAUAUAEAV4IgJgFhAEUcAQBE8AS2TKYaAqTJaSm9T7U6YKQyocuMnJ3z6RqyAIQjKK2krtnMCB8kadwAme8OUcQyFz5BYxRHqDpQ5ZGhHkK6pCw/dbW4mHOJmMhMMgAACgMNQNoAIiI8cUaEKCARANrA31Bl6qFfq3Fw+2p5CQrqMKyM/LFWCAhLshI9XrgdhBhMfxonBkCJFHPWIfjSsQ/QxGhSIhqoRQJEJDwYO4gQqBWgIUIbEFwlQoEBCkA8UIh+E2EBAjKCKC4BAj/9k=" alt="Logo">
-<img class="corner-logo right" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAeAB4AAD/2wBDAAICAgICAQICAgIDAgIDAwYEAwMDAwcFBQQGCAcJCAgHCAgJCg0LCQoMCggICw8LDA0ODg8OCQsQERAOEQ0ODg7/2wBDAQIDAwMDAwcEBAcOCQgJDg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg7/wAARCAKAAoADASIAAhEBAxEB/8QAHgAAAQMFAQEAAAAAAAAAAAAAAAECAwQGBwgJBQr/xABjEAABAgUCBAMEBQcGBwwFCgcBAgMABAUGEQchCBIxQRNRFSIycYEJFEKRoRUjYnKSgrEWM0JTorLRJDRDU1Vkc4OywuHwJjV0dZOjs7TS8RdIZGSEo7TE0zU2RoWVpP/EABoBAAIDAQEAAAAAAAAAAAAAAAABAgMEBQb/xAAvEQACAgICAgEEAQMEAwAAAAAAAQIRAyESMQQTBSJBUQYyYXEjM0KBFCNCkaHw/9oADAMBAAIRAxEAPwD9IkBMCANiA+MhSdoAICBh0IhtCgAyhGc8sShGRDI2rkd2IhKhFADFZjjG8RqGMI4hUQv8ACTEJheR/kMhtSFG0NMEBjEBAYihSuUQnMMQj3h+MAKAEQ+IcRCQhG6BcN4hYIaYdAYVAOQmE5oXMMEChYjJgJhCYQKisYhgTBioBkPDJhJwYVhDRLGIAAhfyhIYEGYh6djAM5hqjjIRgGQYET2PzgwYTMGCB2KITA4g5oY6QnMDH0DoIgMQQUxEQ4w0bxElgMCgxARCEAwwmFJhpMAoFBAYTIUJgQwEwYhYIYYkmO8CkohMQAiEZgggL/2Q==" alt="Logo">
+
+<!-- Logolar: sol ve sağ üst köşe, sayfa kaydırılınca kayıyor (absolute), arkaplan şeffaf, beyazlık yok -->
+<div class="site-logo left">
+  <img src="https://github.com/hamzaozaydin/testmerkezi/blob/main/sitenin_logosu.png?raw=true" alt="Logo Sol">
+</div>
+<div class="site-logo right">
+  <img src="https://github.com/hamzaozaydin/testmerkezi/blob/main/sitenin_logosu.png?raw=true" alt="Logo Sağ">
+</div>
 
 <div class="page-wrapper">
 
@@ -571,7 +628,6 @@ footer span { color: #F5C842; }
     <div class="panel-body">
       <div class="two-col-grid">
 
-        <!-- Sol: Ücretsizler -->
         <div>
           <div class="col-label col-label-free">✅ Ücretsiz</div>
           <div class="col-items">
@@ -610,7 +666,6 @@ footer span { color: #F5C842; }
           </div>
         </div>
 
-        <!-- Sağ: Giriş Gerekliler -->
         <div>
           <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
           <div class="col-items">
@@ -726,7 +781,6 @@ footer span { color: #F5C842; }
     <div class="panel-body">
       <div class="two-col-grid">
 
-        <!-- Sol: Ücretsizler -->
         <div>
           <div class="col-label col-label-free">✅ Ücretsiz</div>
           <div class="col-items">
@@ -785,7 +839,6 @@ footer span { color: #F5C842; }
           </div>
         </div>
 
-        <!-- Sağ: Giriş Gerekliler -->
         <div>
           <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
           <div class="col-items">
@@ -876,7 +929,6 @@ footer span { color: #F5C842; }
     <div class="panel-header"><h2>📖 Okuma Metinleri</h2></div>
     <div class="panel-body">
       <div class="two-col-grid">
-        <!-- Sol: Ücretsizler -->
         <div>
           <div class="col-label col-label-free">✅ Ücretsiz</div>
           <div class="col-items">
@@ -918,7 +970,6 @@ footer span { color: #F5C842; }
             </a>
           </div>
         </div>
-        <!-- Sağ: Giriş Gerekliler -->
         <div>
           <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
           <div class="col-items">
@@ -996,7 +1047,6 @@ footer span { color: #F5C842; }
     <div class="panel-header"><h2>✍️ Okuma Alıştırmaları</h2></div>
     <div class="panel-body">
       <div class="two-col-grid">
-        <!-- Sol: Ücretsizler -->
         <div>
           <div class="col-label col-label-free">✅ Ücretsiz</div>
           <div class="col-items">
@@ -1026,7 +1076,6 @@ footer span { color: #F5C842; }
             </a>
           </div>
         </div>
-        <!-- Sağ: Giriş Gerekliler -->
         <div>
           <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
           <div class="col-items">
@@ -1043,7 +1092,6 @@ footer span { color: #F5C842; }
   <div class="panel-header"><h2>🎯 Oyunlar</h2></div>
   <div class="panel-body">
     <div class="two-col-grid">
-      <!-- Sol: Ücretsizler -->
       <div>
         <div class="col-label col-label-free">✅ Ücretsiz</div>
         <div class="col-items">
@@ -1057,7 +1105,6 @@ footer span { color: #F5C842; }
           </a>
         </div>
       </div>
-      <!-- Sağ: Giriş Gerekliler -->
       <div>
         <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
         <div class="col-items">
@@ -1239,7 +1286,6 @@ async function doLogin() {
       const [sheetUser, sheetPass, expiryDateRaw] = rows[i].map(c => (c || '').trim());
       if (sheetUser.toLowerCase() === username.toLowerCase() && sheetPass === password) {
         found = true;
-
         // Tarih kontrolü: eğer tarih sütunu doluysa ve bugün bu tarihten sonraysa giriş engellensin
         if (expiryDateRaw && expiryDateRaw !== '') {
           // Tarih formatı: DD-MM-YYYY
@@ -1257,11 +1303,9 @@ async function doLogin() {
             }
           }
         }
-
         // Tarih geçerli veya tarih yok → başarılı giriş
         sessionStorage.setItem('hamzaUser', username);
         closeModal();
-
         if (targetVideoSrc) {
           openVideo(targetVideoSrc);
         } else if (targetExternal) {
