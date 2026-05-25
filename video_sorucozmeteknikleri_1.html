@@ -175,7 +175,6 @@
   .section-divider { width:120px; height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:.4rem auto 1.5rem; border-radius:2px; }
   .section-title-main { text-align:center; font-size:1.1rem; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin:1.5rem 0 .4rem; opacity:.9; }
   .bottom-space { height:3rem; }
-  .writing-badge { background: rgba(245,200,66,0.15); border-radius: 20px; padding: 2px 12px; font-size: 11px; font-weight: 600; color: #F5C842; margin-left: 10px; vertical-align: middle; }
   .dual-badge { background: rgba(100,200,255,0.15); border-radius: 20px; padding: 2px 10px; font-size: 10px; font-weight: 600; color: #88ccff; margin-left: 8px; }
 </style>
 </head>
@@ -213,7 +212,7 @@
   <div class="section-title-main">Soru Çözüm Teknikleri</div>
   <div class="section-divider"></div>
 
-  <!-- OKUMA BÖLÜMÜ (SADECE Sayfa 1) -->
+  <!-- OKUMA BÖLÜMÜ -->
   <div class="section-block">
     <div class="accordion-header" onclick="toggleAccordion(this)" id="acc-okuma">
       <div class="acc-left">
@@ -257,7 +256,7 @@
     </div>
   </div>
 
-  <!-- DİNLEME BÖLÜMÜ (SADECE Sayfa 1) -->
+  <!-- DİNLEME BÖLÜMÜ -->
   <div class="section-block">
     <div class="accordion-header" onclick="toggleAccordion(this)" id="acc-dinleme">
       <div class="acc-left">
@@ -305,7 +304,7 @@
     </div>
   </div>
 
-  <!-- YAZMA BÖLÜMÜ (Sayfa 1 VEYA Sayfa 2) -->
+  <!-- YAZMA BÖLÜMÜ -->
   <div class="section-block">
     <div class="accordion-header" onclick="toggleAccordion(this)" id="acc-yazma">
       <div class="acc-left">
@@ -433,10 +432,10 @@ function handleVideoOverlayClick(e) {
 // ===================== GİRİŞ SİSTEMİ =====================
 let pendingVideoId = null;
 let pendingVideoTitle = null;
-let pendingSectionType = null; // 'reading' veya 'writing'
+let pendingSectionType = null;
 
-const READING_SESSION_KEY = 'hh_auth_reading';   // Okuma/Dinleme için session
-const WRITING_SESSION_KEY = 'hh_auth_writing';   // Yazma için session
+const READING_SESSION_KEY = 'hh_auth_reading';
+const WRITING_SESSION_KEY = 'hh_auth_writing';
 
 function getSession(sectionType) {
   try { 
@@ -449,7 +448,6 @@ function setSession(user, sectionType) {
   sessionStorage.setItem(key, JSON.stringify({ user, ts: Date.now() }));
 }
 
-// Google Sheets'ten veri çekme
 async function fetchUsersFromSheet(gid) {
   const SHEET_ID = '1CZAbgcO8mBnEJ_Ay9baiHESirK3C8A1i3C-rDRzLEJE';
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${gid}&cachebust=${Date.now()}`;
@@ -465,18 +463,33 @@ async function fetchUsersFromSheet(gid) {
   })).filter(r => r.user && r.pass);
 }
 
+// Tarih parse: gün-ay-yıl (25-04-2026) veya Date(2026,3,25) formatını destekler
 function parseExpiry(val) {
-  if (!val) return null;
+  if (!val || val.trim() === '') return null;
+  val = val.trim();
+  
   let m;
+  // Google Sheets Date formatı: Date(2026,3,25) -> ay 0-index
   if ((m = val.match(/Date\((\d+),(\d+),(\d+)\)/))) {
     return new Date(parseInt(m[1]), parseInt(m[2]), parseInt(m[3]));
   }
+  // ISO: 2026-04-25
   if ((m = val.match(/^(\d{4})-(\d{2})-(\d{2})$/))) {
     return new Date(parseInt(m[1]), parseInt(m[2])-1, parseInt(m[3]));
   }
+  // gg-aa-yyyy (25-04-2026)
+  if ((m = val.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/))) {
+    return new Date(parseInt(m[3]), parseInt(m[2])-1, parseInt(m[1]));
+  }
+  // gg.aa.yyyy (25.04.2026)
   if ((m = val.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/))) {
     return new Date(parseInt(m[3]), parseInt(m[2])-1, parseInt(m[1]));
   }
+  // gg/aa/yyyy
+  if ((m = val.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/))) {
+    return new Date(parseInt(m[3]), parseInt(m[2])-1, parseInt(m[1]));
+  }
+  
   const d = new Date(val);
   return isNaN(d.getTime()) ? null : d;
 }
@@ -499,25 +512,20 @@ async function doLogin() {
 
   try {
     let match = null;
-    let usedSheet = null;
 
     if (pendingSectionType === 'writing') {
-      // YAZMA: Önce Sayfa 1'i kontrol et (tam erişimli kullanıcılar)
+      // YAZMA: Önce Sayfa 1 (tam erişim), sonra Sayfa 2 (sadece yazma)
       const page1Users = await fetchUsersFromSheet('148065819');
       match = page1Users.find(u => u.user.toLowerCase() === userInput.toLowerCase() && u.pass === passInput);
-      usedSheet = '148065819';
       
-      // Sayfa 1'de yoksa Sayfa 2'yi kontrol et (sadece yazma erişimli kullanıcılar)
       if (!match) {
         const page2Users = await fetchUsersFromSheet('2061679672');
         match = page2Users.find(u => u.user.toLowerCase() === userInput.toLowerCase() && u.pass === passInput);
-        usedSheet = '2061679672';
       }
     } else {
-      // OKUMA/DİNLEME: SADECE Sayfa 1 kontrol et
+      // OKUMA/DİNLEME: SADECE Sayfa 1
       const page1Users = await fetchUsersFromSheet('148065819');
       match = page1Users.find(u => u.user.toLowerCase() === userInput.toLowerCase() && u.pass === passInput);
-      usedSheet = '148065819';
     }
 
     if (!match) {
@@ -526,18 +534,19 @@ async function doLogin() {
       btn.disabled = false; loadEl.classList.remove('show'); return;
     }
 
-    // Tarih kontrolü
-    const expiry = parseExpiry(match.expiry);
-    if (expiry) {
-      const today = new Date(); today.setHours(0,0,0,0);
-      if (expiry < today) {
-        errEl.textContent = '⏰ Erişim süreniz dolmuş. Lütfen Hamza Hoca ile iletişime geçin.';
-        errEl.classList.add('show');
-        btn.disabled = false; loadEl.classList.remove('show'); return;
+    // Tarih kontrolü (boş tarih = süresiz erişim)
+    if (match.expiry && match.expiry.trim() !== '') {
+      const expiry = parseExpiry(match.expiry);
+      if (expiry) {
+        const today = new Date(); today.setHours(0,0,0,0);
+        if (expiry < today) {
+          errEl.textContent = '⏰ Erişim süreniz dolmuş (' + match.expiry + '). Lütfen Hamza Hoca ile iletişime geçin.';
+          errEl.classList.add('show');
+          btn.disabled = false; loadEl.classList.remove('show'); return;
+        }
       }
     }
 
-    // Başarılı giriş
     setSession(match.user, pendingSectionType);
     loadEl.classList.remove('show');
     document.getElementById('loginModal').classList.remove('active');
@@ -559,7 +568,6 @@ async function doLogin() {
 }
 
 function openLoginModal(videoId, title, sectionType) {
-  // sectionType: 'reading' (okuma/dinleme) veya 'writing' (yazma)
   const session = getSession(sectionType);
   if (session) { 
     openVideo(videoId, title); 
