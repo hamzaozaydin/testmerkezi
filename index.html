@@ -14,7 +14,7 @@
 <title>Hamza Hoca ile Türkçe Öğreniyorum</title>
 <style>
 /* ═══════════════════════════════════════
-   RESET & BASE
+   RESET & BASE - AYNI
 ═══════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1199,11 +1199,7 @@ const ACCESS_TYPE = {
   SPEAKING: 'speaking' // Sheet4 - sadece konuşma ödevi
 };
 
-// Session'da tutulacak bilgiler
-let currentAccessType = null;
-let currentUsername = null;
-
-// Yönlendirme hedefleri
+// Yönlendirme hedefleri (global)
 let targetPage = '';
 let targetUrl = '';
 let targetVideoSrc = null;
@@ -1245,12 +1241,13 @@ function closeVideoOutside(e) {
   if (e.target === document.getElementById('videoOverlay')) closeVideo();
 }
 
-// Yetki kontrolü
+// Yetki kontrolü (direkt sayfaya yönlendirir veya modal açar)
 function checkAccess(requiredAccessType, successCallback) {
   const storedType = sessionStorage.getItem('hamzaAccessType');
   const storedUser = sessionStorage.getItem('hamzaUser');
   
   if (storedUser && storedType === requiredAccessType) {
+    // Zaten doğru giriş yapılmış, hemen yönlendir
     if (successCallback) successCallback();
     return true;
   } else if (storedUser && storedType !== requiredAccessType) {
@@ -1262,10 +1259,9 @@ function checkAccess(requiredAccessType, successCallback) {
     alert(`Bu içeriğe erişmek için ${requiredText} hesabıyla giriş yapmalısınız. Mevcut oturumunuz kapatılacak.`);
     sessionStorage.removeItem('hamzaUser');
     sessionStorage.removeItem('hamzaAccessType');
-    currentAccessType = requiredAccessType;
     return false;
   } else {
-    currentAccessType = requiredAccessType;
+    // Hiç giriş yok
     return false;
   }
 }
@@ -1311,9 +1307,6 @@ function openSpeakingOdev() {
 
 function closeModal() { 
   document.getElementById('modalOverlay').classList.remove('show');
-  targetPage = '';
-  targetUrl = '';
-  targetVideoSrc = null;
 }
 function closeModalOutside(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
 
@@ -1342,28 +1335,25 @@ async function doLogin() {
   const username = document.getElementById('inputUser').value.trim();
   const password = document.getElementById('inputPass').value.trim();
   if (!username || !password) return;
+  
   const btn = document.getElementById('btnLogin');
-  btn.disabled = true; btn.textContent = 'Kontrol ediliyor...';
+  btn.disabled = true; 
+  btn.textContent = 'Kontrol ediliyor...';
+  
+  // Hangi modda olduğumuzu modal'daki metinden anlayalım
+  const modalSubTitle = document.getElementById('modalSubTitle').innerText;
+  let requiredAccessType = ACCESS_TYPE.EXAM; // varsayılan
+  
+  if (modalSubTitle.includes('Sınav (Sheet2)')) requiredAccessType = ACCESS_TYPE.EXAM;
+  else if (modalSubTitle.includes('Yazma Ödevi (Sheet3)')) requiredAccessType = ACCESS_TYPE.WRITING;
+  else if (modalSubTitle.includes('Konuşma Ödevi (Sheet4)')) requiredAccessType = ACCESS_TYPE.SPEAKING;
   
   try {
-    // currentAccessType'a göre doğru sheet'i seç
+    // requiredAccessType'a göre doğru sheet'i seç
     let sheetUrl = '';
-    let accessTypeForSheet = '';
-    
-    if (currentAccessType === ACCESS_TYPE.EXAM) {
-      sheetUrl = EXAM_SHEET_URL;
-      accessTypeForSheet = ACCESS_TYPE.EXAM;
-    } else if (currentAccessType === ACCESS_TYPE.WRITING) {
-      sheetUrl = WRITING_SHEET_URL;
-      accessTypeForSheet = ACCESS_TYPE.WRITING;
-    } else if (currentAccessType === ACCESS_TYPE.SPEAKING) {
-      sheetUrl = SPEAKING_SHEET_URL;
-      accessTypeForSheet = ACCESS_TYPE.SPEAKING;
-    } else {
-      // Varsayılan olarak exam sheet'i kontrol et
-      sheetUrl = EXAM_SHEET_URL;
-      accessTypeForSheet = ACCESS_TYPE.EXAM;
-    }
+    if (requiredAccessType === ACCESS_TYPE.EXAM) sheetUrl = EXAM_SHEET_URL;
+    else if (requiredAccessType === ACCESS_TYPE.WRITING) sheetUrl = WRITING_SHEET_URL;
+    else sheetUrl = SPEAKING_SHEET_URL;
     
     const res = await fetch(sheetUrl);
     const rows = parseCSV(await res.text());
@@ -1392,16 +1382,19 @@ async function doLogin() {
         }
         // Giriş başarılı - session'a kaydet
         sessionStorage.setItem('hamzaUser', username);
-        sessionStorage.setItem('hamzaAccessType', accessTypeForSheet);
+        sessionStorage.setItem('hamzaAccessType', requiredAccessType);
         closeModal();
         
-        // Yönlendirme yap
+        // Yönlendirme yap (HEDEF PAGE'A DIREKT YÖNLENDİR)
         if (targetVideoSrc) {
           openVideo(targetVideoSrc);
+          targetVideoSrc = null;
         } else if (targetUrl) {
           window.location.href = targetUrl;
+          targetUrl = '';
         } else if (targetPage) {
           window.location.href = targetPage;
+          targetPage = '';
         }
         return;
       }
@@ -1409,9 +1402,9 @@ async function doLogin() {
 
     if (!found) {
       let sheetName = '';
-      if (currentAccessType === ACCESS_TYPE.EXAM) sheetName = 'Sınav (Sheet2)';
-      else if (currentAccessType === ACCESS_TYPE.WRITING) sheetName = 'Yazma Ödevi (Sheet3)';
-      else if (currentAccessType === ACCESS_TYPE.SPEAKING) sheetName = 'Konuşma Ödevi (Sheet4)';
+      if (requiredAccessType === ACCESS_TYPE.EXAM) sheetName = 'Sınav (Sheet2)';
+      else if (requiredAccessType === ACCESS_TYPE.WRITING) sheetName = 'Yazma Ödevi (Sheet3)';
+      else sheetName = 'Konuşma Ödevi (Sheet4)';
       alert(`Hatalı kullanıcı adı veya şifre! (${sheetName} hesabı)`);
     } else if (isExpired) {
       alert('Üyelik süreniz dolmuştur. Lütfen yenilemek için Hamza Hoca ile iletişime geçiniz.');
@@ -1420,13 +1413,16 @@ async function doLogin() {
     console.error(err);
     alert('Bağlantı hatası! Lütfen daha sonra tekrar deneyin.');
   } finally {
-    btn.disabled = false; btn.textContent = 'GİRİŞ YAP';
+    btn.disabled = false; 
+    btn.textContent = 'GİRİŞ YAP';
   }
 }
 
 window.addEventListener('pageshow', function(e) {
   closeModal();
   targetVideoSrc = null;
+  targetPage = '';
+  targetUrl = '';
 });
 
 function parseCSV(text) {
