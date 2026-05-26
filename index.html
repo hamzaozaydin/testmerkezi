@@ -406,7 +406,7 @@ footer span { color: #F5C842; }
   fill: white;
 }
 
-/* LOGO - Kaydırılınca kaybolacak, sabit değil, kenarlarda, şeffaf */
+/* LOGO */
 .site-logo {
   position: absolute;
   top: 20px;
@@ -418,7 +418,7 @@ footer span { color: #F5C842; }
   background: transparent;
   border-radius: 0;
   box-shadow: none;
-  pointer-events: none; /* Tıklamaları engellemez, sadece görsel */
+  pointer-events: none;
 }
 
 .site-logo.left {
@@ -429,7 +429,6 @@ footer span { color: #F5C842; }
   right: 20px;
 }
 
-/* Responsive logo boyutları */
 @media (max-width: 1100px) {
   .site-logo {
     max-width: 100px;
@@ -453,7 +452,6 @@ footer span { color: #F5C842; }
   }
 }
 
-/* Logo resminin kendisi şeffaf arkaplanlı olsa bile arkaplan rengini almaz, beyazlık yok */
 .site-logo img {
   width: 100%;
   height: auto;
@@ -467,7 +465,6 @@ footer span { color: #F5C842; }
 </head>
 <body>
 
-<!-- Logolar: sol ve sağ üst köşe, sayfa kaydırılınca kayıyor (absolute), arkaplan şeffaf, beyazlık yok -->
 <div class="site-logo left">
   <img src="https://github.com/hamzaozaydin/testmerkezi/blob/main/sitenin_logosu.png?raw=true" alt="Logo Sol">
 </div>
@@ -545,7 +542,6 @@ footer span { color: #F5C842; }
       <span class="emoji">📤</span>
       <span class="label">YAZMA ÖDEVİ GÖNDER</span>
     </button>
-    <!-- YENİ BUTON: KONUŞMA ÖDEVİ GÖNDER -->
     <button class="cat-btn" id="konusmaOdevGonderBtn">
       <span class="emoji">🎙️</span>
       <span class="label">KONUŞMA ÖDEVİ GÖNDER</span>
@@ -556,39 +552,39 @@ footer span { color: #F5C842; }
     <div class="panel-header"><h2>📖 Okuma Sınavları</h2></div>
     <div class="panel-body">
       <div class="items-grid">
-        <div class="item-card" onclick="openLogin('okuma1.html')">
+        <div class="item-card" onclick="openExamLogin('okuma1.html')">
           <span class="item-name">Okuma Sınavı 1</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
-        <div class="item-card" onclick="openLogin('okuma-testi-2.html')">
+        <div class="item-card" onclick="openExamLogin('okuma-testi-2.html')">
           <span class="item-name">Okuma Sınavı 2</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
-        <div class="item-card" onclick="openLogin('okuma_testi_3.html')">
+        <div class="item-card" onclick="openExamLogin('okuma_testi_3.html')">
           <span class="item-name">Okuma Sınavı 3</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
-        <div class="item-card" onclick="openLogin('okuma_testi_4.html')">
+        <div class="item-card" onclick="openExamLogin('okuma_testi_4.html')">
           <span class="item-name">Okuma Sınavı 4</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
-        <div class="item-card" onclick="openLogin('okuma_testi_5.html')">
+        <div class="item-card" onclick="openExamLogin('okuma_testi_5.html')">
           <span class="item-name">Okuma Sınavı 5</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
-         <div class="item-card" onclick="openLogin('okuma_testi_6.html')">
+         <div class="item-card" onclick="openExamLogin('okuma_testi_6.html')">
           <span class="item-name">Okuma Sınavı 6</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
-         <div class="item-card" onclick="openLogin('okuma_testi_7.html')">
+         <div class="item-card" onclick="openExamLogin('okuma_testi_7.html')">
           <span class="item-name">Okuma Sınavı 7</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
-         <div class="item-card" onclick="openLogin('okuma_testi_8.html')">
+         <div class="item-card" onclick="openExamLogin('okuma_testi_8.html')">
           <span class="item-name">Okuma Sınavı 8</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
-          <div class="item-card" onclick="openLogin('TYS_okuma_testi_1.html')">
+          <div class="item-card" onclick="openExamLogin('TYS_okuma_testi_1.html')">
           <span class="item-name">Okuma Sınavı 9 (TYS)</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
@@ -675,59 +671,59 @@ footer span { color: #F5C842; }
         <div>
           <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
           <div class="col-items">
-            <div class="item-card" onclick="openLogin('baglaçlar.html')">
+            <div class="item-card" onclick="openExamLogin('baglaçlar.html')">
               <span class="item-name">Bağlaçlar</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLogin('b2_kelimeler_2.html')">
+            <div class="item-card" onclick="openExamLogin('b2_kelimeler_2.html')">
               <span class="item-name">Kelimeler 1</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLogin('b2_kelimeler_3.html')">
+            <div class="item-card" onclick="openExamLogin('b2_kelimeler_3.html')">
               <span class="item-name">Kelimeler 2</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('b2_kelimeler_33.html')">
+             <div class="item-card" onclick="openExamLogin('b2_kelimeler_33.html')">
               <span class="item-name">Kelimeler 3</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLogin('b2_kelimeler_4.html')">
+            <div class="item-card" onclick="openExamLogin('b2_kelimeler_4.html')">
               <span class="item-name">Kelimeler 4</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('cumle_kurma_alistirmasi_1.html')">
+             <div class="item-card" onclick="openExamLogin('cumle_kurma_alistirmasi_1.html')">
               <span class="item-name">Cümle Kurma Alıştırması 1</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('cumle_kurma_alistirmasi_2.html')">
+             <div class="item-card" onclick="openExamLogin('cumle_kurma_alistirmasi_2.html')">
               <span class="item-name">Cümle Kurma Alıştırması 2</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('B2_es_anlamli_kelime_oyunu_1.html')">
+             <div class="item-card" onclick="openExamLogin('B2_es_anlamli_kelime_oyunu_1.html')">
               <span class="item-name">Eş Anlamlı Kelime Alıştırması 1</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-              <div class="item-card" onclick="openLogin('gunluk_ifadeler_1.html')">
+              <div class="item-card" onclick="openExamLogin('gunluk_ifadeler_1.html')">
               <span class="item-name">Günlük İfadeler 1</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('gunluk_ifadeler_2.html')">
+             <div class="item-card" onclick="openExamLogin('gunluk_ifadeler_2.html')">
               <span class="item-name">Günlük İfadeler 2</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLogin('gunluk_ifadeler_3.html')">
+            <div class="item-card" onclick="openExamLogin('gunluk_ifadeler_3.html')">
               <span class="item-name">Günlük İfadeler 3</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('gunluk_ifadeler_4.html')">
+             <div class="item-card" onclick="openExamLogin('gunluk_ifadeler_4.html')">
               <span class="item-name">Günlük İfadeler 4</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('deyimler_b2_1.html')">
+             <div class="item-card" onclick="openExamLogin('deyimler_b2_1.html')">
               <span class="item-name">Deyimler 1</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('deyimler_b2_2.html')">
+             <div class="item-card" onclick="openExamLogin('deyimler_b2_2.html')">
               <span class="item-name">Deyimler 2</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
@@ -742,31 +738,31 @@ footer span { color: #F5C842; }
     <div class="panel-header"><h2>🎧 Dinleme Sınavları</h2></div>
     <div class="panel-body">
       <div class="items-grid">
-        <div class="item-card" onclick="openLogin('dinleme_sinavi.html')">
+        <div class="item-card" onclick="openExamLogin('dinleme_sinavi.html')">
           <span class="item-name">Dinleme Sınavı 1</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
-        <div class="item-card" onclick="openLogin('dinleme_testi_2.html')">
+        <div class="item-card" onclick="openExamLogin('dinleme_testi_2.html')">
           <span class="item-name">Dinleme Sınavı 2</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
-        <div class="item-card" onclick="openLogin('dinleme_testi_3.html')">
+        <div class="item-card" onclick="openExamLogin('dinleme_testi_3.html')">
           <span class="item-name">Dinleme Sınavı 3</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
-        <div class="item-card" onclick="openLogin('dinleme_testi_4.html')">
+        <div class="item-card" onclick="openExamLogin('dinleme_testi_4.html')">
           <span class="item-name">Dinleme Sınavı 4</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
-        <div class="item-card" onclick="openLogin('dinleme_testi_5.html')">
+        <div class="item-card" onclick="openExamLogin('dinleme_testi_5.html')">
           <span class="item-name">Dinleme Sınavı 5</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
-         <div class="item-card" onclick="openLogin('dinleme_testi_6.html')">
+         <div class="item-card" onclick="openExamLogin('dinleme_testi_6.html')">
           <span class="item-name">Dinleme Sınavı 6</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
-         <div class="item-card" onclick="openLogin('TYS_dinleme_testi_1.html')">
+         <div class="item-card" onclick="openExamLogin('TYS_dinleme_testi_1.html')">
           <span class="item-name">Dinleme Sınavı 7 (TYS)</span>
           <span class="badge badge-locked">🔒 Giriş Gerekli</span>
         </div>
@@ -852,55 +848,55 @@ footer span { color: #F5C842; }
         <div>
           <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
           <div class="col-items">
-            <div class="item-card" onclick="openLogin('konuşma_soruları_3.html')">
+            <div class="item-card" onclick="openExamLogin('konuşma_soruları_3.html')">
               <span class="item-name">Konuşma Soruları 1</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLogin('konuşma_soruları_4.html')">
+            <div class="item-card" onclick="openExamLogin('konuşma_soruları_4.html')">
               <span class="item-name">Konuşma Soruları 2</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLogin('konusma_sorulari_5.html')">
+            <div class="item-card" onclick="openExamLogin('konusma_sorulari_5.html')">
               <span class="item-name">Konuşma Soruları 3</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLogin('konusma_sorulari_6.html')">
+            <div class="item-card" onclick="openExamLogin('konusma_sorulari_6.html')">
               <span class="item-name">Konuşma Soruları 4</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLogin('konusma_soruları_7.html')">
+            <div class="item-card" onclick="openExamLogin('konusma_soruları_7.html')">
               <span class="item-name">Konuşma Soruları 5</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('konusma_sorulari_66.html')">
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_66.html')">
               <span class="item-name">Konuşma Soruları 6</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('konusma_sorulari_77.html')">
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_77.html')">
               <span class="item-name">Konuşma Soruları 7</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('konusma_sorulari_8.html')">
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_8.html')">
               <span class="item-name">Konuşma Soruları 8</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('konusma_sorulari_9.html')">
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_9.html')">
               <span class="item-name">Konuşma Soruları 9</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('konusma_sorulari_10.html')">
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_10.html')">
               <span class="item-name">Konuşma Soruları 10</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('konusma_sorulari_11.html')">
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_11.html')">
               <span class="item-name">Konuşma Soruları 11</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('konusma_sorulari_12.html')">
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_12.html')">
               <span class="item-name">Konuşma Soruları 12</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-             <div class="item-card" onclick="openLogin('konusma_sorulari_13.html')">
+             <div class="item-card" onclick="openExamLogin('konusma_sorulari_13.html')">
               <span class="item-name">Konuşma Soruları 13</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
@@ -908,23 +904,23 @@ footer span { color: #F5C842; }
 
           <div class="col-label col-label-locked" style="margin-top: 18px;">🎬 Video Sorular</div>
           <div class="col-items">
-            <div class="item-card" onclick="openLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_1.mp4')">
+            <div class="item-card" onclick="openExamLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_1.mp4')">
               <span class="item-name">Video Sorular 1</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_2.mp4')">
+            <div class="item-card" onclick="openExamLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_2.mp4')">
               <span class="item-name">Video Sorular 2</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_3.mp4')">
+            <div class="item-card" onclick="openExamLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_3.mp4')">
               <span class="item-name">Video Sorular 3</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_4.mp4')">
+            <div class="item-card" onclick="openExamLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_4.mp4')">
               <span class="item-name">Video Sorular 4</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_5.mp4')">
+            <div class="item-card" onclick="openExamLoginVideo('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/konusma_sorulari_video_ucretli_5.mp4')">
               <span class="item-name">Video Sorular 5</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
@@ -983,27 +979,27 @@ footer span { color: #F5C842; }
         <div>
           <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
           <div class="col-items">
-            <div class="item-card" onclick="openLogin('ormanlar.html')">
+            <div class="item-card" onclick="openExamLogin('ormanlar.html')">
               <span class="item-name">Ormanların Yok Olmasının Sebepleri ve Korunma Yolları</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLogin('ogretmen_yapay_zeka.html')">
+            <div class="item-card" onclick="openExamLogin('ogretmen_yapay_zeka.html')">
               <span class="item-name">Dil Öğreniminde Öğretmen Rehberliği mi, Yapay Zeka mı Daha Etkilidir?</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLogin('dort_gun_calisma.html')">
+            <div class="item-card" onclick="openExamLogin('dort_gun_calisma.html')">
               <span class="item-name">Haftada Dört Gün Çalışma Verimliliği ve Sağlığı Artırır mı?</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLogin('egitimde_yapay_zeka.html')">
+            <div class="item-card" onclick="openExamLogin('egitimde_yapay_zeka.html')">
               <span class="item-name">Eğitimde yapay zeka kullanımı, öğrencilerin eleştirel düşünme becerilerini köreltiyor mu yoksa onlara yeni ufuklar mı açıyor? Okullarda Yapay zeka kullanımı yasaklanmalı mı yoksa müfredata mı dahil edilmelidir?</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLogin('sosyal_medya_dostluklari.html')">
+            <div class="item-card" onclick="openExamLogin('sosyal_medya_dostluklari.html')">
               <span class="item-name">Sosyal medya aracılığıyla kurulan bağlar, gerçek dostlukların yerini tutabilir mi?</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
-            <div class="item-card" onclick="openLogin('mekandan_bagimsiz_calisma.html')">
+            <div class="item-card" onclick="openExamLogin('mekandan_bagimsiz_calisma.html')">
               <span class="item-name">Uzaktan çalışma modeli, bireylerin sosyal bağlarını zayıflatıyor mu? İş ve özel hayat dengesini korumak için fiziksel ofislere hala ihtiyaç var mı?</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
@@ -1089,7 +1085,7 @@ footer span { color: #F5C842; }
         <div>
           <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
           <div class="col-items">
-            <div class="item-card" onclick="openLogin('tys_okuma_alistirmasi_1.html')">
+            <div class="item-card" onclick="openExamLogin('tys_okuma_alistirmasi_1.html')">
               <span class="item-name">TYS Okuma Alıştırması 1</span>
               <span class="badge badge-locked">🔒 Giriş Gerekli</span>
             </div>
@@ -1118,7 +1114,7 @@ footer span { color: #F5C842; }
       <div>
         <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
         <div class="col-items">
-          <div class="item-card" onclick="openLogin('kelimeler_carki_c1_1.unite.html')">
+          <div class="item-card" onclick="openExamLogin('kelimeler_carki_c1_1.unite.html')">
             <span class="item-name">C1-Kelimeler Çarkı 1</span>
             <span class="badge badge-locked">🔒 Giriş Gerekli</span>
           </div>
@@ -1180,7 +1176,7 @@ footer span { color: #F5C842; }
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <h2>🔐 Giriş Yap</h2>
-    <p class="sub">Bu içeriğe erişmek için giriş yapmalısınız.</p>
+    <p class="sub" id="modalSubTitle">Bu içeriğe erişmek için giriş yapmalısınız.</p>
     <div class="form-group"><label>Kullanıcı Adı</label><input type="text" id="inputUser" placeholder="kullanici_adi"></div>
     <div class="form-group"><label>Şifre</label><input type="password" id="inputPass" placeholder="••••••••"></div>
     <button class="btn-login" id="btnLogin" onclick="doLogin()">GİRİŞ YAP</button>
@@ -1190,22 +1186,33 @@ footer span { color: #F5C842; }
 
 <script>
 const SHEET_ID  = '1CZAbgcO8mBnEJ_Ay9baiHESirK3C8A1i3C-rDRzLEJE';
-// YAZMA ÖDEVİ için Sheet3 kullanılıyor
-const WRITING_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet3`;
-// KONUŞMA ÖDEVİ için Sheet4 kullanılıyor
-const SPEAKING_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet4`;
 
-// login mode: 'writing' (varsayılan) veya 'speaking'
-let loginMode = 'writing';
-let targetWritingPage = '';
-let targetSpeakingUrl = '';
+// Üç farklı sheet için URL'ler
+const EXAM_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet2`;      // Sınav kullanıcıları
+const WRITING_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet3`;  // Yazma ödevi kullanıcıları
+const SPEAKING_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet4`; // Konuşma ödevi kullanıcıları
+
+// Yetki türleri
+const ACCESS_TYPE = {
+  EXAM: 'exam',      // Sheet2 - sınavlar, kelimeler, tüm kilitli içerikler
+  WRITING: 'writing', // Sheet3 - sadece yazma ödevi
+  SPEAKING: 'speaking' // Sheet4 - sadece konuşma ödevi
+};
+
+// Session'da tutulacak bilgiler
+let currentAccessType = null;
+let currentUsername = null;
+
+// Yönlendirme hedefleri
+let targetPage = '';
+let targetUrl = '';
+let targetVideoSrc = null;
 
 function toggle(id, btn) {
   const panel = document.getElementById(id);
   if (!panel) return;
   const isOpen = panel.classList.contains('open');
 
-  // Tüm panelleri kapat
   document.querySelectorAll('.content-panel').forEach(p => {
     p.classList.remove('open');
     p.style.maxHeight = '0';
@@ -1238,71 +1245,95 @@ function closeVideoOutside(e) {
   if (e.target === document.getElementById('videoOverlay')) closeVideo();
 }
 
-function openLogin(page) {
-  if (sessionStorage.getItem('hamzaUser')) { window.location.href = page; return; }
-  loginMode = 'writing';
-  targetWritingPage = page;
-  targetSpeakingUrl = '';
-  document.getElementById('modalOverlay').classList.add('show');
-}
-
-function openLoginExternal(url) {
-  if (sessionStorage.getItem('hamzaUser')) { window.location.href = url; return; }
-  loginMode = 'writing';
-  targetSpeakingUrl = url;
-  targetWritingPage = '';
-  document.getElementById('modalOverlay').classList.add('show');
-}
-
-function openLoginVideo(src) {
-  if (sessionStorage.getItem('hamzaUser')) { openVideo(src); return; }
-  loginMode = 'writing';
-  targetWritingPage = '';
-  targetSpeakingUrl = '';
-  // Video için özel bir yönlendirme yok, giriş sonrası openVideo çağrılacak
-  window.pendingVideoSrc = src;
-  document.getElementById('modalOverlay').classList.add('show');
-}
-
-function openSpeakingLogin() {
-  if (sessionStorage.getItem('hamzaUser')) { 
-    window.location.href = 'https://hamzahocailekonusmapratigi.base44.app/';
-    return; 
+// Yetki kontrolü
+function checkAccess(requiredAccessType, successCallback) {
+  const storedType = sessionStorage.getItem('hamzaAccessType');
+  const storedUser = sessionStorage.getItem('hamzaUser');
+  
+  if (storedUser && storedType === requiredAccessType) {
+    if (successCallback) successCallback();
+    return true;
+  } else if (storedUser && storedType !== requiredAccessType) {
+    let requiredText = '';
+    if (requiredAccessType === ACCESS_TYPE.EXAM) requiredText = 'Sınav (Sheet2)';
+    else if (requiredAccessType === ACCESS_TYPE.WRITING) requiredText = 'Yazma Ödevi (Sheet3)';
+    else if (requiredAccessType === ACCESS_TYPE.SPEAKING) requiredText = 'Konuşma Ödevi (Sheet4)';
+    
+    alert(`Bu içeriğe erişmek için ${requiredText} hesabıyla giriş yapmalısınız. Mevcut oturumunuz kapatılacak.`);
+    sessionStorage.removeItem('hamzaUser');
+    sessionStorage.removeItem('hamzaAccessType');
+    currentAccessType = requiredAccessType;
+    return false;
+  } else {
+    currentAccessType = requiredAccessType;
+    return false;
   }
-  loginMode = 'speaking';
-  targetSpeakingUrl = 'https://hamzahocailekonusmapratigi.base44.app/';
-  targetWritingPage = '';
+}
+
+// Sınav içerikleri için (Sheet2)
+function openExamLogin(page) {
+  if (checkAccess(ACCESS_TYPE.EXAM, () => { window.location.href = page; })) return;
+  targetPage = page;
+  targetUrl = '';
+  targetVideoSrc = null;
+  document.getElementById('modalSubTitle').innerText = 'Bu sınav içeriğine erişmek için Sınav (Sheet2) hesabınızla giriş yapmalısınız.';
   document.getElementById('modalOverlay').classList.add('show');
 }
 
-function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+function openExamLoginVideo(src) {
+  if (checkAccess(ACCESS_TYPE.EXAM, () => { openVideo(src); })) return;
+  targetVideoSrc = src;
+  targetPage = '';
+  targetUrl = '';
+  document.getElementById('modalSubTitle').innerText = 'Bu video içeriğine erişmek için Sınav (Sheet2) hesabınızla giriş yapmalısınız.';
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+// Yazma ödevi için (Sheet3)
+function openWritingOdev() {
+  if (checkAccess(ACCESS_TYPE.WRITING, () => { window.location.href = 'https://hamzahocaodevkontrolu.base44.app/'; })) return;
+  targetUrl = 'https://hamzahocaodevkontrolu.base44.app/';
+  targetPage = '';
+  targetVideoSrc = null;
+  document.getElementById('modalSubTitle').innerText = 'Yazma ödevi göndermek için Yazma Ödevi (Sheet3) hesabınızla giriş yapmalısınız.';
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+// Konuşma ödevi için (Sheet4)
+function openSpeakingOdev() {
+  if (checkAccess(ACCESS_TYPE.SPEAKING, () => { window.location.href = 'https://hamzahocailekonusmapratigi.base44.app/'; })) return;
+  targetUrl = 'https://hamzahocailekonusmapratigi.base44.app/';
+  targetPage = '';
+  targetVideoSrc = null;
+  document.getElementById('modalSubTitle').innerText = 'Konuşma ödevi göndermek için Konuşma Ödevi (Sheet4) hesabınızla giriş yapmalısınız.';
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function closeModal() { 
+  document.getElementById('modalOverlay').classList.remove('show');
+  targetPage = '';
+  targetUrl = '';
+  targetVideoSrc = null;
+}
 function closeModalOutside(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
 
-// YAZMA ÖDEVİ butonu
+// Buton eventleri
 document.addEventListener('DOMContentLoaded', function() {
-  const odevBtn = document.getElementById('odevGonderBtn');
-  if (odevBtn) {
-    odevBtn.addEventListener('click', function(e) {
+  const writingBtn = document.getElementById('odevGonderBtn');
+  if (writingBtn) {
+    writingBtn.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      if (sessionStorage.getItem('hamzaUser')) {
-        window.location.href = 'https://hamzahocaodevkontrolu.base44.app/';
-      } else {
-        loginMode = 'writing';
-        targetSpeakingUrl = 'https://hamzahocaodevkontrolu.base44.app/';
-        targetWritingPage = '';
-        document.getElementById('modalOverlay').classList.add('show');
-      }
+      openWritingOdev();
     });
   }
 
-  // KONUŞMA ÖDEVİ GÖNDER butonu
-  const konusmaBtn = document.getElementById('konusmaOdevGonderBtn');
-  if (konusmaBtn) {
-    konusmaBtn.addEventListener('click', function(e) {
+  const speakingBtn = document.getElementById('konusmaOdevGonderBtn');
+  if (speakingBtn) {
+    speakingBtn.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      openSpeakingLogin();
+      openSpeakingOdev();
     });
   }
 });
@@ -1315,8 +1346,25 @@ async function doLogin() {
   btn.disabled = true; btn.textContent = 'Kontrol ediliyor...';
   
   try {
-    // loginMode'a göre doğru sheet'i kullan
-    const sheetUrl = (loginMode === 'speaking') ? SPEAKING_SHEET_URL : WRITING_SHEET_URL;
+    // currentAccessType'a göre doğru sheet'i seç
+    let sheetUrl = '';
+    let accessTypeForSheet = '';
+    
+    if (currentAccessType === ACCESS_TYPE.EXAM) {
+      sheetUrl = EXAM_SHEET_URL;
+      accessTypeForSheet = ACCESS_TYPE.EXAM;
+    } else if (currentAccessType === ACCESS_TYPE.WRITING) {
+      sheetUrl = WRITING_SHEET_URL;
+      accessTypeForSheet = ACCESS_TYPE.WRITING;
+    } else if (currentAccessType === ACCESS_TYPE.SPEAKING) {
+      sheetUrl = SPEAKING_SHEET_URL;
+      accessTypeForSheet = ACCESS_TYPE.SPEAKING;
+    } else {
+      // Varsayılan olarak exam sheet'i kontrol et
+      sheetUrl = EXAM_SHEET_URL;
+      accessTypeForSheet = ACCESS_TYPE.EXAM;
+    }
+    
     const res = await fetch(sheetUrl);
     const rows = parseCSV(await res.text());
     let found = false;
@@ -1326,7 +1374,7 @@ async function doLogin() {
       const [sheetUser, sheetPass, expiryDateRaw] = rows[i].map(c => (c || '').trim());
       if (sheetUser.toLowerCase() === username.toLowerCase() && sheetPass === password) {
         found = true;
-        // Tarih kontrolü: eğer tarih sütunu doluysa ve bugün bu tarihten sonraysa giriş engellensin
+        // Tarih kontrolü
         if (expiryDateRaw && expiryDateRaw !== '') {
           const parts = expiryDateRaw.split('-');
           if (parts.length === 3) {
@@ -1342,30 +1390,29 @@ async function doLogin() {
             }
           }
         }
-        // Tarih geçerli veya tarih yok → başarılı giriş
+        // Giriş başarılı - session'a kaydet
         sessionStorage.setItem('hamzaUser', username);
+        sessionStorage.setItem('hamzaAccessType', accessTypeForSheet);
         closeModal();
         
-        if (loginMode === 'speaking') {
-          // Konuşma ödevi sayfasına yönlendir
-          window.location.href = targetSpeakingUrl;
-        } else {
-          // Yazma ödevi veya normal içerik
-          if (window.pendingVideoSrc) {
-            openVideo(window.pendingVideoSrc);
-            window.pendingVideoSrc = null;
-          } else if (targetSpeakingUrl) {
-            window.location.href = targetSpeakingUrl;
-          } else if (targetWritingPage) {
-            window.location.href = targetWritingPage;
-          }
+        // Yönlendirme yap
+        if (targetVideoSrc) {
+          openVideo(targetVideoSrc);
+        } else if (targetUrl) {
+          window.location.href = targetUrl;
+        } else if (targetPage) {
+          window.location.href = targetPage;
         }
         return;
       }
     }
 
     if (!found) {
-      alert('Hatalı kullanıcı adı veya şifre!');
+      let sheetName = '';
+      if (currentAccessType === ACCESS_TYPE.EXAM) sheetName = 'Sınav (Sheet2)';
+      else if (currentAccessType === ACCESS_TYPE.WRITING) sheetName = 'Yazma Ödevi (Sheet3)';
+      else if (currentAccessType === ACCESS_TYPE.SPEAKING) sheetName = 'Konuşma Ödevi (Sheet4)';
+      alert(`Hatalı kullanıcı adı veya şifre! (${sheetName} hesabı)`);
     } else if (isExpired) {
       alert('Üyelik süreniz dolmuştur. Lütfen yenilemek için Hamza Hoca ile iletişime geçiniz.');
     }
@@ -1379,7 +1426,7 @@ async function doLogin() {
 
 window.addEventListener('pageshow', function(e) {
   closeModal();
-  window.pendingVideoSrc = null;
+  targetVideoSrc = null;
 });
 
 function parseCSV(text) {
