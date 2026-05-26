@@ -545,6 +545,11 @@ footer span { color: #F5C842; }
       <span class="emoji">📤</span>
       <span class="label">YAZMA ÖDEVİ GÖNDER</span>
     </button>
+    <!-- YENİ BUTON: KONUŞMA ÖDEVİ GÖNDER -->
+    <button class="cat-btn" id="konusmaOdevGonderBtn">
+      <span class="emoji">🎙️</span>
+      <span class="label">KONUŞMA ÖDEVİ GÖNDER</span>
+    </button>
     </div>
 
   <div class="content-panel" id="okuma-testleri">
@@ -1185,8 +1190,15 @@ footer span { color: #F5C842; }
 
 <script>
 const SHEET_ID  = '1CZAbgcO8mBnEJ_Ay9baiHESirK3C8A1i3C-rDRzLEJE';
-// Güncellendi: Sheet3 kullanılıyor
-const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet3`;
+// YAZMA ÖDEVİ için Sheet3 kullanılıyor
+const WRITING_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet3`;
+// KONUŞMA ÖDEVİ için Sheet4 kullanılıyor
+const SPEAKING_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet4`;
+
+// login mode: 'writing' (varsayılan) veya 'speaking'
+let loginMode = 'writing';
+let targetWritingPage = '';
+let targetSpeakingUrl = '';
 
 function toggle(id, btn) {
   const panel = document.getElementById(id);
@@ -1226,38 +1238,47 @@ function closeVideoOutside(e) {
   if (e.target === document.getElementById('videoOverlay')) closeVideo();
 }
 
-let targetPage = '';
-let targetVideoSrc = '';
-let targetExternal = '';
-
 function openLogin(page) {
   if (sessionStorage.getItem('hamzaUser')) { window.location.href = page; return; }
-  targetPage = page;
-  targetVideoSrc = '';
-  targetExternal = '';
+  loginMode = 'writing';
+  targetWritingPage = page;
+  targetSpeakingUrl = '';
   document.getElementById('modalOverlay').classList.add('show');
 }
 
 function openLoginExternal(url) {
   if (sessionStorage.getItem('hamzaUser')) { window.location.href = url; return; }
-  targetExternal = url;
-  targetPage = '';
-  targetVideoSrc = '';
+  loginMode = 'writing';
+  targetSpeakingUrl = url;
+  targetWritingPage = '';
   document.getElementById('modalOverlay').classList.add('show');
 }
 
 function openLoginVideo(src) {
   if (sessionStorage.getItem('hamzaUser')) { openVideo(src); return; }
-  targetVideoSrc = src;
-  targetPage = '';
-  targetExternal = '';
+  loginMode = 'writing';
+  targetWritingPage = '';
+  targetSpeakingUrl = '';
+  // Video için özel bir yönlendirme yok, giriş sonrası openVideo çağrılacak
+  window.pendingVideoSrc = src;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function openSpeakingLogin() {
+  if (sessionStorage.getItem('hamzaUser')) { 
+    window.location.href = 'https://hamzahocailekonusmapratigi.base44.app/';
+    return; 
+  }
+  loginMode = 'speaking';
+  targetSpeakingUrl = 'https://hamzahocailekonusmapratigi.base44.app/';
+  targetWritingPage = '';
   document.getElementById('modalOverlay').classList.add('show');
 }
 
 function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
 function closeModalOutside(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
 
-// ÖDEV GÖNDER butonu için event listener
+// YAZMA ÖDEVİ butonu
 document.addEventListener('DOMContentLoaded', function() {
   const odevBtn = document.getElementById('odevGonderBtn');
   if (odevBtn) {
@@ -1267,11 +1288,21 @@ document.addEventListener('DOMContentLoaded', function() {
       if (sessionStorage.getItem('hamzaUser')) {
         window.location.href = 'https://hamzahocaodevkontrolu.base44.app/';
       } else {
-        targetExternal = 'https://hamzahocaodevkontrolu.base44.app/';
-        targetPage = '';
-        targetVideoSrc = '';
+        loginMode = 'writing';
+        targetSpeakingUrl = 'https://hamzahocaodevkontrolu.base44.app/';
+        targetWritingPage = '';
         document.getElementById('modalOverlay').classList.add('show');
       }
+    });
+  }
+
+  // KONUŞMA ÖDEVİ GÖNDER butonu
+  const konusmaBtn = document.getElementById('konusmaOdevGonderBtn');
+  if (konusmaBtn) {
+    konusmaBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      openSpeakingLogin();
     });
   }
 });
@@ -1282,8 +1313,11 @@ async function doLogin() {
   if (!username || !password) return;
   const btn = document.getElementById('btnLogin');
   btn.disabled = true; btn.textContent = 'Kontrol ediliyor...';
+  
   try {
-    const res = await fetch(SHEET_URL);
+    // loginMode'a göre doğru sheet'i kullan
+    const sheetUrl = (loginMode === 'speaking') ? SPEAKING_SHEET_URL : WRITING_SHEET_URL;
+    const res = await fetch(sheetUrl);
     const rows = parseCSV(await res.text());
     let found = false;
     let isExpired = false;
@@ -1294,7 +1328,6 @@ async function doLogin() {
         found = true;
         // Tarih kontrolü: eğer tarih sütunu doluysa ve bugün bu tarihten sonraysa giriş engellensin
         if (expiryDateRaw && expiryDateRaw !== '') {
-          // Tarih formatı: DD-MM-YYYY
           const parts = expiryDateRaw.split('-');
           if (parts.length === 3) {
             const day = parseInt(parts[0], 10);
@@ -1312,12 +1345,20 @@ async function doLogin() {
         // Tarih geçerli veya tarih yok → başarılı giriş
         sessionStorage.setItem('hamzaUser', username);
         closeModal();
-        if (targetVideoSrc) {
-          openVideo(targetVideoSrc);
-        } else if (targetExternal) {
-          window.location.href = targetExternal;
-        } else if (targetPage) {
-          window.location.href = targetPage;
+        
+        if (loginMode === 'speaking') {
+          // Konuşma ödevi sayfasına yönlendir
+          window.location.href = targetSpeakingUrl;
+        } else {
+          // Yazma ödevi veya normal içerik
+          if (window.pendingVideoSrc) {
+            openVideo(window.pendingVideoSrc);
+            window.pendingVideoSrc = null;
+          } else if (targetSpeakingUrl) {
+            window.location.href = targetSpeakingUrl;
+          } else if (targetWritingPage) {
+            window.location.href = targetWritingPage;
+          }
         }
         return;
       }
@@ -1338,6 +1379,7 @@ async function doLogin() {
 
 window.addEventListener('pageshow', function(e) {
   closeModal();
+  window.pendingVideoSrc = null;
 });
 
 function parseCSV(text) {
