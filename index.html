@@ -1241,8 +1241,8 @@ function closeVideoOutside(e) {
   if (e.target === document.getElementById('videoOverlay')) closeVideo();
 }
 
-// Yetki kontrolü (direkt sayfaya yönlendirir veya modal açar)
-function checkAccess(requiredAccessType, successCallback) {
+// Yeni Yetki Kontrol Sistemi
+function checkAccessAndOpen(requiredAccessType, successCallback, targetType, targetValue) {
   const storedType = sessionStorage.getItem('hamzaAccessType');
   const storedUser = sessionStorage.getItem('hamzaUser');
   
@@ -1268,40 +1268,42 @@ function checkAccess(requiredAccessType, successCallback) {
 
 // Sınav içerikleri için (Sheet2)
 function openExamLogin(page) {
-  if (checkAccess(ACCESS_TYPE.EXAM, () => { window.location.href = page; })) return;
+  if (checkAccessAndOpen(ACCESS_TYPE.EXAM, () => { window.location.href = page; }, 'page', page)) return;
   targetPage = page;
   targetUrl = '';
   targetVideoSrc = null;
-  document.getElementById('modalSubTitle').innerText = 'Bu sınav içeriğine erişmek için Sınav hesabınızla giriş yapmalısınız.';
+  document.getElementById('modalSubTitle').innerHTML = 'Bu sınav içeriğine erişmek için <strong>Sınav (Sheet2)</strong> hesabınızla giriş yapmalısınız.';
   document.getElementById('modalOverlay').classList.add('show');
 }
 
 function openExamLoginVideo(src) {
-  if (checkAccess(ACCESS_TYPE.EXAM, () => { openVideo(src); })) return;
+  if (checkAccessAndOpen(ACCESS_TYPE.EXAM, () => { openVideo(src); }, 'video', src)) return;
   targetVideoSrc = src;
   targetPage = '';
   targetUrl = '';
-  document.getElementById('modalSubTitle').innerText = 'Bu video içeriğine erişmek için Sınav hesabınızla giriş yapmalısınız.';
+  document.getElementById('modalSubTitle').innerHTML = 'Bu video içeriğine erişmek için <strong>Sınav (Sheet2)</strong> hesabınızla giriş yapmalısınız.';
   document.getElementById('modalOverlay').classList.add('show');
 }
 
 // Yazma ödevi için (Sheet3)
 function openWritingOdev() {
-  if (checkAccess(ACCESS_TYPE.WRITING, () => { window.location.href = 'https://hamzahocaodevkontrolu.base44.app/'; })) return;
-  targetUrl = 'https://hamzahocaodevkontrolu.base44.app/';
+  const targetWritingUrl = 'https://hamzahocaodevkontrolu.base44.app/';
+  if (checkAccessAndOpen(ACCESS_TYPE.WRITING, () => { window.location.href = targetWritingUrl; }, 'url', targetWritingUrl)) return;
+  targetUrl = targetWritingUrl;
   targetPage = '';
   targetVideoSrc = null;
-  document.getElementById('modalSubTitle').innerText = 'Yazma ödevi göndermek için Yazma Ödevi hesabınızla giriş yapmalısınız.';
+  document.getElementById('modalSubTitle').innerHTML = 'Yazma ödevi göndermek için <strong>Yazma Ödevi (Sheet3)</strong> hesabınızla giriş yapmalısınız.';
   document.getElementById('modalOverlay').classList.add('show');
 }
 
 // Konuşma ödevi için (Sheet4)
 function openSpeakingOdev() {
-  if (checkAccess(ACCESS_TYPE.SPEAKING, () => { window.location.href = 'https://hamzahocailekonusmapratigi.base44.app/'; })) return;
-  targetUrl = 'https://hamzahocailekonusmapratigi.base44.app/';
+  const targetSpeakingUrl = 'https://hamzahocailekonusmapratigi.base44.app/';
+  if (checkAccessAndOpen(ACCESS_TYPE.SPEAKING, () => { window.location.href = targetSpeakingUrl; }, 'url', targetSpeakingUrl)) return;
+  targetUrl = targetSpeakingUrl;
   targetPage = '';
   targetVideoSrc = null;
-  document.getElementById('modalSubTitle').innerText = 'Konuşma ödevi göndermek için Konuşma Ödevi hesabınızla giriş yapmalısınız.';
+  document.getElementById('modalSubTitle').innerHTML = 'Konuşma ödevi göndermek için <strong>Konuşma Ödevi (Sheet4)</strong> hesabınızla giriş yapmalısınız.';
   document.getElementById('modalOverlay').classList.add('show');
 }
 
@@ -1385,7 +1387,7 @@ async function doLogin() {
         sessionStorage.setItem('hamzaAccessType', requiredAccessType);
         closeModal();
         
-        // Yönlendirme yap (HEDEF PAGE'A DIREKT YÖNLENDİR)
+        // Yönlendirme yap
         if (targetVideoSrc) {
           openVideo(targetVideoSrc);
           targetVideoSrc = null;
