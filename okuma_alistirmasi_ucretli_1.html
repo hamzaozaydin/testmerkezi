@@ -22,7 +22,53 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 17px; line-height: 1.75; }
-  .page { max-width: 860px; margin: 0 auto; padding: 52px 28px 80px; }
+  .page { max-width: 860px; margin: 0 auto; padding: 52px 28px 80px; position: relative; }
+  
+  /* geri butonu - sol üst köşe, sabit değil, sayfa ile kayar */
+  .back-button {
+    position: absolute;
+    top: 28px;
+    left: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 8px 18px 8px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 100;
+    backdrop-filter: blur(0px);
+    letter-spacing: 0.3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  }
+  .back-button:hover {
+    background: var(--accent-light);
+    border-color: var(--accent);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    transform: translateX(-2px);
+  }
+  .back-button svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--accent);
+    stroke-width: 2;
+    fill: none;
+    transition: transform 0.2s;
+  }
+  .back-button:hover svg {
+    transform: translateX(-2px);
+  }
+  .back-button span {
+    line-height: 1;
+  }
+
   .header { text-align: center; margin-bottom: 44px; }
   .eyebrow { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 12px; }
   h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(22px, 4vw, 40px); font-weight: 700; line-height: 1.15; color: var(--ink); margin-bottom: 8px; }
@@ -99,10 +145,23 @@
   .score-big { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; color: var(--accent); line-height: 1; }
   .score-sub { font-size: 14px; color: var(--muted); margin-top: 6px; }
   .footer { text-align: center; margin-top: 52px; font-size: 12px; color: var(--muted); letter-spacing: 1px; }
+  
+  @media (max-width: 640px) {
+    .back-button { padding: 6px 14px 6px 12px; top: 18px; left: 18px; font-size: 12px; }
+    .back-button svg { width: 14px; height: 14px; }
+    .page { padding: 42px 20px 70px; }
+  }
 </style>
 </head>
 <body>
 <div class="page">
+  <!-- GERİ BUTONU - sayfa ile kayar, sol üst köşe, dokununca bir önceki sayfaya gider -->
+  <button class="back-button" id="backNavBtn" aria-label="Geri">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 18l-6-6 6-6" />
+    </svg>
+    <span>Geri</span>
+  </button>
 
   <div class="header">
     <div class="eyebrow">Okuma Alıştırması · 6</div>
@@ -182,7 +241,7 @@
 </div>
 
 <div id="floating-dd">
-  <div class="dd-opt" data-l="A">><span class="opt-l">A)</span>tavsiye edilir</div>
+  <div class="dd-opt" data-l="A"><span class="opt-l">A)</span>tavsiye edilir</div>
   <div class="dd-opt" data-l="B"><span class="opt-l">B)</span>önem</div>
   <div class="dd-opt" data-l="C"><span class="opt-l">C)</span>devam eder</div>
   <div class="dd-opt" data-l="D"><span class="opt-l">D)</span>azalmasına</div>
@@ -324,6 +383,21 @@
     closeDD();
     document.getElementById('exp-block').classList.remove('vis');
     document.getElementById('score-banner').style.display = 'none';
+  }
+
+  // Geri butonu fonksiyonu: bir önceki sayfaya yönlendirir (geçmiş varsa geri gider, yoksa boş işlem)
+  const backBtn = document.getElementById('backNavBtn');
+  if (backBtn) {
+    backBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        // Tarayıcı geçmişi yoksa sayfayı yeniden yüklemek veya boş javascript:void(0) gibi davranmamak için
+        // basitçe geri gitmeye çalış, bazı ortamlarda faydasız olabilir ancak sorun çıkarmaz.
+        window.location.href = 'about:blank';
+      }
+    });
   }
 </script>
 </body>
