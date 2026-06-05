@@ -91,6 +91,7 @@ header h1 {
   flex-wrap: wrap;
   margin-bottom: 24px;
   justify-content: center;
+  align-items: stretch;
 }
 .sub-action-btn {
   background: #1a2332;
@@ -100,11 +101,15 @@ header h1 {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   transition: all .2s ease;
   font-weight: bold;
   color: #F5C842;
   font-size: 0.95rem;
+  flex: 1;
+  min-width: 180px;
+  text-align: center;
 }
 .sub-action-btn:hover { background: #2a3a4a; transform: translateY(-2px); }
 .sub-action-btn.active { background: #F5C842; color: #1a2332; border-color: #F5C842; }
