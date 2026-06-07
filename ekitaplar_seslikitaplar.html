@@ -389,15 +389,109 @@
         <!-- SAĞ: SESLİ KİTAPLAR + ROMANLAR/HİKAYELER -->
         <div>
             <div class="section-title">📚 Sesli Kitaplar</div>
-            <div class="sesli-list">
-                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/1.1/mobile/index.html" target="_blank"><span class="book-name">Kırmızı Uçurtma</span><span class="badge">✅ Ücretsiz</span></a>
-                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/5/mobile/index.html" target="_blank"><span class="book-name">İlk Kar Tanesi</span><span class="badge">✅ Ücretsiz</span></a>
-                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/10/mobile/index.html" target="_blank"><span class="book-name">Ege'nin Maceraları</span><span class="badge">✅ Ücretsiz</span></a>
-                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/11/mobile/index.html" target="_blank"><span class="book-name">Uzun Yol Misafirleri</span><span class="badge">✅ Ücretsiz</span></a>
-                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/12/mobile/index.html" target="_blank"><span class="book-name">Güneşi Yakala</span><span class="badge">✅ Ücretsiz</span></a>
-                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/13/mobile/index.html" target="_blank"><span class="book-name">Zamanda Yolculuk</span><span class="badge">✅ Ücretsiz</span></a>
-                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/14/mobile/index.html" target="_blank"><span class="book-name">Tokyo'dan İstanbul'a</span><span class="badge">✅ Ücretsiz</span></a>
-                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/15/mobile/index.html" target="_blank"><span class="book-name">Günlükten İzler</span><span class="badge">✅ Ücretsiz</span></a>
+            <div class="level-grid">
+                <!-- 1. Seviye -->
+                <div class="level-item">
+                    <button class="level-btn" onclick="toggleLevel('sesli-1', this)">
+                        <span class="lbl-level">1. Seviye</span>
+                        <span class="lbl-count">4 kitap</span>
+                    </button>
+                    <div class="book-panel" id="sesli-1">
+                        <div class="book-panel-inner">
+                            <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/1.1/mobile/index.html" target="_blank"><span class="book-name">Kırmızı Uçurtma</span><span class="badge">✅ Ücretsiz</span></a>
+                            <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/2/mobile/index.html" target="_blank"><span class="book-name">Asya Tatilde</span><span class="badge">✅ Ücretsiz</span></a>
+                            <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/3/mobile/index.html" target="_blank"><span class="book-name">Piknik Zamanı</span><span class="badge">✅ Ücretsiz</span></a>
+                            <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/4/mobile/index.html" target="_blank"><span class="book-name">Ormana Yolculuk</span><span class="badge">✅ Ücretsiz</span></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2. Seviye -->
+                <div class="level-item">
+                    <button class="level-btn" onclick="toggleLevel('sesli-2', this)">
+                        <span class="lbl-level">2. Seviye</span>
+                        <span class="lbl-count">4 kitap</span>
+                    </button>
+                    <div class="book-panel" id="sesli-2">
+                        <div class="book-panel-inner">
+                            <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/5/mobile/index.html" target="_blank"><span class="book-name">İlk Kar Tanesi</span><span class="badge">✅ Ücretsiz</span></a>
+                            <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/6/mobile/index.html" target="_blank"><span class="book-name">Oyun Günü</span><span class="badge">✅ Ücretsiz</span></a>
+                            <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/7/mobile/index.html" target="_blank"><span class="book-name">Gizemli Kutu</span><span class="badge">✅ Ücretsiz</span></a>
+                            <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/8/mobile/index.html" target="_blank"><span class="book-name">Münih'ten İstanbul'a</span><span class="badge">✅ Ücretsiz</span></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 3. Seviye -->
+                <div class="level-item">
+                    <button class="level-btn" onclick="toggleLevel('sesli-3', this)">
+                        <span class="lbl-level">3. Seviye</span>
+                        <span class="lbl-count">1 kitap</span>
+                    </button>
+                    <div class="book-panel" id="sesli-3">
+                        <div class="book-panel-inner">
+                            <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/10/mobile/index.html" target="_blank"><span class="book-name">Ege'nin Maceraları</span><span class="badge">✅ Ücretsiz</span></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 4. Seviye -->
+                <div class="level-item">
+                    <button class="level-btn" onclick="toggleLevel('sesli-4', this)">
+                        <span class="lbl-level">4. Seviye</span>
+                        <span class="lbl-count">1 kitap</span>
+                    </button>
+                    <div class="book-panel" id="sesli-4">
+                        <div class="book-panel-inner">
+                            <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/11/mobile/index.html" target="_blank"><span class="book-name">Uzun Yol Misafirleri</span><span class="badge">✅ Ücretsiz</span></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 5. Seviye -->
+                <div class="level-item">
+                    <button class="level-btn" onclick="toggleLevel('sesli-5', this)">
+                        <span class="lbl-level">5. Seviye</span>
+                        <span class="lbl-count">1 kitap</span>
+                    </button>
+                    <div class="book-panel" id="sesli-5">
+                        <div class="book-panel-inner">
+                            <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/12/mobile/index.html" target="_blank"><span class="book-name">Güneşi Yakala</span><span class="badge">✅ Ücretsiz</span></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 6. Seviye -->
+                <div class="level-item">
+                    <button class="level-btn" onclick="toggleLevel('sesli-6', this)">
+                        <span class="lbl-level">6. Seviye</span>
+                        <span class="lbl-count">1 kitap</span>
+                    </button>
+                    <div class="book-panel" id="sesli-6">
+                        <div class="book-panel-inner">
+                            <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/13/mobile/index.html" target="_blank"><span class="book-name">Zamanda Yolculuk</span><span class="badge">✅ Ücretsiz</span></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 7. Seviye -->
+                <div class="level-item">
+                    <button class="level-btn" onclick="toggleLevel('sesli-7', this)">
+                        <span class="lbl-level">7. Seviye</span>
+                        <span class="lbl-count">1 kitap</span>
+                    </button>
+                    <div class="book-panel" id="sesli-7">
+                        <div class="book-panel-inner">
+                            <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/14/mobile/index.html" target="_blank"><span class="book-name">Tokyo'dan İstanbul'a</span><span class="badge">✅ Ücretsiz</span></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 8. Seviye -->
+                <div class="level-item">
+                    <button class="level-btn" onclick="toggleLevel('sesli-8', this)">
+                        <span class="lbl-level">8. Seviye</span>
+                        <span class="lbl-count">1 kitap</span>
+                    </button>
+                    <div class="book-panel" id="sesli-8">
+                        <div class="book-panel-inner">
+                            <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/15/mobile/index.html" target="_blank"><span class="book-name">Günlükten İzler</span><span class="badge">✅ Ücretsiz</span></a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- ROMANLAR / HİKAYELER -->
