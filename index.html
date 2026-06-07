@@ -456,9 +456,26 @@ footer span { color: #F5C842; }
         <div class="word-sub-buttons">
             <button class="word-level-btn active" onclick="switchWordLevel('a1a2')"><span>🗂️</span> A1/A2 Kelime Kartları</button>
             <button class="word-level-btn" onclick="switchWordLevel('b2c1')"><span>📚</span> B2/C1 Kelime Kartları</button>
+            <button class="word-level-btn" onclick="switchWordLevel('gramer')"><span>📝</span> Gramer Kartları</button>
         </div>
         <div id="word-a1a2" class="word-panel active-panel"><div class="three-col-grid" id="a1ThreeColGrid"></div></div>
         <div id="word-b2c1" class="word-panel"><div class="two-col-grid"><div><div class="col-label col-label-free">✅ Ücretsiz</div><div class="col-items" id="b2c1FreeInner"></div></div><div><div class="col-label col-label-locked">🔒 Giriş Gerekli</div><div class="col-items" id="b2c1LockedInner"></div></div></div></div>
+        <div id="word-gramer" class="word-panel">
+            <div class="two-col-grid">
+                <div>
+                    <div class="sub-panel-header"><h3>📗 A1/A2 Gramer Kartları</h3></div>
+                    <div class="sub-panel-body">
+                        <div class="col-items" id="gramerA1Inner"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="sub-panel-header"><h3>📘 B2/C1 Gramer Kartları</h3></div>
+                    <div class="sub-panel-body">
+                        <div class="col-items" id="gramerB2Inner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -568,12 +585,16 @@ function toggleMain(panelId) {
 function switchWordLevel(level) {
     document.querySelectorAll('.word-panel').forEach(p => p.classList.remove('active-panel'));
     document.querySelectorAll('.word-level-btn').forEach(btn => btn.classList.remove('active'));
+    const btns = document.querySelectorAll('.word-level-btn');
     if(level === 'a1a2') {
         document.getElementById('word-a1a2').classList.add('active-panel');
-        document.querySelector('.word-level-btn:first-child').classList.add('active');
-    } else {
+        btns[0].classList.add('active');
+    } else if(level === 'b2c1') {
         document.getElementById('word-b2c1').classList.add('active-panel');
-        document.querySelector('.word-level-btn:last-child').classList.add('active');
+        btns[1].classList.add('active');
+    } else {
+        document.getElementById('word-gramer').classList.add('active-panel');
+        btns[2].classList.add('active');
     }
 }
 function switchQuestionTab(tab) {
@@ -651,8 +672,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if(dinlemeGridSub) dinlemeNames.forEach((name,idx)=>{ let a=document.createElement('a'); a.className='item-card'; a.href=dinlemeAlis[idx]; a.innerHTML=`<span class="item-name">${name}</span><span class="badge badge-free">✅ Ücretsiz</span>`; dinlemeGridSub.appendChild(a); });
   
 // A1/A2
-  const a1Items = ["a1_turk_alfabesi.html","a1_unlu_harfler.html","a1_cogul_eki.html","a1_hal_ekleri_ozbekce.html","a1_a2_unsuz_benzesmesi.html","kartlar.html","gunler.html","a1_es_anlamli_kelimeler.html","a1_zit_anlamlilar.html","akrabalik_adlari.html","benzer_sozler_1.html","benzer_sozler_2.html","A1_es_anlamli_kelime_oyunu_1.html","a1_kelime_bulmaca_1.html","a1_kelime_bulmaca_2.html","a1_hal_ekleri.html","a1_isim_tamlamalari.html","a1_karisik_kelimeler_1.html"];
-  const a1Labels = ["Alfabe Kartları","Ünlü Harfler","Çoğul Eki","Hal Ekleri","Ünsüz Benzeşmesi","Selamlaşma Kartları","Günler","Eş Anlamlı Kelimeler 1","Zıt Anlamlı Kelimeler 1","Akrabalık Adları","Benzer Sözler 1","Benzer Sözler 2","Eş Anlamlı Kelime Alıştırması 1","Kelime Bulmaca 1","Kelime Bulmaca 2","Hal Ekleri","İsim Tamlamaları","Karışık Kelimeler 1"];
+  const a1Items = ["a1_turk_alfabesi.html","kartlar.html","gunler.html","a1_es_anlamli_kelimeler.html","a1_zit_anlamlilar.html","akrabalik_adlari.html","benzer_sozler_1.html","benzer_sozler_2.html","A1_es_anlamli_kelime_oyunu_1.html","a1_kelime_bulmaca_1.html","a1_kelime_bulmaca_2.html","a1_karisik_kelimeler_1.html"];
+  const a1Labels = ["Alfabe Kartları","Selamlaşma Kartları","Günler","Eş Anlamlı Kelimeler 1","Zıt Anlamlı Kelimeler 1","Akrabalık Adları","Benzer Sözler 1","Benzer Sözler 2","Eş Anlamlı Kelime Alıştırması 1","Kelime Bulmaca 1","Kelime Bulmaca 2","Karışık Kelimeler 1"];
   const a1Container = document.getElementById('a1ThreeColGrid');
   if(a1Container) {
       const chunkSize = Math.ceil(a1Items.length / 3);
@@ -668,9 +689,14 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   // B2/C1
   const b2free=[["kroki_kelimeleri.html","Kroki Kelimeleri"],["kelimeler1.html","Kelimeler 1"],["b2c1_kelimeler_ucretsiz2.html","Kelimeler 2"],["b2c1_kelimeler_ucretsiz_3.html","Kelimeler 3"],["cumle_kurma_alistirmasi_ucretsiz_1.html","Cümle Kurma Alıştırması 1"],["deyimler_b2_ucretsiz_1.html","Deyimler 1"],["gunluk_ifadeler_ucretsiz_1.html","Günlük İfadeler 1"],["https://hamzahocaileturkceogreniyorum1.base44.app/","Özbekçe-Türkçe Aktarım 1"],["b2_c1_kelime_bulmaca_ucretsiz.html","Kelime Bulmaca 1"]];
-  const b2locked=[["baglaçlar.html","Bağlaçlar"],["b2_birlesik_zamanlar.html","Birleşik Zamanlar"],["b2_kelimeler_2.html","Kelimeler 1"],["b2_kelimeler_3.html","Kelimeler 2"],["b2_kelimeler_33.html","Kelimeler 3"],["b2_kelimeler_4.html","Kelimeler 4"],["cumle_kurma_alistirmasi_1.html","Cümle Kurma Alıştırması 1"],["cumle_kurma_alistirmasi_2.html","Cümle Kurma Alıştırması 2"],["B2_es_anlamli_kelime_oyunu_1.html","Eş Anlamlı Kelime Alıştırması 1"],["gunluk_ifadeler_1.html","Günlük İfadeler 1"],["gunluk_ifadeler_2.html","Günlük İfadeler 2"],["gunluk_ifadeler_3.html","Günlük İfadeler 3"],["gunluk_ifadeler_4.html","Günlük İfadeler 4"],["deyimler_b2_1.html","Deyimler 1"],["deyimler_b2_2.html","Deyimler 2"]];
+  const b2locked=[["baglaçlar.html","Bağlaçlar"],["b2_kelimeler_2.html","Kelimeler 1"],["b2_kelimeler_3.html","Kelimeler 2"],["b2_kelimeler_33.html","Kelimeler 3"],["b2_kelimeler_4.html","Kelimeler 4"],["cumle_kurma_alistirmasi_1.html","Cümle Kurma Alıştırması 1"],["cumle_kurma_alistirmasi_2.html","Cümle Kurma Alıştırması 2"],["B2_es_anlamli_kelime_oyunu_1.html","Eş Anlamlı Kelime Alıştırması 1"],["gunluk_ifadeler_1.html","Günlük İfadeler 1"],["gunluk_ifadeler_2.html","Günlük İfadeler 2"],["gunluk_ifadeler_3.html","Günlük İfadeler 3"],["gunluk_ifadeler_4.html","Günlük İfadeler 4"],["deyimler_b2_1.html","Deyimler 1"],["deyimler_b2_2.html","Deyimler 2"]];
   const freeDivB2=document.getElementById('b2c1FreeInner'); if(freeDivB2) b2free.forEach(([h,t])=>{ let a=document.createElement('a'); a.className='item-card'; a.href=h; a.innerHTML=`<span>${t}</span><span class="badge badge-free">✅ Ücretsiz</span>`; freeDivB2.appendChild(a); });
   const lockedDivB2=document.getElementById('b2c1LockedInner'); if(lockedDivB2) b2locked.forEach(([h,t])=>{ let div=document.createElement('div'); div.className='item-card'; div.setAttribute('onclick',`openExamLogin('${h}')`); div.innerHTML=`<span>${t}</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`; lockedDivB2.appendChild(div); });
+
+  // Gramer Kartları
+  const gramerA1=[["a1_unlu_harfler.html","Ünlü Harfler"],["a1_cogul_eki.html","Çoğul Eki"],["a1_hal_ekleri_ozbekce.html","Hal Ekleri"],["a1_hal_ekleri.html","Hal Ekleri"],["a1_a2_unsuz_benzesmesi.html","Ünsüz Benzeşmesi"],["a1_isim_tamlamalari.html","İsim Tamlamaları"]];
+  const gramerA1Div=document.getElementById('gramerA1Inner'); if(gramerA1Div) gramerA1.forEach(([h,t])=>{ let a=document.createElement('a'); a.className='item-card'; a.href=h; a.innerHTML=`<span>${t}</span><span class="badge badge-free">✅ Ücretsiz</span>`; gramerA1Div.appendChild(a); });
+  const gramerB2Div=document.getElementById('gramerB2Inner'); if(gramerB2Div){ let div=document.createElement('div'); div.className='item-card'; div.setAttribute('onclick',`openExamLogin('b2_birlesik_zamanlar.html')`); div.innerHTML=`<span>Birleşik Zamanlar</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`; gramerB2Div.appendChild(div); }
   
   // Konuşma Soruları (metin sorular)
   const speakFree=[["2026_ocak_nisan_cikmis_sorular.html","2026 Ocak-Nisan Çıkmış Sorular"],["konuşma_soruları_1.html","Konuşma Soruları 1"],["konuşma_soruları_2.html","Konuşma Soruları 2"],["konusma_soruları_ucretsiz_3.html","Konuşma Soruları 3"],["konusma_soruları_ucretsiz_4.html","Konuşma Soruları 4"],["konusma_soruları_ucretsiz_5.html","Konuşma Soruları 5"],["konusma_soruları_ucretsiz_6.html","Konuşma Soruları 6"],["konusma_soruları_ucretsiz_7.html","Konuşma Soruları 7"],["konusma_soruları_ucretsiz_8.html","Konuşma Soruları 8"]];
