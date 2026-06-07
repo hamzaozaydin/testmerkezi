@@ -694,7 +694,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const lockedDivB2=document.getElementById('b2c1LockedInner'); if(lockedDivB2) b2locked.forEach(([h,t])=>{ let div=document.createElement('div'); div.className='item-card'; div.setAttribute('onclick',`openExamLogin('${h}')`); div.innerHTML=`<span>${t}</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`; lockedDivB2.appendChild(div); });
 
   // Gramer Kartları
-  const gramerA1=[["a1_unlu_harfler.html","Ünlü Harfler"],["a1_cogul_eki.html","Çoğul Eki"],["a1_hal_ekleri_ozbekce.html","Hal Ekleri (O'zbek tili)"],["a1_hal_ekleri.html","Hal Ekleri"],["a1_a2_unsuz_benzesmesi.html","Ünsüz Benzeşmesi"],["a1_isim_tamlamalari.html","İsim Tamlamaları"]];
+  const gramerA1=[["a1_unlu_harfler.html","Ünlü Harfler"],["a1_cogul_eki.html","Çoğul Eki"],["a1_hal_ekleri_ozbekce.html","Kelishik Qo'shimchalari"],["a1_hal_ekleri.html","Hal Ekleri"],["a1_a2_unsuz_benzesmesi.html","Ünsüz Benzeşmesi"],["a1_isim_tamlamalari.html","İsim Tamlamaları"]];
   const gramerA1Div=document.getElementById('gramerA1Inner'); if(gramerA1Div) gramerA1.forEach(([h,t])=>{ let a=document.createElement('a'); a.className='item-card'; a.href=h; a.innerHTML=`<span>${t}</span><span class="badge badge-free">✅ Ücretsiz</span>`; gramerA1Div.appendChild(a); });
   const gramerB2Div=document.getElementById('gramerB2Inner'); if(gramerB2Div){ let div=document.createElement('div'); div.className='item-card'; div.setAttribute('onclick',`openExamLogin('b2_birlesik_zamanlar.html')`); div.innerHTML=`<span>Birleşik Zamanlar</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`; gramerB2Div.appendChild(div); }
   
