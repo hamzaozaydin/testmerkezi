@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Gereklilik Kipi (Keraklilik fe'li) – Hamza Hoca</title>
+<style>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+    min-height: 100vh;
+    color: white;
+    overflow-x: hidden;
+  }
+
+  .home-btn-wrap {
+    padding: 18px 20px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a2332;
+    border: 2px solid #F5C842;
+    border-radius: 40px;
+    padding: 9px 20px;
+    color: #F5C842;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .22s, transform .18s, box-shadow .22s;
+  }
+
+  .home-btn:hover {
+    background: #2a3a4a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    color: #F5C842;
+  }
+
+  header {
+    text-align: center;
+    padding: 2rem 1rem 1.2rem;
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #F5C842, #C9960A);
+    color: #0D1B2A;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 0.3rem 1.2rem;
+    border-radius: 50px;
+    margin-bottom: 0.9rem;
+  }
+
+  header h1 {
+    font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+    font-weight: 800;
+    color: #F5C842;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .header-line {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #F5C842, transparent);
+    margin: 0 auto 10px;
+  }
+
+  .stars {
+    font-size: 1rem;
+    color: #F5C842;
+    letter-spacing: .4em;
+    margin-bottom: 6px;
+    opacity: .7;
+  }
+
+  .subtitle {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .telegram-section {
+    text-align: center;
+    padding: 0.5rem 1rem 1rem;
+  }
+
+  .tg-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(26,35,50,0.85);
+    border: 1.5px solid rgba(34,158,217,0.3);
+    border-radius: 60px;
+    padding: .75rem 1.5rem .75rem 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .tg-logo-wrap {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+
+  .tg-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    background: linear-gradient(135deg, #229ED9, #1A7FB0);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: .92rem;
+    padding: .65rem 1.5rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(34,158,217,.4);
+    transition: all .22s;
+    white-space: nowrap;
+  }
+
+  .tg-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(34,158,217,.55);
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: .85rem;
+    color: #F5C842;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: .5rem 0 1rem;
+    opacity: .75;
+  }
+
+  .page-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 20px 70px;
+  }
+
+  .grammar-card {
+    background: #1a2332;
+    border: 1px solid rgba(245,200,66,0.15);
+    border-radius: 28px;
+    padding: 28px 32px 36px;
+    margin-bottom: 40px;
+  }
+
+  .grammar-card h2 {
+    color: #F5C842;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    border-left: 4px solid #F5C842;
+    padding-left: 18px;
+  }
+
+  .grammar-card h3 {
+    color: #F5C842;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 24px 0 16px 0;
+  }
+
+  .intro-text {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.85);
+    border-left: 3px solid #F5C842;
+    padding-left: 20px;
+    margin-bottom: 28px;
+  }
+
+  .bilingual-note {
+    background: #0f1724;
+    border-radius: 20px;
+    padding: 16px 22px;
+    margin: 20px 0;
+    color: #e0e0e0;
+    border-left: 4px solid #F5C842;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #0D1B2A;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .custom-table th {
+    background: rgba(245,200,66,0.18);
+    padding: 12px 16px;
+    text-align: center;
+    color: #F5C842;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(245,200,66,0.3);
+  }
+
+  .custom-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(245,200,66,0.1);
+    color: rgba(255,255,255,0.85);
+    text-align: center;
+  }
+
+  .custom-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .example-list {
+    background: #0f1724;
+    border-radius: 20px;
+    padding: 18px 24px;
+    margin: 16px 0;
+    border-left: 4px solid #F5C842;
+  }
+
+  .example-list p {
+    margin: 8px 0;
+    font-size: 0.95rem;
+  }
+
+  .example-list strong {
+    color: #F5C842;
+  }
+
+  .warning-note {
+    background: #0D1B2A;
+    padding: 14px 20px;
+    border-radius: 16px;
+    margin: 16px 0;
+    border-left: 4px solid #F5C842;
+    font-size: 0.9rem;
+  }
+
+  .exercise-box {
+    background: #0f1724;
+    border-radius: 20px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    border: 1px solid rgba(245,200,66,0.2);
+  }
+
+  .exercise-item {
+    margin: 14px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(245,200,66,0.1);
+  }
+
+  .exercise-item:last-child {
+    border-bottom: none;
+  }
+
+  .exercise-text {
+    font-size: 0.95rem;
+    flex: 2;
+    min-width: 280px;
+  }
+
+  .answer-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 220px;
+    flex: 1;
+  }
+
+  .answer-input {
+    background: #0D1B2A;
+    border: 1px solid rgba(245,200,66,0.4);
+    border-radius: 12px;
+    padding: 8px 14px;
+    color: white;
+    font-family: inherit;
+    font-size: 0.9rem;
+    width: 100%;
+  }
+
+  .answer-input:focus {
+    outline: none;
+    border-color: #F5C842;
+  }
+
+  .feedback {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .feedback.correct {
+    color: #6fcf97;
+    background: rgba(111,207,151,0.1);
+  }
+
+  .feedback.wrong {
+    color: #e74c3c;
+    background: rgba(231,76,60,0.1);
+  }
+
+  .feedback-icon {
+    font-size: 0.75rem;
+  }
+
+  .check-all-btn {
+    background: #F5C842;
+    color: #0D1B2A;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 24px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin: 15px 0 5px;
+    transition: 0.2s;
+    display: inline-block;
+  }
+
+  .check-all-btn:hover {
+    background: #e0b42b;
+    transform: scale(1.02);
+  }
+
+  .reset-btn {
+    background: #2c3e50;
+    color: #F5C842;
+    border: 1px solid #F5C842;
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin: 15px 0 5px 10px;
+    transition: 0.2s;
+    display: inline-block;
+  }
+
+  .reset-btn:hover {
+    background: #1a2a3a;
+  }
+
+  .score-badge {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 16px;
+    background: #0D1B2A;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #F5C842;
+  }
+
+  footer {
+    text-align: center;
+    padding: 0 1rem 2.5rem;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+  }
+
+  footer span {
+    color: #F5C842;
+  }
+
+  @media (max-width: 720px) {
+    .grammar-card {
+      padding: 20px;
+    }
+    .exercise-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .answer-wrapper {
+      width: 100%;
+    }
+    .tg-box {
+      flex-direction: column;
+      padding: 1rem;
+    }
+    .custom-table th,
+    .custom-table td {
+      font-size: 0.75rem;
+      padding: 6px 4px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12" />
+      <polyline points="12 19 5 12 12 5" />
+    </svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ GEREKLİLİK KİPİ ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle">Keraklilik fe'li • Gereklilik Kipi</p>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9" />
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white" />
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">Kanala Katıl</a>
+  </div>
+</div>
+
+<div class="section-title">-meli, -malı • Keraklilik fe'li</div>
+
+<div class="page-wrapper">
+
+  <div class="grammar-card">
+    <h2>Gereklilik Kipi (Keraklilik fe'li)</h2>
+    <div class="bilingual-note">
+      <strong>📖 Türkçe:</strong> Gereklilik kipi, fiilin bildirdiği işin, oluşun veya hareketin yapılması gerektiğini anlatan fiil şeklidir. Ekleri: <strong>-meli / -malı</strong> (ünlü uyumuna göre).<br><br>
+      <strong>📖 O'zbekcha:</strong> Turk tilida fe’l ifodalagan ish-harakatning bajarilishi kerakligini bildiruvchi fe’l shakllariga keraklilik shakli (gereklilik kipi) deyiladi. Ushbu mayl qo‘shimchasi <strong>-meli, -malı</strong> bo‘lib, u singarmonizm qoidasiga bo‘ysunadi: okumalı, yazmalı, bilmeli, vermeli...
+    </div>
+
+    <!-- Çekim Tablosu -->
+    <h3>📌 Gereklilik Kipi Çekimi (gitmek fiili örneği)</h3>
+    <table class="custom-table">
+      <thead>
+        <tr><th>Şahıs</th><th>Olumlu</th><th>Olumsuz</th><th>Olumlu Soru</th><th>Olumsuz Soru</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Ben</td><td>gitmeliyim</td><td>gitmemeliyim</td><td>gitmeli miyim?</td><td>gitmemeli miyim?</td></tr>
+        <tr><td>Sen</td><td>gitmelisin</td><td>gitmemelisin</td><td>gitmeli misin?</td><td>gitmemeli misin?</td></tr>
+        <tr><td>O</td><td>gitmeli</td><td>gitmemeli</td><td>gitmeli mi?</td><td>gitmemeli mi?</td></tr>
+        <tr><td>Biz</td><td>gitmeliyiz</td><td>gitmemeliyiz</td><td>gitmeli miyiz?</td><td>gitmemeli miyiz?</td></tr>
+        <tr><td>Siz</td><td>gitmelisiniz</td><td>gitmemelisiniz</td><td>gitmeli misiniz?</td><td>gitmemeli misiniz?</td></tr>
+        <tr><td>Onlar</td><td>gitmeliler</td><td>gitmemeliler</td><td>gitmeliler mi?</td><td>gitmemeliler mi?</td></tr>
+      </tbody>
+    </table>
+
+    <h3>📌 Örnek Cümleler</h3>
+    <div class="example-list">
+      <p><strong>»</strong> Kitap okumalısın.</p>
+      <p><strong>»</strong> Doğayı sevmelisin.</p>
+      <p><strong>»</strong> Ormanları korumalıyız.</p>
+      <p><strong>»</strong> Sınavı başarmalısın.</p>
+      <p><strong>»</strong> Borcunu ödemelisin.</p>
+      <p><strong>»</strong> Biraz hızlı gitmeliyiz.</p>
+      <p><strong>»</strong> Saat beşte evde olmalı.</p>
+    </div>
+
+    <div class="bilingual-note">
+      <strong>🔗 Karşılaştırma (gerek / lâzım / icap etmek):</strong><br>
+      Kitap okumalısın. = Kitap okuman gerek. = Kitap okuman lâzım. = Kitap okuman icap ediyor.<br>
+      Doğayı sevmelisin. = Doğayı sevmen gerek.<br>
+      Ormanları korumalıyız. = Ormanları korumamız gerek.<br>
+      Sınavı başarmalısın. = Sınavı başarman lâzım.<br>
+      Borcunu ödemelisin. = Borcunu ödemen icap ediyor.<br>
+      Biraz hızlı gitmeliyiz. = Biraz hızlı gitmemiz gerek.<br>
+      Saat beşte evde olmalı. = Saat beşte evde olması lâzım.
+    </div>
+
+    <div class="warning-note">
+      <strong>⚠️ Kural:</strong> Gereklilik eki <strong>-malı / -meli</strong> ünlü uyumuna göre değişir. Kalın ünlülü fiillerde <strong>-malı</strong>, ince ünlülü fiillerde <strong>-meli</strong> kullanılır.<br>
+      <em>Örnek: okumalı, yazmalı, bilmeli, vermeli, gitmeli, yapmalı, gelmeli...</em>
+    </div>
+
+    <!-- 1-mashq -->
+    <h3>✍️ 1-mashq</h3>
+    <div class="intro-text">
+      Quyidagi gaplarni keraklilik mayli bilan to‘ldiring. (Aşağıdaki cümleleri gereklilik kipiyle tamamlayın.)
+    </div>
+    <div class="exercise-box" id="exerciseBox">
+      <div class="exercise-item">
+        <span class="exercise-text">1. Öğrenciler, dersleri başlamadan 10 dakika önce sınıfta ol...................</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ex1" placeholder="Cevabınızı yazın">
+          <div class="feedback" id="fb1"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">2. Doktorla görüşmek için önce randevu al.......................................</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ex2" placeholder="Cevabınızı yazın">
+          <div class="feedback" id="fb2"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">3. Raporlarımızı yarın sabaha kadar bitir.......................................</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ex3" placeholder="Cevabınızı yazın">
+          <div class="feedback" id="fb3"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">4. Bu kadar çok şeker ye..............................................</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ex4" placeholder="Cevabınızı yazın">
+          <div class="feedback" id="fb4"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">5. İnsanlar özel araba kullanmak yerine otobüs kullan..........................</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ex5" placeholder="Cevabınızı yazın">
+          <div class="feedback" id="fb5"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">6. İnsanlar birbirlerine saygı ve hoşgörü göster............................ ?</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ex6" placeholder="Cevabınızı yazın">
+          <div class="feedback" id="fb6"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">7. Doğum günümde tüm sevdiklerim yanımda ol................................ .</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ex7" placeholder="Cevabınızı yazın">
+          <div class="feedback" id="fb7"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">8. Bugün sizinle gelemem, bir iş görüşmesine git............ .</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ex8" placeholder="Cevabınızı yazın">
+          <div class="feedback" id="fb8"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">9. Yarınki toplantıya gel.............................?</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ex9" placeholder="Cevabınızı yazın">
+          <div class="feedback" id="fb9"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">10. Sağlıklı olmak için abur cubur ye..................................</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ex10" placeholder="Cevabınızı yazın">
+          <div class="feedback" id="fb10"></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center;">
+      <button class="check-all-btn" id="checkAllBtn">🔍 Kontrol Et</button>
+      <button class="reset-btn" id="resetBtn">⟳ Temizle</button>
+    </div>
+    <div id="scoreBadge" class="score-badge"></div>
+
+    <div class="warning-note" style="margin-top: 20px;">
+      <strong>💡 İpucu:</strong> Gereklilik kipinde fiil köküne <strong>-malı / -meli</strong> eklenir, ardından şahıs ekleri gelir. Olumsuzu <strong>-ma / -me</strong> olumsuzluk eki ile yapılır (gel-memeli, yap-mamalı). Soru eki <strong>mu</strong> ayrı yazılır.
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 <span>Hamza Hoca</span> — Türkçe Öğrenme Platformu</p>
+</footer>
+
+<script>
+  // Doğru cevaplar (gereklilik kipi ile tamamlanmış halleri)
+  const correctAnswers = [
+    "olmalıdırlar",
+    "almalısın",
+    "bitirmeliyiz",
+    "yememelisin",
+    "kullanmalıdırlar",
+    "göstermelidirler",
+    "olmalıdır",
+    "gitmeliyim",
+    "gelmelisin",
+    "yememelisin"
+  ];
+
+  // Normalizasyon fonksiyonu
+  function normalizeText(text) {
+    return text.toLowerCase()
+      .replace(/\s+/g, ' ')
+      .trim()
+      .replace(/[.,?!]/g, '')
+      .replace(/ğ/g, 'g')
+      .replace(/ü/g, 'u')
+      .replace(/ö/g, 'o')
+      .replace(/şı/g, 'si')
+      .replace(/ş/g, 's')
+      .replace(/ı/g, 'i');
+  }
+
+  // Tüm cevapları kontrol et ve her sorunun yanında göster
+  function checkAllAnswers() {
+    let correctCount = 0;
+    
+    for (let i = 1; i <= correctAnswers.length; i++) {
+      const inputElement = document.getElementById(`ex${i}`);
+      const userAnswer = inputElement ? inputElement.value.trim() : '';
+      const normalizedUser = normalizeText(userAnswer);
+      const normalizedCorrect = normalizeText(correctAnswers[i-1]);
+      
+      const isCorrect = (normalizedUser === normalizedCorrect);
+      if (isCorrect) correctCount++;
+      
+      const fbDiv = document.getElementById(`fb${i}`);
+      if (isCorrect) {
+        fbDiv.innerHTML = `<span class="feedback-icon">✅</span> Doğru!`;
+        fbDiv.className = "feedback correct";
+      } else {
+        fbDiv.innerHTML = `<span class="feedback-icon">❌</span> Yanlış. Doğru cevap: <strong>${correctAnswers[i-1]}</strong>`;
+        fbDiv.className = "feedback wrong";
+      }
+    }
+    
+    const total = correctAnswers.length;
+    const percentage = Math.round((correctCount / total) * 100);
+    let emoji = '';
+    if (percentage === 100) emoji = '🎉 Mükemmel!';
+    else if (percentage >= 80) emoji = '👍 Çok iyi!';
+    else if (percentage >= 60) emoji = '📖 İyi, biraz daha çalış!';
+    else emoji = '💪 Tekrar dene!';
+    
+    document.getElementById('scoreBadge').innerHTML = `🎯 ${correctCount} / ${total} doğru (${percentage}%) ${emoji}`;
+  }
+
+  // Tüm cevapları ve geri bildirimleri temizle
+  function resetAllAnswers() {
+    for (let i = 1; i <= correctAnswers.length; i++) {
+      const inputElement = document.getElementById(`ex${i}`);
+      if (inputElement) inputElement.value = '';
+      
+      const fbDiv = document.getElementById(`fb${i}`);
+      if (fbDiv) {
+        fbDiv.innerHTML = '';
+        fbDiv.className = 'feedback';
+      }
+    }
+    document.getElementById('scoreBadge').innerHTML = '';
+  }
+
+  document.getElementById('checkAllBtn').addEventListener('click', checkAllAnswers);
+  document.getElementById('resetBtn').addEventListener('click', resetAllAnswers);
+  
+  // Enter tuşu ile kontrol
+  for (let i = 1; i <= 10; i++) {
+    const input = document.getElementById(`ex${i}`);
+    if (input) {
+      input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          checkAllAnswers();
+        }
+      });
+    }
+  }
+</script>
+</body>
+</html>
