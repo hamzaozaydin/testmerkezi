@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Fiiller – Hamza Hoca</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+            padding-bottom: 3rem;
+        }
+
+        /* ── HEADER ŞABLON STİLLERİ ── */
+        .home-btn-wrap {
+            padding: 18px 20px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1a2332;
+            border: 2px solid #F5C842;
+            border-radius: 40px;
+            padding: 9px 20px;
+            color: #F5C842;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background .22s, transform .18s, box-shadow .22s;
+        }
+
+        .home-btn:hover {
+            background: #2a3a4a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+            color: #F5C842;
+            text-decoration: none;
+        }
+
+        .home-btn svg { flex-shrink: 0; }
+
+        header {
+            text-align: center;
+            padding: 2rem 1rem 1.2rem;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #F5C842, #C9960A);
+            color: #0D1B2A;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 0.3rem 1.2rem;
+            border-radius: 50px;
+            margin-bottom: 0.9rem;
+        }
+
+        header h1 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+            font-weight: 800;
+            color: #F5C842;
+            line-height: 1.3;
+            margin-bottom: 10px;
+            letter-spacing: 0.02em;
+        }
+
+        .header-line {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #F5C842, transparent);
+            margin: 0 auto 10px;
+        }
+
+        .stars {
+            font-size: 1rem;
+            color: #F5C842;
+            letter-spacing: .4em;
+            margin-bottom: 6px;
+            opacity: .7;
+        }
+
+        .subtitle {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.45);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        .telegram-section {
+            text-align: center;
+            padding: 0.5rem 1rem 1rem;
+        }
+
+        .tg-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(26,35,50,0.85);
+            border: 1.5px solid rgba(34,158,217,0.3);
+            border-radius: 60px;
+            padding: .75rem 1.5rem .75rem 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+        .tg-btn {
+            display: inline-flex;
+            align-items: center; gap: .45rem;
+            background: linear-gradient(135deg, #229ED9, #1A7FB0);
+            color: #fff; text-decoration: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 800; font-size: .92rem;
+            padding: .65rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(34,158,217,.4);
+            transition: all .22s; white-space: nowrap;
+        }
+
+        .tg-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(34,158,217,.55);
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: .85rem; color: #F5C842;
+            letter-spacing: 2px; text-transform: uppercase;
+            margin: .5rem 0 1rem; opacity: .75;
+        }
+
+        /* ── KART STİLLERİ ── */
+        .cards-grid {
+            max-width: 1300px;
+            width: 100%;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 220px));
+            justify-content: center;
+            gap: 1.8rem;
+            padding: 1rem 1.5rem;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            perspective: 1500px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.65s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            border-radius: 28px;
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .flip-card.active .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.2rem;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .card-front {
+            background: linear-gradient(145deg, #fff9ef, #ffefdb);
+            border: 1px solid rgba(255,215,150,0.7);
+            transform: rotateY(0deg);
+        }
+
+        .card-front .motion-icon {
+            font-size: 5.5rem;
+            line-height: 1.2;
+            filter: drop-shadow(2px 6px 12px rgba(0,0,0,0.15));
+        }
+
+        .card-back {
+            background: linear-gradient(145deg, #2c5f7a, #1e3e52);
+            color: white;
+            transform: rotateY(180deg);
+            border: 1px solid #ffcd94;
+            box-shadow: inset 0 0 0 2px rgba(255,210,128,0.3);
+        }
+
+        .verb-turkish {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #ffdd99;
+            text-shadow: 0 2px 5px #00000030;
+            margin-bottom: 0.5rem;
+        }
+
+        .verb-detail {
+            font-size: 1rem;
+            font-weight: 400;
+            background: rgba(0,0,0,0.5);
+            padding: 0.3rem 0.8rem;
+            border-radius: 80px;
+            margin-top: 0.6rem;
+            backdrop-filter: blur(2px);
+        }
+
+        /* ── KONTROLLER ── */
+        .controls {
+            margin-top: 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button.ctrl-btn {
+            background: #2d4558;
+            border: 1px solid rgba(255,215,140,0.5);
+            color: #fef0cf;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.7rem 1.5rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        button.ctrl-btn:hover {
+            background: #3e627a;
+            transform: scale(0.97);
+            color: white;
+            border-color: #ffcd7e;
+        }
+
+        .counter {
+            background: rgba(1,14,20,0.67);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #ffefcf;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem 0;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+        }
+        footer span { color: #F5C842; }
+
+        @media (max-width: 550px) {
+            .cards-grid {
+                gap: 1.2rem;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 170px));
+            }
+            .card-front .motion-icon { font-size: 4rem; }
+            .verb-turkish { font-size: 1.6rem; }
+            button.ctrl-btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── GERİ BUTONU ── -->
+<div class="home-btn-wrap">
+    <button class="home-btn" onclick="history.back()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        Geri
+    </button>
+</div>
+
+<!-- ── HEADER ── -->
+<header>
+    <div class="header-badge">✦ A1 Kelime Kartları ✦</div>
+    <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+    <div class="header-line"></div>
+    <div class="stars">★ ★ ★ ★ ★</div>
+    <p class="subtitle">Fiiller • Fe'llar</p>
+</header>
+
+<!-- ── TELEGRAM ── -->
+<div class="telegram-section">
+    <div class="tg-box">
+        <div class="tg-logo-wrap">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+                <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+                <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+            </svg>
+        </div>
+        <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+            Kanala Katıl
+        </a>
+    </div>
+</div>
+
+<div class="section-title">Fiiller • Fe'llar</div>
+
+<!-- ── KARTLAR ── -->
+<div class="cards-grid" id="cardsContainer"></div>
+
+<div class="controls">
+    <button class="ctrl-btn" id="resetAllBtn">⟳ Tüm kartları kapat</button>
+    <div class="counter" id="cardCounter">0 / 0 kart açık</div>
+</div>
+
+<footer>
+    📌 Her karta tıklayın → döner ve fiili gösterir. Tekrar tıklayınca geri döner.<br>
+    <span>Hamza Hoca ile Türkçe Öğreniyorum</span>
+</footer>
+
+<script>
+    const verbsData = [
+        { motionEmoji: "🤔💭", verb: "Düşünmek" },
+        { motionEmoji: "🏆🥇", verb: "Kazanmak" },
+        { motionEmoji: "🧼🫧", verb: "Yıkamak" },
+        { motionEmoji: "🪑🧘", verb: "Oturmak" },
+        { motionEmoji: "🧍‍♂️⬆️", verb: "Kalkmak" },
+        { motionEmoji: "✂️🔪", verb: "Kesmek" },
+        { motionEmoji: "😭😢", verb: "Ağlamak" },
+        { motionEmoji: "😄😂", verb: "Gülmek" },
+        { motionEmoji: "🍳👩‍🍳", verb: "Pişirmek" },
+        { motionEmoji: "⏳🕰️", verb: "Beklemek" },
+        { motionEmoji: "📺👀", verb: "Seyretmek / İzlemek" },
+        { motionEmoji: "💃🕺", verb: "Dans etmek" },
+        { motionEmoji: "🥤☕", verb: "İçmek" },
+        { motionEmoji: "🍕🍽️", verb: "Yemek" },
+        { motionEmoji: "👂🎧", verb: "Dinlemek" },
+        { motionEmoji: "🏋️‍♂️📦", verb: "Kaldırmak" },
+        { motionEmoji: "🎨🖌️", verb: "Resim yapmak" },
+        { motionEmoji: "😴💤", verb: "Uyumak" },
+        { motionEmoji: "🧹", verb: "Süpürmek" },
+        { motionEmoji: "📖📚", verb: "Okumak" },
+        { motionEmoji: "🎤🎶", verb: "Şarkı söylemek" },
+        { motionEmoji: "🏊‍♂️🌊", verb: "Yüzmek" },
+        { motionEmoji: "✍️📝", verb: "Yazmak" },
+        { motionEmoji: "👏", verb: "Alkışlamak" },
+        { motionEmoji: "🎧🎵", verb: "Müzik dinlemek" },
+        { motionEmoji: "🕊️✈️", verb: "Uçmak" },
+        { motionEmoji: "📢🗣️", verb: "Bağırmak" },
+        { motionEmoji: "🎮⚽", verb: "Oynamak" },
+        { motionEmoji: "🚶‍♂️🚶", verb: "Yürümek" },
+        { motionEmoji: "🏃‍♂️💨", verb: "Koşmak" },
+        { motionEmoji: "😊🎉", verb: "Sevinmek" },
+        { motionEmoji: "🚴‍♂️🚲", verb: "Bisiklet sürmek / Binmek" },
+        { motionEmoji: "💬🗣️", verb: "Konuşmak" }
+    ];
+
+    const container = document.getElementById("cardsContainer");
+    const resetBtn  = document.getElementById("resetAllBtn");
+    const counterSpan = document.getElementById("cardCounter");
+    let activeCards = 0;
+
+    function buildCards() {
+        container.innerHTML = "";
+        activeCards = 0;
+        verbsData.forEach((item, index) => {
+            const flipCard = document.createElement("div");
+            flipCard.className = "flip-card";
+            flipCard.setAttribute("data-id", index);
+
+            const inner = document.createElement("div");
+            inner.className = "flip-card-inner";
+
+            const front = document.createElement("div");
+            front.className = "card-front";
+            const emojiSpan = document.createElement("div");
+            emojiSpan.className = "motion-icon";
+            emojiSpan.textContent = item.motionEmoji;
+            front.appendChild(emojiSpan);
+
+            const back = document.createElement("div");
+            back.className = "card-back";
+            const verbMain = document.createElement("div");
+            verbMain.className = "verb-turkish";
+            verbMain.textContent = item.verb;
+            const detail = document.createElement("div");
+            detail.className = "verb-detail";
+            detail.textContent = "📖 fiil";
+            back.appendChild(verbMain);
+            back.appendChild(detail);
+
+            inner.appendChild(front);
+            inner.appendChild(back);
+            flipCard.appendChild(inner);
+
+            flipCard.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const isActive = flipCard.classList.contains("active");
+                if (!isActive) { flipCard.classList.add("active"); activeCards++; }
+                else           { flipCard.classList.remove("active"); activeCards--; }
+                updateCounter();
+            });
+
+            container.appendChild(flipCard);
+        });
+        updateCounter();
+    }
+
+    function updateCounter() {
+        counterSpan.textContent = `${activeCards} / ${verbsData.length} kart açık`;
+    }
+
+    function resetAllCards() {
+        document.querySelectorAll(".flip-card").forEach(c => c.classList.remove("active"));
+        activeCards = 0;
+        updateCounter();
+    }
+
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") resetAllCards(); });
+    resetBtn.addEventListener("click", resetAllCards);
+    buildCards();
+</script>
+</body>
+</html>
