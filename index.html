@@ -444,7 +444,7 @@ footer span { color: #F5C842; }
             <button class="sub-action-btn" onclick="window.location.href='yazma_alistirmalari.html'"><span class="emoji">✍️</span> YAZMA ALIŞTIRMALARI</button>
         </div>
         <div id="okuma-content" class="content-section"><div class="two-col-grid" id="okumaAlistirmaGrid"></div></div>
-        <div id="dinleme-content" class="content-section"><div class="items-grid" id="dinlemeAlistirmaGrid"></div></div>
+        <div id="dinleme-content" class="content-section"><div class="two-col-grid" id="dinlemeAlistirmaGrid"></div></div>
         <div id="yazma-content" class="content-section"></div>
     </div>
 </div>
@@ -489,19 +489,15 @@ footer span { color: #F5C842; }
         </div>
         <div id="konusma-sorulari-content" class="questions-sub-content active">
             <div class="two-col-grid">
-                <!-- SOL SÜTUN: ÜCRETSİZ -->
                 <div>
                     <div class="col-label col-label-free">✅ Ücretsiz</div>
                     <div class="col-items" id="speakingFree"></div>
-                    <!-- 🎬 Video Sorular (Ücretsiz) başlık ve liste -->
                     <div class="video-subheader"><span class="emoji">🎬</span> Video Sorular</div>
                     <div class="col-items" id="videoFreeList"></div>
                 </div>
-                <!-- SAĞ SÜTUN: GİRİŞ GEREKLİ -->
                 <div>
                     <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
                     <div class="col-items" id="speakingLocked"></div>
-                    <!-- 🎬 Video Sorular (Ücretli/Giriş Gerekli) başlık ve liste -->
                     <div class="video-subheader"><span class="emoji">🎬</span> Video Sorular</div>
                     <div class="col-items" id="videoLockedList"></div>
                 </div>
@@ -519,14 +515,12 @@ footer span { color: #F5C842; }
             <button class="reading-sub-btn active" onclick="switchReadingTab('metinler')"><span>📄</span> OKUMA METİNLERİ</button>
             <button class="reading-sub-btn" onclick="switchReadingTab('ekitaplar')"><span>📘🎧</span> E-KİTAPLAR / SESLİ KİTAPLAR</button>
         </div>
-        <!-- Okuma Metinleri sekmesi -->
         <div id="reading-metinler-tab" class="reading-tab-panel active-panel">
             <div class="two-col-grid">
                 <div><div class="col-label col-label-free">✅ Ücretsiz</div><div class="col-items" id="readingTextFree"></div></div>
                 <div><div class="col-label col-label-locked">🔒 Giriş Gerekli</div><div class="col-items" id="readingTextLocked"></div></div>
             </div>
         </div>
-        <!-- E-Kitaplar / Sesli Kitaplar sekmesi -->
         <div id="reading-ekitaplar-tab" class="reading-tab-panel">
         </div>
     </div>
@@ -644,8 +638,8 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('odevGonderBtn')?.addEventListener('click', (e) => { e.preventDefault(); openWritingOdev(); });
   document.getElementById('konusmaOdevGonderBtn')?.addEventListener('click', (e) => { e.preventDefault(); openSpeakingOdev(); });
   
-  // ========== TÜM STATİK İÇERİKLER (Sınavlar, Alıştırmalar, Kelimeler, Sorular, Oyunlar, Öğretmenler, Okuma Metinleri) ==========
-  // Okuma Metinleri (ücretsiz + kilitli) - readingTextFree/Locked doldur
+  // ========== TÜM STATİK İÇERİKLER ==========
+  // Okuma Metinleri
   const readFree=[["kuresel_isinma.html","Küresel Isınma"],["elektrikli_araclar.html","Elektrikli Araçlar"],["yapay_zeka.html","Yapay Zeka"],["geri_donusum.html","Geri Dönüşümün Önemi"],["sosyal_medya.html","Sosyal Medyanın İnsanlar Üzerindeki Etkisi"],["teknoloji.html","Teknolojinin İnsan Hayatındaki Yeri"],["cevre_temizligi.html","Çevre Temizliği"],["ceviri_1.html","Özbekçe-Türkçe Metin 1"],["ceviri_2.html","Özbekçe-Türkçe Metin 2"]];
   const readLocked=[["ormanlar.html","Ormanların Yok Olmasının Sebepleri ve Korunma Yolları"],["ogretmen_yapay_zeka.html","Dil Öğreniminde Öğretmen Rehberliği mi, Yapay Zeka mı Daha Etkilidir?"],["dort_gun_calisma.html","Haftada Dört Gün Çalışma Verimliliği ve Sağlığı Artırır Mı?"],["egitimde_yapay_zeka.html","Eğitimde Yapay Zeka Kullanılmalı Mı?"],["sosyal_medya_dostluklari.html","Sosyal Medya Dostlukları Gerçek Mi?"],["mekandan_bagimsiz_calisma.html","Mekandan Bağımsız Çalışma"]];
   const freeDivReading = document.getElementById('readingTextFree'); 
@@ -663,13 +657,35 @@ document.addEventListener('DOMContentLoaded', function() {
   const dinlemeGrid = document.getElementById('dinlemeSınavlarıGrid');
   if(dinlemeGrid) listening.forEach((href,idx)=>{ let div=document.createElement('div'); div.className='item-card'; div.setAttribute('onclick',`openExamLogin('${href}')`); div.innerHTML=`<span class="item-name">${listeningNames[idx]}</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`; dinlemeGrid.appendChild(div); });
   
-  // Okuma Alıştırmaları
+  // Okuma Alıştırmaları (iki sütunlu grid)
   const okumaAlisGrid = document.getElementById('okumaAlistirmaGrid');
   if(okumaAlisGrid) okumaAlisGrid.innerHTML = `<div><div class="col-label col-label-free">✅ Ücretsiz</div><div class="col-items"><a class="item-card" href="okuma_alistirmasi_1.html">Okuma Alıştırması 1<span class="badge badge-free">✅ Ücretsiz</span></a><a class="item-card" href="okuma_alistirmasi_2.html">Okuma Alıştırması 2<span class="badge badge-free">✅ Ücretsiz</span></a><a class="item-card" href="okuma_alistirmasi_3.html">Okuma Alıştırması 3<span class="badge badge-free">✅ Ücretsiz</span></a><a class="item-card" href="okuma_alistirmasi_4.html">Okuma Alıştırması 4<span class="badge badge-free">✅ Ücretsiz</span></a><a class="item-card" href="okuma_alistirmasi_5.html">Okuma Alıştırması 5<span class="badge badge-free">✅ Ücretsiz</span></a><a class="item-card" href="tys_okuma_alistirmasi_ucretsiz_1.html">TYS Okuma Alıştırması 1<span class="badge badge-free">✅ Ücretsiz</span></a></div></div><div><div class="col-label col-label-locked">🔒 Giriş Gerekli</div><div class="col-items"><div class="item-card" onclick="openExamLogin('tys_okuma_alistirmasi_1.html')">TYS Okuma Alıştırması 1<span class="badge badge-locked">🔒 Giriş Gerekli</span></div><div class="item-card" onclick="openExamLogin('tys_okuma_alistirmasi_ucretli_2.html')">TYS Okuma Alıştırması 2<span class="badge badge-locked">🔒 Giriş Gerekli</span></div><div class="item-card" onclick="openExamLogin('okuma_alistirmasi_ucretli_1.html')">Okuma Alıştırması 1<span class="badge badge-locked">🔒 Giriş Gerekli</span></div><div class="item-card" onclick="openExamLogin('okuma_alistirmasi_ucretli_2.html')">Okuma Alıştırması 2<span class="badge badge-locked">🔒 Giriş Gerekli</span></div></div></div>`;
-  const dinlemeAlis = ["dinleme_alistirmasi_1.html","dinleme_alistirmasi_2.html","dinleme_alistirmasi_3.html","dinleme_alistirmasi_4.html","dinleme_alistirmasi_5.html","b2_kroki_alıştırmasi_1.html","dinleme_alistimasikroki_7.html","dinleme_alistimasikroki_8.html"];
-  const dinlemeNames = ["Dinleme Alıştırması 1","Dinleme Alıştırması 2","Dinleme Alıştırması 3","Dinleme Alıştırması 4","Dinleme Alıştırması 5","Dinleme Alıştırması 6","Dinleme Alıştırması 7","Dinleme Alıştırması 8"];
-  const dinlemeGridSub = document.getElementById('dinlemeAlistirmaGrid');
-  if(dinlemeGridSub) dinlemeNames.forEach((name,idx)=>{ let a=document.createElement('a'); a.className='item-card'; a.href=dinlemeAlis[idx]; a.innerHTML=`<span class="item-name">${name}</span><span class="badge badge-free">✅ Ücretsiz</span>`; dinlemeGridSub.appendChild(a); });
+  
+  // Dinleme Alıştırmaları (Okuma Alıştırmaları ile aynı yapı - iki sütunlu grid)
+  const dinlemeAlisGrid = document.getElementById('dinlemeAlistirmaGrid');
+  if(dinlemeAlisGrid) {
+    dinlemeAlisGrid.innerHTML = `
+      <div>
+        <div class="col-label col-label-free">✅ Ücretsiz</div>
+        <div class="col-items">
+          <a class="item-card" href="dinleme_alistirmasi_1.html">Dinleme Alıştırması 1<span class="badge badge-free">✅ Ücretsiz</span></a>
+          <a class="item-card" href="dinleme_alistirmasi_2.html">Dinleme Alıştırması 2<span class="badge badge-free">✅ Ücretsiz</span></a>
+          <a class="item-card" href="dinleme_alistirmasi_3.html">Dinleme Alıştırması 3<span class="badge badge-free">✅ Ücretsiz</span></a>
+          <a class="item-card" href="dinleme_alistirmasi_4.html">Dinleme Alıştırması 4<span class="badge badge-free">✅ Ücretsiz</span></a>
+          <a class="item-card" href="dinleme_alistirmasi_5.html">Dinleme Alıştırması 5<span class="badge badge-free">✅ Ücretsiz</span></a>
+          <a class="item-card" href="b2_kroki_alıştırmasi_1.html">Dinleme Alıştırması 6<span class="badge badge-free">✅ Ücretsiz</span></a>
+          <a class="item-card" href="dinleme_alistimasikroki_7.html">Dinleme Alıştırması 7<span class="badge badge-free">✅ Ücretsiz</span></a>
+          <a class="item-card" href="dinleme_alistimasikroki_8.html">Dinleme Alıştırması 8<span class="badge badge-free">✅ Ücretsiz</span></a>
+        </div>
+      </div>
+      <div>
+        <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
+        <div class="col-items">
+          <div class="item-card" onclick="openExamLogin('b2_dinleme_alistirmasi_ucretli_1.html')">Dinleme Alıştırması 1<span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
+        </div>
+      </div>
+    `;
+  }
   
 // A1/A2
   const a1Items = ["a1_turk_alfabesi.html","kartlar.html","a1_resimli_fiiller.html","gunler.html","a1_es_anlamli_kelimeler.html","a1_zit_anlamlilar.html","akrabalik_adlari.html","benzer_sozler_1.html","benzer_sozler_2.html","A1_es_anlamli_kelime_oyunu_1.html","a1_kelime_bulmaca_1.html","a1_kelime_bulmaca_2.html","a1_karisik_kelimeler_1.html"];
