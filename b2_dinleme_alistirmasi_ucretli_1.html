@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+html<script>
+  if (!sessionStorage.getItem('hamzaUser')) {
+    alert('Bu sayfa sadece üyeler içindir. Lütfen giriş yapın.');
+    window.location.replace('index.html');
+  }
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dinleme Anlama - Buzullar ve Gezegenin Geleceği</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f2f5f9;
+    --surface: #ffffff;
+    --ink: #1a2c3e;
+    --muted: #5a6e7c;
+    --border: #dce4ec;
+    --accent: #1e6f5c;
+    --accent-light: #e2f0ed;
+    --gold: #e6b91e;
+    --correct: #2d7a50;
+    --correct-bg: #edf7f1;
+    --wrong: #b93a3a;
+    --wrong-bg: #fdf0f0;
+    --shadow: 0 4px 20px rgba(0,0,0,0.05);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .page {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .subheading {
+    font-size: 15px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .rule {
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+    margin: 20px auto 0;
+    border-radius: 3px;
+  }
+
+  .player-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 24px;
+    margin-bottom: 48px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+
+  .player-status {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+
+  .timer-info {
+    font-size: 15px;
+    color: var(--muted);
+    margin: 12px 0;
+    font-weight: 500;
+  }
+
+  .btn-play {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    font-size: 16px;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    margin-top: 8px;
+  }
+
+  .btn-play:hover {
+    background: #0e4f41;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(30,111,92,0.3);
+  }
+
+  .btn-play:disabled {
+    background: #a3bfb8;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .questions-label {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 32px 0 20px 0;
+  }
+
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+    transition: all 0.2s ease;
+  }
+
+  .question-card.correct {
+    border-left: 6px solid var(--correct);
+    background: var(--correct-bg);
+  }
+
+  .question-card.wrong {
+    border-left: 6px solid var(--wrong);
+    background: var(--wrong-bg);
+  }
+
+  .q-stem {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 20px;
+    line-height: 1.4;
+    padding-right: 12px;
+  }
+
+  .q-num {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 30px;
+    margin-right: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  .options-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px 0 8px;
+  }
+
+  .radio-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 18px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--bg);
+  }
+
+  .radio-option:hover {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .radio-option.selected-radio {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .radio-option.disabled {
+    cursor: default;
+    opacity: 0.8;
+  }
+
+  .radio-input {
+    margin-top: 3px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  .radio-input:disabled {
+    cursor: default;
+  }
+
+  .radio-label {
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--ink);
+    cursor: pointer;
+    flex: 1;
+    font-weight: 450;
+  }
+
+  .disabled .radio-label,
+  .disabled .radio-input {
+    cursor: default;
+  }
+
+  .feedback-row {
+    display: none;
+    margin-top: 20px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    background: rgba(0,0,0,0.02);
+    border: 1px solid transparent;
+  }
+
+  .question-card.correct .feedback-row {
+    display: block;
+    background: rgba(45,122,80,0.08);
+    border-color: rgba(45,122,80,0.2);
+    color: #1f5a3d;
+  }
+
+  .question-card.wrong .feedback-row {
+    display: block;
+    background: rgba(185,58,58,0.06);
+    border-color: rgba(185,58,58,0.2);
+    color: #9b2e2e;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 36px;
+  }
+
+  button {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border: none;
+    padding: 14px 36px;
+    border-radius: 44px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-check {
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .btn-check:hover {
+    background: #0e4f41;
+    transform: scale(0.98);
+  }
+
+  .score-banner {
+    display: none;
+    text-align: center;
+    margin-top: 36px;
+    padding: 24px;
+    background: linear-gradient(135deg, #1e6f5c 0%, #28997f 100%);
+    border-radius: 30px;
+    box-shadow: var(--shadow);
+    color: white;
+  }
+
+  .score-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .score-sub {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-top: 8px;
+  }
+
+  .footer {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 680px) {
+    .page { padding: 24px 16px; }
+    .question-card { padding: 18px 20px; }
+    .q-stem { font-size: 16px; }
+    .radio-label { font-size: 14px; }
+    .btn-check { padding: 12px 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="eyebrow">DİNLEME ANLAMA · B2 SEVİYESİ</div>
+    <h1>Buzullar ve Gezegenin Geleceği</h1>
+    <p class="subheading">Metni dikkatle dinleyin ve her soru için doğru seçeneği işaretleyin. Kontrol et butonunda açıklamalı cevaplar görünecektir.</p>
+    <div class="rule"></div>
+  </div>
+
+  <div class="player-card">
+    <div class="player-status">🎧 DİNLEME MODÜLÜ</div>
+    <div class="timer-info" id="timerInfo">⏳ Hazır</div>
+    <button class="btn-play" id="playBtn">▶ DİNLEMEYİ BAŞLAT</button>
+  </div>
+
+  <div class="questions-label">SORULAR (S30 – S35)</div>
+  <div id="questionsContainer"></div>
+
+  <div class="controls">
+    <button class="btn-check" id="checkBtn">KONTROL ET</button>
+  </div>
+
+  <div class="score-banner" id="scoreBanner">
+    <div class="score-big" id="scoreNumber">0/6</div>
+    <div class="score-sub">doğru cevap</div>
+  </div>
+
+  <div class="footer">Hamza Hoca ile Türkçe Öğreniyorum · Dinleme Etkinliği – Buzullar ve Gezegenin Geleceği</div>
+</div>
+
+<script>
+  // Sorular ve doğru cevaplar
+  const questionsData = [
+    { 
+      id: 30, 
+      text: "Metne göre, günümüzdeki ve geçmişteki buzul yoğunluğu karşılaştırıldığında aşağıdaki yargılardan hangisine ulaşılabilir?",
+      options: [
+        { val: 'A', label: 'Son buzul çağındaki buzul örtüsü, bugünkü toplam buzul alanının yaklaşık üç katından fazlaydı.' },
+        { val: 'B', label: 'Alp buzulları, kıtasal buzullara kıyasla yeryüzünde çok daha geniş bir alanı kaplamaktadır.' },
+        { val: 'C', label: 'Lambert buzulu, dünyadaki tatlı su rezervlerinin tek başına %10\'unu oluşturmaktadır.' }
+      ],
+      correct: 'A',
+      explanation: '📖 Açıklama: Metinde bugün buzullar dünyanın %10\'unu kaplarken, son buzul çağında bu oranın %32 olduğu belirtilmiştir. 32 sayısı 10\'un 3 katından fazla olduğu için A seçeneği doğrudur. B şıkkı yanlıştır çünkü kıtasal buzullar (Antarktika ve Grönland) çok daha geniş alan kaplar. C şıkkı yanlıştır; Lambert en büyük buzul olsa da tatlı suyun %10\'u değil, genel buzul alanı dünyanın %10\'udur.'
+    },
+    { 
+      id: 31, 
+      text: "Dinlediğiniz metne göre 2006-2015 yılları arasındaki buzul kaybı verileriyle ilgili aşağıdakilerden hangisi doğrudur?",
+      options: [
+        { val: 'A', label: 'Antarktika’nın yıllık buzul kaybı, diğer tüm bölgelerin toplam kaybından daha fazladır.' },
+        { val: 'B', label: 'En yüksek yıllık erime hacmi Grönland buzullarında kaydedilmiştir.' },
+        { val: 'C', label: 'Dünyadaki küçük buzulların toplam erime hızı Antarktika ile aynı seviyededir.' }
+      ],
+      correct: 'B',
+      explanation: '📖 Açıklama: Metinde Grönland\'ın her yıl 280 milyar ton, diğer bölgelerin (küçük buzullar dahil) 220 milyar ton, Antarktika\'nın ise 155 milyar ton buz kaybettiği açıklanmıştır. Bu verilere göre en yüksek yıllık erime hacmi Grönland\'a aittir.'
+    },
+    { 
+      id: 32, 
+      text: "Metinde geçen okyanus yüzeyindeki yıllık 3,6 mm'lik artışla ilgili bilim insanlarının temel yaklaşımı aşağıdakilerden hangisidir?",
+      options: [
+        { val: 'A', label: 'Bu artış hızı kısa vadede kıyı şeritlerini değiştirecek kadar tehlikelidir.' },
+        { val: 'B', label: 'Küçük görünen bu değişimlerin zamanla birikerek ani ve büyük etkiler yaratma riski vardır.' },
+        { val: 'C', label: 'NASA\'nın yakın gelecek öngörülerine göre bu yıllık artış hızı zamanla sabitlenecektir.' }
+      ],
+      correct: 'B',
+      explanation: '📖 Açıklama: Metinde “Bu miktar çok da önemli görünmeyebilir ancak iklimle ilgili değişiklikler yavaş yavaş birikerek etkisini bir anda gösterebilirler.” ifadesi yer alır. Bu, “küçük görünen değişimlerin ani ve büyük etkiler yaratma riski” anlamına gelir.'
+    },
+    { 
+      id: 33, 
+      text: "Kaliforniya Üniversitesi'ndeki araştırmacıların simülasyonuna göre, küresel çaptaki tüm buz kütlelerinin tamamen sıvıya dönüşmesi durumunda ne kadarlık bir deniz seviyesi artışı öngörülmektedir?",
+      options: [
+        { val: 'A', label: '7,4 metre' },
+        { val: 'B', label: '58 metre' },
+        { val: 'C', label: '65 metre' }
+      ],
+      correct: 'C',
+      explanation: '📖 Açıklama: Metinde Grönland buzullarının erimesiyle 7,4 metre, Antarktika\'nın erimesiyle 58 metre, gezegendeki tüm buzulların erimesi durumunda ise toplam 65 metre yükseleceği hesaplanmıştır. Soru “tüm buz kütleleri” için olduğundan doğru cevap 65 metredir.'
+    },
+    { 
+      id: 34, 
+      text: "Tüm buzulların eridiği bir senaryoda coğrafi yapıların uğrayacağı değişimlerle ilgili aşağıdakilerden hangisi yanlıştır?",
+      options: [
+        { val: 'A', label: 'Karadeniz genişleyerek okyanusla doğrudan bir bağ kuracak ve Hazar Denizi nitelik değiştirecektir.' },
+        { val: 'B', label: 'Güney Amerika\'daki bazı akarsular birleşerek devasa körfez yapılarına dönüşecektir.' },
+        { val: 'C', label: 'Çin ve Vietnam gibi Asya ülkeleri yükselen su seviyesinden en az etkilenecek güvenli bölgeler olacaktır.' }
+      ],
+      correct: 'C',
+      explanation: '📖 Açıklama: Metinde Çin, Vietnam ve Filipinler’de büyük sel felaketleri yaşanacağı ve toprakların sular altında kalacağı vurgulanmıştır. Bu nedenle “en az etkilenecek güvenli bölgeler” ifadesi tamamen yanlıştır. Diğer seçenekler metindeki coğrafi değişimlerle uyumludur.'
+    },
+    { 
+      id: 35, 
+      text: "Dinlediğiniz metinde aşağıdakilerden hangisine değinilmemiştir?",
+      options: [
+        { val: 'A', label: 'Okyanus sularının yükselmesiyle birlikte tatlı su ve tuzlu su kaynaklarının kimyasal olarak birbirine nasıl karışacağına' },
+        { val: 'B', label: 'Dünyadaki mevcut tüm buz kütlelerinin toplam hacminin ne kadarlık bir büyüklüğe denk geldiğine' },
+        { val: 'C', label: 'Avrupa\'da deniz seviyesinin yükselmesine karşı uzun süredir setler ve barajlarla mücadele eden ülkelerin durumuna' }
+      ],
+      correct: 'A',
+      explanation: '📖 Açıklama: Metnin girişinde “Tuzlu su tatlı suyla karışır mı?” sorusu sorulsa da, devamında erime miktarları, coğrafi sonuçlar ve Hollanda örneği anlatılmış; bu karışımın kimyasal boyutuna veya nasıl olacağına dair hiçbir açıklama yapılmamıştır. B seçeneği (25-30 milyon km³ / Kuzey Amerika benzetmesi) ve C seçeneği (10 yıldır suyla mücadele eden Hollanda) metinde yer almaktadır.'
+    }
+  ];
+
+  // Ses dosyası URL'i
+  const audioUrl = 'https://github.com/hamzaozaydin/testmerkezi/blob/main/b2_dinleme_alistirmasi_ucretli_1.mp3';
+  const embeddedAudio = new Audio(audioUrl);
+  
+  let selected = {};      // kullanıcının seçtiği cevaplar {30: 'A', 31: 'C'}
+  let checkedState = {};  // kontrol edilmiş mi
+  let isPlaying = false;
+
+  // Soruları oluştur
+  function buildQuestions() {
+    const container = document.getElementById('questionsContainer');
+    container.innerHTML = '';
+    
+    questionsData.forEach(q => {
+      const card = document.createElement('div');
+      card.className = 'question-card';
+      card.id = `qcard-${q.id}`;
+
+      const stem = document.createElement('div');
+      stem.className = 'q-stem';
+      stem.innerHTML = `<span class="q-num">S${q.id}</span> ${q.text}`;
+
+      const optionsDiv = document.createElement('div');
+      optionsDiv.className = 'options-group';
+      optionsDiv.id = `options-${q.id}`;
+
+      q.options.forEach(opt => {
+        const radioDiv = document.createElement('div');
+        radioDiv.className = 'radio-option';
+        radioDiv.setAttribute('data-q', q.id);
+        radioDiv.setAttribute('data-val', opt.val);
+
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = `q${q.id}`;
+        radio.value = opt.val;
+        radio.id = `q${q.id}_${opt.val}`;
+        radio.className = 'radio-input';
+
+        const label = document.createElement('label');
+        label.htmlFor = `q${q.id}_${opt.val}`;
+        label.className = 'radio-label';
+        label.textContent = `${opt.val}) ${opt.label}`;
+
+        radioDiv.appendChild(radio);
+        radioDiv.appendChild(label);
+
+        // Seçim değişikliği
+        radio.addEventListener('change', (e) => {
+          if (checkedState[q.id]) return;
+          if (radio.checked) {
+            selected[q.id] = opt.val;
+            // kartın sınıflarını temizle
+            card.classList.remove('correct', 'wrong');
+            const fb = document.getElementById(`fb-${q.id}`);
+            if (fb) fb.innerHTML = '';
+            // diğer radio-option'lardan selected-radio sınıfını kaldır
+            const allRadios = document.querySelectorAll(`#options-${q.id} .radio-option`);
+            allRadios.forEach(rd => rd.classList.remove('selected-radio'));
+            radioDiv.classList.add('selected-radio');
+          }
+        });
+
+        optionsDiv.appendChild(radioDiv);
+      });
+
+      const feedback = document.createElement('div');
+      feedback.className = 'feedback-row';
+      feedback.id = `fb-${q.id}`;
+
+      card.appendChild(stem);
+      card.appendChild(optionsDiv);
+      card.appendChild(feedback);
+      container.appendChild(card);
+    });
+  }
+
+  // Tüm cevapları kontrol et ve açıklamalı sonuçları göster
+  function checkAllAnswers() {
+    let score = 0;
+    
+    questionsData.forEach(q => {
+      const selectedAns = selected[q.id];
+      const card = document.getElementById(`qcard-${q.id}`);
+      const fb = document.getElementById(`fb-${q.id}`);
+      const optionsContainer = document.getElementById(`options-${q.id}`);
+      const allRadioDivs = optionsContainer ? optionsContainer.querySelectorAll('.radio-option') : [];
+      
+      // Seçilmemişse uyarı ver ama her soru için feedback göster
+      if (!selectedAns) {
+        card.classList.add('wrong');
+        fb.innerHTML = `⚠ Cevap seçilmemiş.<br><span style="font-size:13px; opacity:0.85;">📖 Açıklama: ${q.explanation}</span>`;
+        checkedState[q.id] = true;
+        // Tüm radio div'lerini devre dışı bırak
+        allRadioDivs.forEach(div => {
+          div.classList.add('disabled');
+          const radio = div.querySelector('.radio-input');
+          if (radio) radio.disabled = true;
+        });
+        return;
+      }
+      
+      // Kontrol edildi, radio'ları devre dışı bırak
+      allRadioDivs.forEach(div => {
+        div.classList.add('disabled');
+        const radio = div.querySelector('.radio-input');
+        if (radio) radio.disabled = true;
+      });
+      checkedState[q.id] = true;
+      
+      if (selectedAns === q.correct) {
+        card.classList.add('correct');
+        fb.innerHTML = `✓ Doğru cevap!<br><span style="font-size:13px; opacity:0.85;">📖 Açıklama: ${q.explanation}</span>`;
+        score++;
+        // doğru cevabın olduğu radio-option'u vurgula
+        allRadioDivs.forEach(div => {
+          const val = div.getAttribute('data-val');
+          if (val === q.correct) {
+            div.classList.add('correct-highlight');
+          }
+        });
+      } else {
+        card.classList.add('wrong');
+        const correctLetter = q.correct;
+        const correctText = q.options.find(opt => opt.val === correctLetter)?.label || correctLetter;
+        fb.innerHTML = `✗ Yanlış. Doğru cevap: ${correctLetter}) ${correctText}.<br><span style="font-size:13px; opacity:0.85;">📖 Açıklama: ${q.explanation}</span>`;
+        // yanlış işaretleneni ve doğru olanı vurgula
+        allRadioDivs.forEach(div => {
+          const val = div.getAttribute('data-val');
+          if (val === selectedAns) {
+            div.classList.add('wrong-highlight');
+          }
+          if (val === q.correct) {
+            div.classList.add('correct-highlight');
+          }
+        });
+      }
+    });
+    
+    // Skor banner'ını göster
+    const banner = document.getElementById('scoreBanner');
+    banner.style.display = 'block';
+    document.getElementById('scoreNumber').textContent = `${score}/6`;
+    banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // Dinleme başlatma
+  function startListening() {
+    if (isPlaying) return;
+    
+    isPlaying = true;
+    const playBtn = document.getElementById('playBtn');
+    playBtn.disabled = true;
+    playBtn.textContent = '🎧 DİNLEME DEVAM EDİYOR...';
+    const timerInfo = document.getElementById('timerInfo');
+    timerInfo.textContent = '🎤 Ses çalıyor, lütfen dikkatle dinleyin...';
+    
+    embeddedAudio.currentTime = 0;
+    embeddedAudio.play().catch(err => {
+      console.error('Ses çalınamadı:', err);
+      isPlaying = false;
+      playBtn.disabled = false;
+      playBtn.textContent = '▶ DİNLEMEYİ BAŞLAT';
+      timerInfo.textContent = '⚠️ Ses oynatılamadı. Lütfen bağlantınızı kontrol edin.';
+    });
+  }
+  
+  // Ses bittiğinde
+  embeddedAudio.addEventListener('ended', () => {
+    isPlaying = false;
+    const playBtn = document.getElementById('playBtn');
+    playBtn.disabled = false;
+    playBtn.textContent = '▶ DİNLEMEYİ BAŞLAT';
+    const timerInfo = document.getElementById('timerInfo');
+    timerInfo.textContent = '✅ Dinleme tamamlandı. Soruları cevaplayabilirsiniz.';
+  });
+  
+  embeddedAudio.addEventListener('error', () => {
+    isPlaying = false;
+    const playBtn = document.getElementById('playBtn');
+    playBtn.disabled = false;
+    playBtn.textContent = '▶ DİNLEMEYİ BAŞLAT';
+    const timerInfo = document.getElementById('timerInfo');
+    timerInfo.textContent = '⚠️ Ses dosyası yüklenemedi. Lütfen bağlantıyı kontrol edin.';
+  });
+
+  // Sayfa yüklendiğinde soruları oluştur
+  buildQuestions();
+  
+  // Buton olayları
+  document.getElementById('playBtn').addEventListener('click', startListening);
+  document.getElementById('checkBtn').addEventListener('click', checkAllAnswers);
+</script>
+</body>
+</html>
