@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<script>
+  if (!sessionStorage.getItem('hamzaUser')) {
+    alert('Bu sayfa sadece üyeler içindir. Lütfen giriş yapın.');
+    window.location.replace('index.html');
+  }
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RGXEF62STR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RGXEF62STR');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>-ken Eki – Hamza Hoca</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* ── HEADER STYLES ── */
+.home-btn-wrap {
+  padding: 18px 20px 0;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 40px;
+  padding: 9px 20px;
+  color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .22s, transform .18s, box-shadow .22s;
+}
+
+.home-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  color: #F5C842;
+  text-decoration: none;
+}
+
+.home-btn svg { flex-shrink: 0; }
+
+header {
+  text-align: center;
+  padding: 2rem 1rem 1.2rem;
+}
+
+.header-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.3rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 0.9rem;
+}
+
+header h1 {
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.header-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 10px;
+}
+
+.stars {
+  font-size: 1rem;
+  color: #F5C842;
+  letter-spacing: .4em;
+  margin-bottom: 6px;
+  opacity: .7;
+}
+
+.subtitle {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.telegram-section {
+  text-align: center;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.tg-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(26,35,50,0.85);
+  border: 1.5px solid rgba(34,158,217,0.3);
+  border-radius: 60px;
+  padding: .75rem 1.5rem .75rem 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+.tg-btn {
+  display: inline-flex;
+  align-items: center; gap: .45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0);
+  color: #fff; text-decoration: none;
+  font-weight: 800; font-size: .92rem;
+  padding: .65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34,158,217,.4);
+  transition: all .22s; white-space: nowrap;
+}
+
+.tg-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(34,158,217,.55);
+}
+
+.section-title {
+  text-align: center;
+  font-size: .85rem; color: #F5C842;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: .5rem 0 1rem; opacity: .75;
+}
+
+footer {
+  text-align: center;
+  padding: 0 1rem 2.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+footer span { color: #F5C842; }
+
+/* ── CONTENT STYLES ── */
+.content-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1.2rem 3rem;
+}
+
+/* Explanation card */
+.explanation-card {
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(245,200,66,0.2);
+  border-radius: 16px;
+  padding: 1.6rem 1.8rem;
+  margin-bottom: 1.5rem;
+  animation: popIn .4s ease both;
+}
+
+.explanation-card h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #F5C842;
+  margin-bottom: 1rem;
+  letter-spacing: .04em;
+}
+
+.explanation-card p {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.75;
+  margin-bottom: 0.7rem;
+}
+
+.explanation-card p:last-child { margin-bottom: 0; }
+
+/* Example rows */
+.example-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin: 0.6rem 0 0.4rem;
+}
+
+.example-list li {
+  background: rgba(245,200,66,0.07);
+  border-left: 3px solid #F5C842;
+  border-radius: 0 8px 8px 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.93rem;
+  color: #fff;
+}
+
+.example-list li .ek {
+  color: #F5C842;
+  font-weight: 700;
+}
+
+/* Warning box */
+.warning-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: rgba(255, 80, 80, 0.08);
+  border: 1.5px solid rgba(255,100,100,0.25);
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  margin: 0.8rem 0 0;
+}
+
+.warning-box .icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+.warning-box p { font-size: 0.88rem; color: rgba(255,200,200,0.9); line-height: 1.6; }
+.warning-box strong { color: #ff9090; }
+
+/* Info box */
+.info-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: rgba(34,158,217,0.08);
+  border: 1.5px solid rgba(34,158,217,0.25);
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  margin: 0.8rem 0 0;
+}
+
+.info-box .icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+.info-box p { font-size: 0.88rem; color: rgba(180,225,255,0.9); line-height: 1.6; }
+
+/* Exercises */
+.exercises-card {
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(245,200,66,0.2);
+  border-radius: 16px;
+  padding: 1.6rem 1.8rem;
+  animation: popIn .4s .1s ease both;
+}
+
+.exercises-card h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #F5C842;
+  margin-bottom: 1.2rem;
+  letter-spacing: .04em;
+}
+
+.exercise-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.exercise-item .num {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #F5C842;
+  opacity: 0.7;
+  min-width: 22px;
+}
+
+.exercise-item .sentence {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.88);
+  line-height: 1.6;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.blank-input {
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(245,200,66,0.35);
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.95rem;
+  padding: 4px 10px;
+  width: 160px;
+  outline: none;
+  transition: border-color .2s, background .2s;
+}
+
+.blank-input:focus {
+  border-color: #F5C842;
+  background: rgba(245,200,66,0.08);
+}
+
+.blank-input.correct {
+  border-color: #4ade80;
+  background: rgba(74,222,128,0.08);
+  color: #4ade80;
+}
+
+.blank-input.wrong {
+  border-color: #f87171;
+  background: rgba(248,113,113,0.08);
+  color: #f87171;
+}
+
+/* Check button row */
+.check-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.2rem;
+}
+
+.check-btn {
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.65rem 1.6rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: .04em;
+  transition: transform .18s, box-shadow .2s;
+}
+
+.check-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(245,200,66,0.4);
+}
+
+/* Inline answer row */
+.inline-answer {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  margin: -0.2rem 0 0.6rem 28px;
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.6);
+  animation: popIn .25s ease both;
+}
+
+.inline-answer.visible { display: flex; }
+
+.inline-answer .answer-key {
+  color: #4ade80;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.inline-answer .check-icon { font-size: 0.9rem; }
+
+/* Note panel */
+.note-panel {
+  display: none;
+  margin-top: 1rem;
+  background: rgba(34,158,217,0.07);
+  border: 1.5px solid rgba(34,158,217,0.2);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  animation: popIn .3s ease both;
+}
+
+.note-panel.visible { display: block; }
+
+.note-panel h3 {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #64c8f0;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  opacity: 0.85;
+}
+
+.note-panel p {
+  font-size: 0.88rem;
+  color: rgba(180,225,255,0.88);
+  line-height: 1.7;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.97) translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<div class="home-btn-wrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ Dilbilgisi ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle">-ken Eki • -ken Qo'shimchasi</p>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+      Kanala Katıl
+    </a>
+  </div>
+</div>
+
+<div class="section-title">-ken Eki • -ken Qo'shimchasi</div>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="content-wrap">
+
+  <!-- Açıklama -->
+  <div class="explanation-card">
+    <h2>📖 -ken Eki Nedir?</h2>
+    <p>Cümleye <strong>durum ve zaman anlamı</strong> katar. Yerine göre geçmiş zaman, geniş zaman, şimdiki zaman ve gelecek zaman anlamı verebilir.</p>
+
+    <ul class="example-list">
+      <li>Ben küçük<span class="ek">ken</span>…</li>
+      <li>Ben çocuk<span class="ek">ken</span>…</li>
+      <li>Ben genç<span class="ek">ken</span>…</li>
+      <li>Spor yap<span class="ek">arken</span></li>
+      <li>Tam düş<span class="ek">ecekken</span> elinden tuttu.</li>
+      <li>Babam, film seyred<span class="ek">iyorken</span> birden televizyonu kapattı.</li>
+    </ul>
+
+    <div class="warning-box">
+      <div class="icon">⚠️</div>
+      <p><strong>Not:</strong> <strong>-kan</strong> biçimi yoktur!<br>
+      ❌ Yemek yapar<strong>kan</strong> &nbsp;→&nbsp; ✅ Yemek yapar<strong>ken</strong></p>
+    </div>
+
+    <div class="info-box" style="margin-top:0.8rem;">
+      <div class="icon">💡</div>
+      <p>Eğer kelime <strong>ünlü</strong> ile biterse araya <strong>-y-</strong> sesi girer:<br>
+      Hasta<strong>yken</strong> &nbsp;•&nbsp; Öğrenci<strong>yken</strong></p>
+    </div>
+
+    <div class="info-box" style="margin-top:0.8rem;">
+      <div class="icon">📍</div>
+      <p>Bazen <strong>bulunma hali eki -da/de</strong>'den sonra da kullanılır:<br>
+      Sinema<strong>dayken</strong> telefonum çaldı. &nbsp;•&nbsp; İstanbul'<strong>dayken</strong>… &nbsp;•&nbsp; Ders<strong>teyken</strong> öğretmenini dinle…</p>
+    </div>
+  </div>
+
+  <!-- Alıştırmalar -->
+  <div class="exercises-card">
+    <h2>✏️ Alıştırmalar</h2>
+    <p style="font-size:0.82rem; color:rgba(255,255,255,0.4); margin-bottom:1.1rem; letter-spacing:.04em;">Boşluklara uygun -ken ekini getirin.</p>
+
+    <div id="exerciseList"></div>
+
+    <div class="check-row">
+      <button class="check-btn" onclick="checkAnswers()">Kontrol Et ✓</button>
+    </div>
+
+    <div class="note-panel" id="notePanel">
+      <h3>📝 Açıklama</h3>
+      <p>Günlük konuşmada Türkçede <strong style="color:#fff;">okurken, giderken, yerken, çalışırken</strong> gibi kısa biçimler çok daha yaygındır. <strong style="color:#fff;">Okuyorken, gidiyorken, yiyorken</strong> biçimleri dil bilgisi açısından doğru olsa da daha az kullanılır.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span>Hamza Hoca ile Türkçe Öğreniyorum</span> &nbsp;&nbsp; 
+</footer>
+
+<script>
+const exercises = [
+  { before: "Kitap oku", after: " not alırım.", answer: "rken", full: "Kitap okurken not alırım." },
+  { before: "Öğrenci",   after: " çok kitap okurdum.", answer: "yken", full: "Öğrenciyken çok kitap okurdum." },
+  { before: "Yemek yer", after: " televizyon izlemem.", answer: "ken", full: "Yemek yerken televizyon izlemem." },
+  { before: "Ders çalış", after: " müzik dinliyorum.", answer: "ırken", full: "Ders çalışırken müzik dinliyorum." },
+  { before: "Bekar",     after: " yalnız yaşıyordu.", answer: "ken", full: "Bekarken yalnız yaşıyordu." },
+  { before: "Çay iç",   after: " gazete okudu.", answer: "erken", full: "Çay içerken gazete okudu." },
+  { before: "Yağmur yağ", after: " dışarı çıktık.", answer: "arken", full: "Yağmur yağarken dışarı çıktık." },
+  { before: "Mutlu",    after: " daha çok şarkı söyler.", answer: "yken", full: "Mutluyken daha çok şarkı söyler." },
+  { before: "Parkta yürür", after: " eski bir arkadaşla karşılaştım.", answer: "ken", full: "Parkta yürürken eski bir arkadaşla karşılaştım." },
+  { before: "Film izle",  after: " uyuyakalmışım.", answer: "rken", full: "Film izlerken uyuyakalmışım." },
+];
+
+// Build exercise UI
+const list = document.getElementById('exerciseList');
+exercises.forEach((ex, i) => {
+  const wrapper = document.createElement('div');
+
+  const div = document.createElement('div');
+  div.className = 'exercise-item';
+  div.innerHTML = `
+    <span class="num">${i + 1}.</span>
+    <span class="sentence">
+      ${ex.before}<input
+        class="blank-input"
+        id="inp${i}"
+        type="text"
+        placeholder="…"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+      />${ex.after}
+    </span>`;
+
+  const answerRow = document.createElement('div');
+  answerRow.className = 'inline-answer';
+  answerRow.id = 'ans' + i;
+  answerRow.innerHTML = `<span class="check-icon">✔</span> <span>${ex.full.replace(ex.answer, `<span class="answer-key">${ex.answer}</span>`)}</span>`;
+
+  wrapper.appendChild(div);
+  wrapper.appendChild(answerRow);
+  list.appendChild(wrapper);
+});
+
+function normalize(s) {
+  return s.trim().toLowerCase();
+}
+
+function checkAnswers() {
+  const notePanel = document.getElementById('notePanel');
+
+  exercises.forEach((ex, i) => {
+    const inp = document.getElementById('inp' + i);
+    const val = normalize(inp.value);
+    const correct = normalize(ex.answer);
+    const isCorrect = val === correct;
+
+    inp.classList.remove('correct', 'wrong');
+    inp.classList.add(isCorrect ? 'correct' : 'wrong');
+
+    const ansRow = document.getElementById('ans' + i);
+    ansRow.style.animationDelay = (i * 0.04) + 's';
+    ansRow.classList.add('visible');
+  });
+
+  notePanel.classList.add('visible');
+  document.getElementById('ans0').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+</script>
+</body>
+</html>
