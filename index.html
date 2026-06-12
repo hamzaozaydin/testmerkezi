@@ -661,7 +661,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const okumaAlisGrid = document.getElementById('okumaAlistirmaGrid');
   if(okumaAlisGrid) okumaAlisGrid.innerHTML = `<div><div class="col-label col-label-free">✅ Ücretsiz</div><div class="col-items"><a class="item-card" href="okuma_alistirmasi_1.html">Okuma Alıştırması 1<span class="badge badge-free">✅ Ücretsiz</span></a><a class="item-card" href="okuma_alistirmasi_2.html">Okuma Alıştırması 2<span class="badge badge-free">✅ Ücretsiz</span></a><a class="item-card" href="okuma_alistirmasi_3.html">Okuma Alıştırması 3<span class="badge badge-free">✅ Ücretsiz</span></a><a class="item-card" href="okuma_alistirmasi_4.html">Okuma Alıştırması 4<span class="badge badge-free">✅ Ücretsiz</span></a><a class="item-card" href="okuma_alistirmasi_5.html">Okuma Alıştırması 5<span class="badge badge-free">✅ Ücretsiz</span></a><a class="item-card" href="tys_okuma_alistirmasi_ucretsiz_1.html">TYS Okuma Alıştırması 1<span class="badge badge-free">✅ Ücretsiz</span></a></div></div><div><div class="col-label col-label-locked">🔒 Giriş Gerekli</div><div class="col-items"><div class="item-card" onclick="openExamLogin('tys_okuma_alistirmasi_1.html')">TYS Okuma Alıştırması 1<span class="badge badge-locked">🔒 Giriş Gerekli</span></div><div class="item-card" onclick="openExamLogin('tys_okuma_alistirmasi_ucretli_2.html')">TYS Okuma Alıştırması 2<span class="badge badge-locked">🔒 Giriş Gerekli</span></div><div class="item-card" onclick="openExamLogin('okuma_alistirmasi_ucretli_1.html')">Okuma Alıştırması 1<span class="badge badge-locked">🔒 Giriş Gerekli</span></div><div class="item-card" onclick="openExamLogin('okuma_alistirmasi_ucretli_2.html')">Okuma Alıştırması 2<span class="badge badge-locked">🔒 Giriş Gerekli</span></div></div></div>`;
   
-  // Dinleme Alıştırmaları (Okuma Alıştırmaları ile aynı yapı - iki sütunlu grid)
+ // Dinleme Alıştırmaları (Okuma Alıştırmaları ile aynı yapı - iki sütunlu grid)
   const dinlemeAlisGrid = document.getElementById('dinlemeAlistirmaGrid');
   if(dinlemeAlisGrid) {
     dinlemeAlisGrid.innerHTML = `
@@ -682,6 +682,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
         <div class="col-items">
           <div class="item-card" onclick="openExamLogin('b2_dinleme_alistirmasi_ucretli_1.html')">Dinleme Alıştırması 1<span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
+          <div class="item-card" onclick="openExamLogin('b2_dinleme_alistirmasi_ucretli_2.html')">Dinleme Alıştırması 2<span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
         </div>
       </div>
     `;
