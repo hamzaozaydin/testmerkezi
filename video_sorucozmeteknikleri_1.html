@@ -580,9 +580,9 @@ function openLoginModal(videoId, title, sectionType) {
   
   let subtitleText = '';
   if (sectionType === 'writing') {
-    subtitleText = `"${title}" için YAZMA bölümü girişi. Sayfa 1 (tam erişim) veya Sayfa 2 (sadece yazma) ile giriş yapabilirsiniz.`;
+    subtitleText = `"${title}" için YAZMA bölümü girişi. Hesabınız ile giriş yapabilirsiniz.`;
   } else {
-    subtitleText = `"${title}" için OKUMA/DİNLEME bölümü girişi. Sadece Sayfa 1 kullanıcıları erişebilir.`;
+    subtitleText = `"${title}" için OKUMA/DİNLEME bölümü girişi. Hesabınız ile giriş yapabilirsiniz.`;
   }
   
   document.getElementById('loginSubtitle').textContent = subtitleText;
