@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kroki Sorusu - Akasya Mahallesi</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh; color: white; overflow-x: hidden;
+}
+.home-btn-wrap { padding: 18px 20px 0; max-width: 1200px; margin: 0 auto; }
+.home-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #1a2332; border: 2px solid #F5C842; border-radius: 40px;
+  padding: 9px 20px; color: #F5C842; font-size: 0.85rem; font-weight: 700;
+  letter-spacing: 0.04em; text-decoration: none; cursor: pointer;
+}
+.home-btn:hover { background: #2a3a4a; transform: translateY(-2px); }
+header { text-align: center; padding: 2rem 1rem 1.2rem; }
+.header-badge {
+  display: inline-block; background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A; font-size: 0.68rem; font-weight: 800; letter-spacing: 3px;
+  text-transform: uppercase; padding: 0.3rem 1.2rem; border-radius: 50px; margin-bottom: 0.9rem;
+}
+header h1 {
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem); font-weight: 800; color: #F5C842;
+  line-height: 1.3; margin-bottom: 10px;
+}
+.header-line { width: 80px; height: 2px; background: linear-gradient(90deg, transparent, #F5C842, transparent); margin: 0 auto 10px; }
+.stars { font-size: 1rem; color: #F5C842; letter-spacing: .4em; margin-bottom: 6px; opacity: .7; }
+.subtitle { font-size: 0.78rem; color: rgba(255,255,255,0.45); letter-spacing: .1em; text-transform: uppercase; }
+.telegram-section { text-align: center; padding: 0.5rem 1rem 1rem; }
+.tg-box {
+  display: inline-flex; align-items: center; gap: 1rem;
+  background: rgba(26,35,50,0.85); border: 1.5px solid rgba(34,158,217,0.3);
+  border-radius: 60px; padding: .75rem 1.5rem .75rem 1rem; flex-wrap: wrap; justify-content: center;
+}
+.tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+.tg-btn {
+  display: inline-flex; align-items: center; gap: .45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0); color: #fff; text-decoration: none;
+  font-weight: 800; font-size: .92rem; padding: .65rem 1.5rem; border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34,158,217,.4);
+}
+main { max-width: 1100px; margin: 0 auto; padding: 20px; display: grid; gap: 20px; }
+.panel { background: rgba(26,35,50,0.9); border: 2px solid rgba(245,200,66,0.3); padding: 16px; border-radius: 8px; }
+.panel h2 { color: #F5C842; margin: 0 0 8px; font-size: 18px; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+button {
+  font: inherit; padding: 10px 16px; border: 2px solid #F5C842; background: #F5C842; color: #0D1B2A;
+  cursor: pointer; border-radius: 6px; font-weight: 700;
+}
+button:hover { transform: translateY(-2px); }
+button.secondary { background: transparent; color: #F5C842; }
+.quiz { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px 18px; margin-top: 12px; }
+.quiz .quiz-row { display: flex; flex-direction: column; gap: 4px; }
+.quiz .quiz-row label { display: flex; align-items: center; gap: 10px; font-weight: 600; color: rgba(255,255,255,0.85); }
+.quiz .quiz-row label > span { flex: 0 0 180px; }
+.quiz .quiz-row select { padding: 6px 8px; border: 2px solid rgba(245,200,66,0.4); background: #1a2332; color: #fff; font: inherit; width: 90px; flex: 0 0 90px; border-radius: 4px; }
+.quiz .feedback { font-size: 13px; font-weight: 700; min-height: 18px; display: flex; gap: 14px; padding-left: 190px; }
+.quiz .feedback .fb-wrong { color: #fca5a5; }
+.quiz .feedback .fb-correct { color: #86efac; }
+.result { margin-top: 12px; font-weight: 700; }
+.legend { font-size: 13px; color: #a0aec0; margin-top: 6px; }
+svg { width: 100%; height: auto; display: block; }
+.building { fill: rgba(13,27,42,0.7); stroke: #F5C842; stroke-width: 3; transition: fill .3s; }
+.building.correct { fill: rgba(187,247,208,0.3); }
+.building.wrong { fill: rgba(254,202,202,0.3); }
+.street { fill: rgba(255,255,255,0.06); stroke: rgba(245,200,66,0.25); stroke-width: 1; stroke-dasharray: 6 6; }
+.street-label { font-size: 13px; font-weight: 700; fill: rgba(255,255,255,0.55); text-anchor: middle; letter-spacing: 1px; }
+.label { font-weight: 800; font-size: 26px; text-anchor: middle; dominant-baseline: central; pointer-events: none; fill: #F5C842; }
+.compass { font-size: 12px; font-weight: 700; fill: rgba(255,255,255,0.5); }
+.entry-dot { fill: #fbbf24; stroke: #fff; stroke-width: 2; }
+.entry-text { font-size: 11px; font-weight: 700; fill: #fbbf24; text-anchor: middle; }
+.course-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 8px; }
+.course-btn {
+  background: rgba(26,35,50,0.9); color: #F5C842; border: 2px solid rgba(245,200,66,0.4);
+  padding: 14px 12px; font-weight: 700; border-radius: 6px;
+}
+.course-btn:hover { background: rgba(245,200,66,0.15); border-color: #F5C842; }
+.course-btn.active { background: rgba(245,200,66,0.2); border-color: #F5C842; box-shadow: 0 0 0 3px rgba(245,200,66,0.3), 0 0 20px rgba(245,200,66,.3); }
+.light-trail { fill: none; stroke: url(#trailGrad); stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; filter: url(#glowFilter); opacity: .95; }
+.light-head { fill: #fff; filter: url(#glowFilter); }
+@keyframes pulseHead { 0%,100% { r: 7; opacity: 1; } 50% { r: 11; opacity: .85; } }
+details { margin-top: 10px; }
+summary { cursor: pointer; font-weight: 700; color: #F5C842; }
+.text-block {
+  white-space: pre-wrap; background: rgba(13,27,42,0.8); border-left: 4px solid #F5C842;
+  padding: 12px 14px; margin-top: 10px; font-size: 14px; color: rgba(255,255,255,0.85); border-radius: 4px;
+}
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+    </svg>
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ Kroki Alıştırması ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle">Kroki Sorusu • Akasya Mahallesi</p>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">Kanala Katıl</a>
+  </div>
+</div>
+
+<main>
+  <section class="panel">
+    <div class="controls">
+      <button id="play">▶ Dinleme</button>
+      <button id="pause" class="secondary">⏸ Duraklat / Devam</button>
+      <span class="legend">Metni sesli dinleyin veya aşağıdan okuyun.</span>
+    </div>
+    <details>
+      <summary>Dinleme Metnini Oku</summary>
+      <div class="text-block" id="textBlock"></div>
+    </details>
+  </section>
+
+  <section class="panel">
+    <h2>Akasya Mahallesi Krokisi</h2>
+    <svg id="map" viewBox="0 0 900 640" role="img" aria-label="Akasya Mahallesi krokisi">
+      <defs>
+        <filter id="glowFilter" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <linearGradient id="trailGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#fbbf24"/>
+          <stop offset="50%" stop-color="#fde68a"/>
+          <stop offset="100%" stop-color="#fff7cc"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Outer frame -->
+      <rect x="10" y="10" width="880" height="620" fill="none" stroke="#F5C842" stroke-width="3"/>
+
+      <!-- Streets -->
+      <!-- Martı Sokağı (dikey, sol) -->
+      <rect class="street" x="180" y="20" width="40" height="520"/>
+      <!-- Çınar Sokak (dikey, sağ) -->
+      <rect class="street" x="640" y="20" width="40" height="520"/>
+      <!-- Paralel yol (yatay üst) -->
+      <rect class="street" x="180" y="130" width="700" height="40"/>
+      <!-- Liman Caddesi (yatay alt) -->
+      <rect class="street" x="20" y="490" width="860" height="50" fill="rgba(245,200,66,0.08)"/>
+
+      <!-- Street labels -->
+      <text class="street-label" x="200" y="330" transform="rotate(-90 200 330)">MARTI SOKAĞI</text>
+      <text class="street-label" x="660" y="330" transform="rotate(-90 660 330)">ÇINAR SOKAK</text>
+      <text class="street-label" x="430" y="156" style="font-size:13px;">PARALEL YOL</text>
+      <text class="street-label" x="450" y="522" style="font-size:15px;fill:#F5C842;opacity:.7">LİMAN CADDESİ</text>
+
+      <!-- Compass -->
+      <text class="compass" x="30" y="522">◀ BATI</text>
+      <text class="compass" x="870" y="522" text-anchor="end">DOĞU ▶</text>
+
+      <!-- Buildings: doğu side of Martı Sokak (kuzey-paralelin üzerinde) -->
+      <rect class="building" data-room="B" x="240" y="40"  width="130" height="80"/>
+      <text class="label" x="305" y="80">B</text>
+
+      <!-- Martı doğusu: D ve F (Liman üstü, paralel altı) -->
+      <rect class="building" data-room="D" x="240" y="200" width="130" height="100"/>
+      <text class="label" x="305" y="250">D</text>
+
+      <rect class="building" data-room="F" x="240" y="370" width="130" height="110"/>
+      <text class="label" x="305" y="425">F</text>
+
+      <!-- Orta: K (Çınar batısı) -->
+      <rect class="building" data-room="K" x="470" y="370" width="130" height="110"/>
+      <text class="label" x="535" y="425">K</text>
+
+      <!-- Çınar doğusu -->
+      <rect class="building" data-room="E" x="700" y="40"  width="150" height="80"/>
+      <text class="label" x="775" y="80">E</text>
+
+      <rect class="building" data-room="A" x="700" y="185" width="150" height="80"/>
+      <text class="label" x="775" y="225">A</text>
+
+      <rect class="building" data-room="C" x="700" y="280" width="150" height="80"/>
+      <text class="label" x="775" y="320">C</text>
+
+      <rect class="building" data-room="G" x="700" y="380" width="150" height="100"/>
+      <text class="label" x="775" y="430">G</text>
+
+      <!-- Liman güneyi -->
+      <rect class="building" data-room="H" x="620" y="560" width="170" height="55"/>
+      <text class="label" x="705" y="588">H</text>
+
+      <!-- Meydan -->
+      <rect class="building" x="120" y="560" width="140" height="55" style="fill:rgba(251,191,36,0.15);stroke:#fbbf24;"/>
+      <text class="label" x="190" y="588" style="fill:#fbbf24;font-size:18px;">MEYDAN</text>
+
+      <!-- Başlangıç noktası -->
+      <circle class="entry-dot" cx="190" cy="560" r="8"/>
+
+      <!-- Animated light path layer -->
+      <g id="lightLayer"></g>
+    </svg>
+  </section>
+
+  <section class="panel">
+    <h2>Hangi mekân hangi harfte?</h2>
+    <p class="legend">Her mekân için doğru harfi seçin, sonra <b>Kontrol Et</b>'e basın.</p>
+    <div class="quiz" id="quiz"></div>
+    <div class="controls" style="margin-top: 14px">
+      <button id="check">✓ Kontrol Et</button>
+      <button id="reset" class="secondary">↺ Sıfırla</button>
+      <button id="reveal" class="secondary">👁 Cevap Anahtarını Göster</button>
+    </div>
+    <p class="result" id="result"></p>
+  </section>
+
+  <section class="panel">
+    <h2>Yolu Göster (Işıklı Animasyon)</h2>
+    <p class="legend">Bir mekâna basın; Meydan'dan o binaya kadar sokakları takip eden ışıklı yol çizilsin (çapraz gitmez, sağa/sola döner).</p>
+    <div class="course-buttons" id="courseButtons"></div>
+  </section>
+</main>
+
+<script>
+// ==================== METİN ====================
+const TEXT = `Merhaba sevgili dinleyiciler, Akasya Mahallesi'ne yapacağımız sanal tura hoş geldiniz. Elinizdeki krokide mahallenin tam ortasından doğu-batı ekseninde geçen geniş bir cadde göreceksiniz: Liman Caddesi. Bu cadde mahallemizin ana damarıdır.
+
+Turumuza caddenin en batı ucundaki büyük meydandan başlıyoruz. Meydanın hemen batısındaki yoldan kuzeye gittiğinizde sağınızdaki ilk bina, vatandaşların işlem yaptığı Merkez Bankası binasıdır. Bankadan çıkıp Martı sokağı boyunca kuzeye doğru ilerlediğinizde, karşınıza çıkan ilk kavşaktan doğuya, yani paralel yola sapın. Sokağın hemen girişinde, solunuzda kalan ilk yer Gençlik Kütüphanesi'dir; burası öğrencilerin uğrak noktasıdır.
+
+Kütüphaneden çıkıp paralel yol boyunca doğuya doğru yürümeye devam edin. Yolun en sonuna geldiğinizde, sokağın bittiği köşede solunuzda mahalle sakinlerinin taze ürünler aldığı Organik Pazar yer almaktadır. Organik pazara varmadan, Çınar sokağından güneye doğru ilerlerseniz, yolun sol tarafında, iki binanın arasında gizlenmiş, hafta sonları çocukların eğlendiği Masal Parkı'nı göreceksiniz.
+
+Parkın kuzeyinde ise mahallenin sağlık ihtiyaçlarını karşılayan Şifa Hastanesi yer almaktadır. Hastaneden çıkıp yüzünüzü güneye dönerek aşağıya doğru inmeye devam edin. Bu sokakta ilerlerken sağ tarafınızda, sokağın sonunda Akasya Mahallesi sakinlerinin spor yaptığı Kapalı Yüzme Havuzu binasını göreceksiniz.
+
+Hiçbir yere sapmadan Çınar Sokağı'nın sonuna kadar indiğinizde, yeniden ana cadde olan Liman Caddesi ile kesişeceksiniz. Bu kesişim noktasının tam güneyinde mahallemizin en lezzetli yemeklerinin piştiği Tarihî Restoran bulunmaktadır. Turumuz burada sona ermiştir.`;
+document.getElementById('textBlock').textContent = TEXT;
+
+// ==================== TTS ====================
+// Tarayıcı TTS devre dışı — GitHub'dan MP3 çalınıyor
+const audioPlayer = new Audio('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/b2_dinleme_alistirmasi_ucretli_6.mp3');
+audioPlayer.preload = 'auto';
+
+// ==================== CEVAP ANAHTARI ====================
+// B = Gençlik Kütüphanesi
+// F = Merkez Bankası
+// A = Şifa Hastanesi
+// C = Masal Parkı
+// H = Tarihî Restoran
+// (Bonus: E = Organik Pazar, G = Kapalı Yüzme Havuzu)
+
+// ==================== YOL TANIMLARI ====================
+// Sokak merkez çizgileri:
+//  Liman Caddesi y = 515
+//  Martı Sokağı  x = 200
+//  Çınar Sokak   x = 660
+//  Paralel yol   y = 150
+// Başlangıç (Meydan): (190, 560)
+const START = { x: 190, y: 560 };
+
+const pathPoints = {
+  // Merkez Bankası (F): Meydan → Martı kuzeye düz çık → F (doğuya dön)
+  'F': [START, {x:200,y:560}, {x:200,y:425}, {x:305,y:425}],
+
+  // Gençlik Kütüphanesi (B): Martı kuzeye → paralel doğuya sap → B solda (kuzeyde)
+  'B': [START, {x:200,y:560}, {x:200,y:150}, {x:305,y:150}, {x:305,y:80}],
+
+  // Organik Pazar (E): B'den başla → paralel doğu → Çınar kavşağı → kuzeye E
+  'E': [{x:305,y:80}, {x:305,y:150}, {x:660,y:150}, {x:775,y:150}, {x:775,y:80}],
+
+  // Masal Parkı (C): paralel → Çınar güneye → C (sol = doğu)
+  'C': [START, {x:200,y:560}, {x:200,y:150}, {x:660,y:150}, {x:660,y:320}, {x:775,y:320}],
+
+  // Şifa Hastanesi (A): C'den başla → Çınar'a → kuzeye → A'ya doğuya dön
+  'A': [{x:775,y:320}, {x:660,y:320}, {x:660,y:225}, {x:775,y:225}],
+
+  // Kapalı Yüzme Havuzu (K): A'dan başla → Çınar'a → güneye → batıya K'ye
+  'K': [{x:775,y:225}, {x:660,y:225}, {x:660,y:425}, {x:535,y:425}],
+
+  // Tarihî Restoran (H): Meydan → Martı kuzey → paralel doğu → Çınar güney → Liman → H
+  'H': [START, {x:200,y:560}, {x:200,y:150}, {x:660,y:150}, {x:660,y:515}, {x:660,y:560}, {x:705,y:588}]
+};
+
+const placeLabels = {
+  'Merkez Bankası': 'F',
+  'Gençlik Kütüphanesi': 'B',
+  'Organik Pazar': 'E',
+  'Masal Parkı': 'C',
+  'Şifa Hastanesi': 'A',
+  'Kapalı Yüzme Havuzu': 'K',
+  'Tarihî Restoran': 'H'
+};
+
+const courseButtons = document.getElementById('courseButtons');
+const lightLayer = document.getElementById('lightLayer');
+let animationFrame = null;
+
+function buildCourseButtons() {
+  Object.keys(placeLabels).forEach(name => {
+    const btn = document.createElement('button');
+    btn.className = 'course-btn';
+    btn.textContent = name;            // sadece yer adı, harf yok
+    btn.dataset.letter = placeLabels[name];
+    btn.addEventListener('click', () => showPath(placeLabels[name]));
+    courseButtons.appendChild(btn);
+  });
+}
+
+function polylineLength(points) {
+  let len = 0;
+  for (let i = 1; i < points.length; i++) {
+    len += Math.hypot(points[i].x - points[i-1].x, points[i].y - points[i-1].y);
+  }
+  return len;
+}
+function pointAtDistance(points, dist) {
+  let acc = 0;
+  for (let i = 1; i < points.length; i++) {
+    const seg = Math.hypot(points[i].x - points[i-1].x, points[i].y - points[i-1].y);
+    if (acc + seg >= dist) {
+      const t = (dist - acc) / seg;
+      return { x: points[i-1].x + (points[i].x - points[i-1].x) * t,
+               y: points[i-1].y + (points[i].y - points[i-1].y) * t };
+    }
+    acc += seg;
+  }
+  return points[points.length - 1];
+}
+
+function showPath(letter) {
+  document.querySelectorAll('.course-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`.course-btn[data-letter="${letter}"]`);
+  if (btn) btn.classList.add('active');
+
+  const pts = pathPoints[letter];
+  if (!pts) return;
+  if (animationFrame) cancelAnimationFrame(animationFrame);
+  lightLayer.innerHTML = '';
+
+  const d = 'M ' + pts.map(p => `${p.x} ${p.y}`).join(' L ');
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', d);
+  path.setAttribute('class', 'light-trail');
+  const length = polylineLength(pts);
+  path.style.strokeDasharray = length;
+  path.style.strokeDashoffset = length;
+  lightLayer.appendChild(path);
+
+  const head = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  head.setAttribute('cx', pts[0].x); head.setAttribute('cy', pts[0].y);
+  head.setAttribute('r', '7'); head.setAttribute('class', 'light-head');
+  lightLayer.appendChild(head);
+
+  let startTime = null;
+  const duration = Math.max(1400, length * 3);
+  function animate(time) {
+    if (!startTime) startTime = time;
+    const progress = Math.min((time - startTime) / duration, 1);
+    path.style.strokeDashoffset = length * (1 - progress);
+    const pt = pointAtDistance(pts, length * progress);
+    head.setAttribute('cx', pt.x); head.setAttribute('cy', pt.y);
+    if (progress < 1) animationFrame = requestAnimationFrame(animate);
+    else head.style.animation = 'pulseHead 0.8s ease-in-out 3';
+  }
+  animationFrame = requestAnimationFrame(animate);
+}
+
+// ==================== QUIZ ====================
+const quizData = [
+  { place: 'Gençlik Kütüphanesi', letter: 'B' },
+  { place: 'Tarihî Restoran',     letter: 'H' },
+  { place: 'Şifa Hastanesi',      letter: 'A' },
+  { place: 'Masal Parkı',         letter: 'C' },
+  { place: 'Merkez Bankası',      letter: 'F' }
+];
+
+const ALL_LETTERS = ['A','B','C','D','E','F','G','H','K'];
+const quizContainer = document.getElementById('quiz');
+const resultEl = document.getElementById('result');
+
+function buildQuiz() {
+  quizContainer.innerHTML = '';
+  quizData.forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'quiz-row';
+    const label = document.createElement('label');
+    const span = document.createElement('span');
+    span.textContent = item.place + ':';
+    const select = document.createElement('select');
+    select.dataset.place = item.place;
+    select.dataset.answer = item.letter;
+    const optE = document.createElement('option'); optE.value=''; optE.textContent='—';
+    select.appendChild(optE);
+    ALL_LETTERS.forEach(r => {
+      const opt = document.createElement('option');
+      opt.value = r; opt.textContent = r;
+      select.appendChild(opt);
+    });
+    label.appendChild(span); label.appendChild(select);
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback';
+    feedback.dataset.place = item.place;
+    row.appendChild(label); row.appendChild(feedback);
+    quizContainer.appendChild(row);
+  });
+}
+
+function checkQuiz() {
+  const selects = quizContainer.querySelectorAll('select');
+  let correct = 0;
+  selects.forEach(sel => {
+    const feedback = quizContainer.querySelector(`.feedback[data-place="${sel.dataset.place}"]`);
+    if (feedback) feedback.innerHTML = '';
+    if (!sel.value) {
+      sel.style.borderColor = 'rgba(245,200,66,0.4)';
+      sel.style.background = '#1a2332';
+      sel.style.color = '#fff';
+    } else if (sel.value === sel.dataset.answer) {
+      correct++;
+      sel.style.borderColor = '#16a34a';
+      sel.style.background = 'rgba(22,163,74,0.25)';
+      sel.style.color = '#86efac';
+    } else {
+      sel.style.borderColor = '#dc2626';
+      sel.style.background = 'rgba(220,38,38,0.25)';
+      sel.style.color = '#fca5a5';
+      if (feedback) {
+        feedback.innerHTML = `<span class="fb-wrong">Sizin cevabınız: ${sel.value}</span><span class="fb-correct">Doğru cevap: ${sel.dataset.answer}</span>`;
+      }
+    }
+  });
+  if (correct === selects.length) {
+    resultEl.textContent = '✅ Tebrikler! Tüm cevaplar doğru! 🎉';
+    resultEl.style.color = '#16a34a';
+  } else {
+    resultEl.textContent = `❌ ${correct}/${selects.length} doğru. Tekrar deneyin!`;
+    resultEl.style.color = '#dc2626';
+  }
+  document.querySelectorAll('.building').forEach(b => {
+    b.classList.remove('correct','wrong');
+    const roomLetter = b.dataset.room;
+    const sel = Array.from(selects).find(s => s.dataset.answer === roomLetter);
+    if (sel) b.classList.add(sel.value === roomLetter ? 'correct' : 'wrong');
+  });
+}
+
+function resetQuiz() {
+  quizContainer.querySelectorAll('select').forEach(sel => {
+    sel.value = '';
+    sel.style.borderColor = 'rgba(245,200,66,0.4)';
+    sel.style.background = '#1a2332';
+    sel.style.color = '#fff';
+  });
+  quizContainer.querySelectorAll('.feedback').forEach(fb => fb.innerHTML = '');
+  document.querySelectorAll('.building').forEach(b => b.classList.remove('correct','wrong'));
+  resultEl.textContent = '';
+}
+
+function revealAnswers() {
+  quizContainer.querySelectorAll('select').forEach(sel => {
+    sel.value = sel.dataset.answer;
+    sel.style.borderColor = '#16a34a';
+    sel.style.background = 'rgba(22,163,74,0.2)';
+    sel.style.color = '#86efac';
+  });
+  quizContainer.querySelectorAll('.feedback').forEach(fb => fb.innerHTML = '');
+  document.querySelectorAll('.building').forEach(b => {
+    b.classList.remove('wrong');
+    if (['B','F','A','C','H'].includes(b.dataset.room)) b.classList.add('correct');
+  });
+  resultEl.textContent = '👁 Cevap anahtarı gösteriliyor.';
+  resultEl.style.color = '#F5C842';
+}
+
+// ==================== INIT ====================
+document.addEventListener('DOMContentLoaded', () => {
+  buildCourseButtons();
+  buildQuiz();
+  document.getElementById('check').addEventListener('click', checkQuiz);
+  document.getElementById('reset').addEventListener('click', resetQuiz);
+  document.getElementById('reveal').addEventListener('click', revealAnswers);
+
+  const playBtn = document.getElementById('play');
+  const pauseBtn = document.getElementById('pause');
+
+  playBtn.addEventListener('click', () => {
+    if (audioPlayer.paused) {
+      audioPlayer.play();
+    }
+  });
+  pauseBtn.addEventListener('click', () => {
+    if (!audioPlayer.paused) {
+      audioPlayer.pause();
+    } else {
+      audioPlayer.play();
+    }
+  });
+});
+</script>
+</body>
+</html>
