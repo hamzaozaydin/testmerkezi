@@ -136,6 +136,7 @@ summary { cursor: pointer; font-weight: 700; color: #F5C842; }
       <button id="pause" class="secondary">⏸ Duraklat / Devam</button>
       <span class="legend">Metni sesli dinleyin veya aşağıdan okuyun.</span>
     </div>
+    <audio id="audioPlayer" src="https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/b2_dinleme_alistirmasi_ucretli_7.mp3" preload="none"></audio>
     <details>
       <summary>Dinleme Metnini Oku</summary>
       <div class="text-block" id="textBlock"></div>
@@ -331,14 +332,6 @@ Kampüs krokisinin en kuzeybatı köşesinde, Açık Spor Kompleksiyle karşı k
 
 Kampüs turumuz burada sona ermiştir, katılımınız için teşekkür ederiz.`;
 document.getElementById('textBlock').textContent = TEXT;
-
-// ==================== TTS ====================
-const synth = window.speechSynthesis;
-let utter = null;
-function pickTrVoice() {
-  const vs = synth.getVoices();
-  return vs.find(v => /tr(-|_)?TR/i.test(v.lang)) || vs.find(v => /^tr/i.test(v.lang)) || null;
-}
 
 // ==================== CEVAP ANAHTARI ====================
 // A = Yabancı Diller Yüksekokulu   (kuzeybatı köşe)
@@ -570,7 +563,6 @@ function revealAnswers() {
 
 // ==================== INIT ====================
 document.addEventListener('DOMContentLoaded', () => {
-  if (synth) { synth.getVoices(); synth.onvoiceschanged = () => synth.getVoices(); }
   buildCourseButtons();
   buildQuiz();
   document.getElementById('check').addEventListener('click', checkQuiz);
@@ -579,24 +571,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const playBtn = document.getElementById('play');
   const pauseBtn = document.getElementById('pause');
-  function speak() {
-    if (!synth) return;
-    if (utter) synth.cancel();
-    utter = new SpeechSynthesisUtterance(TEXT);
-    const v = pickTrVoice(); if (v) utter.voice = v;
-    utter.lang = 'tr-TR'; utter.rate = 0.9;
-    synth.speak(utter);
-  }
+  const audioPlayer = document.getElementById('audioPlayer');
+
   playBtn.addEventListener('click', () => {
-    if (synth && synth.paused) synth.resume(); else speak();
+    audioPlayer.play();
   });
   pauseBtn.addEventListener('click', () => {
-    if (!synth) return;
-    if (synth.speaking && !synth.paused) synth.pause();
-    else if (synth.paused) synth.resume();
+    if (!audioPlayer.paused) audioPlayer.pause();
+    else audioPlayer.play();
   });
 });
-if (synth) setTimeout(() => synth.getVoices(), 100);
 </script>
 </body>
 </html>
