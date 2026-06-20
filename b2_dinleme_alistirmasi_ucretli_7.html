@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<script>
+  if (!sessionStorage.getItem('hamzaUser')) {
+    alert('Bu sayfa sadece üyeler içindir. Lütfen giriş yapın.');
+    window.location.replace('index.html');
+  }
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kroki Sorusu - Kuzey Kampüsü</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh; color: white; overflow-x: hidden;
+}
+.home-btn-wrap { padding: 18px 20px 0; max-width: 1200px; margin: 0 auto; }
+.home-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #1a2332; border: 2px solid #F5C842; border-radius: 40px;
+  padding: 9px 20px; color: #F5C842; font-size: 0.85rem; font-weight: 700;
+  letter-spacing: 0.04em; text-decoration: none; cursor: pointer;
+}
+.home-btn:hover { background: #2a3a4a; transform: translateY(-2px); }
+header { text-align: center; padding: 2rem 1rem 1.2rem; }
+.header-badge {
+  display: inline-block; background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A; font-size: 0.68rem; font-weight: 800; letter-spacing: 3px;
+  text-transform: uppercase; padding: 0.3rem 1.2rem; border-radius: 50px; margin-bottom: 0.9rem;
+}
+header h1 {
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem); font-weight: 800; color: #F5C842;
+  line-height: 1.3; margin-bottom: 10px;
+}
+.header-line { width: 80px; height: 2px; background: linear-gradient(90deg, transparent, #F5C842, transparent); margin: 0 auto 10px; }
+.stars { font-size: 1rem; color: #F5C842; letter-spacing: .4em; margin-bottom: 6px; opacity: .7; }
+.subtitle { font-size: 0.78rem; color: rgba(255,255,255,0.45); letter-spacing: .1em; text-transform: uppercase; }
+.telegram-section { text-align: center; padding: 0.5rem 1rem 1rem; }
+.tg-box {
+  display: inline-flex; align-items: center; gap: 1rem;
+  background: rgba(26,35,50,0.85); border: 1.5px solid rgba(34,158,217,0.3);
+  border-radius: 60px; padding: .75rem 1.5rem .75rem 1rem; flex-wrap: wrap; justify-content: center;
+}
+.tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+.tg-btn {
+  display: inline-flex; align-items: center; gap: .45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0); color: #fff; text-decoration: none;
+  font-weight: 800; font-size: .92rem; padding: .65rem 1.5rem; border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34,158,217,.4);
+}
+main { max-width: 1100px; margin: 0 auto; padding: 20px; display: grid; gap: 20px; }
+.panel { background: rgba(26,35,50,0.9); border: 2px solid rgba(245,200,66,0.3); padding: 16px; border-radius: 8px; }
+.panel h2 { color: #F5C842; margin: 0 0 8px; font-size: 18px; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+button {
+  font: inherit; padding: 10px 16px; border: 2px solid #F5C842; background: #F5C842; color: #0D1B2A;
+  cursor: pointer; border-radius: 6px; font-weight: 700;
+}
+button:hover { transform: translateY(-2px); }
+button.secondary { background: transparent; color: #F5C842; }
+.quiz { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px 18px; margin-top: 12px; }
+.quiz .quiz-row { display: flex; flex-direction: column; gap: 4px; }
+.quiz .quiz-row label { display: flex; align-items: center; gap: 10px; font-weight: 600; color: rgba(255,255,255,0.85); }
+.quiz .quiz-row label > span { flex: 0 0 220px; }
+.quiz .quiz-row select { padding: 6px 8px; border: 2px solid rgba(245,200,66,0.4); background: #1a2332; color: #fff; font: inherit; width: 90px; flex: 0 0 90px; border-radius: 4px; }
+.quiz .feedback { font-size: 13px; font-weight: 700; min-height: 18px; display: flex; gap: 14px; padding-left: 230px; }
+.quiz .feedback .fb-wrong { color: #fca5a5; }
+.quiz .feedback .fb-correct { color: #86efac; }
+.result { margin-top: 12px; font-weight: 700; }
+.legend { font-size: 13px; color: #a0aec0; margin-top: 6px; }
+svg { width: 100%; height: auto; display: block; max-height: 70vh; }
+.building { fill: rgba(13,27,42,0.7); stroke: #F5C842; stroke-width: 3; transition: fill .3s; }
+.building.correct { fill: rgba(187,247,208,0.3); }
+.building.wrong { fill: rgba(254,202,202,0.3); }
+.street { fill: rgba(255,255,255,0.06); stroke: rgba(245,200,66,0.25); stroke-width: 1; stroke-dasharray: 6 6; }
+.street-main { fill: rgba(245,200,66,0.06); stroke: rgba(245,200,66,0.35); stroke-width: 1; stroke-dasharray: 8 5; }
+.street-label { font-size: 13px; font-weight: 700; fill: rgba(255,255,255,0.55); text-anchor: middle; letter-spacing: 1px; }
+.label { font-weight: 800; font-size: 28px; text-anchor: middle; dominant-baseline: central; pointer-events: none; fill: #F5C842; }
+.entry-dot { fill: #fbbf24; stroke: #fff; stroke-width: 2; }
+.entry-text { font-size: 11px; font-weight: 700; fill: #fbbf24; text-anchor: middle; }
+.course-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 8px; }
+.course-btn {
+  background: rgba(26,35,50,0.9); color: #F5C842; border: 2px solid rgba(245,200,66,0.4);
+  padding: 14px 12px; font-weight: 700; border-radius: 6px;
+}
+.course-btn:hover { background: rgba(245,200,66,0.15); border-color: #F5C842; }
+.course-btn.active { background: rgba(245,200,66,0.2); border-color: #F5C842; box-shadow: 0 0 0 3px rgba(245,200,66,0.3), 0 0 20px rgba(245,200,66,.3); }
+.light-trail { fill: none; stroke: url(#trailGrad); stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; filter: url(#glowFilter); opacity: .95; }
+.light-head { fill: #fff; filter: url(#glowFilter); }
+@keyframes pulseHead { 0%,100% { r: 7; opacity: 1; } 50% { r: 11; opacity: .85; } }
+details { margin-top: 10px; }
+summary { cursor: pointer; font-weight: 700; color: #F5C842; }
+.text-block {
+  white-space: pre-wrap; background: rgba(13,27,42,0.8); border-left: 4px solid #F5C842;
+  padding: 12px 14px; margin-top: 10px; font-size: 14px; color: rgba(255,255,255,0.85); border-radius: 4px;
+}
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+    </svg>
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ Kroki Alıştırması ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle">Kroki Sorusu • Kuzey Kampüsü</p>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">Kanala Katıl</a>
+  </div>
+</div>
+
+<main>
+  <section class="panel">
+    <div class="controls">
+      <button id="play">▶ Dinleme</button>
+      <button id="pause" class="secondary">⏸ Duraklat / Devam</button>
+      <span class="legend">Metni sesli dinleyin veya aşağıdan okuyun.</span>
+    </div>
+    <details>
+      <summary>Dinleme Metnini Oku</summary>
+      <div class="text-block" id="textBlock"></div>
+    </details>
+  </section>
+
+  <section class="panel">
+    <h2>Kuzey Kampüsü Krokisi</h2>
+    <!--
+      SVG LAYOUT (900×680):
+      ─────────────────────────────────────────────────────
+      Koordinat sistemi: (0,0) sol üst
+
+      YOLLAR:
+        Ana dikey yol (merkez):  x=420..460, y=540..170  (GİRİŞ→KAMPÜS YOLU)
+        İkinci dikey yol (batı): x=200..240, y=170..80   (KAMPÜS YOLU kuzeyine)
+        KAMPÜS YOLU (yatay üst): y=170..210, x=20..880
+        SOKAK (yatay orta):      y=370..410, x=200..880
+
+      BİNALAR:
+        A: sol üst  – Yabancı Diller Yüksekokulu  (x=30..190,  y=40..160)
+        B: orta üst – Açık Spor Kompleksi          (x=270..410, y=40..160)
+        C: sol orta – Öğrenci İşleri               (x=30..390,  y=230..360)
+        D: sağ orta üst – Merkez Kütüphane         (x=480..870, y=230..360) — sokağın hemen kuzeyinde sağda
+           DÜZELTME resme göre: D sokağın güneyinde sağda (üst bina)
+        E: sağ – Merkez Yemekhane                  (x=530..870, y=230..355) — kampüs ile sokak arası
+        F: sağ alt – Sağlık Merkezi                (x=480..870, y=420..530)
+        GİRİŞ KAPISI: y=590..640, x=300..580
+      ─────────────────────────────────────────────────────
+    -->
+    <!--
+      GÜNCEL LAYOUT (900×720):
+      ════════════════════════════════════════════════════
+      YOLLAR:
+        Ana dikey yol (L-şekli):
+          - Giriş kapısından SOKAKa kadar: x=418..462, y=580..370
+          - SOKAK'ta doğuya sapar: y=370..410, x=418..760
+          - 760'dan kuzeye döner: x=740..780, y=410..214
+          - KAMPÜS YOLU'na bağlanır
+        İkinci dikey yol (batı): x=198..242, y=170..20
+        KAMPÜS YOLU (yatay): y=170..214, x=20..880
+        SOKAK (yatay): y=370..410, x=198..880
+
+      BİNALAR (sol kenarları = x, üst kenarları = y):
+        A: x=30,  y=30,  w=155, h=130  → Yabancı Diller
+        B: x=270, y=30,  w=135, h=130  → Açık Spor
+        C: x=30,  y=228, w=375, h=130  → Öğrenci İşleri
+        E: x=800, y=228, w=80,  h=130  → Merkez Yemekhane (EN DOĞUDA, KARE ~80x80 aslında 130 yükseklik ama 80 genişlik)
+           Düzeltme: kare için w=h=130 → x=750, y=228, w=130, h=130
+        D: x=475, y=418, w=260, h=90   → Merkez Kütüphane
+        F: x=475, y=528, w=260, h=80   → Sağlık Merkezi (D ile hizalı, aralarında 20px boşluk)
+        GİRİŞ KAPISI: x=300, y=640, w=250, h=55
+      ════════════════════════════════════════════════════
+
+      DÜZELTMELER:
+        1) C, D, F sol kenarları hizalı: x=30 (C), D ve F x=475 (ana yol sağında)
+           → C zaten solda, D ve F sağda; "hiza" = C'nin sağ kenarı ≈ D/F sol kenarına yakın değil
+           Yeniden okuma: "C, D ve F nin hizasında olsun" = C'nin sol kenarı D'nin sol kenarıyla ve F'nin sol kenarıyla aynı dikey çizgide olsun
+           Yani C, D, F hepsi x=30'dan başlasın. Ama C sol, D ve F sağda... 
+           Yeniden: resme bakarak → C solda büyük kare, D ve F sağda iki küçük bina.
+           "Hizalı" = C'nin üst kenarı D'nin üst kenarıyla aynı y'de. Yani C, D, F aynı y=418'de başlasın.
+           SOKAK y=370..410 → altında D y=418, F y=518. C de y=418'den başlasın (sokak altı).
+           Bu durumda C daha aşağıya iner. Ama o zaman C kampüs-sokak arasında olmaz...
+           EN MANTIKLI OKUMA: C, D, F üçü aynı yatay şeride (sokak ile giriş kapısı arası).
+           C sol, D ortada, F sağda → yan yana dizili. Ya da C solda geniş, D ve F sağda üst-alt.
+           Resimde: C büyük sol kare, D sağda üst dikdörtgen, F sağda alt dikdörtgen → zaten bu var.
+           "Hizasında" = C'nin üst kenarı = D'nin üst kenarı = sokağın hemen altı. ✓
+        2) Kampüs yolu etiketi yolun İÇİNDE (y=192)
+        3) GİRİŞ KAPISI ile F arası boşluk: F y=528+80=608, GİRİŞ y=628 → 20px boşluk ✓
+        4) Ana yol L-şekli: x=440 düz gider → SOKAK y=390'da doğuya → x=760'a → kuzeye Kampüs'e
+        5) E en doğuda, kare (~130×130)
+    -->
+    <svg id="map" viewBox="0 0 900 720" role="img" aria-label="Kuzey Kampüsü krokisi">
+      <defs>
+        <filter id="glowFilter" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <linearGradient id="trailGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#fbbf24"/>
+          <stop offset="50%" stop-color="#fde68a"/>
+          <stop offset="100%" stop-color="#fff7cc"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Outer frame -->
+      <rect x="10" y="10" width="880" height="700" fill="none" stroke="#F5C842" stroke-width="3"/>
+
+      <!-- === STREETS === -->
+
+      <!-- Ana dikey yol parça 1: GİRİŞ → SOKAK (düz kuzey) x=418..462 -->
+      <rect class="street-main" x="418" y="370" width="44" height="260"/>
+
+      <!-- Ana yol parça 2: SOKAK'ta doğuya sap (yatay) x=418..762, y=370..410 -->
+      <!-- (SOKAK rect ile birleşecek, ayrıca göstermiyoruz) -->
+
+      <!-- Ana dikey yol parça 3: x=690..734, y=170..410 (E'nin hemen batısından KAMPÜS YOLUNA) -->
+      <rect class="street-main" x="690" y="170" width="44" height="244"/>
+
+      <!-- İkinci dikey yol (batı, KAMPÜS YOLU kuzeyine) -->
+      <rect class="street" x="198" y="20" width="44" height="154"/>
+
+      <!-- KAMPÜS YOLU (yatay üst) -->
+      <rect class="street-main" x="20" y="170" width="860" height="44"/>
+
+      <!-- SOKAK (yatay orta): x=198 → sağ yol merkezi x=712 -->
+      <rect class="street" x="198" y="370" width="536" height="40"/>
+
+      <!-- Street labels: Kampüs yolu ETİKETİ YOLUN İÇİNDE -->
+      <text class="street-label" x="450" y="197" style="font-size:13px;fill:#F5C842;opacity:.9;">KAMPÜS YOLU</text>
+      <text class="street-label" x="560" y="397" style="font-size:13px;">SOKAK</text>
+
+      <!-- Compass -->
+      <text class="street-label" x="40"  y="35" style="font-size:11px;text-anchor:start;">K ▲</text>
+      <text class="street-label" x="860" y="35" style="font-size:11px;text-anchor:end;">▲ K</text>
+
+      <!-- === BİNALAR === -->
+
+      <!-- A: Yabancı Diller Yüksekokulu – kampüs yolunun kuzeyinde, batıda (sol üst) -->
+      <rect class="building" data-room="A" x="30"  y="30"  width="155" height="130"/>
+      <text class="label" x="107" y="95">A</text>
+
+      <!-- B: Açık Spor Kompleksi – kampüs yolunun kuzeyinde, ortada -->
+      <rect class="building" data-room="B" x="270" y="30"  width="135" height="130"/>
+      <text class="label" x="337" y="95">B</text>
+
+      <!-- C: Öğrenci İşleri – ana yolun BATISI, SOKAK altında, D ile HİZALI (aynı y) -->
+      <rect class="building" data-room="C" x="30"  y="418" width="375" height="130"/>
+      <text class="label" x="217" y="483">C</text>
+
+      <!-- E: Merkez Yemekhane – EN DOĞUDA, kare (130×130), sokak ile kampüs yolu arası -->
+      <rect class="building" data-room="E" x="750" y="228" width="130" height="130"/>
+      <text class="label" x="815" y="293">E</text>
+
+      <!-- D: Merkez Kütüphane – SOKAĞIN GÜNEYINDE, C ile HİZALI (y=418), ana yolun sağı -->
+      <rect class="building" data-room="D" x="475" y="418" width="250" height="110"/>
+      <text class="label" x="600" y="473">D</text>
+
+      <!-- F: Sağlık Merkezi – D'nin altında, C/D ile hizalı, GİRİŞ ile arası boşluklu -->
+      <!-- D: y=418+110=528, F: y=548 (20px boşluk), h=80 → F biter y=628 -->
+      <!-- GİRİŞ KAPISI y=650 → 22px boşluk ✓ -->
+      <rect class="building" data-room="F" x="475" y="548" width="250" height="80"/>
+      <text class="label" x="600" y="588">F</text>
+
+      <!-- GİRİŞ KAPISI: F'den 22px aşağıda -->
+      <rect x="295" y="650" width="250" height="50" fill="rgba(245,200,66,0.12)" stroke="#F5C842" stroke-width="2"/>
+      <text class="street-label" x="420" y="679" style="font-size:14px;fill:#F5C842;opacity:.9;font-weight:800;">GİRİŞ KAPISI</text>
+
+      <!-- Başlangıç noktası -->
+      <circle class="entry-dot" cx="440" cy="650" r="9"/>
+
+      <!-- Animated light path layer -->
+      <g id="lightLayer"></g>
+    </svg>
+  </section>
+
+  <section class="panel">
+    <h2>Hangi mekân hangi harfte?</h2>
+    <p class="legend">Her mekân için doğru harfi seçin, sonra <b>Kontrol Et</b>'e basın.</p>
+    <div class="quiz" id="quiz"></div>
+    <div class="controls" style="margin-top: 14px">
+      <button id="check">✓ Kontrol Et</button>
+      <button id="reset" class="secondary">↺ Sıfırla</button>
+      <button id="reveal" class="secondary">👁 Cevap Anahtarını Göster</button>
+    </div>
+    <p class="result" id="result"></p>
+  </section>
+
+  <section class="panel">
+    <h2>Yolu Göster (Işıklı Animasyon)</h2>
+    <p class="legend">Bir mekâna basın; Giriş Kapısı'ndan o binaya kadar yolları takip eden ışıklı yol çizilsin.</p>
+    <div class="course-buttons" id="courseButtons"></div>
+  </section>
+</main>
+
+<script>
+// ==================== METİN ====================
+const TEXT = `Değerli akademisyenler ve sevgili öğrenciler, Kuzey Kampüsümüzün teknik yerleşim planına hoş geldiniz. Kampüsümüz, dik açılı yollar ve geometrik bloklardan oluşan oldukça düzenli bir mimariye sahiptir.
+
+Şu an haritanın en güneyinde, ana giriş kapısındayız. Giriş kapısından içeri adım attığınızda, tam karşınızda kuzey yönüne doğru uzanan bir yol göreceksiniz.
+
+Girişten hemen sonra, yolun batı tarafında, yani solunuzda bir bina göreceksiniz. Burası Öğrenci İşleri Daire Başkanlığı'dır. Burada kayıt yenileme, öğrenci belgesi alma ve harç ödeme gibi tüm resmî işlemlerinizi kolaylıkla halledebilirsiniz.
+
+Öğrenci İşleri binasını geçince, doğu yönüne yani sağa doğru ayrılan bir sokak göreceksiniz. Bu sokağa sapar sapmaz sağ tarafınızda, güneyde kalan bina Merkez Kütüphane'dir. Dört katlı olan bu binada sessiz çalışma odaları ve zengin bir dijital veri tabanı bulunmaktadır. Sınav haftalarında burası yirmi dört saat boyunca öğrencilere kesintisiz hizmet vermektedir.
+
+Kütüphanenin kuzeydoğu tarafındaki bina ise kampüsümüzün Merkez Yemekhanesidir. Aynı anda bin beş yüz kişiye hizmet verebilen bu tesiste, öğrencilerimiz için her gün üç kap sıcak ve ekonomik yemek çıkmaktadır.
+
+Merkez yemekhaneyi geçip sokağın en sonuna kadar kuzeye ilerlediğinizde, Kampüs Yoluna varacaksınız. Kampüs Yolundan batıya sapıp ilk yol ayrımından kuzeye dönerseniz sağınızdaki bina Açık Spor Kompleksi'dir. Burası basketbol, voleybol ve tenis kortlarını içinde barındıran geniş bir açık hava merkezidir.
+
+Şimdi tekrar Giriş Kapısına dönelim ve kuzeye doğru yürümeye devam edelim. Merkez Kütüphaneye varmadan önce, yolun sağ tarafında, yani doğusunda bir bina göreceksiniz. Burası Sağlık Merkezi binasıdır. Küçük kazalar ve acil müdahaleler için burada her zaman bir doktor ve ambulans hazır beklemektedir.
+
+Kampüs krokisinin en kuzeybatı köşesinde, Açık Spor Kompleksiyle karşı karşıya olan bina Yabancı Diller Yüksekokulu'dur. Hazırlık sınıfı öğrencilerinin tamamı eğitim hayatlarının ilk yılını bu binada geçirirler.
+
+Kampüs turumuz burada sona ermiştir, katılımınız için teşekkür ederiz.`;
+document.getElementById('textBlock').textContent = TEXT;
+
+// ==================== TTS ====================
+const synth = window.speechSynthesis;
+let utter = null;
+function pickTrVoice() {
+  const vs = synth.getVoices();
+  return vs.find(v => /tr(-|_)?TR/i.test(v.lang)) || vs.find(v => /^tr/i.test(v.lang)) || null;
+}
+
+// ==================== CEVAP ANAHTARI ====================
+// A = Yabancı Diller Yüksekokulu   (kuzeybatı köşe)
+// B = Açık Spor Kompleksi          (kampüs yolunun kuzeyinde, orta)
+// C = Öğrenci İşleri               (ana yol batısı, sokak-kampüs yolu arası)
+// D = Merkez Kütüphane             (sokağın güneyinde, sağda - üst)
+// E = Merkez Yemekhane             (ana yol doğusu, sokak-kampüs yolu arası)
+// F = Sağlık Merkezi               (sokağın güneyinde, sağda - alt)
+
+// ==================== YOL TANIMLARI ====================
+// Güncel koordinatlar:
+//   Ana dikey yol (GİRİŞ→SOKAK): x=440
+//   Sağ dikey yol (L-kolu): x=712 (merkez), y=170..410
+//   İkinci dikey yol (batı): x=220
+//   KAMPÜS YOLU: y=192
+//   SOKAK: y=390
+// Başlangıç (Giriş Kapısı): (440, 650)
+const START = { x: 440, y: 650 };
+
+const pathPoints = {
+  // C: Öğrenci İşleri – Girişten kuzeye → doğrudan C ortasına
+  'C': [START, {x:440,y:483}, {x:217,y:483}],
+
+  // D: Merkez Kütüphane – Girişten kuzeye → doğuya sap (y=390) → D'nin x hizasında (x=600) güneye dön → D
+  'D': [START, {x:440,y:390}, {x:600,y:390}, {x:600,y:473}],
+
+  // F: Sağlık Merkezi – Girişten kuzeye → F'nin y hizasına (y=588) gelince doğuya dön → F
+  'F': [START, {x:440,y:588}, {x:600,y:588}],
+
+  // E: Merkez Yemekhane – Girişten → SOKAK doğuya → sağ yol kuzeye → E ortası
+  'E': [START, {x:440,y:390}, {x:712,y:390}, {x:712,y:293}, {x:815,y:293}],
+
+  // B: Açık Spor Kompleksi – sağ dikey → KAMPÜS YOLU batıya → A-B arası yola gir (x=220) → B harfi hizasında (y=95) doğuya dön → B merkezi
+  'B': [START, {x:440,y:390}, {x:712,y:390}, {x:712,y:192}, {x:220,y:192}, {x:220,y:95}, {x:337,y:95}],
+
+  // A: Yabancı Diller – Girişten A'ya DOĞRUDAN ÇAPRAZ (kuzeybatı köşe)
+  'A': [START, {x:107,y:95}],
+};
+
+const placeLabels = {
+  'Öğrenci İşleri': 'C',
+  'Merkez Kütüphane': 'D',
+  'Merkez Yemekhane': 'E',
+  'Açık Spor Kompleksi': 'B',
+  'Yabancı Diller Yüksekokulu': 'A',
+  'Sağlık Merkezi': 'F'
+};
+
+const courseButtons = document.getElementById('courseButtons');
+const lightLayer = document.getElementById('lightLayer');
+let animationFrame = null;
+
+function buildCourseButtons() {
+  Object.keys(placeLabels).forEach(name => {
+    const btn = document.createElement('button');
+    btn.className = 'course-btn';
+    btn.textContent = name;
+    btn.dataset.letter = placeLabels[name];
+    btn.addEventListener('click', () => showPath(placeLabels[name]));
+    courseButtons.appendChild(btn);
+  });
+}
+
+function polylineLength(points) {
+  let len = 0;
+  for (let i = 1; i < points.length; i++) {
+    len += Math.hypot(points[i].x - points[i-1].x, points[i].y - points[i-1].y);
+  }
+  return len;
+}
+function pointAtDistance(points, dist) {
+  let acc = 0;
+  for (let i = 1; i < points.length; i++) {
+    const seg = Math.hypot(points[i].x - points[i-1].x, points[i].y - points[i-1].y);
+    if (acc + seg >= dist) {
+      const t = (dist - acc) / seg;
+      return { x: points[i-1].x + (points[i].x - points[i-1].x) * t,
+               y: points[i-1].y + (points[i].y - points[i-1].y) * t };
+    }
+    acc += seg;
+  }
+  return points[points.length - 1];
+}
+
+function showPath(letter) {
+  document.querySelectorAll('.course-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`.course-btn[data-letter="${letter}"]`);
+  if (btn) btn.classList.add('active');
+
+  const pts = pathPoints[letter];
+  if (!pts) return;
+  if (animationFrame) cancelAnimationFrame(animationFrame);
+  lightLayer.innerHTML = '';
+
+  const d = 'M ' + pts.map(p => `${p.x} ${p.y}`).join(' L ');
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', d);
+  path.setAttribute('class', 'light-trail');
+  const length = polylineLength(pts);
+  path.style.strokeDasharray = length;
+  path.style.strokeDashoffset = length;
+  lightLayer.appendChild(path);
+
+  const head = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  head.setAttribute('cx', pts[0].x); head.setAttribute('cy', pts[0].y);
+  head.setAttribute('r', '7'); head.setAttribute('class', 'light-head');
+  lightLayer.appendChild(head);
+
+  let startTime = null;
+  const duration = Math.max(1400, length * 3);
+  function animate(time) {
+    if (!startTime) startTime = time;
+    const progress = Math.min((time - startTime) / duration, 1);
+    path.style.strokeDashoffset = length * (1 - progress);
+    const pt = pointAtDistance(pts, length * progress);
+    head.setAttribute('cx', pt.x); head.setAttribute('cy', pt.y);
+    if (progress < 1) animationFrame = requestAnimationFrame(animate);
+    else head.style.animation = 'pulseHead 0.8s ease-in-out 3';
+  }
+  animationFrame = requestAnimationFrame(animate);
+}
+
+// ==================== QUIZ ====================
+const quizData = [
+  { place: 'Merkez Kütüphane',           letter: 'D' },
+  { place: 'Öğrenci İşleri',             letter: 'C' },
+  { place: 'Açık Spor Kompleksi',        letter: 'B' },
+  { place: 'Yabancı Diller Yüksekokulu', letter: 'A' },
+  { place: 'Merkez Yemekhane',           letter: 'E' }
+];
+
+const ALL_LETTERS = ['A','B','C','D','E','F'];
+const quizContainer = document.getElementById('quiz');
+const resultEl = document.getElementById('result');
+
+function buildQuiz() {
+  quizContainer.innerHTML = '';
+  quizData.forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'quiz-row';
+    const label = document.createElement('label');
+    const span = document.createElement('span');
+    span.textContent = item.place + ':';
+    const select = document.createElement('select');
+    select.dataset.place = item.place;
+    select.dataset.answer = item.letter;
+    const optE = document.createElement('option'); optE.value=''; optE.textContent='—';
+    select.appendChild(optE);
+    ALL_LETTERS.forEach(r => {
+      const opt = document.createElement('option');
+      opt.value = r; opt.textContent = r;
+      select.appendChild(opt);
+    });
+    label.appendChild(span); label.appendChild(select);
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback';
+    feedback.dataset.place = item.place;
+    row.appendChild(label); row.appendChild(feedback);
+    quizContainer.appendChild(row);
+  });
+}
+
+function checkQuiz() {
+  const selects = quizContainer.querySelectorAll('select');
+  let correct = 0;
+  selects.forEach(sel => {
+    const feedback = quizContainer.querySelector(`.feedback[data-place="${sel.dataset.place}"]`);
+    if (feedback) feedback.innerHTML = '';
+    if (!sel.value) {
+      sel.style.borderColor = 'rgba(245,200,66,0.4)';
+      sel.style.background = '#1a2332';
+      sel.style.color = '#fff';
+    } else if (sel.value === sel.dataset.answer) {
+      correct++;
+      sel.style.borderColor = '#16a34a';
+      sel.style.background = 'rgba(22,163,74,0.25)';
+      sel.style.color = '#86efac';
+    } else {
+      sel.style.borderColor = '#dc2626';
+      sel.style.background = 'rgba(220,38,38,0.25)';
+      sel.style.color = '#fca5a5';
+      if (feedback) {
+        feedback.innerHTML = `<span class="fb-wrong">Sizin cevabınız: ${sel.value}</span><span class="fb-correct">Doğru cevap: ${sel.dataset.answer}</span>`;
+      }
+    }
+  });
+  if (correct === selects.length) {
+    resultEl.textContent = '✅ Tebrikler! Tüm cevaplar doğru! 🎉';
+    resultEl.style.color = '#16a34a';
+  } else {
+    resultEl.textContent = `❌ ${correct}/${selects.length} doğru. Tekrar deneyin!`;
+    resultEl.style.color = '#dc2626';
+  }
+  document.querySelectorAll('.building').forEach(b => {
+    b.classList.remove('correct','wrong');
+    const roomLetter = b.dataset.room;
+    const sel = Array.from(selects).find(s => s.dataset.answer === roomLetter);
+    if (sel) b.classList.add(sel.value === roomLetter ? 'correct' : 'wrong');
+  });
+}
+
+function resetQuiz() {
+  quizContainer.querySelectorAll('select').forEach(sel => {
+    sel.value = '';
+    sel.style.borderColor = 'rgba(245,200,66,0.4)';
+    sel.style.background = '#1a2332';
+    sel.style.color = '#fff';
+  });
+  quizContainer.querySelectorAll('.feedback').forEach(fb => fb.innerHTML = '');
+  document.querySelectorAll('.building').forEach(b => b.classList.remove('correct','wrong'));
+  resultEl.textContent = '';
+}
+
+function revealAnswers() {
+  quizContainer.querySelectorAll('select').forEach(sel => {
+    sel.value = sel.dataset.answer;
+    sel.style.borderColor = '#16a34a';
+    sel.style.background = 'rgba(22,163,74,0.2)';
+    sel.style.color = '#86efac';
+  });
+  quizContainer.querySelectorAll('.feedback').forEach(fb => fb.innerHTML = '');
+  document.querySelectorAll('.building').forEach(b => {
+    b.classList.remove('wrong');
+    if (['A','B','C','D','E','F'].includes(b.dataset.room)) b.classList.add('correct');
+  });
+  resultEl.textContent = '👁 Cevap anahtarı gösteriliyor.';
+  resultEl.style.color = '#F5C842';
+}
+
+// ==================== INIT ====================
+document.addEventListener('DOMContentLoaded', () => {
+  if (synth) { synth.getVoices(); synth.onvoiceschanged = () => synth.getVoices(); }
+  buildCourseButtons();
+  buildQuiz();
+  document.getElementById('check').addEventListener('click', checkQuiz);
+  document.getElementById('reset').addEventListener('click', resetQuiz);
+  document.getElementById('reveal').addEventListener('click', revealAnswers);
+
+  const playBtn = document.getElementById('play');
+  const pauseBtn = document.getElementById('pause');
+  function speak() {
+    if (!synth) return;
+    if (utter) synth.cancel();
+    utter = new SpeechSynthesisUtterance(TEXT);
+    const v = pickTrVoice(); if (v) utter.voice = v;
+    utter.lang = 'tr-TR'; utter.rate = 0.9;
+    synth.speak(utter);
+  }
+  playBtn.addEventListener('click', () => {
+    if (synth && synth.paused) synth.resume(); else speak();
+  });
+  pauseBtn.addEventListener('click', () => {
+    if (!synth) return;
+    if (synth.speaking && !synth.paused) synth.pause();
+    else if (synth.paused) synth.resume();
+  });
+});
+if (synth) setTimeout(() => synth.getVoices(), 100);
+</script>
+</body>
+</html>
