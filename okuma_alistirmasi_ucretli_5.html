@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<script>
+  if (!sessionStorage.getItem('hamzaUser')) {
+    alert('Bu sayfa sadece üyeler içindir. Lütfen giriş yapın.');
+    window.location.replace('index.html');
+  }
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Okuma: Hindistan ve Çin'in Nüfusu</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --surface: #fff;
+    --ink: #1a1612;
+    --muted: #7a6e62;
+    --border: #e4ddd3;
+    --accent: #8b4513;
+    --accent-light: #f5ede4;
+    --gold: #c8963e;
+    --correct: #2d7a50;
+    --correct-bg: #edf7f1;
+    --wrong: #b93a3a;
+    --wrong-bg: #fdf0f0;
+    --shadow: 0 2px 16px rgba(80,50,20,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 32px 28px 80px;
+  }
+
+  /* ── Back button (scrolls with the page, not fixed) ── */
+  .back-row {
+    margin-bottom: 28px;
+  }
+
+  .btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 9px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-back:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateX(-2px);
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(26px, 4.6vw, 44px);
+    font-weight: 700;
+    line-height: 1.18;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .subheading {
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .rule {
+    width: 48px;
+    height: 3px;
+    background: var(--accent);
+    margin: 18px auto 0;
+    border-radius: 2px;
+  }
+
+  /* ── Reading text ── */
+  .reading-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px 40px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow);
+  }
+
+  .reading-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 20px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  .reading-text p {
+    margin-bottom: 16px;
+    color: #2e2820;
+    font-size: 16.5px;
+    line-height: 1.85;
+  }
+
+  .reading-text p:last-child { margin-bottom: 0; }
+
+  /* ── Questions ── */
+  .questions-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    transition: border-color 0.3s;
+  }
+
+  .question-card.correct {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+  }
+
+  .question-card.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+  }
+
+  .q-stem {
+    font-family: 'Playfair Display', serif;
+    font-size: 16.5px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .q-num {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 4px;
+    margin-right: 8px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--bg);
+    user-select: none;
+  }
+
+  .option:hover:not(.disabled) {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .option.selected {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .option.opt-correct {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+  }
+
+  .option.opt-wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+  }
+
+  .option.disabled { cursor: default; }
+
+  .opt-letter {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--accent);
+    min-width: 20px;
+    padding-top: 1px;
+  }
+
+  .option.opt-correct .opt-letter { color: var(--correct); }
+  .option.opt-wrong .opt-letter { color: var(--wrong); }
+
+  .opt-text {
+    font-size: 15.5px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+
+  /* ── Feedback / explained answer ── */
+  .feedback-row {
+    display: none;
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 13.5px;
+  }
+
+  .question-card.correct .feedback-row,
+  .question-card.wrong .feedback-row {
+    display: block;
+  }
+
+  .question-card.correct .feedback-row {
+    background: rgba(45,122,80,0.08);
+  }
+
+  .question-card.wrong .feedback-row {
+    background: rgba(185,58,58,0.08);
+  }
+
+  .fb-status {
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .question-card.correct .fb-status { color: var(--correct); }
+  .question-card.wrong .fb-status { color: var(--wrong); }
+
+  .fb-explain {
+    color: #4a4137;
+    line-height: 1.6;
+    font-size: 13.5px;
+  }
+
+  .fb-explain b { color: var(--ink); }
+
+  /* ── Controls ── */
+  .controls {
+    display: flex;
+    gap: 12px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  button {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-check {
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn-check:hover {
+    background: #6b3510;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(139,69,19,0.25);
+  }
+
+  /* ── Score ── */
+  .score-banner {
+    display: none;
+    text-align: center;
+    margin-top: 28px;
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+  }
+
+  .score-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .score-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 56px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    opacity: 0.5;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 20px 16px 60px; }
+    .reading-section { padding: 22px 18px; }
+    .question-card { padding: 20px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Back button -->
+  <div class="back-row">
+    <button class="btn-back" onclick="goBack()">← Geri</button>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="eyebrow">Okuma</div>
+    <h1>Neden Hindistan ve Çin Gibi Ülkelerin Nüfusu Bu Kadar Fazla?</h1>
+    <p class="subheading"></p>
+    <div class="rule"></div>
+  </div>
+
+  <!-- Reading Text -->
+  <div class="reading-section">
+    <div class="reading-title"></div>
+    <div class="reading-text">
+      <p>2013 sayımlarına göre Çin'in nüfusu 1.357 milyar, Hindistan'ın nüfusu 1.252 milyardır. İkisinin toplam nüfusu, tüm Dünya'nın %35'inden fazlasına denk gelmektedir! Bu iki ülkeden sonra Dünya'nın en kalabalık olan ülkesi olan ABD'nin sadece 321 milyon civarında nüfusu bulunmaktadır. Peki bu devasa fark neden kaynaklanıyor? Neden Hindistan ve Çin'in nüfusu bu kadar fazla?</p>
+      <p>Bunun sebebini, ülkelerin tarihlerinde ve coğrafyalarında aramak gerekiyor. Endüstri Devrimi öncesi toplumlarda nüfus, erişilebilen kaynak miktarına bağlı olarak şekillenmekteydi. Eğer ki bir bölgenin dengeli bir iklimi, verimli toprakları ve bolca suyu varsa, popülasyonu da hızla artmıştır. İşte Doğu Çin, bu bölgelerden birisidir.</p>
+      <p>Elbette, tarihsel olarak incelendiğinde bir bölgede üretilen ekin tipinin de nüfusa etkisi olduğu görülmektedir. Örneğin pirinç gibi geniş tarlalarda üretilmesi gereken ekinlerin bol olduğu bölgelerde, nüfus da artmıştır; çünkü insanlar tarlalarında çalıştırabilecekleri daha fazla sayıda çocuk istemişlerdir. Pirincin anavatanı olan Çin'de nüfusun artışının bir nedeni de bundandır.</p>
+      <p>Pirincin nüfus büyümesine bir diğer etkisi daha vardır: Kalori değerleri. 1 birim pirinçten elde edilen kalori miktarı, 1 birim tahıldan elde edilenden daha fazladır. Bu sayede, bu bölgede yaşayan daha fazla insan aynı anda doyurulabilmiş, kaynak bolluğunun üzerine bir de kaynak verimliliği eklenerek popülasyon büyümesine katkı sağlanmıştır.</p>
+      <p>Bunlar haricinde tarihsel olarak önemli olan bir diğer veri de, tarımın ilk ortaya çıktığı bölgelerden birisinin Çin olmasıdır. Bu durum, özellikle Han Çinlileri'ne büyük katkı sağlamıştır ve popülasyonlarını hızla arttırmaları mümkün olmuştur. Elbette ki, günümüzdekinin aksine tarihte orduların sayıca üstünlüğü kazanma açısından en büyük faktörlerden birisiydi. Bu nedenle toplumlar çok sayıda erkek yetiştirmek ve onları savaşçı yapmak peşinde koşmuşlardır. Han Çinleri de bunlardan birisidir. Bu ordu sayesinde Çin, hem devasa bir toprak bütünlüğüne kavuşabilmiş, hem de bunu sürdürebilmeyi başarmıştır.</p>
+      <p>Elbette ki Çin ve Hindistan'ın nüfusu hep bu kadar abartılı düzeylerde olmamıştır. Örneğin 1200-1300 yıllarında yaşadıkları Moğol saldırıları sonucunda nüfuslarının yarısı yok olmuş ve Avrupa'nın o dönemdeki nüfusu ile kabaca eşitlenmiştir. Keza, Dünya'nın diğer bölgelerindeki hızlı gelişmeler de Çin nüfusunun Dünya nüfusuna göreli oranını değiştirmiştir. Örneğin Endüstri Devrimi sonrasında Avrupa'nın popülasyonu 4 kata kadar hızlı bir artış göstermiş ve Çin'in o dönemdeki nüfusu ile kabaca eşitlenmiştir. Ancak Endüstri Devrimi'nin Çin'e ulaşması sonrasında Çin'in popülasyonu da hızla artışa geçmiş ve yine Avrupa'yı çok geride bırakmıştır. Zaten Çin'in günümüzdeki popülasyonunu sürdürebilmesinin tek yolu da endüstridir.</p>
+      <p>Ne var ki günümüzde popülasyon büyüklüğü başarı ile doğrudan ilişkili olmadığı için, Çin de ciddi sıkıntılar içerisindedir. Sadece tarımcılık ile nüfus büyüklüğü desteklenemediği için, Çin Komünist Partisi nüfus kontrolü yöntemlerini devreye sokmuştur. 1979 yılında "tek çocuk politikası" denen bir sisteme geçilmiş ve vatandaşların sadece tek çocuk yapmalarına izin verilmiştir. Bu denetim sayesinde, 400 milyon yeni çocuğun doğmasının önüne geçildiği hesaplanmıştır. Elbette bu kurala herkes uymamıştır; ancak uymayan insanlar hem maddi olarak, hem de iş kaybı veya zorunlu kürtaj gibi yöntemlerle cezalandırılmışlardır.</p>
+      <p>Tek Çocuk Politikası uygulamaya konduktan sonra Çin'de çocuk ve genç insan sayısı azaldı, yaşlı popülasyon oranı yükseldi.</p>
+      <p>Lakin bu politikanın da olumsuz tarafları bulunmaktadır. İnsan haklarının ihlal ediliyor olabileceğine dair şüphelerin ötesinde, tek çocuk politikası kısa bir sürede yaşlı nüfusun hızla artarak 1965'te %8 ile Dünya ortalamasının (%13) 5 puan altında olan Çin'in, 2015 yılında yaşlı nüfus konusunda Dünya ortalamasını (%16) yakalamasına ve geçmeye doğru ilerlemesine neden olmuştur. Buna engel olmak isteyen Parti, 2015 yılında "iki çocuk politikası"na geçildiğini ilan etmiştir. Ne var ki tek çocuk sahibi olmak artık "sosyal norm" haline geldiği için, bu politikanın ne kadar işlevsel olacağını ancak zaman gösterecektir.</p>
+    </div>
+  </div>
+
+  <!-- Questions -->
+  <div class="questions-label">Sorular</div>
+
+  <!-- Q1 -->
+  <div class="question-card" id="qcard-1">
+    <div class="q-stem"><span class="q-num">1</span>Okuduğunuz metne göre, Endüstri Devrimi öncesi dönemde Asya kıtasında pirinç tarımının yaygın olmasının nüfus artışına sağladığı katkı aşağıdakilerden hangisinde doğru ifade edilmiştir?</div>
+    <div class="options" id="opts-1">
+      <div class="option" onclick="select(1,'A')" id="q1-A"><span class="opt-letter">A)</span><span class="opt-text">Pirinç üretiminin az iş gücü gerektirmesi, insanların çocuk yapma ihtiyacını tamamen ortadan kaldırmıştır.</span></div>
+      <div class="option" onclick="select(1,'B')" id="q1-B"><span class="opt-letter">B)</span><span class="opt-text">Bu ekinin birim başına sağladığı enerji miktarının tahıla oranla yüksek olması, aynı miktardaki kaynakla daha fazla insanın beslenmesini kolaylaştırmıştır.</span></div>
+      <div class="option" onclick="select(1,'C')" id="q1-C"><span class="opt-letter">C)</span><span class="opt-text">Pirinç tarlalarının sadece kurak iklimlerde yetişebilmesi, diğer bölgelerdeki nüfusun bu merkezlere göç etmesine yol açmıştır.</span></div>
+    </div>
+    <div class="feedback-row" id="fb-1">
+      <div class="fb-status" id="fb-status-1"></div>
+      <div class="fb-explain" id="fb-explain-1"></div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question-card" id="qcard-2">
+    <div class="q-stem"><span class="q-num">2</span>Metne göre Çin ve Avrupa nüfusunun tarihsel süreçteki dengesi incelendiğinde aşağıdaki yargılardan hangisine ulaşılabilir?</div>
+    <div class="options" id="opts-2">
+      <div class="option" onclick="select(2,'A')" id="q2-A"><span class="opt-letter">A)</span><span class="opt-text">Avrupa nüfusu, tarih boyunca hiçbir dönemde Çin nüfusuna yaklaşamamış veya onunla eşitlenememiştir.</span></div>
+      <div class="option" onclick="select(2,'B')" id="q2-B"><span class="opt-letter">B)</span><span class="opt-text">Sanayi Devrimi'nin getirdiği hızlı büyüme dalgası Çin coğrafyasına ulaştığında, ülkenin nüfus artış hızı yeniden ivme kazanarak Avrupa'yı geride bırakmıştır.</span></div>
+      <div class="option" onclick="select(2,'C')" id="q2-C"><span class="opt-letter">C)</span><span class="opt-text">Moğol istilaları sadece Avrupa'yı etkilediği için Çin, Orta Çağ döneminde nüfus üstünlüğünü korumayı başarmıştır.</span></div>
+    </div>
+    <div class="feedback-row" id="fb-2">
+      <div class="fb-status" id="fb-status-2"></div>
+      <div class="fb-explain" id="fb-explain-2"></div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question-card" id="qcard-3">
+    <div class="q-stem"><span class="q-num">3</span>Han Çinlilerinin geçmişte ordu gücüne önem vermesi ve yüksek nüfus politikası izlemesinin temel tarihsel gerekçesi aşağıdakilerden hangisidir?</div>
+    <div class="options" id="opts-3">
+      <div class="option" onclick="select(3,'A')" id="q3-A"><span class="opt-letter">A)</span><span class="opt-text">Büyük askeri birlikler sayesinde geniş bir coğrafi alanda siyasi bütünlük sağlamak ve bu egemenliği kalıcı kılmak.</span></div>
+      <div class="option" onclick="select(3,'B')" id="q3-B"><span class="opt-letter">B)</span><span class="opt-text">Tarım tarlalarında çalışacak nitelikli mühendis ve ziraatçı sayısını artırmak.</span></div>
+      <div class="option" onclick="select(3,'C')" id="q3-C"><span class="opt-letter">C)</span><span class="opt-text">Diğer kıtalara deniz yoluyla kitlesel göçler düzenleyerek yeni ticaret kolonileri kurmak.</span></div>
+    </div>
+    <div class="feedback-row" id="fb-3">
+      <div class="fb-status" id="fb-status-3"></div>
+      <div class="fb-explain" id="fb-explain-3"></div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="question-card" id="qcard-4">
+    <div class="q-stem"><span class="q-num">4</span>Çin'in 1979 yılında hayata geçirdiği "tek çocuk politikası" ve bu politikanın uygulanma biçimiyle ilgili aşağıdakilerden hangisi doğrudur?</div>
+    <div class="options" id="opts-4">
+      <div class="option" onclick="select(4,'A')" id="q4-A"><span class="opt-letter">A)</span><span class="opt-text">Kurallara uymayan vatandaşlar sadece sözlü olarak uyarılmış, herhangi bir hak mahrumiyeti yaşatılmamıştır.</span></div>
+      <div class="option" onclick="select(4,'B')" id="q4-B"><span class="opt-letter">B)</span><span class="opt-text">Bu yasal sınırlama sayesinde 2015 yılına kadar Çin'in yaşlı nüfus oranı Dünya ortalamasının çok altında tutulabilmiştir.</span></div>
+      <div class="option" onclick="select(4,'C')" id="q4-C"><span class="opt-letter">C)</span><span class="opt-text">Devletin koyduğu bu denetime uymayan bireyler, ekonomik yaptırımların yanı sıra istihdam kaybı gibi sert cezalarla karşı karşıya kalmışlardır.</span></div>
+    </div>
+    <div class="feedback-row" id="fb-4">
+      <div class="fb-status" id="fb-status-4"></div>
+      <div class="fb-explain" id="fb-explain-4"></div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="question-card" id="qcard-5">
+    <div class="q-stem"><span class="q-num">5</span>Çin Komünist Partisi'nin 2015 yılında iki çocuk serbestisine geçiş yapmasının temel amacı aşağıdakilerden hangisidir?</div>
+    <div class="options" id="opts-5">
+      <div class="option" onclick="select(5,'A')" id="q5-A"><span class="opt-letter">A)</span><span class="opt-text">Tarım sektöründeki pirinç üretim oranını yeniden en üst seviyeye çıkarmak.</span></div>
+      <div class="option" onclick="select(5,'B')" id="q5-B"><span class="opt-letter">B)</span><span class="opt-text">Tek çocuk kuralının yarattığı demografik yaşlanma eğilimini dengelemek ve genç nüfus kaybının önüne geçmek.</span></div>
+      <div class="option" onclick="select(5,'C')" id="q5-C"><span class="opt-letter">C)</span><span class="opt-text">Ülkedeki endüstriyel üretimi tamamen durdurarak geleneksel yaşam biçimine geri dönmek.</span></div>
+    </div>
+    <div class="feedback-row" id="fb-5">
+      <div class="fb-status" id="fb-status-5"></div>
+      <div class="fb-explain" id="fb-explain-5"></div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="question-card" id="qcard-6">
+    <div class="q-stem"><span class="q-num">6</span>Okuduğunuz metinde aşağıdakilerden hangisine <em>değinilmemiştir</em>?</div>
+    <div class="options" id="opts-6">
+      <div class="option" onclick="select(6,'A')" id="q6-A"><span class="opt-letter">A)</span><span class="opt-text">Hindistan ve Çin'in 2013 yılındaki nüfus verilerinin dünya genelindeki toplam nüfusa oranına.</span></div>
+      <div class="option" onclick="select(6,'B')" id="q6-B"><span class="opt-letter">B)</span><span class="opt-text">Tek çocuk uygulamasının sonlandırılmasına rağmen, bu durumun toplumda yerleşik bir alışkanlığa dönüşmesinin yaratabileceği risklere.</span></div>
+      <div class="option" onclick="select(6,'C')" id="q6-C"><span class="opt-letter">C)</span><span class="opt-text">Hindistan hükümetinin Çin'e kıyasla nüfus artışını engellemek için ne tür yasal cezalar ve teşvikler uyguladığına.</span></div>
+    </div>
+    <div class="feedback-row" id="fb-6">
+      <div class="fb-status" id="fb-status-6"></div>
+      <div class="fb-explain" id="fb-explain-6"></div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn-check" onclick="checkAll()">KONTROL ET</button>
+  </div>
+
+  <!-- Score -->
+  <div class="score-banner" id="score-banner">
+    <div class="score-big" id="score-num">0/6</div>
+    <div class="score-sub">doğru cevap</div>
+  </div>
+
+  <div class="footer">Hamza Hoca ile Türkçe Öğreniyorum</div>
+</div>
+
+<script>
+  const LETTERS = ['A','B','C'];
+
+  const ANSWERS = { 1:'B', 2:'B', 3:'A', 4:'C', 5:'B', 6:'C' };
+
+  const EXPLANATIONS = {
+    1: "Metinde <b>\u201c1 birim pirinçten elde edilen kalori miktarı, 1 birim tahıldan elde edilenden daha fazladır. Bu sayede, bu bölgede yaşayan daha fazla insan aynı anda doyurulabilmiş...\u201d</b> denmektedir. Şıkta \u201ckalori miktarı\u201d yerine \u201cenerji miktarı\u201d, \u201cdoyurulabilmiş\u201d yerine ise \u201cbeslenmesini kolaylaştırmıştır\u201d ifadeleri kullanılmıştır.",
+    2: "Metinde <b>\u201cEndüstri Devrimi'nin Çin'e ulaşması sonrasında Çin'in popülasyonu da hızla artışa geçmiş ve yine Avrupa'yı çok geride bırakmıştır.\u201d</b> ifadesi yer alır. \u201cHızla artışa geçmek\u201d şıkta \u201civme kazanmak\u201d olarak yorumlanmıştır. Moğol istilası ve Sanayi Devrimi dönemlerinde Avrupa ile Çin nüfusları kabaca eşitlendiği için A ve C şıkları elenir.",
+    3: "Metinde <b>\u201cBu ordu sayesinde Çin, hem devasa bir toprak bütünlüğüne kavuşabilmiş, hem de bunu sürdürebilmeyi başarmıştır.\u201d</b> bilgisi geçmektedir. Şıkta \u201ctoprak bütünlüğü\u201d kavramı \u201cgeniş bir coğrafi alanda siyasi bütünlük\u201d, \u201csürdürebilmek\u201d ise \u201cegemenliği kalıcı kılmak\u201d şeklinde eş anlamlılarıyla kullanılmıştır.",
+    4: "Metinde tek çocuk kuralına uymayanlar için <b>\u201cuymayan insanlar hem maddi olarak, hem de iş kaybı veya zorunlu kürtaj gibi yöntemlerle cezalandırılmışlardır.\u201d</b> denmektedir. Şıkta \u201cmaddi cezalar\u201d ifadesi \u201cekonomik yaptırımlar\u201d, \u201ciş kaybı\u201d ise \u201cistihdam kaybı\u201d olarak kurgulanmıştır.",
+    5: "Metinde tek çocuk politikasının yaşlı nüfusu hızla artırdığı, Çin'in 2015'te dünya yaşlılık ortalamasını yakalayıp geçmeye başladığı ve Parti'nin buna engel olmak için iki çocuk politikasına geçtiği belirtilmiştir. Şıkta durum \u201cdemografik yaşlanma eğilimini dengelemek\u201d olarak özetlenmiştir.",
+    6: "Metnin başında Hindistan'ın nüfus verileri (1.252 milyar) verilmiş olsa da, metnin ilerleyen kısımlarında yapılan tüm nüfus kontrolü politikaları, yasaklar ve tek/iki çocuk kararları tamamen Çin (Çin Komünist Partisi) üzerinden anlatılmıştır. Hindistan'ın nüfus kontrolü için ne yaptığına dair hiçbir detay veya bilgi metinde yer almamaktadır."
+  };
+
+  const selected = {};
+  const checked = {};
+
+  function select(q, letter) {
+    if (checked[q]) return;
+    selected[q] = letter;
+    LETTERS.forEach(l => {
+      const el = document.getElementById('q' + q + '-' + l);
+      if (el) el.classList.toggle('selected', l === letter);
+    });
+  }
+
+  function checkAll() {
+    let score = 0;
+    for (let q = 1; q <= 6; q++) {
+      const ans = selected[q];
+      const card = document.getElementById('qcard-' + q);
+      const fbStatus = document.getElementById('fb-status-' + q);
+      const fbExplain = document.getElementById('fb-explain-' + q);
+      card.classList.remove('correct', 'wrong');
+      checked[q] = true;
+
+      LETTERS.forEach(l => {
+        const el = document.getElementById('q' + q + '-' + l);
+        if (!el) return;
+        el.classList.remove('selected', 'opt-correct', 'opt-wrong');
+        el.classList.add('disabled');
+        el.onclick = null;
+        if (l === ANSWERS[q]) el.classList.add('opt-correct');
+        else if (l === ans && ans !== ANSWERS[q]) el.classList.add('opt-wrong');
+      });
+
+      if (ans === ANSWERS[q]) {
+        card.classList.add('correct');
+        fbStatus.textContent = '✓ Doğru cevap!';
+        score++;
+      } else if (ans) {
+        card.classList.add('wrong');
+        fbStatus.textContent = '✗ Yanlış. Doğru cevap: ' + ANSWERS[q];
+      } else {
+        card.classList.add('wrong');
+        fbStatus.textContent = '➤ Cevap işaretlenmedi. Doğru cevap: ' + ANSWERS[q];
+      }
+      fbExplain.innerHTML = EXPLANATIONS[q];
+    }
+
+    const banner = document.getElementById('score-banner');
+    banner.style.display = 'block';
+    document.getElementById('score-num').textContent = score + '/6';
+    banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function goBack() {
+    window.history.back();
+  }
+</script>
+</body>
+</html>
