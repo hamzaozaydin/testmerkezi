@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Okuma 4: Arıların Gizemli Dünyası ve Koloni Yaşamı</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --surface: #fff;
+    --ink: #1a1612;
+    --muted: #7a6e62;
+    --border: #e4ddd3;
+    --accent: #8b4513;
+    --accent-light: #f5ede4;
+    --gold: #c8963e;
+    --correct: #2d7a50;
+    --correct-bg: #edf7f1;
+    --wrong: #b93a3a;
+    --wrong-bg: #fdf0f0;
+    --shadow: 0 2px 16px rgba(80,50,20,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 32px 28px 80px;
+  }
+
+  /* ── Back button (scrolls with the page, not fixed) ── */
+  .back-row {
+    margin-bottom: 28px;
+  }
+
+  .btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 9px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-back:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateX(-2px);
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(26px, 4.6vw, 44px);
+    font-weight: 700;
+    line-height: 1.18;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .subheading {
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .rule {
+    width: 48px;
+    height: 3px;
+    background: var(--accent);
+    margin: 18px auto 0;
+    border-radius: 2px;
+  }
+
+  /* ── Reading text ── */
+  .reading-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px 40px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow);
+  }
+
+  .reading-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 20px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  .reading-text p {
+    margin-bottom: 16px;
+    color: #2e2820;
+    font-size: 16.5px;
+    line-height: 1.85;
+  }
+
+  .reading-text p:last-child { margin-bottom: 0; }
+
+  /* ── Questions ── */
+  .questions-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+
+  .questions-label.second {
+    margin-top: 36px;
+  }
+
+  .instructions-box {
+    background: var(--accent-light);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #4a4137;
+    line-height: 1.7;
+  }
+
+  .instructions-box b { color: var(--accent); }
+
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    transition: border-color 0.3s;
+  }
+
+  .question-card.correct {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+  }
+
+  .question-card.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+  }
+
+  .q-stem {
+    font-family: 'Playfair Display', serif;
+    font-size: 16.5px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .q-num {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 4px;
+    margin-right: 8px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .options.tfng {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .options.tfng .option {
+    flex: 1;
+    min-width: 140px;
+    justify-content: center;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--bg);
+    user-select: none;
+  }
+
+  .option:hover:not(.disabled) {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .option.selected {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .option.opt-correct {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+  }
+
+  .option.opt-wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+  }
+
+  .option.disabled { cursor: default; }
+
+  .opt-letter {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--accent);
+    min-width: 20px;
+    padding-top: 1px;
+  }
+
+  .option.opt-correct .opt-letter { color: var(--correct); }
+  .option.opt-wrong .opt-letter { color: var(--wrong); }
+
+  .opt-text {
+    font-size: 15.5px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+
+  /* ── Feedback / explained answer ── */
+  .feedback-row {
+    display: none;
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 13.5px;
+  }
+
+  .question-card.correct .feedback-row,
+  .question-card.wrong .feedback-row {
+    display: block;
+  }
+
+  .question-card.correct .feedback-row {
+    background: rgba(45,122,80,0.08);
+  }
+
+  .question-card.wrong .feedback-row {
+    background: rgba(185,58,58,0.08);
+  }
+
+  .fb-status {
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .question-card.correct .fb-status { color: var(--correct); }
+  .question-card.wrong .fb-status { color: var(--wrong); }
+
+  .fb-explain {
+    color: #4a4137;
+    line-height: 1.6;
+    font-size: 13.5px;
+  }
+
+  .fb-explain b { color: var(--ink); }
+
+  /* ── Controls ── */
+  .controls {
+    display: flex;
+    gap: 12px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  button {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-check {
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn-check:hover {
+    background: #6b3510;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(139,69,19,0.25);
+  }
+
+  /* ── Score ── */
+  .score-banner {
+    display: none;
+    text-align: center;
+    margin-top: 28px;
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+  }
+
+  .score-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .score-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 56px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    opacity: 0.5;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 20px 16px 60px; }
+    .reading-section { padding: 22px 18px; }
+    .question-card { padding: 20px 18px; }
+    .options.tfng .option { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Back button -->
+  <div class="back-row">
+    <button class="btn-back" onclick="goBack()">← Geri</button>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="eyebrow">Okuma</div>
+    <h1>Arıların Gizemli Dünyası ve Koloni Yaşamı</h1>
+    <p class="subheading"></p>
+    <div class="rule"></div>
+  </div>
+
+  <!-- Reading Text -->
+  <div class="reading-section">
+    <div class="reading-title"></div>
+    <div class="reading-text">
+      <p>Doğada kusursuz bir düzen kuran canlılardan biri bal arılarıdır. Küçük bedenlerine rağmen gerçekleştirdikleri görevler, insanların dikkatini yüzyıllardır çekmektedir. Bir bal arısının yaşamı yumurta evresiyle başlar. Ana arı, petek gözlerini dikkatle kontrol ettikten sonra bu gözlere döllenmiş ya da döllenmemiş yumurtalar bırakır. Yumurtalar beyaz renkli ve oldukça küçüktür. İlk günlerde embriyo gelişmeye başlar ve birkaç gün sonra yumurtadan larva çıkar. Böylece arının gelişimindeki ikinci dönem başlamış olur. Larva dönemi boyunca arılar çok hızlı büyürler. Bu dönemde onların en önemli işi beslenmek ve gelişmektir. Larvalar hareket etmekte zorlandıkları için sürekli işçi arıların bakımına ihtiyaç duyarlar. İşçi arılar genç larvaları arı sütüyle besler. Daha sonraki günlerde ise besinlerine polen ve nektar da eklenir. Eğer bir larva sürekli arı sütüyle beslenirse ana arı olur. Aynı genetik özelliklere sahip olmalarına rağmen farklı beslenme şekilleri arıların görevlerini değiştirebilir.</p>
+      <p>Larvaların vücut yapısı ergin arılardan oldukça farklıdır. Kanatları ve bacakları bulunmaz. Ayrıca gözleri de gelişmemiştir. Bunun nedeni, larvaların karanlık petek gözlerinde yaşamaları ve çevrelerini görmeye ihtiyaç duymamalarıdır. Larvalar büyürken birkaç kez deri değiştirirler. Her değişim sırasında eski dış tabakalarını atarlar. Bir süre sonra larvalar kendi çevrelerine ince bir koza örmeye başlarlar. Bu dönem prepupa olarak adlandırılır. Daha sonra pupa dönemi başlar. Pupa döneminde arının antenleri, kanatları ve ayakları belirgin hâle gelir. Başlangıçta hareketsiz görünen pupa zamanla yetişkin bir arıya dönüşür. Gelişimini tamamlayan arı, petek gözünü kapatan ince tabakayı parçalayarak dışarı çıkar.</p>
+      <p>Bir arı kolonisinde görev dağılımı son derece düzenlidir. Ana arı koloninin devamını sağlayan tek bireydir. İşçi arılar ise kovan temizliği, yavru bakımı, petek yapımı ve yiyecek toplama gibi görevleri yerine getirirler. Erkek arıların temel görevi ise ana arıyla çiftleşmektir. Kolonideki her birey kendi görevini eksiksiz yerine getirdiğinde düzen korunmuş olur. Arılar arasında iş bölümü yaşa göre de değişebilir. Genç işçi arılar daha çok kovan içindeki görevleri üstlenirken yaşlı işçi arılar dışarı çıkarak nektar ve polen toplarlar.</p>
+      <p>Bal arılarının en dikkat çekici özelliklerinden biri haberleşme biçimleridir. Binlerce arının aynı kovanda karışıklık yaşamadan birlikte hareket etmesi gelişmiş bir iletişim sistemi sayesinde mümkün olmaktadır. Arılar birbirleriyle koku, dokunma, ses ve dans yoluyla iletişim kurarlar. Özellikle feromon adı verilen kimyasal maddeler koloninin düzenini sağlamada büyük önem taşır. Ana arının salgıladığı feromonlar işçi arıların davranışlarını etkiler. Bazı feromonlar tehlikeyi haber verirken bazıları yiyecek kaynaklarının bulunmasına yardımcı olur. Böylece koloni üyeleri aynı amaç doğrultusunda hareket edebilirler.</p>
+      <p>Arı dansı da iletişimin önemli bir parçasıdır. Bir işçi arı zengin bir nektar kaynağı bulduğunda kovana geri döner ve belirli hareketler yapar. Diğer arılar bu hareketleri izleyerek yiyeceğin yönünü ve uzaklığını anlayabilirler. Bilim insanları uzun yıllar boyunca arı dansının anlamını araştırmış ve bu hareketlerin tesadüfi olmadığını ortaya koymuştur. Arılar yalnızca kendi yaşamlarını sürdürmek için değil, doğadaki birçok bitkinin çoğalmasına katkı sağlamak için de çalışırlar. Çiçekler arasında dolaşırken polen taşıyan arılar, bitkilerin döllenmesine yardımcı olur. Bu nedenle arılar, doğal yaşamın devamı açısından büyük önem taşımaktadır.</p>
+    </div>
+  </div>
+
+  <!-- Questions 1-4 -->
+  <div class="questions-label">Sorular 1-4 · Metne göre doğru seçeneği işaretleyiniz.</div>
+
+  <!-- Q1 -->
+  <div class="question-card" id="qcard-1">
+    <div class="q-stem"><span class="q-num">1</span>Metnin bütününe göre aşağıdaki yargılardan hangisine varılamaz?</div>
+    <div class="options" id="opts-1">
+      <div class="option" onclick="select(1,'A')" id="q1-A"><span class="opt-letter">A)</span><span class="opt-text">Arıların gelişim süreçleri belirli aşamalardan oluşmaktadır.</span></div>
+      <div class="option" onclick="select(1,'B')" id="q1-B"><span class="opt-letter">B)</span><span class="opt-text">İşçi arılar kolonide birçok farklı görevi yerine getirirler.</span></div>
+      <div class="option" onclick="select(1,'C')" id="q1-C"><span class="opt-letter">C)</span><span class="opt-text">Erkek arılar koloninin bütün işlerini tek başlarına yürütürler.</span></div>
+      <div class="option" onclick="select(1,'D')" id="q1-D"><span class="opt-letter">D)</span><span class="opt-text">Arılar gelişmiş bir iletişim sistemi sayesinde düzenli yaşayabilirler.</span></div>
+    </div>
+    <div class="feedback-row" id="fb-1">
+      <div class="fb-status" id="fb-status-1"></div>
+      <div class="fb-explain" id="fb-explain-1"></div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question-card" id="qcard-2">
+    <div class="q-stem"><span class="q-num">2</span>Metinde geçen "koloninin düzenini sağlamak" sözüyle anlatılmak istenen aşağıdakilerden hangisidir?</div>
+    <div class="options" id="opts-2">
+      <div class="option" onclick="select(2,'A')" id="q2-A"><span class="opt-letter">A)</span><span class="opt-text">Kovanın yerini değiştirmek</span></div>
+      <div class="option" onclick="select(2,'B')" id="q2-B"><span class="opt-letter">B)</span><span class="opt-text">Arılar arasında uyumlu bir çalışma oluşturmak</span></div>
+      <div class="option" onclick="select(2,'C')" id="q2-C"><span class="opt-letter">C)</span><span class="opt-text">Yeni petekler üretmek</span></div>
+      <div class="option" onclick="select(2,'D')" id="q2-D"><span class="opt-letter">D)</span><span class="opt-text">Koloniyi başka canlılardan saklamak</span></div>
+    </div>
+    <div class="feedback-row" id="fb-2">
+      <div class="fb-status" id="fb-status-2"></div>
+      <div class="fb-explain" id="fb-explain-2"></div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question-card" id="qcard-3">
+    <div class="q-stem"><span class="q-num">3</span>Aşağıdakilerden hangisi metindeki bilgilerle uyumludur?</div>
+    <div class="options" id="opts-3">
+      <div class="option" onclick="select(3,'A')" id="q3-A"><span class="opt-letter">A)</span><span class="opt-text">Larvalar doğdukları anda uçmaya başlarlar.</span></div>
+      <div class="option" onclick="select(3,'B')" id="q3-B"><span class="opt-letter">B)</span><span class="opt-text">Bütün arılar aynı yiyeceklerle beslenmektedir.</span></div>
+      <div class="option" onclick="select(3,'C')" id="q3-C"><span class="opt-letter">C)</span><span class="opt-text">Pupa döneminde arının bazı organları gelişir.</span></div>
+      <div class="option" onclick="select(3,'D')" id="q3-D"><span class="opt-letter">D)</span><span class="opt-text">Ana arılar kolonide yiyecek toplamakla görevlidir.</span></div>
+    </div>
+    <div class="feedback-row" id="fb-3">
+      <div class="fb-status" id="fb-status-3"></div>
+      <div class="fb-explain" id="fb-explain-3"></div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="question-card" id="qcard-4">
+    <div class="q-stem"><span class="q-num">4</span>Metne göre aşağıdaki bilgilerden hangisi doğrudur?</div>
+    <div class="options" id="opts-4">
+      <div class="option" onclick="select(4,'A')" id="q4-A"><span class="opt-letter">A)</span><span class="opt-text">Arılar yalnızca ses çıkararak iletişim kurarlar.</span></div>
+      <div class="option" onclick="select(4,'B')" id="q4-B"><span class="opt-letter">B)</span><span class="opt-text">İşçi arılar hiçbir zaman kovan dışına çıkmazlar.</span></div>
+      <div class="option" onclick="select(4,'C')" id="q4-C"><span class="opt-letter">C)</span><span class="opt-text">Feromonlar arılar arasında haberleşmeyi sağlar.</span></div>
+      <div class="option" onclick="select(4,'D')" id="q4-D"><span class="opt-letter">D)</span><span class="opt-text">Larvaların gözleri çok gelişmiş durumdadır.</span></div>
+    </div>
+    <div class="feedback-row" id="fb-4">
+      <div class="fb-status" id="fb-status-4"></div>
+      <div class="fb-explain" id="fb-explain-4"></div>
+    </div>
+  </div>
+
+  <!-- Questions 5-9 -->
+  <div class="questions-label second">Sorular 5-9 · Doğru / Yanlış / Verilmemiş</div>
+  <div class="instructions-box">
+    <b>DOĞRU</b> — cümle, metindeki bilgilerle uygun ve/veya tutarlıysa,<br>
+    <b>YANLIŞ</b> — cümle, metindeki bilgilerle tutarsız ve/veya çelişkiliyse,<br>
+    <b>VERİLMEMİŞ</b> — cümle, metindeki bilgilerde yer almıyor ve/veya belirtilmemişse.
+  </div>
+
+  <!-- Q5 -->
+  <div class="question-card" id="qcard-5">
+    <div class="q-stem"><span class="q-num">5</span>Larvalar gelişim dönemlerinde birkaç kez deri değiştirmektedir.</div>
+    <div class="options tfng" id="opts-5">
+      <div class="option" onclick="select(5,'A')" id="q5-A"><span class="opt-letter">A)</span><span class="opt-text">Doğru</span></div>
+      <div class="option" onclick="select(5,'B')" id="q5-B"><span class="opt-letter">B)</span><span class="opt-text">Yanlış</span></div>
+      <div class="option" onclick="select(5,'C')" id="q5-C"><span class="opt-letter">C)</span><span class="opt-text">Verilmemiş</span></div>
+    </div>
+    <div class="feedback-row" id="fb-5">
+      <div class="fb-status" id="fb-status-5"></div>
+      <div class="fb-explain" id="fb-explain-5"></div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="question-card" id="qcard-6">
+    <div class="q-stem"><span class="q-num">6</span>Arılar yalnızca gündüz saatlerinde iletişim kurabilmektedir.</div>
+    <div class="options tfng" id="opts-6">
+      <div class="option" onclick="select(6,'A')" id="q6-A"><span class="opt-letter">A)</span><span class="opt-text">Doğru</span></div>
+      <div class="option" onclick="select(6,'B')" id="q6-B"><span class="opt-letter">B)</span><span class="opt-text">Yanlış</span></div>
+      <div class="option" onclick="select(6,'C')" id="q6-C"><span class="opt-letter">C)</span><span class="opt-text">Verilmemiş</span></div>
+    </div>
+    <div class="feedback-row" id="fb-6">
+      <div class="fb-status" id="fb-status-6"></div>
+      <div class="fb-explain" id="fb-explain-6"></div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="question-card" id="qcard-7">
+    <div class="q-stem"><span class="q-num">7</span>Ana arının salgıladığı feromonlar işçi arıların davranışlarını etkileyebilir.</div>
+    <div class="options tfng" id="opts-7">
+      <div class="option" onclick="select(7,'A')" id="q7-A"><span class="opt-letter">A)</span><span class="opt-text">Doğru</span></div>
+      <div class="option" onclick="select(7,'B')" id="q7-B"><span class="opt-letter">B)</span><span class="opt-text">Yanlış</span></div>
+      <div class="option" onclick="select(7,'C')" id="q7-C"><span class="opt-letter">C)</span><span class="opt-text">Verilmemiş</span></div>
+    </div>
+    <div class="feedback-row" id="fb-7">
+      <div class="fb-status" id="fb-status-7"></div>
+      <div class="fb-explain" id="fb-explain-7"></div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="question-card" id="qcard-8">
+    <div class="q-stem"><span class="q-num">8</span>Genç işçi arılar daha çok kovan içindeki görevlerle ilgilenmektedir.</div>
+    <div class="options tfng" id="opts-8">
+      <div class="option" onclick="select(8,'A')" id="q8-A"><span class="opt-letter">A)</span><span class="opt-text">Doğru</span></div>
+      <div class="option" onclick="select(8,'B')" id="q8-B"><span class="opt-letter">B)</span><span class="opt-text">Yanlış</span></div>
+      <div class="option" onclick="select(8,'C')" id="q8-C"><span class="opt-letter">C)</span><span class="opt-text">Verilmemiş</span></div>
+    </div>
+    <div class="feedback-row" id="fb-8">
+      <div class="fb-status" id="fb-status-8"></div>
+      <div class="fb-explain" id="fb-explain-8"></div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="question-card" id="qcard-9">
+    <div class="q-stem"><span class="q-num">9</span>Bilim insanları arı dansının tamamen rastgele hareketlerden oluştuğunu kanıtlamıştır.</div>
+    <div class="options tfng" id="opts-9">
+      <div class="option" onclick="select(9,'A')" id="q9-A"><span class="opt-letter">A)</span><span class="opt-text">Doğru</span></div>
+      <div class="option" onclick="select(9,'B')" id="q9-B"><span class="opt-letter">B)</span><span class="opt-text">Yanlış</span></div>
+      <div class="option" onclick="select(9,'C')" id="q9-C"><span class="opt-letter">C)</span><span class="opt-text">Verilmemiş</span></div>
+    </div>
+    <div class="feedback-row" id="fb-9">
+      <div class="fb-status" id="fb-status-9"></div>
+      <div class="fb-explain" id="fb-explain-9"></div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn-check" onclick="checkAll()">KONTROL ET</button>
+  </div>
+
+  <!-- Score -->
+  <div class="score-banner" id="score-banner">
+    <div class="score-big" id="score-num">0/9</div>
+    <div class="score-sub">doğru cevap</div>
+  </div>
+
+  <div class="footer">Hamza Hoca ile Türkçe Öğreniyorum</div>
+</div>
+
+<script>
+  const QUESTIONS = {
+    1: { letters: ['A','B','C','D'], answer: 'C',
+         explanation: "Metinde erkek arıların koloninin bütün işlerini yaptığı belirtilmemiştir. Aksine erkek arıların temel görevinin <b>çiftleşme</b> olduğu ifade edilmiştir." },
+    2: { letters: ['A','B','C','D'], answer: 'B',
+         explanation: "\u201cKoloninin düzenini sağlamak\u201d ifadesi, arılar arasında <b>uyumlu ve düzenli bir çalışma sistemi</b> kurulmasını anlatmaktadır." },
+    3: { letters: ['A','B','C','D'], answer: 'C',
+         explanation: "Metinde <b>pupa döneminde antenlerin, kanatların ve ayakların geliştiği</b> açıkça belirtilmiştir." },
+    4: { letters: ['A','B','C','D'], answer: 'C',
+         explanation: "<b>Feromonların</b> arılar arasında haberleşmeyi sağlayan kimyasal maddeler olduğu metinde açıklanmıştır." },
+    5: { letters: ['A','B','C'], answer: 'A',
+         explanation: "Larvaların gelişim sırasında <b>birkaç kez deri değiştirdiği</b> bilgisi metinde yer almaktadır." },
+    6: { letters: ['A','B','C'], answer: 'C',
+         explanation: "Arıların yalnızca gündüz iletişim kurduğu yönünde metinde <b>herhangi bir bilgi bulunmamaktadır</b>." },
+    7: { letters: ['A','B','C'], answer: 'A',
+         explanation: "Ana arının salgıladığı <b>feromonların işçi arıların davranışlarını etkilediği</b> ifade edilmiştir." },
+    8: { letters: ['A','B','C'], answer: 'A',
+         explanation: "<b>Genç işçi arıların daha çok kovan içindeki görevleri</b> yerine getirdiği metinde belirtilmektedir." },
+    9: { letters: ['A','B','C'], answer: 'B',
+         explanation: "Bilim insanlarının <b>arı dansının rastgele olmadığını</b> ortaya koyduğu belirtilmiştir." }
+  };
+
+  const TFNG_LABEL = { A: 'Doğru', B: 'Yanlış', C: 'Verilmemiş' };
+
+  const selected = {};
+  const checked = {};
+
+  function select(q, letter) {
+    if (checked[q]) return;
+    selected[q] = letter;
+    QUESTIONS[q].letters.forEach(l => {
+      const el = document.getElementById('q' + q + '-' + l);
+      if (el) el.classList.toggle('selected', l === letter);
+    });
+  }
+
+  function checkAll() {
+    let score = 0;
+    const total = Object.keys(QUESTIONS).length;
+    for (let q = 1; q <= total; q++) {
+      const def = QUESTIONS[q];
+      const ans = selected[q];
+      const card = document.getElementById('qcard-' + q);
+      const fbStatus = document.getElementById('fb-status-' + q);
+      const fbExplain = document.getElementById('fb-explain-' + q);
+      card.classList.remove('correct', 'wrong');
+      checked[q] = true;
+
+      def.letters.forEach(l => {
+        const el = document.getElementById('q' + q + '-' + l);
+        if (!el) return;
+        el.classList.remove('selected', 'opt-correct', 'opt-wrong');
+        el.classList.add('disabled');
+        el.onclick = null;
+        if (l === def.answer) el.classList.add('opt-correct');
+        else if (l === ans && ans !== def.answer) el.classList.add('opt-wrong');
+      });
+
+      const correctLabel = q >= 5 ? (def.answer + ') ' + TFNG_LABEL[def.answer]) : def.answer;
+
+      if (ans === def.answer) {
+        card.classList.add('correct');
+        fbStatus.textContent = '✓ Doğru cevap!';
+        score++;
+      } else if (ans) {
+        card.classList.add('wrong');
+        fbStatus.textContent = '✗ Yanlış. Doğru cevap: ' + correctLabel;
+      } else {
+        card.classList.add('wrong');
+        fbStatus.textContent = '➤ Cevap işaretlenmedi. Doğru cevap: ' + correctLabel;
+      }
+      fbExplain.innerHTML = def.explanation;
+    }
+
+    const banner = document.getElementById('score-banner');
+    banner.style.display = 'block';
+    document.getElementById('score-num').textContent = score + '/' + total;
+    banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function goBack() {
+    window.history.back();
+  }
+</script>
+</body>
+</html>
