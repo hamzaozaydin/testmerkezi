@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Okuma 5: Yapay Zekâ ve Doğa Algısı</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --surface: #fff;
+    --ink: #1a1612;
+    --muted: #7a6e62;
+    --border: #e4ddd3;
+    --accent: #8b4513;
+    --accent-light: #f5ede4;
+    --gold: #c8963e;
+    --correct: #2d7a50;
+    --correct-bg: #edf7f1;
+    --wrong: #b93a3a;
+    --wrong-bg: #fdf0f0;
+    --shadow: 0 2px 16px rgba(80,50,20,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 32px 28px 80px;
+  }
+
+  /* ── Back button (scrolls with the page, not fixed) ── */
+  .back-row {
+    margin-bottom: 28px;
+  }
+
+  .btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 9px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-back:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateX(-2px);
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(26px, 4.6vw, 44px);
+    font-weight: 700;
+    line-height: 1.18;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .subheading {
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .rule {
+    width: 48px;
+    height: 3px;
+    background: var(--accent);
+    margin: 18px auto 0;
+    border-radius: 2px;
+  }
+
+  /* ── Reading text ── */
+  .reading-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px 40px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow);
+  }
+
+  .reading-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 24px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  .para-block {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .para-block:last-child { margin-bottom: 0; }
+
+  .para-letter {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3px;
+  }
+
+  .para-block p {
+    color: #2e2820;
+    font-size: 16.5px;
+    line-height: 1.85;
+  }
+
+  /* ── Questions ── */
+  .questions-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+
+  .questions-label.second {
+    margin-top: 36px;
+  }
+
+  .instructions-box {
+    background: var(--accent-light);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #4a4137;
+    line-height: 1.7;
+  }
+
+  .instructions-box b { color: var(--accent); }
+
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    transition: border-color 0.3s;
+  }
+
+  .question-card.correct {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+  }
+
+  .question-card.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+  }
+
+  .q-stem {
+    font-family: 'Playfair Display', serif;
+    font-size: 16.5px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .q-num {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 4px;
+    margin-right: 8px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .options.compact {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .options.compact .option {
+    flex: 1;
+    min-width: 90px;
+    justify-content: center;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--bg);
+    user-select: none;
+  }
+
+  .option:hover:not(.disabled) {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .option.selected {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .option.opt-correct {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+  }
+
+  .option.opt-wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+  }
+
+  .option.disabled { cursor: default; }
+
+  .opt-letter {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--accent);
+    min-width: 20px;
+    padding-top: 1px;
+  }
+
+  .option.opt-correct .opt-letter { color: var(--correct); }
+  .option.opt-wrong .opt-letter { color: var(--wrong); }
+
+  .opt-text {
+    font-size: 15.5px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+
+  /* ── Feedback / explained answer ── */
+  .feedback-row {
+    display: none;
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 13.5px;
+  }
+
+  .question-card.correct .feedback-row,
+  .question-card.wrong .feedback-row {
+    display: block;
+  }
+
+  .question-card.correct .feedback-row {
+    background: rgba(45,122,80,0.08);
+  }
+
+  .question-card.wrong .feedback-row {
+    background: rgba(185,58,58,0.08);
+  }
+
+  .fb-status {
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .question-card.correct .fb-status { color: var(--correct); }
+  .question-card.wrong .fb-status { color: var(--wrong); }
+
+  .fb-explain {
+    color: #4a4137;
+    line-height: 1.6;
+    font-size: 13.5px;
+  }
+
+  .fb-explain b { color: var(--ink); }
+
+  /* ── Controls ── */
+  .controls {
+    display: flex;
+    gap: 12px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  button {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-check {
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn-check:hover {
+    background: #6b3510;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(139,69,19,0.25);
+  }
+
+  /* ── Score ── */
+  .score-banner {
+    display: none;
+    text-align: center;
+    margin-top: 28px;
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+  }
+
+  .score-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .score-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 56px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    opacity: 0.5;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 20px 16px 60px; }
+    .reading-section { padding: 22px 18px; }
+    .question-card { padding: 20px 18px; }
+    .options.compact .option { min-width: 60px; }
+    .para-block { gap: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Back button -->
+  <div class="back-row">
+    <button class="btn-back" onclick="goBack()">← Geri</button>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="eyebrow">Okuma</div>
+    <h1>Yapay Zekâ ve Doğa Algısı</h1>
+    <p class="subheading"></p>
+    <div class="rule"></div>
+  </div>
+
+  <!-- Reading Text -->
+  <div class="reading-section">
+    <div class="reading-title"></div>
+
+    <div class="para-block">
+      <div class="para-letter">A</div>
+      <p>Son yıllarda sosyal medya platformlarında yapay zekâ tarafından oluşturulan hayvan videoları büyük ilgi görmeye başladı. Özellikle TikTok, Instagram ve Facebook gibi platformlarda paylaşılan bazı videolarda, gerçek hayatta mümkün olmayan olaylar gösteriliyor. Örneğin bir videoda, bir tilkinin küçük bir çocuğa sarıldığı; başka bir videoda ise kutup ayılarının insanlarla birlikte dans ettiği görülüyor. Bu görüntüler milyonlarca kişi tarafından izleniyor ve kullanıcıların önemli bir kısmı bu görüntülerin yapay zekâ tarafından üretildiğini fark etmiyor. Yapay zekâ teknolojisinin gelişmesi sayesinde artık yalnızca birkaç kelime kullanılarak oldukça gerçekçi videolar hazırlanabiliyor. Bu durum bazı uzmanları endişelendiriyor çünkü insanlar zamanla gerçek görüntüler ile dijital olarak üretilmiş sahte görüntüler arasındaki farkı ayırt etmekte zorlanabiliyor.</p>
+    </div>
+
+    <div class="para-block">
+      <div class="para-letter">B</div>
+      <p>Uzmanlara göre bu tür videolar yalnızca eğlence amacı taşımıyor. Sosyal medya içerik üreticileri, daha fazla takipçi kazanmak ve gelir elde etmek için dikkat çekici görüntüler hazırlıyor. Bazı platformlar, yüksek izlenme oranına ulaşan videolar için içerik üreticilerine ödeme yapıyor. Bu nedenle birçok kişi, gerçek olmayan görüntüler üretmeye yöneliyor. Ancak bazı içerik üreticileri bunun yalnızca yaratıcı bir çalışma olduğunu savunuyor. Onlara göre yapay zekâ, insanların hayal gücünü geliştiren yeni bir araçtır. Hatta bazı kişiler, bu videoların çocukların hayvanlara karşı daha fazla ilgi duymasını sağladığını düşünüyor. Özellikle nesli tükenme tehlikesi altında bulunan hayvanların sevimli şekilde gösterilmesi, insanların bu canlılara karşı daha fazla empati hissetmesine yardımcı olabiliyor.</p>
+    </div>
+
+    <div class="para-block">
+      <div class="para-letter">C</div>
+      <p>Bununla birlikte birçok bilim insanı, yapay zekâ tarafından oluşturulan hayvan içeriklerinin ciddi sorunlara yol açabileceğini düşünüyor. Çünkü bu videolar, hayvanların gerçek davranışları hakkında yanlış bilgiler verebiliyor. Örneğin bazı videolarda ayılar insanlarla oyun oynayan dost canlısı hayvanlar gibi gösteriliyor. Gerçekte ise vahşi ayılar insan hayatı için tehlikeli olabilir. Uzmanlar, özellikle çocukların bu tür görüntülerden kolayca etkilenebileceğini belirtiyor. Yapılan araştırmalar, çocukların internet ortamında gördükleri bilgilerin önemli bir bölümünü sorgulamadan doğru kabul ettiğini ortaya koyuyor. Bu nedenle yanlış içeriklerin uzun vadede insanların doğa hakkındaki bilgisini olumsuz etkileyebileceği düşünülüyor.</p>
+    </div>
+
+    <div class="para-block">
+      <div class="para-letter">D</div>
+      <p>Bazı araştırmacılar ise sorunun yalnızca yanlış bilgi olmadığını ifade ediyor. Onlara göre insanlar doğadan giderek uzaklaşıyor ve doğal yaşamı çoğunlukla ekranlardan tanıyor. Büyük şehirlerde yaşayan çocukların önemli bir kısmı birçok hayvan türünü yalnızca çizgi filmlerden veya sosyal medyadan öğreniyor. İspanya'da yapılan bir araştırmada, ilkokul öğrencilerinin büyük bölümünün kendi ülkelerinde yaşayan bazı hayvan türlerini tanımadığı ortaya çıktı. Benzer şekilde İngiltere'de yapılan başka bir araştırmada, üniversite öğrencilerinin çoğunun yerel kuş türlerini ayırt edemediği görüldü. Uzmanlar, yapay zekâ tarafından hazırlanan sahte videoların bu bilgi eksikliğini daha da artırabileceğini söylüyor.</p>
+    </div>
+
+    <div class="para-block">
+      <div class="para-letter">E</div>
+      <p>Yapay zekâ destekli içeriklerin tamamen yasaklanması gerektiğini düşünenlerin sayısı fazla değildir. Uzmanların çoğu, asıl çözümün şeffaflık olduğunu savunuyor. Buna göre sosyal medya platformları, yapay zekâ ile oluşturulan görüntüleri açık şekilde etiketlemelidir. Böylece kullanıcılar izledikleri içeriğin gerçek mi yoksa dijital olarak mı üretildiğini anlayabilir. Avrupa Birliği bu konuda bazı yeni düzenlemeler hazırlamaya başlamıştır. Ayrıca birçok teknoloji şirketi de sahte içerikleri otomatik olarak tespit eden sistemler geliştirmektedir. Uzmanlara göre insanların medya okuryazarlığı konusunda bilinçlendirilmesi de büyük önem taşımaktadır. Çünkü gelecekte yapay zekâ teknolojisinin daha da gelişeceği ve bu tür içeriklerin günlük yaşamın sıradan bir parçası hâline geleceği düşünülmektedir.</p>
+    </div>
+  </div>
+
+  <!-- Questions 1-3 -->
+  <div class="questions-label">Sorular 1-3 · Metne göre doğru seçeneği işaretleyiniz.</div>
+
+  <!-- Q1 -->
+  <div class="question-card" id="qcard-1">
+    <div class="q-stem"><span class="q-num">1</span>Aşağıdaki cümlelerden hangisi metinden çıkarılamaz?</div>
+    <div class="options" id="opts-1">
+      <div class="option" onclick="select(1,'A')" id="q1-A"><span class="opt-letter">A)</span><span class="opt-text">Bazı insanlar yapay zekâ videolarını gerçek sanmaktadır.</span></div>
+      <div class="option" onclick="select(1,'B')" id="q1-B"><span class="opt-letter">B)</span><span class="opt-text">İçerik üreticileri sosyal medyadan maddi gelir elde edebilmektedir.</span></div>
+      <div class="option" onclick="select(1,'C')" id="q1-C"><span class="opt-letter">C)</span><span class="opt-text">Uzmanların tamamı yapay zekâ içeriklerinin yasaklanmasını istemektedir.</span></div>
+      <div class="option" onclick="select(1,'D')" id="q1-D"><span class="opt-letter">D)</span><span class="opt-text">Yapay zekâ ile gerçekçi videolar üretmek kolaylaşmıştır.</span></div>
+    </div>
+    <div class="feedback-row" id="fb-1">
+      <div class="fb-status" id="fb-status-1"></div>
+      <div class="fb-explain" id="fb-explain-1"></div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question-card" id="qcard-2">
+    <div class="q-stem"><span class="q-num">2</span>Metinde aşağıdaki cümlelerden hangisine değinilmemiştir?</div>
+    <div class="options" id="opts-2">
+      <div class="option" onclick="select(2,'A')" id="q2-A"><span class="opt-letter">A)</span><span class="opt-text">Çocuklar internette gördükleri bilgileri sorgulamadan kabul edebilir.</span></div>
+      <div class="option" onclick="select(2,'B')" id="q2-B"><span class="opt-letter">B)</span><span class="opt-text">Avrupa Birliği yapay zekâ içerikleriyle ilgili düzenlemeler hazırlamaktadır.</span></div>
+      <div class="option" onclick="select(2,'C')" id="q2-C"><span class="opt-letter">C)</span><span class="opt-text">Yapay zekâ sayesinde insanlar artık kitap okumayı bırakmıştır.</span></div>
+      <div class="option" onclick="select(2,'D')" id="q2-D"><span class="opt-letter">D)</span><span class="opt-text">Bazı araştırmalar öğrencilerin doğa bilgisi konusunda yetersiz olduğunu göstermektedir.</span></div>
+    </div>
+    <div class="feedback-row" id="fb-2">
+      <div class="fb-status" id="fb-status-2"></div>
+      <div class="fb-explain" id="fb-explain-2"></div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question-card" id="qcard-3">
+    <div class="q-stem"><span class="q-num">3</span>Metinden aşağıdaki yargılardan hangisine ulaşılamaz?</div>
+    <div class="options" id="opts-3">
+      <div class="option" onclick="select(3,'A')" id="q3-A"><span class="opt-letter">A)</span><span class="opt-text">Yapay zekâ videoları insanların hayvanlara karşı empati geliştirmesine katkı sağlayabilir.</span></div>
+      <div class="option" onclick="select(3,'B')" id="q3-B"><span class="opt-letter">B)</span><span class="opt-text">Sosyal medya kullanıcılarının tamamı sahte videoları kolayca ayırt edebilmektedir.</span></div>
+      <div class="option" onclick="select(3,'C')" id="q3-C"><span class="opt-letter">C)</span><span class="opt-text">Yanlış hayvan tasvirleri insanların doğa hakkındaki bilgisini etkileyebilir.</span></div>
+      <div class="option" onclick="select(3,'D')" id="q3-D"><span class="opt-letter">D)</span><span class="opt-text">Teknoloji şirketleri sahte içerikleri belirlemek için yeni sistemler geliştirmektedir.</span></div>
+    </div>
+    <div class="feedback-row" id="fb-3">
+      <div class="fb-status" id="fb-status-3"></div>
+      <div class="fb-explain" id="fb-explain-3"></div>
+    </div>
+  </div>
+
+  <!-- Questions 4-6 -->
+  <div class="questions-label second">Sorular 4-6 · Paragraf Eşleştirme</div>
+  <div class="instructions-box">
+    Aşağıdaki cümlelerin hangi paragrafa (<b>A-E</b>) ait olduğunu bulunuz. Seçilmemesi gereken <b>İKİ</b> paragraf bulunmaktadır.
+  </div>
+
+  <!-- Q4 -->
+  <div class="question-card" id="qcard-4">
+    <div class="q-stem"><span class="q-num">4</span>İnsanların doğadan uzaklaşmasının çocukların hayvan bilgisi üzerindeki etkisi hangi paragrafta yer almaktadır?</div>
+    <div class="options compact" id="opts-4">
+      <div class="option" onclick="select(4,'A')" id="q4-A"><span class="opt-text">A</span></div>
+      <div class="option" onclick="select(4,'B')" id="q4-B"><span class="opt-text">B</span></div>
+      <div class="option" onclick="select(4,'C')" id="q4-C"><span class="opt-text">C</span></div>
+      <div class="option" onclick="select(4,'D')" id="q4-D"><span class="opt-text">D</span></div>
+      <div class="option" onclick="select(4,'E')" id="q4-E"><span class="opt-text">E</span></div>
+    </div>
+    <div class="feedback-row" id="fb-4">
+      <div class="fb-status" id="fb-status-4"></div>
+      <div class="fb-explain" id="fb-explain-4"></div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="question-card" id="qcard-5">
+    <div class="q-stem"><span class="q-num">5</span>Sosyal medya içerik üreticilerinin yapay zekâ videoları hazırlama nedenleri hangi paragrafta yer almaktadır?</div>
+    <div class="options compact" id="opts-5">
+      <div class="option" onclick="select(5,'A')" id="q5-A"><span class="opt-text">A</span></div>
+      <div class="option" onclick="select(5,'B')" id="q5-B"><span class="opt-text">B</span></div>
+      <div class="option" onclick="select(5,'C')" id="q5-C"><span class="opt-text">C</span></div>
+      <div class="option" onclick="select(5,'D')" id="q5-D"><span class="opt-text">D</span></div>
+      <div class="option" onclick="select(5,'E')" id="q5-E"><span class="opt-text">E</span></div>
+    </div>
+    <div class="feedback-row" id="fb-5">
+      <div class="fb-status" id="fb-status-5"></div>
+      <div class="fb-explain" id="fb-explain-5"></div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="question-card" id="qcard-6">
+    <div class="q-stem"><span class="q-num">6</span>Yapay zekâ içeriklerinin etiketlenmesi gerektiği fikri hangi paragrafta yer almaktadır?</div>
+    <div class="options compact" id="opts-6">
+      <div class="option" onclick="select(6,'A')" id="q6-A"><span class="opt-text">A</span></div>
+      <div class="option" onclick="select(6,'B')" id="q6-B"><span class="opt-text">B</span></div>
+      <div class="option" onclick="select(6,'C')" id="q6-C"><span class="opt-text">C</span></div>
+      <div class="option" onclick="select(6,'D')" id="q6-D"><span class="opt-text">D</span></div>
+      <div class="option" onclick="select(6,'E')" id="q6-E"><span class="opt-text">E</span></div>
+    </div>
+    <div class="feedback-row" id="fb-6">
+      <div class="fb-status" id="fb-status-6"></div>
+      <div class="fb-explain" id="fb-explain-6"></div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn-check" onclick="checkAll()">KONTROL ET</button>
+  </div>
+
+  <!-- Score -->
+  <div class="score-banner" id="score-banner">
+    <div class="score-big" id="score-num">0/6</div>
+    <div class="score-sub">doğru cevap</div>
+  </div>
+
+  <div class="footer">Hamza Hoca ile Türkçe Öğreniyorum</div>
+</div>
+
+<script>
+  const QUESTIONS = {
+    1: { letters: ['A','B','C','D'], answer: 'C', paragraph: false,
+         explanation: "Metnin <b>E paragrafında</b> uzmanların çoğunun içeriklerin tamamen yasaklanmasını değil, açık şekilde etiketlenmesini savunduğu belirtilmektedir. Bu nedenle \u201ctamamı yasaklanmasını istemektedir\u201d ifadesi metinden çıkarılamaz." },
+    2: { letters: ['A','B','C','D'], answer: 'C', paragraph: false,
+         explanation: "Metinde kitap okuma alışkanlıklarının tamamen sona erdiğine dair hiçbir bilgi verilmemektedir. Diğer seçenekler metinde açıkça yer alır: <b>A → C paragrafı, B → E paragrafı, D → D paragrafı.</b>" },
+    3: { letters: ['A','B','C','D'], answer: 'B', paragraph: false,
+         explanation: "<b>A paragrafında</b> kullanıcıların önemli bir kısmının sahte içerikleri fark etmediği belirtilmiştir. Bu nedenle herkesin sahte videoları kolayca ayırt edebildiği söylenemez. Diğer seçenekler metinden çıkarılabilir: <b>A → B paragrafı, C → C paragrafı, D → E paragrafı.</b>" },
+    4: { letters: ['A','B','C','D','E'], answer: 'D', paragraph: true,
+         explanation: "<b>D paragrafında</b> insanların doğadan uzaklaştığı, çocukların hayvanları daha çok ekranlardan öğrendiği ve öğrencilerin doğa bilgisi konusunda yetersiz olduğu anlatılmaktadır." },
+    5: { letters: ['A','B','C','D','E'], answer: 'B', paragraph: true,
+         explanation: "<b>B paragrafında</b> içerik üreticilerinin takipçi kazanmak, gelir elde etmek ve yaratıcı içerikler üretmek amacıyla yapay zekâ videoları hazırladığı açıklanmaktadır." },
+    6: { letters: ['A','B','C','D','E'], answer: 'E', paragraph: true,
+         explanation: "<b>E paragrafında</b> yapay zekâ ile üretilen içeriklerin açık şekilde etiketlenmesi gerektiği ve Avrupa Birliği'nin bu konuda düzenlemeler hazırladığı belirtilmektedir." }
+  };
+
+  const selected = {};
+  const checked = {};
+
+  function select(q, letter) {
+    if (checked[q]) return;
+    selected[q] = letter;
+    QUESTIONS[q].letters.forEach(l => {
+      const el = document.getElementById('q' + q + '-' + l);
+      if (el) el.classList.toggle('selected', l === letter);
+    });
+  }
+
+  function checkAll() {
+    let score = 0;
+    const total = Object.keys(QUESTIONS).length;
+    for (let q = 1; q <= total; q++) {
+      const def = QUESTIONS[q];
+      const ans = selected[q];
+      const card = document.getElementById('qcard-' + q);
+      const fbStatus = document.getElementById('fb-status-' + q);
+      const fbExplain = document.getElementById('fb-explain-' + q);
+      card.classList.remove('correct', 'wrong');
+      checked[q] = true;
+
+      def.letters.forEach(l => {
+        const el = document.getElementById('q' + q + '-' + l);
+        if (!el) return;
+        el.classList.remove('selected', 'opt-correct', 'opt-wrong');
+        el.classList.add('disabled');
+        el.onclick = null;
+        if (l === def.answer) el.classList.add('opt-correct');
+        else if (l === ans && ans !== def.answer) el.classList.add('opt-wrong');
+      });
+
+      const correctLabel = def.paragraph ? (def.answer + ' paragrafı') : def.answer;
+
+      if (ans === def.answer) {
+        card.classList.add('correct');
+        fbStatus.textContent = '✓ Doğru cevap!';
+        score++;
+      } else if (ans) {
+        card.classList.add('wrong');
+        fbStatus.textContent = '✗ Yanlış. Doğru cevap: ' + correctLabel;
+      } else {
+        card.classList.add('wrong');
+        fbStatus.textContent = '➤ Cevap işaretlenmedi. Doğru cevap: ' + correctLabel;
+      }
+      fbExplain.innerHTML = def.explanation;
+    }
+
+    const banner = document.getElementById('score-banner');
+    banner.style.display = 'block';
+    document.getElementById('score-num').textContent = score + '/' + total;
+    banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function goBack() {
+    window.history.back();
+  }
+</script>
+</body>
+</html>
