@@ -526,11 +526,26 @@ footer span { color: #F5C842; }
     </div>
 </div>
 
-<!-- OYUNLAR PANELİ -->
-<div class="content-panel" id="oyunlar">
-    <div class="panel-header"><h2>🎯 OYUNLAR</h2></div>
-    <div class="panel-body"><div class="two-col-grid"><div><div class="col-label col-label-free">✅ Ücretsiz</div><div class="col-items" id="gamesFree"></div></div><div><div class="col-label col-label-locked">🔒 Giriş Gerekli</div><div class="col-items" id="gamesLocked"></div></div></div></div>
-</div>
+// Oyunlar
+const gamesGrid = document.getElementById('gamesGrid');
+if(gamesGrid) {
+  gamesGrid.innerHTML = `
+    <div>
+      <div class="col-label col-label-free">✅ Ücretsiz</div>
+      <div class="col-items">
+        <a class="item-card" href="deyimler_carki.html">Deyim Çarkı 1<span class="badge badge-free">✅ Ücretsiz</span></a>
+        <a class="item-card" href="fiiller_carki_b1_1.unite.html">B1-Fiiller Çarkı 1<span class="badge badge-free">✅ Ücretsiz</span></a>
+      </div>
+    </div>
+    <div>
+      <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
+      <div class="col-items">
+        <div class="item-card" onclick="openExamLogin('kelimeler_carki_c1_1.unite.html')">C1-Kelimeler Çarkı 1<span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
+        <div class="item-card" onclick="openExamLogin('kelimeler_carki_c1_2.unite.html')">C1-Kelimeler Çarkı 2<span class="badge badge-locked">🔒 Giriş Gerekli</span></div>
+      </div>
+    </div>
+  `;
+}
 
 <!-- ÖĞRETMENLER İÇİN PANELİ -->
 <div class="content-panel" id="ogretmenler-icin">
