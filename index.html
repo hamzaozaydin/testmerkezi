@@ -759,6 +759,12 @@ if(gramerB2Div){
   div2.setAttribute('onclick',`openExamLogin('b2_ken_eki.html')`);
   div2.innerHTML=`<span>-ken Eki</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`;
   gramerB2Div.appendChild(div2);
+
+  let div3=document.createElement('div');
+  div3.className='item-card';
+  div3.setAttribute('onclick',`openExamLogin('b2_ragmen_dıgı_halde.html')`);
+  div3.innerHTML=`<span>-rağmen/-dığı halde/-a rağmen Ekleri</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`;
+  gramerB2Div.appendChild(div3); // 
 }
   
   // Konuşma Soruları (metin sorular)
