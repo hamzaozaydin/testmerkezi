@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<script>
+  if (!sessionStorage.getItem('hamzaUser')) {
+    alert('Bu sayfa sadece üyeler içindir. Lütfen giriş yapın.');
+    window.location.replace('index.html');
+  }
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>-a Rağmen / -dığı Halde – Hamza Hoca</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* ===== HEADER STYLES (unchanged) ===== */
+.home-btn-wrap {
+  padding: 18px 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 40px;
+  padding: 9px 20px;
+  color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .22s, transform .18s, box-shadow .22s;
+}
+
+.home-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  color: #F5C842;
+  text-decoration: none;
+}
+
+.home-btn svg { flex-shrink: 0; }
+
+header {
+  text-align: center;
+  padding: 2rem 1rem 1.2rem;
+}
+
+.header-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.3rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 0.9rem;
+}
+
+header h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.header-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 10px;
+}
+
+.stars {
+  font-size: 1rem;
+  color: #F5C842;
+  letter-spacing: .4em;
+  margin-bottom: 6px;
+  opacity: .7;
+}
+
+.subtitle {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.telegram-section {
+  text-align: center;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.tg-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(26,35,50,0.85);
+  border: 1.5px solid rgba(34,158,217,0.3);
+  border-radius: 60px;
+  padding: .75rem 1.5rem .75rem 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+.tg-btn {
+  display: inline-flex;
+  align-items: center; gap: .45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0);
+  color: #fff; text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800; font-size: .92rem;
+  padding: .65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34,158,217,.4);
+  transition: all .22s; white-space: nowrap;
+}
+
+.tg-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(34,158,217,.55);
+}
+
+.section-title {
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: .85rem; color: #F5C842;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: .5rem 0 1rem; opacity: .75;
+}
+
+footer {
+  text-align: center;
+  padding: 0 1rem 2.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+footer span { color: #F5C842; }
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.95) translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ===== CONTENT STYLES ===== */
+.content-wrap {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+}
+
+/* Konu kutusu */
+.topic-card {
+  background: rgba(26,35,50,0.9);
+  border: 1.5px solid rgba(245,200,66,0.25);
+  border-radius: 16px;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1.4rem;
+  animation: popIn .4s ease both;
+}
+
+.topic-card h2 {
+  font-size: 1.05rem;
+  color: #F5C842;
+  font-weight: 800;
+  letter-spacing: .04em;
+  margin-bottom: .7rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.topic-card h2 .badge {
+  background: linear-gradient(135deg,#F5C842,#C9960A);
+  color: #0D1B2A;
+  font-size: .62rem;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: .18rem .7rem;
+  border-radius: 50px;
+}
+
+.topic-card p {
+  font-size: .93rem;
+  color: rgba(255,255,255,.82);
+  line-height: 1.65;
+  margin-bottom: .55rem;
+}
+
+.topic-card .example-list {
+  list-style: none;
+  margin-top: .4rem;
+}
+
+.topic-card .example-list li {
+  font-size: .88rem;
+  color: rgba(255,255,255,.72);
+  padding: .28rem 0 .28rem .9rem;
+  border-left: 2px solid rgba(245,200,66,.35);
+  margin-bottom: .3rem;
+  line-height: 1.5;
+}
+
+.topic-card .example-list li strong {
+  color: #F5C842;
+}
+
+/* İsim + a rağmen kutusu */
+.isim-box {
+  background: rgba(34,158,217,0.08);
+  border: 1px solid rgba(34,158,217,0.3);
+  border-radius: 10px;
+  padding: .8rem 1rem;
+  margin-top: .8rem;
+}
+
+.isim-box .isim-title {
+  font-size: .75rem;
+  font-weight: 800;
+  color: #4fc3e8;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: .45rem;
+}
+
+.isim-box ul { list-style: none; }
+.isim-box ul li {
+  font-size: .88rem;
+  color: rgba(255,255,255,.75);
+  padding: .22rem 0;
+  line-height: 1.5;
+}
+
+/* Alıştırma bölümleri */
+.exercise-section {
+  margin-bottom: 1.6rem;
+  animation: popIn .4s ease both;
+  animation-delay: .1s;
+}
+
+.exercise-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-bottom: 1rem;
+}
+
+.exercise-title {
+  font-size: .82rem;
+  font-weight: 800;
+  color: #F5C842;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: .85;
+}
+
+.check-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  border: none;
+  border-radius: 50px;
+  padding: .55rem 1.3rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: .82rem;
+  font-weight: 900;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: transform .18s, box-shadow .2s;
+  box-shadow: 0 4px 14px rgba(245,200,66,.3);
+}
+
+.check-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245,200,66,.45);
+}
+
+.check-btn svg { flex-shrink: 0; }
+
+/* Alıştırma kartı */
+.ex-card {
+  background: rgba(26,35,50,0.85);
+  border: 1.5px solid rgba(245,200,66,0.15);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  margin-bottom: .75rem;
+  transition: border-color .2s;
+}
+
+.ex-card:hover { border-color: rgba(245,200,66,.35); }
+
+.ex-card .original {
+  font-size: .88rem;
+  color: rgba(255,255,255,.6);
+  margin-bottom: .35rem;
+  line-height: 1.5;
+}
+
+.ex-card .transform {
+  font-size: .93rem;
+  color: rgba(255,255,255,.88);
+  line-height: 1.6;
+}
+
+.blank-input {
+  display: inline-block;
+  min-width: 130px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid rgba(245,200,66,.55);
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: .9rem;
+  padding: 1px 6px 2px;
+  vertical-align: bottom;
+  outline: none;
+  transition: border-color .2s;
+}
+.blank-input:focus {
+  border-bottom-color: #F5C842;
+  background: rgba(245,200,66,.06);
+}
+.blank-input::placeholder { color: rgba(255,255,255,.25); font-style: italic; }
+
+/* Cevap açılınca */
+.answer-reveal {
+  display: none;
+  margin-top: .6rem;
+  padding-top: .6rem;
+  border-top: 1px solid rgba(245,200,66,.15);
+}
+
+.answer-reveal.visible { display: block; }
+
+.answer-label {
+  font-size: .68rem;
+  font-weight: 800;
+  color: #4fc3e8;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: .3rem;
+}
+
+.answer-text {
+  font-size: .92rem;
+  color: #6ee87e;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.answer-text .highlight {
+  background: rgba(110,232,126,0.15);
+  border-radius: 4px;
+  padding: 0 3px;
+  color: #6ee87e;
+}
+
+/* Gizle butonu */
+.hide-btn {
+  display: none;
+  align-items: center;
+  gap: .45rem;
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.55);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 50px;
+  padding: .45rem 1.1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: .78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .18s;
+  margin-top: .6rem;
+}
+
+.hide-btn.visible { display: inline-flex; }
+.hide-btn:hover { background: rgba(255,255,255,.1); color: rgba(255,255,255,.75); }
+
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER (orijinal, değiştirilmedi) ===== -->
+<div class="home-btn-wrap" id="backBtnWrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ B2 Dilbilgisi ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle"></p>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+      Kanala Katıl
+    </a>
+  </div>
+</div>
+
+<div class="section-title">-a Rağmen • -masına Rağmen • -dığı Halde</div>
+
+<!-- ===== İÇERİK ===== -->
+<div class="content-wrap">
+
+  <!-- KONU KARTI -->
+  <div class="topic-card">
+    <h2>
+      <span class="badge">Konu</span>
+      -a rağmen &nbsp;/&nbsp; -masına rağmen &nbsp;/&nbsp; -dığı halde
+    </h2>
+    <p>
+      Aralarında <strong style="color:#F5C842">karşıtlık (zıtlık)</strong> olan iki cümleyi bağlar.
+      <em style="color:rgba(255,255,255,.55)">Ama, fakat, lakin</em> anlamları taşır.
+    </p>
+    <ul class="example-list">
+      <li>Çok çalıştı <strong>ama</strong> sınavı kazanamadı.</li>
+      <li>Çok çalış<strong>masına rağmen</strong> sınavı kazanamadı.</li>
+      <li>Çok çalış<strong>tığı halde</strong> sınavı kazanamadı.</li>
+      <li>Çok çalış<strong>mama rağmen</strong> sınavı kazanamadım.</li>
+    </ul>
+    <ul class="example-list" style="margin-top:.6rem">
+      <li>Ayşe'yi saatlerce bekledim <strong>ama</strong> o gelmedi.</li>
+      <li>Ayşe'yi saatlerce bekleme<strong>me rağmen</strong> o gelmedi.</li>
+      <li>Ayşe'yi saatlerce bekledi<strong>ğim halde</strong> o gelmedi.</li>
+      <li>Ayşe'yi saatlerce bekle<strong>mesine rağmen</strong> o gelmedi.</li>
+    </ul>
+
+    <div class="isim-box">
+      <div class="isim-title">İsim + (y)a rağmen</div>
+      <ul>
+        <li>Soğuk hava<strong>ya rağmen</strong> insanlar denize giriyor.</li>
+        <li>Trafiğ<strong>e rağmen</strong> işe zamanında yetiştim.</li>
+        <li>Onca ısrarımız<strong>a rağmen</strong> bizimle gelmeyi reddetti.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== ALIŞTIRMA 1: -a rağmen / -masına rağmen ===== -->
+  <div class="exercise-section">
+    <div class="exercise-header">
+      <div class="exercise-title">⬡ Alıştırma 1 — -a rağmen / -masına rağmen</div>
+      <button class="check-btn" onclick="toggleAnswers('ex1')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        Cevapları Kontrol Et
+      </button>
+    </div>
+
+    <!-- Soru 1 -->
+    <div class="ex-card">
+      <div class="original">Hava çok soğuktu ama dışarı çıktık.</div>
+      <div class="transform">→ Havanın çok soğuk <span style="color:#F5C842;font-weight:700;">olmasına rağmen</span> dışarı çıktık.</div>
+      <div class="answer-reveal" id="ex1-0">
+        <div class="answer-label">✓ Cevap</div>
+        <div class="answer-text">Havanın çok soğuk <span class="highlight">olmasına rağmen</span> dışarı çıktık.</div>
+      </div>
+    </div>
+
+    <!-- Soru 2 -->
+    <div class="ex-card">
+      <div class="original">Yaşı genç ama çok tecrübeli.</div>
+      <div class="transform">→ Yaşının genç ol<input class="blank-input" type="text" placeholder="…yazınız…"> çok tecrübeli.</div>
+      <div class="answer-reveal" id="ex1-1">
+        <div class="answer-label">✓ Cevap</div>
+        <div class="answer-text">Yaşının genç <span class="highlight">olmasına rağmen</span> çok tecrübeli.</div>
+      </div>
+    </div>
+
+    <!-- Soru 3 -->
+    <div class="ex-card">
+      <div class="original">Çok yorgundum ama ödevimi bitirdim.</div>
+      <div class="transform">→ Çok yorgun ol<input class="blank-input" type="text" placeholder="…yazınız…"> ödevimi bitirdim.</div>
+      <div class="answer-reveal" id="ex1-2">
+        <div class="answer-label">✓ Cevap</div>
+        <div class="answer-text">Çok yorgun <span class="highlight">olmama rağmen</span> ödevimi bitirdim.</div>
+      </div>
+    </div>
+
+    <!-- Soru 4 -->
+    <div class="ex-card">
+      <div class="original">Param yok ama yardım ettim.</div>
+      <div class="transform">→ Param ol<input class="blank-input" type="text" placeholder="…yazınız…"> yardım ettim.</div>
+      <div class="answer-reveal" id="ex1-3">
+        <div class="answer-label">✓ Cevap</div>
+        <div class="answer-text">Param <span class="highlight">olmamasına rağmen</span> yardım ettim.</div>
+      </div>
+    </div>
+
+    <!-- Soru 5 -->
+    <div class="ex-card">
+      <div class="original">Hastaydı ama işe gitti.</div>
+      <div class="transform">→ Hasta ol<input class="blank-input" type="text" placeholder="…yazınız…"> işe gitti.</div>
+      <div class="answer-reveal" id="ex1-4">
+        <div class="answer-label">✓ Cevap</div>
+        <div class="answer-text">Hasta <span class="highlight">olmasına rağmen</span> işe gitti.</div>
+      </div>
+    </div>
+
+    <!-- Soru 6 -->
+    <div class="ex-card">
+      <div class="original">Türkçeyi yeni öğreniyor ama çok güzel konuşuyor.</div>
+      <div class="transform">→ Türkçeyi yeni öğren<input class="blank-input" type="text" placeholder="…yazınız…"> çok güzel konuşuyor.</div>
+      <div class="answer-reveal" id="ex1-5">
+        <div class="answer-label">✓ Cevap</div>
+        <div class="answer-text">Türkçeyi yeni <span class="highlight">öğrenmesine rağmen</span> çok güzel konuşuyor.</div>
+      </div>
+    </div>
+
+    <!-- Soru 7 -->
+    <div class="ex-card">
+      <div class="original">Yağmur yağıyordu ama maç devam etti.</div>
+      <div class="transform">→ Yağmur yağ<input class="blank-input" type="text" placeholder="…yazınız…"> maç devam etti.</div>
+      <div class="answer-reveal" id="ex1-6">
+        <div class="answer-label">✓ Cevap</div>
+        <div class="answer-text">Yağmur <span class="highlight">yağmasına rağmen</span> maç devam etti.</div>
+      </div>
+    </div>
+
+    <!-- Soru 8 -->
+    <div class="ex-card">
+      <div class="original">Beni tanımıyordu ama bana yardım etti.</div>
+      <div class="transform">→ Beni tanı<input class="blank-input" type="text" placeholder="…yazınız…"> bana yardım etti.</div>
+      <div class="answer-reveal" id="ex1-7">
+        <div class="answer-label">✓ Cevap</div>
+        <div class="answer-text">Onu <span class="highlight">tanımamama rağmen</span> bana yardım etti.</div>
+      </div>
+    </div>
+
+    <button class="hide-btn" id="hide-ex1" onclick="hideAnswers('ex1')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+      Cevapları Gizle
+    </button>
+  </div>
+
+  <!-- ===== ALIŞTIRMA 2: -dığı halde ===== -->
+  <div class="exercise-section">
+    <div class="exercise-header">
+      <div class="exercise-title">⬡ Alıştırma 2 — -dığı halde</div>
+      <button class="check-btn" onclick="toggleAnswers('ex2')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        Cevapları Kontrol Et
+      </button>
+    </div>
+
+    <!-- Örnek -->
+    <div class="ex-card" style="border-color:rgba(245,200,66,.3);">
+      <div class="original" style="color:rgba(245,200,66,.6); font-size:.78rem; letter-spacing:1px; text-transform:uppercase;">Örnek</div>
+      <div class="original">Çok zengin ama mutsuz.</div>
+      <div class="transform" style="color:#6ee87e;">→ Çok zengin <strong>olduğu halde</strong> mutsuz.</div>
+    </div>
+
+    <!-- Soru 1 -->
+    <div class="ex-card">
+      <div class="original">Saat çok geç ama uyumuyor.</div>
+      <div class="transform">→ Saat çok geç <input class="blank-input" type="text" placeholder="…yazınız…"> uyumuyor.</div>
+      <div class="answer-reveal" id="ex2-0">
+        <div class="answer-label">✓ Cevap</div>
+        <div class="answer-text">Saat çok geç <span class="highlight">olduğu halde</span> uyumuyor.</div>
+      </div>
+    </div>
+
+    <!-- Soru 2 -->
+    <div class="ex-card">
+      <div class="original">Derslerine düzenli çalışıyor ama başarılı olamıyor.</div>
+      <div class="transform">→ Derslerine düzenli çalış<input class="blank-input" type="text" placeholder="…yazınız…"> başarılı olamıyor.</div>
+      <div class="answer-reveal" id="ex2-1">
+        <div class="answer-label">✓ Cevap</div>
+        <div class="answer-text">Derslerine düzenli <span class="highlight">çalıştığı halde</span> başarılı olamıyor.</div>
+      </div>
+    </div>
+
+    <!-- Soru 3 -->
+    <div class="ex-card">
+      <div class="original">Defalarca anlattım ama anlamadı.</div>
+      <div class="transform">→ Defalarca anlat<input class="blank-input" type="text" placeholder="…yazınız…"> anlamadı.</div>
+      <div class="answer-reveal" id="ex2-2">
+        <div class="answer-label">✓ Cevap</div>
+        <div class="answer-text">Defalarca <span class="highlight">anlattığım halde</span> anlamadı.</div>
+      </div>
+    </div>
+
+    <!-- Soru 4 -->
+    <div class="ex-card">
+      <div class="original">Çok korkuyordu ama sahneye çıktı.</div>
+      <div class="transform">→ Çok kor<input class="blank-input" type="text" placeholder="…yazınız…"> sahneye çıktı.</div>
+      <div class="answer-reveal" id="ex2-3">
+        <div class="answer-label">✓ Cevap</div>
+        <div class="answer-text">Çok <span class="highlight">korktuğu halde</span> sahneye çıktı.</div>
+      </div>
+    </div>
+
+    <!-- Soru 5 -->
+    <div class="ex-card">
+      <div class="original">Kar yağdı ama yollar kapanmadı.</div>
+      <div class="transform">→ Kar yağ<input class="blank-input" type="text" placeholder="…yazınız…"> yollar kapanmadı.</div>
+      <div class="answer-reveal" id="ex2-4">
+        <div class="answer-label">✓ Cevap</div>
+        <div class="answer-text">Kar <span class="highlight">yağdığı halde</span> yollar kapanmadı.</div>
+      </div>
+    </div>
+
+    <!-- Soru 6 -->
+    <div class="ex-card">
+      <div class="original">Yaşı ilerledi ama hâlâ spor yapıyor.</div>
+      <div class="transform">→ Yaşı ilerle<input class="blank-input" type="text" placeholder="…yazınız…"> hâlâ spor yapıyor.</div>
+      <div class="answer-reveal" id="ex2-5">
+        <div class="answer-label">✓ Cevap</div>
+        <div class="answer-text">Yaşı <span class="highlight">ilerlediği halde</span> hâlâ spor yapıyor.</div>
+      </div>
+    </div>
+
+    <button class="hide-btn" id="hide-ex2" onclick="hideAnswers('ex2')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+      Cevapları Gizle
+    </button>
+  </div>
+
+</div><!-- /content-wrap -->
+
+<footer>
+  <span>Hamza Hoca ile Türkçe Öğreniyorum</span> &nbsp;•&nbsp; Tüm hakları saklıdır.
+</footer>
+
+<script>
+function toggleAnswers(section) {
+  const reveals = document.querySelectorAll('[id^="' + section + '-"]');
+  const hideBtn = document.getElementById('hide-' + section);
+  reveals.forEach(function(el) {
+    el.classList.add('visible');
+  });
+  hideBtn.classList.add('visible');
+}
+
+function hideAnswers(section) {
+  const reveals = document.querySelectorAll('[id^="' + section + '-"]');
+  const hideBtn = document.getElementById('hide-' + section);
+  reveals.forEach(function(el) {
+    el.classList.remove('visible');
+  });
+  hideBtn.classList.remove('visible');
+}
+</script>
+
+</body>
+</html>
