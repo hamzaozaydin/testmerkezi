@@ -650,8 +650,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Sınavlar
   const reading = ["okuma1.html","okuma-testi-2.html","okuma_testi_3.html","okuma_testi_4.html","okuma_testi_5.html","okuma_testi_6.html","okuma_testi_7.html","okuma_testi_8.html","TYS_okuma_testi_1.html","okuma_testi_10.html"];
   const readingNames = ["Okuma Sınavı 1","Okuma Sınavı 2","Okuma Sınavı 3","Okuma Sınavı 4","Okuma Sınavı 5","Okuma Sınavı 6","Okuma Sınavı 7","Okuma Sınavı 8","Okuma Sınavı 9 (TYS)","Okuma Sınavı 10"];
-  const listening = ["dinleme_sinavi.html","dinleme_testi_2.html","dinleme_testi_3.html","dinleme_testi_4.html","dinleme_testi_5.html","dinleme_testi_6.html","TYS_dinleme_testi_1.html","dinleme_testi_8.html","dinleme_testi_9.html"];
-  const listeningNames = ["Dinleme Sınavı 1","Dinleme Sınavı 2","Dinleme Sınavı 3","Dinleme Sınavı 4","Dinleme Sınavı 5","Dinleme Sınavı 6","Dinleme Sınavı 7 (TYS)","Dinleme Sınavı 8","Dinleme Sınavı 9"];
+  const listening = ["dinleme_sinavi.html","dinleme_testi_2.html","dinleme_testi_3.html","dinleme_testi_4.html","dinleme_testi_5.html","dinleme_testi_6.html","TYS_dinleme_testi_1.html","dinleme_testi_8.html","dinleme_testi_9.html","dinleme_testi_10.html"];
+  const listeningNames = ["Dinleme Sınavı 1","Dinleme Sınavı 2","Dinleme Sınavı 3","Dinleme Sınavı 4","Dinleme Sınavı 5","Dinleme Sınavı 6","Dinleme Sınavı 7 (TYS)","Dinleme Sınavı 8","Dinleme Sınavı 9","Dinleme Sınavı 10"];
   const okumaGrid = document.getElementById('okumaSınavlarıGrid');
   if(okumaGrid) reading.forEach((href,idx)=>{ let div=document.createElement('div'); div.className='item-card'; div.setAttribute('onclick',`openExamLogin('${href}')`); div.innerHTML=`<span class="item-name">${readingNames[idx]}</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`; okumaGrid.appendChild(div); });
   const dinlemeGrid = document.getElementById('dinlemeSınavlarıGrid');
