@@ -18,9 +18,44 @@ body {
   max-width: 720px;
   margin: 0 auto;
   padding: 40px 20px 80px;
+  position: relative;
 }
 
-header { text-align: center; margin-bottom: 28px; }
+/* Sol üst geri butonu */
+.back-btn {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  color: #F5C842;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 10;
+}
+.back-btn:hover {
+  background: rgba(245,200,66,0.15);
+  border-color: #F5C842;
+}
+.back-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 28px;
+  margin-top: 10px;
+}
 header h1 {
   font-size: clamp(1.3rem, 5vw, 1.9rem);
   font-weight: 800;
@@ -138,19 +173,17 @@ header h1 {
 .end-box h2 { color: #F5C842; font-size: 1.3rem; margin-bottom: 14px; }
 .end-box .result-line { font-size: 0.95rem; color: rgba(255,255,255,0.8); margin-bottom: 6px; }
 
-.back-link {
-  display: block;
-  text-align: center;
-  margin-top: 30px;
-  color: rgba(255,255,255,0.4);
-  font-size: 0.8rem;
-  text-decoration: none;
-}
-.back-link:hover { color: #F5C842; }
+/* "Ana Sayfaya Dön" linki kaldırıldı */
 </style>
 </head>
 <body>
 <div class="page-wrapper">
+
+  <!-- Sol üst Geri Butonu (sayfa ile kayar) -->
+  <button class="back-btn" onclick="window.history.back();">
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Geri
+  </button>
 
   <header>
     <h1>⚡Kelime Testi 1</h1>
@@ -185,7 +218,7 @@ header h1 {
     <button class="btn" onclick="restartGame()">🔄 Yeniden Başlat</button>
   </div>
 
-  <a class="back-link" href="yeni_index.html">← Ana Sayfaya Dön</a>
+  <!-- "Ana Sayfaya Dön" bağlantısı kaldırıldı -->
 
 </div>
 
@@ -224,7 +257,7 @@ const words = [
 ];
 
 const TOTAL = words.length;
-const DURATIONS = [15,15,15,15,15,15,15,15,15,15,15,15,15,15,15]; // 15 saniye
+const DURATIONS = [15,15,15,15,15,15,15,15,15,15,15,15,15,15,15];
 
 let order = [];
 let currentIndex = 0;
