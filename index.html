@@ -111,6 +111,8 @@ header h1 {
   min-width: 180px;
   text-align: center;
 }
+.sub-buttons-col { flex-direction: column; align-items: stretch; }
+.sub-buttons-col .sub-action-btn { flex: none; width: 100%; justify-content: flex-start; }
 .sub-action-btn:hover { background: #2a3a4a; transform: translateY(-2px); }
 .sub-action-btn.active { background: #F5C842; color: #1a2332; border-color: #F5C842; }
 .sub-action-btn.active .emoji { filter: none; }
@@ -438,10 +440,11 @@ footer span { color: #F5C842; }
 <div class="content-panel" id="alistirmalar">
     <div class="panel-header"><h2>✍️ ALIŞTIRMALAR</h2></div>
     <div class="panel-body">
-        <div class="sub-buttons-row">
+        <div class="sub-buttons-row sub-buttons-col">
             <button class="sub-action-btn" onclick="showExerciseContent('okuma-content')"><span class="emoji">📖</span> OKUMA ALIŞTIRMALARI</button>
             <button class="sub-action-btn" onclick="showExerciseContent('dinleme-content')"><span class="emoji">🎤</span> DİNLEME ALIŞTIRMALARI</button>
-            <button class="sub-action-btn" onclick="window.location.href='yazma_alistirmalari.html'"><span class="emoji">✍️</span> YAZMA ALIŞTIRMALARI</button>
+            <button class="sub-action-btn" onclick="window.location.href='yazma_alistirmalari.html'"><span class="emoji">✍️</span> YAZMA ALIŞTIRMALARI (YAPAY ZEKA DESTEKLİ)</button>
+            <button class="sub-action-btn" onclick="window.location.href='https://hamzahocakonusmapratigi.lovable.app/konusma'"><span class="emoji">🗣️</span> KONUŞMA ALIŞTIRMASI (YAPAY ZEKA DESTEKLİ)</button>
         </div>
         <div id="okuma-content" class="content-section"><div class="two-col-grid" id="okumaAlistirmaGrid"></div></div>
         <div id="dinleme-content" class="content-section"><div class="two-col-grid" id="dinlemeAlistirmaGrid"></div></div>
@@ -811,7 +814,7 @@ if(gramerB2Div){
     });
   }
   
- // Oyunlar
+// Oyunlar
 const gamesFree=[["deyimler_carki.html","Deyim Çarkı 1"],["fiiller_carki_b1_1.unite.html","B1-Fiiller Çarkı 1"],["deyim_eslestirme_oyunu_1_ucretsiz.html","Deyim Eşleştirme 1"]];
 const gFreeDiv=document.getElementById('gamesFree'); if(gFreeDiv) gamesFree.forEach(([h,t])=>{ let a=document.createElement('a'); a.className='item-card'; a.href=h; a.innerHTML=`<span>${t}</span><span class="badge badge-free">✅ Ücretsiz</span>`; gFreeDiv.appendChild(a); });
 const gLockDiv=document.getElementById('gamesLocked'); if(gLockDiv){ let div=document.createElement('div'); div.className='item-card'; div.setAttribute('onclick',`openExamLogin('kelimeler_carki_c1_1.unite.html')`); div.innerHTML=`<span>C1-Kelime Çarkı 1</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`; gLockDiv.appendChild(div); 
@@ -820,6 +823,7 @@ const gLockDiv=document.getElementById('gamesLocked'); if(gLockDiv){ let div=doc
                                                                       let div4=document.createElement('div'); div4.className='item-card'; div4.setAttribute('onclick',`openExamLogin('kelimeler_carki_c1_4.unite.html')`); div4.innerHTML=`<span>C1-Kelime Çarkı 4</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`; gLockDiv.appendChild(div4);
                                                                       let div5=document.createElement('div'); div5.className='item-card'; div5.setAttribute('onclick',`openExamLogin('kelimeler_carki_c1_5.unite.html')`); div5.innerHTML=`<span>C1-Kelime Çarkı 5</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`; gLockDiv.appendChild(div5);
                                                                       let div6=document.createElement('div'); div6.className='item-card'; div6.setAttribute('onclick',`openExamLogin('deyim_eslestirme_oyunu_1_ucretli.html')`); div6.innerHTML=`<span>Deyim Eşleştirme 1</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`; gLockDiv.appendChild(div6)}
+
   // Öğretmenler
   const teacher=[["kronometre.html","Kronometre"],["hikaye_galerisi_1.html","Resimli Hikayeler 1"],["hikaye_galerisi_2.html","Resimli Hikayeler 2"],["karikaturler_1.html","Karikatürler 1"],["munazara_carki.html","Münazara Çarkı"],["sessiz_filmler.html","Sessiz Filmler"]];
   const tGrid=document.getElementById('teacherGrid'); if(tGrid) teacher.forEach(([h,t])=>{ let a=document.createElement('a'); a.className='item-card'; a.href=h; a.innerHTML=`<span>${t}</span><span class="badge badge-free">✅ Ücretsiz</span>`; tGrid.appendChild(a); });
