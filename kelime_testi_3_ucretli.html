@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Zamanlayıcılı Hızlı Kelime Testi 4 | Hamza Hoca ile Türkçe Öğreniyorum</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+}
+
+.page-wrapper {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+  position: relative;
+}
+
+/* Sol üst geri butonu */
+.back-btn {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  color: #F5C842;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 10;
+}
+.back-btn:hover {
+  background: rgba(245,200,66,0.15);
+  border-color: #F5C842;
+}
+.back-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 28px;
+  margin-top: 10px;
+}
+header h1 {
+  font-size: clamp(1.3rem, 5vw, 1.9rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+.header-line {
+  width: 80px; height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 12px;
+}
+.subtitle { font-size: 0.78rem; color: rgba(255,255,255,0.55); letter-spacing: .06em; }
+
+.stat-bar {
+  display: flex; justify-content: center; gap: 18px;
+  margin-bottom: 22px; flex-wrap: wrap;
+}
+.stat-box {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(245,200,66,0.25);
+  border-radius: 10px;
+  padding: 9px 18px;
+  text-align: center;
+  min-width: 84px;
+}
+.stat-box .num { font-size: 1.2rem; font-weight: 700; color: #F5C842; }
+.stat-box .lbl { font-size: 0.65rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: .05em; }
+
+.timer-track {
+  height: 8px;
+  border-radius: 5px;
+  background: rgba(255,255,255,0.1);
+  overflow: hidden;
+  margin-bottom: 26px;
+}
+.timer-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #F5C842, #FF8C42);
+  border-radius: 5px;
+  width: 100%;
+  transition: width 0.1s linear;
+}
+.timer-fill.danger { background: linear-gradient(90deg, #E15759, #ff8080); }
+
+.question-box {
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid rgba(245,200,66,0.3);
+  border-radius: 14px;
+  padding: 34px 24px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.q-label {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 10px;
+}
+.q-word {
+  font-size: clamp(1.8rem, 7vw, 2.4rem);
+  font-weight: 800;
+  color: #F5C842;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 540px) { .options-grid { grid-template-columns: 1fr; } }
+
+.option-btn {
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.14);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: white;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+.option-btn:hover:not(:disabled) { border-color: rgba(245,200,66,0.5); background: rgba(255,255,255,0.1); }
+.option-btn:disabled { cursor: default; }
+.option-btn.correct { border-color: #4CAF50; background: rgba(76,175,80,0.2); color: #8fd08f; }
+.option-btn.wrong { border-color: #E15759; background: rgba(225,87,89,0.2); color: #ffb3b3; }
+
+.controls { display: flex; justify-content: center; margin-top: 28px; }
+.btn {
+  background: transparent;
+  border: 1.5px solid #F5C842;
+  color: #F5C842;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: .03em;
+  transition: all 0.2s ease;
+}
+.btn:hover { background: #F5C842; color: #0D1B2A; }
+
+.end-box {
+  display: none;
+  text-align: center;
+  padding: 32px 24px;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(245,200,66,0.35);
+  border-radius: 14px;
+}
+.end-box.show { display: block; }
+.end-box h2 { color: #F5C842; font-size: 1.3rem; margin-bottom: 14px; }
+.end-box .result-line { font-size: 0.95rem; color: rgba(255,255,255,0.8); margin-bottom: 6px; }
+
+/* "Ana Sayfaya Dön" linki kaldırıldı */
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- Sol üst Geri Butonu (sayfa ile kayar) -->
+  <button class="back-btn" onclick="window.history.back();">
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Geri
+  </button>
+
+  <header>
+    <h1>⚡Kelime Testi 3</h1>
+    <div class="header-line"></div>
+    <div class="subtitle">B2 / C1 SEVİYESİ &middot; SÜRE DOLMADAN DOĞRU ANLAMI SEÇİN</div>
+  </header>
+
+  <div class="stat-bar">
+    <div class="stat-box"><div class="num" id="statQ">1/15</div><div class="lbl">Soru</div></div>
+    <div class="stat-box"><div class="num" id="statScore">0</div><div class="lbl">Puan</div></div>
+    <div class="stat-box"><div class="num" id="statStreak">0</div><div class="lbl">Seri</div></div>
+  </div>
+
+  <div class="timer-track"><div class="timer-fill" id="timerFill"></div></div>
+
+  <div id="gameArea">
+    <div class="question-box">
+      <div class="q-label">Bu kelimenin anlamı nedir?</div>
+      <div class="q-word" id="qWord"></div>
+    </div>
+    <div class="options-grid" id="optionsGrid"></div>
+  </div>
+
+  <div class="end-box" id="endBox">
+    <h2 id="endTitle">🎉 Test Tamamlandı!</h2>
+    <div class="result-line" id="endScore"></div>
+    <div class="result-line" id="endCorrect"></div>
+    <div class="result-line" id="endStreak"></div>
+  </div>
+
+  <div class="controls">
+    <button class="btn" onclick="restartGame()">🔄 Yeniden Başlat</button>
+  </div>
+
+  <!-- "Ana Sayfaya Dön" bağlantısı kaldırıldı -->
+
+</div>
+
+<script>
+const words = [
+  { word: "iddia etmek", correct: "Bir görüşü kesin bir şekilde ileri sürmek",
+    wrong: ["Bir görüşten tamamen vazgeçmek", "Bir konuda sessiz kalmak", "Başkasının görüşünü tekrarlamak"] },
+  { word: "mütevazı", correct: "Kendini övmeyen, alçakgönüllü",
+    wrong: ["Kendini sürekli öne çıkaran", "Başkalarını küçümseyen", "Her konuda ısrarcı davranan"] },
+  { word: "sonuçlandırmak", correct: "Bir işi tamamlayıp bitirmek",
+    wrong: ["Bir işi yarım bırakmak", "Bir işe yeni başlamak", "Bir işi sürekli ertelemek"] },
+  { word: "kaçınmak", correct: "Bir şeyden uzak durmaya, ondan sakınmaya çalışmak",
+    wrong: ["Bir şeye doğrudan yönelmek", "Bir riski bilerek göze almak", "Bir fırsatı değerlendirmek"] },
+  { word: "hâkim olmak", correct: "Bir konuyu veya durumu iyi bilip kontrol edebilmek",
+    wrong: ["Bir konu hakkında hiçbir bilgisi olmamak", "Bir duruma tamamen yabancı kalmak", "Bir işi başkasına bırakmak"] },
+  { word: "yeterlilik", correct: "Bir işi yapabilecek düzeyde bilgi ve beceriye sahip olma",
+    wrong: ["Bir işi yapmaya gücünün yetmemesi", "Bir konuda tecrübesiz olma", "Sürekli hata yapma durumu"] },
+  { word: "dengeli", correct: "Aşırıya kaçmadan, ölçülü davranan",
+    wrong: ["Her konuda aşırıya kaçan", "Sürekli değişken davranan", "Kararsız ve tutarsız olan"] },
+  { word: "saptamak", correct: "Bir durumu inceleyerek kesin olarak belirlemek",
+    wrong: ["Bir durumu belirsiz bırakmak", "Bir konuyu araştırmadan tahmin etmek", "Bir bilgiyi yanlış aktarmak"] },
+  { word: "bünye", correct: "Bir kişinin veya sistemin genel yapısı",
+    wrong: ["Bir sistemin dışarıdan görünüşü", "Bir kişinin geçici ruh hâli", "Bir olayın son aşaması"] },
+  { word: "üstlenmek", correct: "Bir görevi veya sorumluluğu kabul edip yerine getirmek",
+    wrong: ["Bir görevden kaçınmak", "Bir sorumluluğu başkasına yıkmak", "Bir işi hiç düşünmeden reddetmek"] },
+  { word: "ivedi", correct: "Hemen, gecikmeden yapılması gereken",
+    wrong: ["Ertelenmesi hiçbir sakınca doğurmayan", "Önemi olmayan, göz ardı edilebilir", "Uzun vadede ele alınacak"] },
+  { word: "nitelikli", correct: "Belirli bir standardı veya kaliteyi taşıyan",
+    wrong: ["Hiçbir standardı karşılamayan", "Rastgele ve özensiz hazırlanmış", "Geçici ve kalıcı olmayan"] },
+  { word: "bertaraf etmek", correct: "Bir engeli veya sorunu ortadan kaldırmak",
+    wrong: ["Bir sorunu daha da büyütmek", "Bir engeli görmezden gelmek", "Bir sorunu başka birine devretmek"] },
+  { word: "tutum", correct: "Bir kişinin bir konu karşısındaki davranış biçimi",
+    wrong: ["Bir kişinin fiziksel görünüşü", "Bir olayın gerçekleşme süresi", "Bir konunun teknik detayları"] },
+  { word: "kuşku duymak", correct: "Bir şeyin doğruluğundan veya güvenilirliğinden emin olamamak",
+    wrong: ["Bir şeye tam olarak güvenmek", "Bir konuda hiç tereddüt yaşamamak", "Bir bilgiyi hemen kabul etmek"] }
+];
+
+const TOTAL = words.length;
+const DURATIONS = [15,15,15,15,15,15,15,15,15,15,15,15,15,15,15]; // 15 saniye
+
+let order = [];
+let currentIndex = 0;
+let score = 0;
+let streak = 0;
+let bestStreak = 0;
+let correctCount = 0;
+let timerInterval = null;
+let timeLeft = 0;
+let questionDuration = 0;
+let answered = false;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildOrder() {
+  order = shuffle(words.map((w, i) => i));
+}
+
+function loadQuestion() {
+  answered = false;
+  const wIdx = order[currentIndex];
+  const item = words[wIdx];
+
+  document.getElementById('qWord').textContent = item.word;
+  document.getElementById('statQ').textContent = `${currentIndex + 1}/${TOTAL}`;
+
+  const options = shuffle([
+    { text: item.correct, correct: true },
+    ...item.wrong.map(t => ({ text: t, correct: false }))
+  ]);
+
+  const grid = document.getElementById('optionsGrid');
+  grid.innerHTML = '';
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = opt.text;
+    btn.onclick = () => selectAnswer(btn, opt.correct);
+    grid.appendChild(btn);
+  });
+
+  questionDuration = DURATIONS[currentIndex] * 1000;
+  startTimer();
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timeLeft = questionDuration;
+  const fill = document.getElementById('timerFill');
+  fill.style.transition = 'none';
+  fill.style.width = '100%';
+  fill.classList.remove('danger');
+  requestAnimationFrame(() => { fill.style.transition = 'width 0.1s linear'; });
+
+  const tickMs = 100;
+  timerInterval = setInterval(() => {
+    timeLeft -= tickMs;
+    const pct = Math.max(0, (timeLeft / questionDuration) * 100);
+    fill.style.width = pct + '%';
+    if (pct < 30) fill.classList.add('danger');
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      if (!answered) handleTimeout();
+    }
+  }, tickMs);
+}
+
+function handleTimeout() {
+  answered = true;
+  streak = 0;
+  document.getElementById('statStreak').textContent = streak;
+  const buttons = document.querySelectorAll('.option-btn');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if (b.textContent === words[order[currentIndex]].correct) b.classList.add('correct');
+  });
+  setTimeout(nextQuestion, 1100);
+}
+
+function selectAnswer(btn, isCorrect) {
+  if (answered) return;
+  answered = true;
+  clearInterval(timerInterval);
+
+  const buttons = document.querySelectorAll('.option-btn');
+  buttons.forEach(b => { b.disabled = true; });
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    const timeBonus = Math.ceil((timeLeft / questionDuration) * 5);
+    score += 10 + timeBonus;
+    streak++;
+    correctCount++;
+    if (streak > bestStreak) bestStreak = streak;
+  } else {
+    btn.classList.add('wrong');
+    streak = 0;
+    buttons.forEach(b => {
+      if (b.textContent === words[order[currentIndex]].correct) b.classList.add('correct');
+    });
+  }
+
+  document.getElementById('statScore').textContent = score;
+  document.getElementById('statStreak').textContent = streak;
+
+  setTimeout(nextQuestion, 1100);
+}
+
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex >= TOTAL) {
+    endGame();
+  } else {
+    loadQuestion();
+  }
+}
+
+function endGame() {
+  clearInterval(timerInterval);
+  document.getElementById('gameArea').style.display = 'none';
+  document.getElementById('timerFill').parentElement.style.display = 'none';
+
+  const box = document.getElementById('endBox');
+  document.getElementById('endScore').textContent = `Toplam Puan: ${score}`;
+  document.getElementById('endCorrect').textContent = `Doğru Sayısı: ${correctCount}/${TOTAL}`;
+  document.getElementById('endStreak').textContent = `En Uzun Doğru Serisi: ${bestStreak}`;
+
+  let title = '👍 Test Tamamlandı!';
+  if (correctCount === TOTAL) title = '🏆 Mükemmel! Hepsi Doğru!';
+  else if (correctCount >= TOTAL * 0.7) title = '🎉 Harika Sonuç!';
+  document.getElementById('endTitle').textContent = title;
+
+  box.classList.add('show');
+}
+
+function restartGame() {
+  clearInterval(timerInterval);
+  currentIndex = 0;
+  score = 0;
+  streak = 0;
+  bestStreak = 0;
+  correctCount = 0;
+  document.getElementById('statScore').textContent = '0';
+  document.getElementById('statStreak').textContent = '0';
+  document.getElementById('endBox').classList.remove('show');
+  document.getElementById('gameArea').style.display = 'block';
+  document.getElementById('timerFill').parentElement.style.display = 'block';
+  buildOrder();
+  loadQuestion();
+}
+
+buildOrder();
+loadQuestion();
+</script>
+</body>
+</html>
