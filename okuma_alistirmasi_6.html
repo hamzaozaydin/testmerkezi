@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Okuma Alıştırması – Hamza Hoca</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+  overflow-x: hidden;
+}
+
+.home-btn-wrap {
+  padding: 18px 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 40px;
+  padding: 9px 20px;
+  color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .22s, transform .18s, box-shadow .22s;
+}
+
+.home-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  color: #F5C842;
+  text-decoration: none;
+}
+
+.home-btn svg { flex-shrink: 0; }
+
+header {
+  text-align: center;
+  padding: 2rem 1rem 1.2rem;
+}
+
+.header-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.3rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 0.9rem;
+}
+
+header h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.header-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 10px;
+}
+
+.stars {
+  font-size: 1rem;
+  color: #F5C842;
+  letter-spacing: .4em;
+  margin-bottom: 6px;
+  opacity: .7;
+}
+
+.subtitle {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.telegram-section {
+  text-align: center;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.tg-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(26,35,50,0.85);
+  border: 1.5px solid rgba(34,158,217,0.3);
+  border-radius: 60px;
+  padding: .75rem 1.5rem .75rem 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+.tg-btn {
+  display: inline-flex;
+  align-items: center; gap: .45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0);
+  color: #fff; text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800; font-size: .92rem;
+  padding: .65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34,158,217,.4);
+  transition: all .22s; white-space: nowrap;
+}
+
+.tg-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(34,158,217,.55);
+}
+
+.section-title {
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: .85rem; color: #F5C842;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: .5rem 0 1rem; opacity: .75;
+}
+
+footer {
+  text-align: center;
+  padding: 0 1rem 2.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+footer span { color: #F5C842; }
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.95) translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* -------- quiz styles -------- */
+.quiz-container {
+  max-width: 800px;
+  margin: 1rem auto 2rem;
+  padding: 0 1rem 1rem;
+}
+
+.paragraf {
+  background: rgba(255,255,255,0.04);
+  padding: 1.8rem 1.8rem 0.8rem;
+  border-radius: 28px;
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255,255,255,0.06);
+  font-size: 1.06rem;
+  line-height: 1.8;
+  color: #ececec;
+  text-align: justify;
+}
+
+.paragraf .blank-select {
+  display: inline-block;
+  min-width: 100px;
+  background: #1d2b3d;
+  border: 1px solid #F5C842;
+  border-radius: 30px;
+  padding: 0.2rem 0.8rem 0.2rem 1rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: #F5C842;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  margin: 0 2px;
+  vertical-align: middle;
+}
+.paragraf .blank-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #F5C84244;
+}
+
+.paragraf .blank-select option {
+  background: #0D1B2A;
+  color: #f0f0f0;
+}
+
+.cevap-kontrol {
+  text-align: center;
+  margin: 2.2rem 0 1.5rem;
+}
+.cevap-kontrol button {
+  background: linear-gradient(135deg, #F5C842, #D4A020);
+  border: none;
+  border-radius: 60px;
+  padding: 0.9rem 3rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #0D1B2A;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 6px 28px rgba(245, 200, 66, 0.3);
+}
+.cevap-kontrol button:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 34px rgba(245, 200, 66, 0.5);
+}
+
+.sonuc-box {
+  background: #13212e;
+  border-radius: 40px;
+  padding: 1.5rem 1.5rem 0.8rem;
+  margin: 1.8rem 0 1rem;
+  border-left: 4px solid #F5C842;
+}
+
+.cevap-satiri {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 1.2rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 1rem;
+}
+.cevap-satiri:last-child { border-bottom: none; }
+
+.cevap-satiri .etiket {
+  font-weight: 700;
+  color: #F5C842;
+  min-width: 34px;
+}
+.cevap-satiri .secim {
+  font-weight: 500;
+  background: #1d2b3d;
+  padding: 0 14px;
+  border-radius: 30px;
+  color: #ddd;
+}
+.cevap-satiri .dogru {
+  color: #7bdd7b;
+  font-weight: 700;
+}
+.cevap-satiri .yanlis {
+  color: #f77b7b;
+  font-weight: 700;
+}
+.cevap-satiri .dogru-isaret {
+  color: #7bdd7b;
+  font-weight: 800;
+  margin-left: 6px;
+}
+.cevap-satiri .yanlis-isaret {
+  color: #f77b7b;
+  font-weight: 800;
+  margin-left: 6px;
+}
+.sonuc-ozet {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  color: #F5C842;
+  padding: 0.8rem 0 0.2rem;
+  letter-spacing: 1px;
+}
+.sonuc-ozet span { background: #0D1B2A; padding: 0.1rem 1rem; border-radius: 40px; }
+
+.uyari {
+  text-align: center;
+  color: #f5c842aa;
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+}
+
+/* mobil için düzeltme */
+@media (max-width: 480px) {
+  .paragraf { padding: 1.2rem 1rem 0.6rem; font-size: 1rem; }
+  .blank-select { min-width: 80px; padding: 0.1rem 0.4rem 0.1rem 0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap" id="backBtnWrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ Okuma Alıştırması ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle"></p>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+      Kanala Katıl
+    </a>
+  </div>
+</div>
+
+<div class="section-title">SAĞLIKLI YAŞAM VE DENGELİ BESLENME</div>
+
+<!-- ========== SORU ALANI ========== -->
+<div class="quiz-container">
+  <div class="paragraf" id="paragrafAlani">
+    Sağlıklı bir yaşam sürmek, günümüzde birçok insanın en temel hedeflerinden biridir. Yeterli ve dengeli beslenme, vücudumuzun ihtiyaç duyduğu enerjiyi sağlarken hastalıklara karşı direncimizi de artırır. Ancak yoğun iş temposu ve hazır gıdalara ulaşımın kolaylaşması, sağlıklı alışkanlıklar edinmeyi bazen 
+    <select class="blank-select" id="s1" data-dogru="C"><option value="">—</option><option value="A">A) önem</option><option value="B">B) doğru</option><option value="C">C) zor</option><option value="D">D) etkili</option><option value="E">E) yol</option><option value="F">F) özen</option><option value="G">G) fayda</option><option value="H">H) hızlı</option></select> 
+    hâle getirebilir.
+
+    <br><br>
+    Düzenli fiziksel aktivite yapmak da en az beslenme kadar büyük bir 
+    <select class="blank-select" id="s2" data-dogru="A"><option value="">—</option><option value="A">A) önem</option><option value="B">B) doğru</option><option value="C">C) zor</option><option value="D">D) etkili</option><option value="E">E) yol</option><option value="F">F) özen</option><option value="G">G) fayda</option><option value="H">H) hızlı</option></select> 
+    taşımaktadır. Her gün yapılan kısa yürüyüşler bile kalp sağlığını korumada ve stresi azaltmada oldukça 
+    <select class="blank-select" id="s3" data-dogru="D"><option value="">—</option><option value="A">A) önem</option><option value="B">B) doğru</option><option value="C">C) zor</option><option value="D">D) etkili</option><option value="E">E) yol</option><option value="F">F) özen</option><option value="G">G) fayda</option><option value="H">H) hızlı</option></select> 
+    bir rol oynar. Spor yapmak sadece bedensel değil, zihinsel olarak da kendimizi daha zinde hissetmemize yardımcı olur.
+
+    <br><br>
+    Bunun yanı sıra uyku düzeni de genel sağlık üzerinde doğrudan bir etkiye sahiptir. Yetersiz uyku, gün içindeki odaklanma sorunlarına ve bağışıklık sisteminin zayıflamasına 
+    <select class="blank-select" id="s4" data-dogru="E"><option value="">—</option><option value="A">A) önem</option><option value="B">B) doğru</option><option value="C">C) zor</option><option value="D">D) etkili</option><option value="E">E) yol</option><option value="F">F) özen</option><option value="G">G) fayda</option><option value="H">H) hızlı</option></select> 
+    açabilir. Kaliteli bir uyku çekmek, vücudun kendini yenilemesi için vazgeçilmez bir ihtiyaçtır.
+
+    <br><br>
+    Sağlıklı yaşam tek bir adımla değil, küçük ama kararlı değişikliklerle mümkündür. Günlük su tüketimini artırmak ve işlenmiş gıdalardan uzak durmak, bu süreçte atılabilecek en 
+    <select class="blank-select" id="s5" data-dogru="B"><option value="">—</option><option value="A">A) önem</option><option value="B">B) doğru</option><option value="C">C) zor</option><option value="D">D) etkili</option><option value="E">E) yol</option><option value="F">F) özen</option><option value="G">G) fayda</option><option value="H">H) hızlı</option></select> 
+    adımlardan bazılarıdır. Sonuç olarak, bedenimize gösterdiğimiz 
+    <select class="blank-select" id="s6" data-dogru="F"><option value="">—</option><option value="A">A) önem</option><option value="B">B) doğru</option><option value="C">C) zor</option><option value="D">D) etkili</option><option value="E">E) yol</option><option value="F">F) özen</option><option value="G">G) fayda</option><option value="H">H) hızlı</option></select> 
+    yaşam kalitemizi doğrudan belirleyen en önemli unsurdur.
+  </div>
+
+  <div style="margin-top:0.8rem; font-size:0.9rem; color:rgba(255,255,255,0.45); text-align:center; letter-spacing:0.5px;">
+    Aşağıdaki kelimelerden 6 tanesini metindeki (S1–S6) boşluklarına uygun şekilde yerleştiriniz. İki kelime dışarıda kalacaktır.
+  </div>
+  <div style="display:flex; flex-wrap:wrap; gap:0.2rem 0.8rem; justify-content:center; margin:0.2rem 0 0.4rem; font-size:0.9rem; color:#ccc;">
+    <span>A) önem</span> <span>B) doğru</span> <span>C) zor</span> <span>D) etkili</span>
+    <span>E) yol</span> <span>F) özen</span> <span>G) fayda</span> <span>H) hızlı</span>
+  </div>
+
+  <div class="cevap-kontrol">
+    <button id="kontrolBtn">✔ KONTROL ET</button>
+  </div>
+
+  <!-- CEVAPLARIN GÖSTERİLECEĞİ ALAN -->
+  <div id="sonucAlani" class="sonuc-box" style="display:none;"></div>
+  <div id="uyariMesaj" class="uyari"></div>
+</div>
+
+<footer>
+  <span>✦</span> Hamza Hoca ile Türkçe Öğreniyorum <span>✦</span>
+</footer>
+
+<script>
+(function() {
+  const kontrolBtn = document.getElementById('kontrolBtn');
+  const sonucAlani = document.getElementById('sonucAlani');
+  const uyari = document.getElementById('uyariMesaj');
+
+  // boşluk ID'leri ve doğru cevaplar (data-dogru ile eşleşir)
+  const blankIds = ['s1','s2','s3','s4','s5','s6'];
+  // her bir soru için etiket (S1, S2 …)
+  const etiketler = ['S1','S2','S3','S4','S5','S6'];
+
+  // harf -> tam metin
+  const secenekMap = {
+    'A': 'önem', 'B': 'doğru', 'C': 'zor', 'D': 'etkili',
+    'E': 'yol', 'F': 'özen', 'G': 'fayda', 'H': 'hızlı'
+  };
+
+  function cevaplariGoster() {
+    // önceki uyarıyı temizle
+    uyari.textContent = '';
+
+    // tüm seçimleri oku
+    let boslukVar = false;
+    const secilenler = [];
+    const dogruCevapHarfleri = [];
+
+    blankIds.forEach((id, idx) => {
+      const select = document.getElementById(id);
+      const val = select.value;
+      secilenler.push(val);
+      dogruCevapHarfleri.push(select.getAttribute('data-dogru'));
+      if (val === '') boslukVar = true;
+    });
+
+    // eğer herhangi bir boşluk seçilmemişse uyarı göster
+    if (boslukVar) {
+      uyari.textContent = '⚠ Lütfen tüm boşlukları doldurun.';
+      sonucAlani.style.display = 'none';
+      return;
+    }
+
+    // doğru/yanlış kontrolü
+    let dogruSayisi = 0;
+    let html = '';
+
+    secilenler.forEach((secim, idx) => {
+      const dogruHarf = dogruCevapHarfleri[idx];
+      const etiket = etiketler[idx];
+      const secimMetin = secenekMap[secim] || secim;
+      const dogruMetin = secenekMap[dogruHarf] || dogruHarf;
+      const isDogru = (secim === dogruHarf);
+
+      if (isDogru) dogruSayisi++;
+
+      const durumSembol = isDogru ? '✅' : '❌';
+      const durumClass = isDogru ? 'dogru' : 'yanlis';
+      const sembolSpan = isDogru ? 'dogru-isaret' : 'yanlis-isaret';
+
+      html += `
+        <div class="cevap-satiri">
+          <span class="etiket">${etiket}</span>
+          <span class="secim">${secimMetin}</span>
+          <span class="${durumClass}">${isDogru ? 'Doğru' : 'Yanlış'}</span>
+          <span class="${sembolSpan}">${durumSembol}</span>
+          ${!isDogru ? `<span style="color:#aaa; font-size:0.85rem;">(doğru: ${dogruMetin})</span>` : ''}
+        </div>
+      `;
+    });
+
+    // doğru sayısı özet
+    const ozet = `<div class="sonuc-ozet"><span>${dogruSayisi} / 6 doğru</span></div>`;
+
+    sonucAlani.innerHTML = html + ozet;
+    sonucAlani.style.display = 'block';
+
+    // her boşluğun arkaplan rengini güncelle (yeşil/kırmızı)
+    blankIds.forEach((id, idx) => {
+      const select = document.getElementById(id);
+      const secim = select.value;
+      const dogruHarf = select.getAttribute('data-dogru');
+      if (secim === dogruHarf) {
+        select.style.backgroundColor = '#1d3d2a';
+        select.style.borderColor = '#7bdd7b';
+        select.style.color = '#b3ffb3';
+      } else {
+        select.style.backgroundColor = '#3d1d1d';
+        select.style.borderColor = '#f77b7b';
+        select.style.color = '#ffb3b3';
+      }
+    });
+  }
+
+  // butona tıklama
+  kontrolBtn.addEventListener('click', cevaplariGoster);
+
+  // Sayfa yüklendiğinde tüm select'leri varsayılan görünüme getir (arkaplanı sıfırla)
+  document.querySelectorAll('.blank-select').forEach(sel => {
+    sel.addEventListener('change', function() {
+      // eğer bir değişiklik olursa, arkaplanı sıfırla (eski haline döndür)
+      this.style.backgroundColor = '#1d2b3d';
+      this.style.borderColor = '#F5C842';
+      this.style.color = '#F5C842';
+      // sonuç kutusunu gizle
+      sonucAlani.style.display = 'none';
+      uyari.textContent = '';
+    });
+  });
+
+})();
+</script>
+
+</body>
+</html>
