@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benzer Sözler 1 – Hamza Hoca</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+  overflow-x: hidden;
+}
+
+.home-btn-wrap {
+  padding: 18px 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 40px;
+  padding: 9px 20px;
+  color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .22s, transform .18s, box-shadow .22s;
+}
+
+.home-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  color: #F5C842;
+  text-decoration: none;
+}
+
+.home-btn svg { flex-shrink: 0; }
+
+header {
+  text-align: center;
+  padding: 2rem 1rem 1.2rem;
+}
+
+.header-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.3rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 0.9rem;
+}
+
+header h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.header-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 10px;
+}
+
+.stars {
+  font-size: 1rem;
+  color: #F5C842;
+  letter-spacing: .4em;
+  margin-bottom: 6px;
+  opacity: .7;
+}
+
+.telegram-section {
+  text-align: center;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.tg-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(26,35,50,0.85);
+  border: 1.5px solid rgba(34,158,217,0.3);
+  border-radius: 60px;
+  padding: .75rem 1.5rem .75rem 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+.tg-btn {
+  display: inline-flex;
+  align-items: center; gap: .45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0);
+  color: #fff; text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800; font-size: .92rem;
+  padding: .65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34,158,217,.4);
+  transition: all .22s; white-space: nowrap;
+}
+
+.tg-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(34,158,217,.55);
+}
+
+.section-title {
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #F5C842;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: .5rem 0 1rem;
+  opacity: 0.9;
+}
+
+footer {
+  text-align: center;
+  padding: 0 1rem 2.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+footer span { color: #F5C842; }
+
+/* -------- quiz styles -------- */
+.quiz-container {
+  max-width: 900px;
+  margin: 1rem auto 2rem;
+  padding: 0 1rem 1rem;
+}
+
+.paragraf {
+  background: rgba(255,255,255,0.04);
+  padding: 1.8rem 1.8rem 0.8rem;
+  border-radius: 28px;
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255,255,255,0.06);
+  font-size: 1.06rem;
+  line-height: 1.8;
+  color: #ececec;
+  text-align: justify;
+}
+.paragraf .paragraf-etiket {
+  display: inline-block;
+  background: #F5C842;
+  color: #0D1B2A;
+  font-weight: 800;
+  padding: 0.1rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+}
+.paragraf p {
+  margin-top: 0.8rem;
+}
+.paragraf p:first-of-type {
+  margin-top: 0;
+}
+
+.soru-blok {
+  background: rgba(255,255,255,0.04);
+  border-radius: 24px;
+  padding: 1.2rem 1.5rem;
+  margin-top: 1.5rem;
+  border-left: 3px solid #F5C842;
+  transition: 0.2s;
+}
+.soru-blok h3 {
+  color: #F5C842;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.4rem;
+}
+.soru-blok .soru-metni {
+  font-weight: 400;
+  margin-bottom: 0.8rem;
+  color: #eaeaea;
+}
+.soru-blok .secenekler {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  align-items: center;
+}
+.soru-blok .secenekler label {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #1a2332;
+  padding: 0.2rem 0.9rem 0.2rem 0.6rem;
+  border-radius: 40px;
+  border: 2px solid transparent;
+  transition: 0.15s;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.soru-blok .secenekler label:hover {
+  border-color: #F5C84255;
+}
+.soru-blok .secenekler input[type="radio"] {
+  accent-color: #F5C842;
+  width: 16px; height: 16px;
+  margin: 0;
+  flex-shrink: 0;
+}
+.soru-blok .secenekler input[type="radio"]:disabled + span {
+  opacity: 0.7;
+}
+.soru-blok .secenekler label span {
+  word-break: break-word;
+}
+.soru-blok .aciklama {
+  margin-top: 0.6rem;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  background: rgba(0,0,0,0.3);
+  border-left: 3px solid #F5C842;
+  display: none;
+  color: #d4d4d4;
+  line-height: 1.6;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  word-break: break-word;
+}
+.soru-blok .aciklama.dogru-aciklama {
+  border-left-color: #7bdd7b;
+  background: rgba(123,221,123,0.08);
+  color: #b3ffb3;
+}
+.soru-blok .aciklama.yanlis-aciklama {
+  border-left-color: #f77b7b;
+  background: rgba(247,123,123,0.08);
+  color: #ffb3b3;
+}
+.soru-blok .aciklama.goster {
+  display: block;
+}
+
+.cevap-kontrol {
+  text-align: center;
+  margin: 2.2rem 0 1.5rem;
+}
+.cevap-kontrol button {
+  background: linear-gradient(135deg, #F5C842, #D4A020);
+  border: none;
+  border-radius: 60px;
+  padding: 0.9rem 3rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #0D1B2A;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 6px 28px rgba(245, 200, 66, 0.3);
+}
+.cevap-kontrol button:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 34px rgba(245, 200, 66, 0.5);
+}
+
+.sonuc-ozet-box {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #F5C842;
+  margin-top: 0.5rem;
+  padding: 0.8rem;
+  background: #13212e;
+  border-radius: 40px;
+  border-left: 4px solid #F5C842;
+  display: none;
+}
+.sonuc-ozet-box span {
+  background: #0D1B2A;
+  padding: 0.2rem 1.8rem;
+  border-radius: 40px;
+}
+
+.uyari {
+  text-align: center;
+  color: #f5c842aa;
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+}
+
+/* mobil */
+@media (max-width: 480px) {
+  .paragraf { padding: 1.2rem 1rem 0.6rem; font-size: 1rem; }
+  .soru-blok { padding: 1rem; }
+  .soru-blok .secenekler { gap: 0.3rem 0.6rem; }
+  .soru-blok .aciklama { 
+    font-size: 0.85rem; 
+    padding: 0.6rem 0.8rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap" id="backBtnWrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ Okuma Alıştırması ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+      Kanala Katıl
+    </a>
+  </div>
+</div>
+
+<div class="section-title">Sanat Metropollerinde Unutulma ve Kalıcılık</div>
+
+<!-- ========== SORU ALANI ========== -->
+<div class="quiz-container" id="quizContainer">
+
+  <!-- OKUMA METNİ -->
+  <div class="paragraf">
+    <p><span class="paragraf-etiket">A</span> Toplumsal dönüşümlerin en hızlı hissedildiği yerler olan büyük şehirler, sanatsal üretimin de merkez üssü konumundadır. Sanatçılar yüzyıllardır fikir alışverişinde bulunmak, eserlerini sergilemek ve geniş kitlelere ulaşmak amacıyla bu yoğun nüfuslu merkezlere çekilmişlerdir. Ancak bu durum, sanat dünyasında rekabetin kontrolsüz bir şekilde kızışmasına yol açar. Yüzlerce yeteneğin aynı coğrafyada var olma mücadelesi vermesi, bireysel özgünlüklerin vitrin nesnesi hâline gelerek sıradanlaşması riskini doğurur. Kalabalığın içinde fark edilme çabası, ne yazık ki çoğu zaman sanatsal derinliğin yüzeyselleşmesiyle sonuçlanmaktadır.</p>
+    <p><span class="paragraf-etiket">B</span> Sanat sosyologları, büyük şehirlerin estetik pazarda yarattığı bu olguyu "geçici şöhret yanılsaması" olarak tanımlar. Sanat eleştirmeni Dr. Selin Doğan, dev galerilerin ve süreli sergilerin sanatçıya sağladığı popülerliğin aldatıcı olduğunu vurgular. Doğan'a göre, bir eserin güncel sergi takvimlerinde yer bulması veya dönemsel olarak yüksek fiyatlara alıcı bulması, onun zamana direnebileceği anlamına gelmez. Gerçek sanatsal değer; popüler trendlerin tüketim hızına yenik düşmeyen, yaratıldığı dönemin ötesine geçerek geleceğin estetik algısına yön verebilen yapıtlarda gizlidir.</p>
+    <p><span class="paragraf-etiket">C</span> Metropol hayatının getirdiği bu hızlı tüketim çarkına teslim olmak istemeyen kimi sanatçılar ise gözlerden uzak kalmayı tercih eder. Taşrada veya kendi iç dünyalarında oluşturdukları izole alanlarda üretim yapan bu isimler, piyasa koşullarının dayattığı beklentilerden muaf kalmanın avantajını yaşarlar. Popüler kültürün gürültüsünden uzaklaşmak, sanatsal üretimin özünü oluşturan içsel sorgulamaya imkân tanır. Nitekim sanat tarihine bakıldığında, döneminde görmezden gelinen veya kenarda kalmayı seçen pek çok ismin, ölümünden uzun süre sonra "çağının ötesinde" ilan edilerek tescillendiği görülür.</p>
+    <p><span class="paragraf-etiket">D</span> Yaratım sürecinin izole ortamlarda yürütülmesinin üretkenliği beslediği savunulsa da bunun bazı dezavantajları bulunmaktadır. Dış dünyayla etkileşimini tamamen kesen sanatçı, yaşadığı çağın toplumsal gerçekliklerinden ve dinamiklerinden kopma tehlikesiyle yüzleşir. Bir eserin evrensel bir nitelik kazanması, sanatçının toplumsal nabzı tutabilme ve döneminin sancılarını estetize edebilme kabiliyetine doğrudan bağlıdır. Aşırı içe kapanıklık, sanatsal üretimin dar bir kişisel paranteze sıkışmasına ve kitlelerle kurabileceği zihinsel bağın tamamen kopmasına yol açabilir.</p>
+    <p><span class="paragraf-etiket">E</span> Sanatın niteliğini koruyarak kalıcılığı yakalayabilmesi, sanatçının şehir yaşamının sunduğu olanaklar ile kendi özgün dünyası arasındaki dengeyi ne kadar koruyabildiğine bağlıdır. Şehrin entelektüel canlılığından beslenirken, onun yüzeysel tüketim fırtınasında kaybolmamak ciddi bir disiplin gerektirir. Günümüz kültür politikalarının nihai hedefi; sanatçıyı ticari kaygıların kıskacından kurtararak ona hem toplumsal etkileşime açık hem de bağımsız üretim yapabileceği nitelikli alanlar sunmak olmalıdır.</p>
+  </div>
+
+  <!-- SORULAR -->
+  <div style="margin-top:1.8rem;">
+    <div style="color:#F5C842; font-weight:700; font-size:1.1rem; letter-spacing:1px; border-bottom:1px solid #F5C84233; padding-bottom:0.3rem;">Çoktan Seçmeli Sorular (S1 - S3)</div>
+    <div style="color:rgba(255,255,255,0.5); font-size:0.85rem; margin-top:0.2rem;">Aşağıdaki sorular için doğru seçeneği (A, B, C veya D) işaretleyiniz.</div>
+
+    <!-- S1 -->
+    <div class="soru-blok" id="s1Block">
+      <h3>S1.</h3>
+      <div class="soru-metni">Aşağıdaki cümlelerden hangisi metinden çıkarılamaz?</div>
+      <div class="secenekler" data-dogru="B" data-aciklama="Metindeki ana düşüncenin tam tersini savunur. B paragrafında geçen 'bir eserin dönemsel olarak yüksek fiyatlara alıcı bulması, onun zamana direnebileceği anlamına gelmez' ifadesi paraphrasing edilerek B seçeneğinde ters çevrilmiştir.">
+        <label><input type="radio" name="s1" value="A"> <span>A) Büyük kentlerin sunduğu geniş kitle imkânı, sanatsal özgünlüğün piyasa koşullarına kurban gitmesine zemin hazırlayabilir.</span></label>
+        <label><input type="radio" name="s1" value="B"> <span>B) Bir sanat eserinin kalıcılığı, üretildiği dönemde elde ettiği finansal başarı ve görünürlükle doğru orantılıdır.</span></label>
+        <label><input type="radio" name="s1" value="C"> <span>C) Sanatçının kendi kabuğuna çekilmesi, eserlerinde derin ve içsel bir anlatım yakalamasını kolaylaştırabilir.</span></label>
+        <label><input type="radio" name="s1" value="D"> <span>D) Yaşadığı toplumun dinamiklerine yabancılaşan bir sanatçının kitlelerde karşılık bulması oldukça güçtür.</span></label>
+      </div>
+      <div class="aciklama" id="aciklamaS1"></div>
+    </div>
+
+    <!-- S2 -->
+    <div class="soru-blok" id="s2Block">
+      <h3>S2.</h3>
+      <div class="soru-metni">Metinde aşağıdaki yargılardan hangisine değinilmemiştir?</div>
+      <div class="secenekler" data-dogru="C" data-aciklama="E paragrafında sanatçıya alan sunulması gerektiğinden söz edilse de metnin hiçbir yerinde 'Devletin ve kurumların sanatçılara sunduğu doğrudan maddi yardımlar...' gibi spesifik bir ifadeden ya da bunun üretimi artırdığından söz edilmemiştir.">
+        <label><input type="radio" name="s2" value="A"> <span>A) Kent ortamındaki yoğun sanatsal rekabet, eser kalitesinde nitelik kaybına yol açabilmektedir.</span></label>
+        <label><input type="radio" name="s2" value="B"> <span>B) Tarihte hak ettiği değeri yaşarken göremeyip sonradan takdir edilen sanatçılar mevcuttur.</span></label>
+        <label><input type="radio" name="s2" value="C"> <span>C) Devletin ve kurumların sanatçılara sunduğu doğrudan maddi yardımlar sanatsal üretimi artırmıştır.</span></label>
+        <label><input type="radio" name="s2" value="D"> <span>D) Metropolün dinamizmi ile kişisel bağımsızlık arasında kurulacak denge kalıcılığın anahtarıdır.</span></label>
+      </div>
+      <div class="aciklama" id="aciklamaS2"></div>
+    </div>
+
+    <!-- S3 -->
+    <div class="soru-blok" id="s3Block">
+      <h3>S3.</h3>
+      <div class="soru-metni">Metinden aşağıdaki çıkarımlardan hangisine ulaşılamaz?</div>
+      <div class="secenekler" data-dogru="C" data-aciklama="C seçeneğinde geçen 'daima daha niteliklidir' ifadesi kesin ve aşırı bir genellemedir. Metnin C ve D paragraflarında taşrada/izolasyonda kalmanın hem avantajları hem de dezavantajları tartışılmıştır. Dolayısıyla şehir dışındakilerin 'daima' daha nitelikli olduğu çıkarımı yapılamaz.">
+        <label><input type="radio" name="s3" value="A"> <span>A) Sanatsal üretimin ticari döngüye girmesi, eserin niteliğinden ziyade popülerliğine hizmet edebilir.</span></label>
+        <label><input type="radio" name="s3" value="B"> <span>B) Yaşadığı dönemin toplumsal meselelerini eserine yansıtmayan bir sanatçının evrenselleşmesi zordur.</span></label>
+        <label><input type="radio" name="s3" value="C"> <span>C) Büyük şehir dışındaki ortamlarda üretilen eserler, kentlerde üretilenlere kıyasla daima daha niteliklidir.</span></label>
+        <label><input type="radio" name="s3" value="D"> <span>D) Çağdaş sergi organizasyonlarında sıklıkla boy göstermek kalıcı bir prestijin garantisi sayılamaz.</span></label>
+      </div>
+      <div class="aciklama" id="aciklamaS3"></div>
+    </div>
+  </div>
+
+  <!-- PARAGRAF EŞLEŞTİRME SORULARI -->
+  <div style="margin-top:2.2rem;">
+    <div style="color:#F5C842; font-weight:700; font-size:1.1rem; letter-spacing:1px; border-bottom:1px solid #F5C84233; padding-bottom:0.3rem;">Paragraf Eşleştirme Soruları (S4 - S6)</div>
+    <div style="color:rgba(255,255,255,0.5); font-size:0.85rem; margin-top:0.2rem;">Aşağıdaki soruları okuyunuz ve ilgili paragrafı (A-E) işaretleyiniz. Seçilmemesi gereken İKİ paragraf bulunmaktadır.</div>
+
+    <!-- S4 -->
+    <div class="soru-blok" id="s4Block">
+      <h3>S4.</h3>
+      <div class="soru-metni">Sanatçının toplumsal çevreden soyutlanmasının estetik üretime getireceği olumsuz sınırlılıklar hangi paragrafta ele alınmaktadır?</div>
+      <div class="secenekler" data-dogru="D" data-aciklama="D paragrafında yer alan 'aşırı içe kapanıklık, sanatsal üretimin dar bir kişisel paranteze sıkışmasına...' ve 'çağın toplumsal gerçekliklerinden kopma tehlikesi' ifadeleri doğrudan bu olumsuzlukları işlemektedir.">
+        <label><input type="radio" name="s4" value="A"> <span>A) A</span></label>
+        <label><input type="radio" name="s4" value="B"> <span>B) B</span></label>
+        <label><input type="radio" name="s4" value="C"> <span>C) C</span></label>
+        <label><input type="radio" name="s4" value="D"> <span>D) D</span></label>
+        <label><input type="radio" name="s4" value="E"> <span>E) E</span></label>
+      </div>
+      <div class="aciklama" id="aciklamaS4"></div>
+    </div>
+
+    <!-- S5 -->
+    <div class="soru-blok" id="s5Block">
+      <h3>S5.</h3>
+      <div class="soru-metni">Göz önünde bulunmamanın ve piyasa baskısından sıyrılmanın sanatsal derinliğe katkısı hangi paragrafta yer almaktadır?</div>
+      <div class="secenekler" data-dogru="C" data-aciklama="C paragrafındaki 'Piyasa koşullarının dayattığı beklentilerden muaf kalmanın avantajı' ve 'içsel sorgulamaya imkân tanıması' cümleleri bu durumu ifade eder.">
+        <label><input type="radio" name="s5" value="A"> <span>A) A</span></label>
+        <label><input type="radio" name="s5" value="B"> <span>B) B</span></label>
+        <label><input type="radio" name="s5" value="C"> <span>C) C</span></label>
+        <label><input type="radio" name="s5" value="D"> <span>D) D</span></label>
+        <label><input type="radio" name="s5" value="E"> <span>E) E</span></label>
+      </div>
+      <div class="aciklama" id="aciklamaS5"></div>
+    </div>
+
+    <!-- S6 -->
+    <div class="soru-blok" id="s6Block">
+      <h3>S6.</h3>
+      <div class="soru-metni">Sanat yapıtının uzun ömürlü olmasının dönemsel ilgi ve piyasa değerinden bağımsız olduğu düşüncesi hangi paragrafta vurgulanmaktadır?</div>
+      <div class="secenekler" data-dogru="B" data-aciklama="B paragrafında Dr. Selin Dogan'in görüşleri üzerinden 'güncel sergi takvimlerinde yer bulması... zamana direnebileceği anlamına gelmez' ifadesiyle bu düşünce vurgulanmaktadır.">
+        <label><input type="radio" name="s6" value="A"> <span>A) A</span></label>
+        <label><input type="radio" name="s6" value="B"> <span>B) B</span></label>
+        <label><input type="radio" name="s6" value="C"> <span>C) C</span></label>
+        <label><input type="radio" name="s6" value="D"> <span>D) D</span></label>
+        <label><input type="radio" name="s6" value="E"> <span>E) E</span></label>
+      </div>
+      <div class="aciklama" id="aciklamaS6"></div>
+    </div>
+  </div>
+
+  <!-- KONTROL BUTONU -->
+  <div class="cevap-kontrol">
+    <button id="kontrolBtn">✔ KONTROL ET</button>
+  </div>
+
+  <!-- SONUÇ ÖZETİ -->
+  <div id="sonucOzet" class="sonuc-ozet-box">
+    <span></span>
+  </div>
+
+  <div id="uyariMesaj" class="uyari"></div>
+</div>
+
+<footer>
+  <span>✦</span> Hamza Hoca ile Türkçe Öğreniyorum <span>✦</span>
+</footer>
+
+<script>
+(function() {
+  const kontrolBtn = document.getElementById('kontrolBtn');
+  const sonucOzet = document.getElementById('sonucOzet');
+  const uyari = document.getElementById('uyariMesaj');
+
+  function cevaplariGoster() {
+    uyari.textContent = '';
+    let boslukVar = false;
+    let toplamSoru = 0;
+    let dogruSayisi = 0;
+
+    const soruBloklari = document.querySelectorAll('.soru-blok');
+    soruBloklari.forEach(blok => {
+      const seceneklerDiv = blok.querySelector('.secenekler');
+      if (!seceneklerDiv) return;
+
+      const inputs = seceneklerDiv.querySelectorAll('input[type="radio"]');
+      const dogruHarf = seceneklerDiv.getAttribute('data-dogru');
+      const aciklamaMetni = seceneklerDiv.getAttribute('data-aciklama') || '';
+      const aciklamaDiv = blok.querySelector('.aciklama');
+
+      let secili = null;
+      inputs.forEach(inp => {
+        if (inp.checked) secili = inp;
+      });
+
+      if (!secili) {
+        boslukVar = true;
+        return;
+      }
+
+      const secim = secili.value;
+      const isDogru = (secim === dogruHarf);
+      if (isDogru) dogruSayisi++;
+      toplamSoru++;
+
+      inputs.forEach(inp => {
+        inp.disabled = true;
+        const label = inp.closest('label');
+        if (inp.value === dogruHarf) {
+          label.style.borderColor = '#7bdd7b';
+          label.style.backgroundColor = '#1d3d2a';
+        } else if (inp.checked && inp.value !== dogruHarf) {
+          label.style.borderColor = '#f77b7b';
+          label.style.backgroundColor = '#3d1d1d';
+        }
+      });
+
+      if (aciklamaDiv) {
+        aciklamaDiv.textContent = aciklamaMetni;
+        aciklamaDiv.className = 'aciklama goster';
+        if (isDogru) {
+          aciklamaDiv.classList.add('dogru-aciklama');
+        } else {
+          aciklamaDiv.classList.add('yanlis-aciklama');
+        }
+      }
+    });
+
+    if (boslukVar) {
+      uyari.textContent = '⚠ Lütfen tüm soruları cevaplayın.';
+      sonucOzet.style.display = 'none';
+      return;
+    }
+
+    const ozetSpan = sonucOzet.querySelector('span');
+    if (ozetSpan) {
+      ozetSpan.textContent = `${dogruSayisi} / ${toplamSoru} doğru`;
+    }
+    sonucOzet.style.display = 'block';
+  }
+
+  kontrolBtn.addEventListener('click', cevaplariGoster);
+
+  function resetGeriBildirim() {
+    sonucOzet.style.display = 'none';
+    uyari.textContent = '';
+
+    document.querySelectorAll('.soru-blok').forEach(blok => {
+      const inputs = blok.querySelectorAll('input[type="radio"]');
+      inputs.forEach(inp => {
+        inp.disabled = false;
+        const label = inp.closest('label');
+        if (label) {
+          label.style.borderColor = 'transparent';
+          label.style.backgroundColor = '#1a2332';
+        }
+      });
+
+      const aciklamaDiv = blok.querySelector('.aciklama');
+      if (aciklamaDiv) {
+        aciklamaDiv.className = 'aciklama';
+        aciklamaDiv.textContent = '';
+      }
+    });
+  }
+
+  document.querySelectorAll('input[type="radio"]').forEach(el => {
+    el.addEventListener('change', resetGeriBildirim);
+  });
+
+})();
+</script>
+
+</body>
+</html>
