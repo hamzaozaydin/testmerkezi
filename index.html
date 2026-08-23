@@ -633,7 +633,7 @@ function checkAccessAndOpen(requiredAccessType, successCallback) { const storedT
 function openExamLogin(page) { if (checkAccessAndOpen(ACCESS_TYPE.EXAM, () => window.location.href=page)) return; targetPage=page; targetUrl=''; targetVideoSrc=null; document.getElementById('modalSubTitle').innerHTML='Bu içeriğe erişmek için <strong></strong> hesabınızla giriş yapmalısınız.'; document.getElementById('modalOverlay').classList.add('show'); }
 function openExamLoginVideo(src) { if (checkAccessAndOpen(ACCESS_TYPE.EXAM, () => openVideo(src))) return; targetVideoSrc=src; targetPage=''; targetUrl=''; document.getElementById('modalSubTitle').innerHTML='Bu video içeriğine erişmek için <strong></strong> hesabınızla giriş yapmalısınız.'; document.getElementById('modalOverlay').classList.add('show'); }
 function openWritingOdev() { const url='https://hamzahocaodevkontrolu.base44.app/'; if (checkAccessAndOpen(ACCESS_TYPE.WRITING, () => window.location.href=url)) return; targetUrl=url; document.getElementById('modalSubTitle').innerHTML='Yazma ödevi göndermek için <strong>Yazma Ödevi</strong> hesabıyla giriş yapmalısınız.'; document.getElementById('modalOverlay').classList.add('show'); }
-function openSpeakingOdev() { const url='https://hamzahocailekonusmapratigi.base44.app/'; if (checkAccessAndOpen(ACCESS_TYPE.SPEAKING, () => window.location.href=url)) return; targetUrl=url; document.getElementById('modalSubTitle').innerHTML='Konuşma ödevi göndermek için <strong>Konuşma Ödevi</strong> hesabıyla giriş yapmalısınız.'; document.getElementById('modalOverlay').classList.add('show'); }
+function openSpeakingOdev() { const url='https://hamzahocakonusmasinavi.base44.app'; if (checkAccessAndOpen(ACCESS_TYPE.SPEAKING, () => window.location.href=url)) return; targetUrl=url; document.getElementById('modalSubTitle').innerHTML='Konuşma ödevi göndermek için <strong>Konuşma Ödevi</strong> hesabıyla giriş yapmalısınız.'; document.getElementById('modalOverlay').classList.add('show'); }
 function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
 function closeModalOutside(e) { if (e.target===document.getElementById('modalOverlay')) closeModal(); }
 
@@ -649,6 +649,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if(freeDivReading) readFree.forEach(([h,t])=>{ let a=document.createElement('a'); a.className='item-card'; a.href=h; a.target='_blank'; a.innerHTML=`<span>${t}</span><span class="badge badge-free">✅ Ücretsiz</span>`; freeDivReading.appendChild(a); });
   const lockDivReading = document.getElementById('readingTextLocked'); 
   if(lockDivReading) readLocked.forEach(([h,t])=>{ let div=document.createElement('div'); div.className='item-card'; div.setAttribute('onclick',`openExamLogin('${h}')`); div.innerHTML=`<span>${t}</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`; lockDivReading.appendChild(div); });
+
   // Sınavlar
   const reading = ["okuma1.html","okuma-testi-2.html","okuma_testi_3.html","okuma_testi_4.html","okuma_testi_5.html","okuma_testi_6.html","okuma_testi_7.html","okuma_testi_8.html","TYS_okuma_testi_1.html","okuma_testi_10.html"];
   const readingNames = ["Okuma Sınavı 1","Okuma Sınavı 2","Okuma Sınavı 3","Okuma Sınavı 4","Okuma Sınavı 5","Okuma Sınavı 6","Okuma Sınavı 7","Okuma Sınavı 8","Okuma Sınavı 9 (TYS)","Okuma Sınavı 10"];
