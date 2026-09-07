@@ -613,7 +613,7 @@ let mode = null, players = [], scores = [], streaks = [], bestStreaks = [];
 let correctCounts = [], totalTimeBonuses = [];
 let currentPlayer = 0, round = 0;
 let usedIndices = [], currentQ = null, answered = false;
-let timerInterval = null, timerLeft = 15;
+let timerInterval = null, timerLeft = 30;
 let wheelAngle = 0, isSpinning = false;
 const TOTAL = KELİMELER.length;
 
@@ -798,14 +798,14 @@ function checkAnswer(btn, chosen) {
 }
 
 function startTimer() {
-  timerLeft = 15;
+  timerLeft = 30;
   const bar = document.getElementById('timer-bar');
   bar.style.width = '100%';
   bar.className = 'timer-bar';
   clearInterval(timerInterval);
   timerInterval = setInterval(() => {
     timerLeft -= 0.1;
-    const pct = Math.max((timerLeft / 15) * 100, 0);
+    const pct = Math.max((timerLeft / 30) * 100, 0);
     bar.style.width = pct + '%';
     if (pct < 40) bar.className = 'timer-bar warn';
     if (pct < 20) bar.className = 'timer-bar danger';
