@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benzer Sözler 1 – Hamza Hoca</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+  overflow-x: hidden;
+}
+
+.home-btn-wrap {
+  padding: 18px 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 40px;
+  padding: 9px 20px;
+  color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .22s, transform .18s, box-shadow .22s;
+}
+
+.home-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  color: #F5C842;
+  text-decoration: none;
+}
+
+.home-btn svg { flex-shrink: 0; }
+
+header {
+  text-align: center;
+  padding: 2rem 1rem 1.2rem;
+}
+
+.header-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.3rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 0.9rem;
+}
+
+header h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.header-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 10px;
+}
+
+.stars {
+  font-size: 1rem;
+  color: #F5C842;
+  letter-spacing: .4em;
+  margin-bottom: 6px;
+  opacity: .7;
+}
+
+.telegram-section {
+  text-align: center;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.tg-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(26,35,50,0.85);
+  border: 1.5px solid rgba(34,158,217,0.3);
+  border-radius: 60px;
+  padding: .75rem 1.5rem .75rem 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+.tg-btn {
+  display: inline-flex;
+  align-items: center; gap: .45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0);
+  color: #fff; text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800; font-size: .92rem;
+  padding: .65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34,158,217,.4);
+  transition: all .22s; white-space: nowrap;
+}
+
+.tg-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(34,158,217,.55);
+}
+
+.section-title {
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #F5C842;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: .5rem 0 1rem;
+  opacity: 0.9;
+}
+
+footer {
+  text-align: center;
+  padding: 0 1rem 2.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+footer span { color: #F5C842; }
+
+/* -------- quiz styles -------- */
+.quiz-container {
+  max-width: 900px;
+  margin: 1rem auto 2rem;
+  padding: 0 1rem 1rem;
+}
+
+.paragraf {
+  background: rgba(255,255,255,0.04);
+  padding: 1.8rem 1.8rem 0.8rem;
+  border-radius: 28px;
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255,255,255,0.06);
+  font-size: 1.06rem;
+  line-height: 1.8;
+  color: #ececec;
+  text-align: justify;
+}
+.paragraf h2 {
+  display: none;
+}
+
+.soru-blok {
+  background: rgba(255,255,255,0.04);
+  border-radius: 24px;
+  padding: 1.2rem 1.5rem;
+  margin-top: 1.5rem;
+  border-left: 3px solid #F5C842;
+  transition: 0.2s;
+}
+.soru-blok h3 {
+  color: #F5C842;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.4rem;
+}
+.soru-blok .soru-metni {
+  font-weight: 400;
+  margin-bottom: 0.8rem;
+  color: #eaeaea;
+}
+.soru-blok .secenekler {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  align-items: center;
+}
+.soru-blok .secenekler label {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #1a2332;
+  padding: 0.2rem 0.9rem 0.2rem 0.6rem;
+  border-radius: 40px;
+  border: 2px solid transparent;
+  transition: 0.15s;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.soru-blok .secenekler label:hover {
+  border-color: #F5C84255;
+}
+.soru-blok .secenekler input[type="radio"] {
+  accent-color: #F5C842;
+  width: 16px; height: 16px;
+  margin: 0;
+  flex-shrink: 0;
+}
+.soru-blok .secenekler input[type="radio"]:disabled + span {
+  opacity: 0.7;
+}
+.soru-blok .secenekler label span {
+  word-break: break-word;
+}
+.soru-blok .aciklama {
+  margin-top: 0.6rem;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  background: rgba(0,0,0,0.3);
+  border-left: 3px solid #F5C842;
+  display: none;
+  color: #d4d4d4;
+  line-height: 1.6;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  word-break: break-word;
+}
+.soru-blok .aciklama.dogru-aciklama {
+  border-left-color: #7bdd7b;
+  background: rgba(123,221,123,0.08);
+  color: #b3ffb3;
+}
+.soru-blok .aciklama.yanlis-aciklama {
+  border-left-color: #f77b7b;
+  background: rgba(247,123,123,0.08);
+  color: #ffb3b3;
+}
+.soru-blok .aciklama.goster {
+  display: block;
+}
+
+.cevap-kontrol {
+  text-align: center;
+  margin: 2.2rem 0 1.5rem;
+}
+.cevap-kontrol button {
+  background: linear-gradient(135deg, #F5C842, #D4A020);
+  border: none;
+  border-radius: 60px;
+  padding: 0.9rem 3rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #0D1B2A;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 6px 28px rgba(245, 200, 66, 0.3);
+}
+.cevap-kontrol button:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 34px rgba(245, 200, 66, 0.5);
+}
+
+.sonuc-ozet-box {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #F5C842;
+  margin-top: 0.5rem;
+  padding: 0.8rem;
+  background: #13212e;
+  border-radius: 40px;
+  border-left: 4px solid #F5C842;
+  display: none;
+}
+.sonuc-ozet-box span {
+  background: #0D1B2A;
+  padding: 0.2rem 1.8rem;
+  border-radius: 40px;
+}
+
+.uyari {
+  text-align: center;
+  color: #f5c842aa;
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+}
+
+/* mobil */
+@media (max-width: 480px) {
+  .paragraf { padding: 1.2rem 1rem 0.6rem; font-size: 1rem; }
+  .soru-blok { padding: 1rem; }
+  .soru-blok .secenekler { gap: 0.3rem 0.6rem; }
+  .soru-blok .aciklama { 
+    font-size: 0.85rem; 
+    padding: 0.6rem 0.8rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap" id="backBtnWrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ Okuma Alıştırması ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+      Kanala Katıl
+    </a>
+  </div>
+</div>
+
+<div class="section-title">Sahne Sanatlarının Kalbi: Tiyatro ve İllüzyon</div>
+
+<!-- ========== SORU ALANI ========== -->
+<div class="quiz-container" id="quizContainer">
+
+  <!-- OKUMA METNİ (başlıksız) -->
+  <div class="paragraf">
+    <p>Dünya bir sahne, insanlar da bu sahnede rollerini oynayan birer oyuncu mudur, yoksa tiyatro hayatın ta kendisi midir? Bu soru, ilk çağlardan beri düşünürlerin ve sanatçıların zihnini meşgul etmiştir. İnsanlığın hikâye anlatma tutkusu, mağara duvarlarına çizilen resimlerden antik amfitiyatrolara kadar uzanan uzun bir yolculuğun eseridir. Ancak tiyatronun kurumsal bir sanata dönüşmesi, Antik Yunan’da bağ bozumu tanrısı Dionysos adına düzenlenen şenliklerle mümkün olmuştur. Maskelerin arkasına saklanan ilk oyuncular, izleyicilere sadece bir hikâye anlatmakla kalmamış; toplumsal kuralları, ahlakı ve insan doğasının çelişkilerini sorgulatmışlardır. Aristoteles’in Tragedyalar üzerine koyduğu kuralcı ilkeler, tiyatroyu yüzyıllar boyunca belirli kalıplar içine sıkıştırmışsa da sanatın özündeki özgürleşme arzusu hiçbir zaman bastırılamamıştır.</p>
+    <p style="margin-top:0.8rem;">Orta Çağ Avrupa’sında kilisenin baskıcı tutumu nedeniyle duraklama dönemine giren tiyatro, sokak gösterileri ve gezgin kumpanyalar sayesinde varlığını sürdürebilmiştir. İtalyanların "Commedia dell'Arte" adını verdiği doğaçlama tiyatro türü, yazılı bir metne bağlı kalmadan halkın içinden çıkan karakterlerle tiyatroyu yeniden halka yakınlaştırmıştır. 16. ve 17. yüzyıllar ise tiyatronun altın çağı olmuştur. İngiltere’de William Shakespeare, insan ruhunun derinliklerini, hırsı, aşkı ve trajediyi sahneye taşırken; Fransa’da Molière, saray çevresini ve dönemin toplumsal ikiyüzlülüklerini mizahi bir dille eleştirmiştir. Tiyatro artık sadece bir seyirlik değil, topluma tutulan keskin bir ayna hâline gelmiştir.</p>
+    <p style="margin-top:0.8rem;">Türk kültüründe ise tiyatro geleneği uzun süre seyirlik halk oyunları bünyesinde gelişim göstermiştir. Karagöz ile Hacivat, Orta Oyunu ve Meddah; yazılı bir metne dayanmayan, gücünü nüktedanlık, taklit yeteneği ve şiveden alan performanslardı. Geleneksel Türk tiyatrosunda sahnede bir duvar yoktu; oyuncu ile seyirci iç içeydi. Tanzimat Dönemi ile birlikte Batı tarzı tiyatro, metne dayalı olarak edebiyatımıza girdi. Namık Kemal’in "Vatan yahut Silistre" oyunuyla tiyatro salonları ilk kez toplumsal bir coşkuya ev sahipliği yaptı. Cumhuriyet Dönemi’nde ise Devlet Tiyatroları’nın kurulması ve Şehir Tiyatroları’nın yaygınlaşmasıyla tiyatro, Türkiye’nin dört bir yanına ulaşan kurumsal bir disipline kavuştu. Günümüzde tiyatro; dijital dünyayla yarışsa da seyirciyle kurduğu o canlı, anlık ve nefes nefese temas sayesinde eşsiz büyüsünü korumaya devam etmektedir.</p>
+  </div>
+
+  <!-- SORULAR -->
+  <div style="margin-top:1.8rem;">
+    <div style="color:#F5C842; font-weight:700; font-size:1.1rem; letter-spacing:1px; border-bottom:1px solid #F5C84233; padding-bottom:0.3rem;">Çoktan Seçmeli Sorular (S1 - S4)</div>
+    <div style="color:rgba(255,255,255,0.5); font-size:0.85rem; margin-top:0.2rem;">Aşağıdaki sorular için doğru seçeneği (A, B, C veya D) işaretleyiniz.</div>
+
+    <!-- S1 -->
+    <div class="soru-blok" id="s1Block">
+      <h3>S1.</h3>
+      <div class="soru-metni">Metnin bütününe göre aşağıdaki yargılardan hangisine varılamaz?</div>
+      <div class="secenekler" data-dogru="C" data-aciklama="Metinde Türk tiyatrosunun Tanzimat öncesinde (Karagöz, Orta Oyunu vb.) yazılı bir metne dayanmadığı, doğaçlama olduğu açıkça belirtilmiştir. Bu yüzden C seçeneğindeki yargıya ulaşılamaz.">
+        <label><input type="radio" name="s1" value="A"> <span>A) Tiyatro, tarih boyunca toplumun ahlaki ve sosyal yapısını sorgulayan bir işlev görmüştür.</span></label>
+        <label><input type="radio" name="s1" value="B"> <span>B) Orta Çağ’da kilisenin baskısına rağmen tiyatro, gezgin kumpanyalarla canlı tutulmuştur.</span></label>
+        <label><input type="radio" name="s1" value="C"> <span>C) Türk tiyatrosu, Tanzimat Dönemi öncesinde tamamen yazılı metinlere dayalı olarak icra edilmiştir.</span></label>
+        <label><input type="radio" name="s1" value="D"> <span>D) Tiyatro, seyirciyle kurduğu anlık ve canlı bağ sayesinde varlığını günümüzde de sürdürmektedir.</span></label>
+      </div>
+      <div class="aciklama" id="aciklamaS1"></div>
+    </div>
+
+    <!-- S2 -->
+    <div class="soru-blok" id="s2Block">
+      <h3>S2.</h3>
+      <div class="soru-metni">Metinde geçen "topluma tutulan keskin bir ayna" ifadesiyle anlatılmak istenen aşağıdakilerden hangisidir?</div>
+      <div class="secenekler" data-dogru="B" data-aciklama='"Ayna tutmak" sanatta toplumsal gerçekliği, ahlakı ve insan ilişkilerini olduğu gibi, tarafsızca eleştirel bir gözle yansıtmak anlamına gelen bir mecazdır.'>
+        <label><input type="radio" name="s2" value="A"> <span>A) İnsanların fiziksel görünüşlerini ve kusurlarını sahnede açıkça sergilemek</span></label>
+        <label><input type="radio" name="s2" value="B"> <span>B) Toplumun gerçeklerini, aksayan yönlerini ve çelişkilerini olduğu gibi yansıtmak</span></label>
+        <label><input type="radio" name="s2" value="C"> <span>C) Gerçek hayattan tamamen bağımsız, hayalî bir dünya yaratarak insanları eğlendirmek</span></label>
+        <label><input type="radio" name="s2" value="D"> <span>D) Geçmişte yaşanmış tarihî olayları hiç değiştirmeden geleceğe aktarmak</span></label>
+      </div>
+      <div class="aciklama" id="aciklamaS2"></div>
+    </div>
+
+    <!-- S3 -->
+    <div class="soru-blok" id="s3Block">
+      <h3>S3.</h3>
+      <div class="soru-metni">Aşağıdakilerden hangisinde tiyatro türleri/dönemleri ile bunlara ait özellikler eşleştirmesi uyumsuzdur?</div>
+      <div class="secenekler" data-dogru="C" data-aciklama='Metinde Geleneksel Türk tiyatrosu için "Geleneksel Türk tiyatrosunda sahnede bir duvar yoktu; oyuncu ile seyirci iç içeydi." denmektedir. Arada kesin sınırlar olduğunu söylemek metinle çelişir.'>
+        <label><input type="radio" name="s3" value="A"> <span>A) Commedia dell'Arte – Yazılı bir metne bağlı kalmadan yapılan doğaçlama oyunlar</span></label>
+        <label><input type="radio" name="s3" value="B"> <span>B) Antik Yunan Tiyatrosu – Dionysos şenliklerinden doğan ve maskelerin kullanıldığı yapı</span></label>
+        <label><input type="radio" name="s3" value="C"> <span>C) Geleneksel Türk Tiyatrosu – Oyuncu ile seyirci arasına kesin sınırlar koyan sahne düzeni</span></label>
+        <label><input type="radio" name="s3" value="D"> <span>D) Molière Dönemi Fransız Tiyatrosu – Toplumsal ikiyüzlülüğü eleştiren mizahi yaklaşım</span></label>
+      </div>
+      <div class="aciklama" id="aciklamaS3"></div>
+    </div>
+
+    <!-- S4 -->
+    <div class="soru-blok" id="s4Block">
+      <h3>S4.</h3>
+      <div class="soru-metni">Metne göre, Türkiye’deki tiyatro tarihi ile ilgili aşağıdaki bilgilerden hangisi doğrudur?</div>
+      <div class="secenekler" data-dogru="C" data-aciklama='3. paragrafta Karagöz, Hacivat, Orta Oyunu gibi geleneksel oyunların "gücünü nüktedanlık, taklit yeteneği ve şiveden aldığı" açıkça ifade edilmektedir.'>
+        <label><input type="radio" name="s4" value="A"> <span>A) Karagöz ile Hacivat, Tanzimat Dönemi'nden sonra Batı etkisiyle ortaya çıkmıştır.</span></label>
+        <label><input type="radio" name="s4" value="B"> <span>B) Namık Kemal’in "Vatan yahut Silistre" eseri, Türk tiyatrosunun ilk doğaçlama örneğidir.</span></label>
+        <label><input type="radio" name="s4" value="C"> <span>C) Geleneksel Türk tiyatrosunda başarı; nükte, taklit yeteneği ve şiveye dayanmaktadır.</span></label>
+        <label><input type="radio" name="s4" value="D"> <span>D) Cumhuriyet Dönemi’nde tiyatro, sadece İstanbul ve Ankara ile sınırlı kalmıştır.</span></label>
+      </div>
+      <div class="aciklama" id="aciklamaS4"></div>
+    </div>
+  </div>
+
+  <!-- DOĞRU / YANLIŞ / VERİLMEMİŞ -->
+  <div style="margin-top:2.2rem;">
+    <div style="color:#F5C842; font-weight:700; font-size:1.1rem; letter-spacing:1px; border-bottom:1px solid #F5C84233; padding-bottom:0.3rem;">Doğru / Yanlış / Verilmemiş Soruları (S5 - S9)</div>
+    <div style="color:rgba(255,255,255,0.5); font-size:0.85rem; margin-top:0.2rem;">• DOĞRU – Cümle metindeki bilgilerle uygun ve/veya tutarlıysa,<br>• YANLIŞ – Cümle metindeki bilgilerle tutarsız ve/veya çelişkiliyse,<br>• VERİLMEMİŞ – Cümle metindeki bilgilerde yer almıyor ve/veya belirtilmemişse.</div>
+
+    <!-- S5 -->
+    <div class="soru-blok" id="s5Block">
+      <h3>S5.</h3>
+      <div class="soru-metni">Antik Yunan’da Aristoteles, tragedya sanatı üzerine kuralcı ilkeler öne sürmüştür.</div>
+      <div class="secenekler" data-dogru="A" data-aciklama='1. paragraftaki "Aristoteles’in Tragedyalar üzerine koyduğu kuralcı ilkeler..." ifadesiyle birebir tutarlıdır.'>
+        <label><input type="radio" name="s5" value="A"> <span>A) Doğru</span></label>
+        <label><input type="radio" name="s5" value="B"> <span>B) Yanlış</span></label>
+        <label><input type="radio" name="s5" value="C"> <span>C) Verilmemiş</span></label>
+      </div>
+      <div class="aciklama" id="aciklamaS5"></div>
+    </div>
+
+    <!-- S6 -->
+    <div class="soru-blok" id="s6Block">
+      <h3>S6.</h3>
+      <div class="soru-metni">William Shakespeare, tiyatro oyunlarından elde ettiği gelirle Londra’da kendi tiyatro binasını satın almıştır.</div>
+      <div class="secenekler" data-dogru="C" data-aciklama="Metinde Shakespeare'in insan ruhunu ve trajediyi sahneye taşıdığı yazmaktadır ancak tiyatro binası satın alıp almadığına dair hiçbir bilgi yer almamaktadır. Bu nedenle cevap 'Verilmemiş'tir.">
+        <label><input type="radio" name="s6" value="A"> <span>A) Doğru</span></label>
+        <label><input type="radio" name="s6" value="B"> <span>B) Yanlış</span></label>
+        <label><input type="radio" name="s6" value="C"> <span>C) Verilmemiş</span></label>
+      </div>
+      <div class="aciklama" id="aciklamaS6"></div>
+    </div>
+
+    <!-- S7 -->
+    <div class="soru-blok" id="s7Block">
+      <h3>S7.</h3>
+      <div class="soru-metni">Geleneksel Türk tiyatrosu, ortaya çıktığı ilk günden itibaren Batı tiyatrosundaki sahne tekniklerini birebir uygulamıştır.</div>
+      <div class="secenekler" data-dogru="B" data-aciklama="Metne göre Türk tiyatrosu uzun süre yazılı metni ve sahne duvarı olmayan geleneksel yöntemlerle gelişim göstermiş, Batı tarzı tiyatro ancak Tanzimat'la girmiştir. Bu yüzden cümle yanlıştır.">
+        <label><input type="radio" name="s7" value="A"> <span>A) Doğru</span></label>
+        <label><input type="radio" name="s7" value="B"> <span>B) Yanlış</span></label>
+        <label><input type="radio" name="s7" value="C"> <span>C) Verilmemiş</span></label>
+      </div>
+      <div class="aciklama" id="aciklamaS7"></div>
+    </div>
+
+    <!-- S8 -->
+    <div class="soru-blok" id="s8Block">
+      <h3>S8.</h3>
+      <div class="soru-metni">Tanzimat Dönemi, Türk tiyatrosunda yazılı metne dayalı Batı tarzı tiyatronun edebiyatımıza girdiği dönemdir.</div>
+      <div class="secenekler" data-dogru="A" data-aciklama='3. paragrafta yer alan "Tanzimat Dönemi ile birlikte Batı tarzı tiyatro, metne dayalı olarak edebiyatımıza girdi." cümlesiyle tamamen örtüşmektedir.'>
+        <label><input type="radio" name="s8" value="A"> <span>A) Doğru</span></label>
+        <label><input type="radio" name="s8" value="B"> <span>B) Yanlış</span></label>
+        <label><input type="radio" name="s8" value="C"> <span>C) Verilmemiş</span></label>
+      </div>
+      <div class="aciklama" id="aciklamaS8"></div>
+    </div>
+
+    <!-- S9 -->
+    <div class="soru-blok" id="s9Block">
+      <h3>S9.</h3>
+      <div class="soru-metni">Cumhuriyet Dönemi'nde kurulan Devlet Tiyatroları, dünya genelinde en çok oyunu sahneleyen kurum seçilmiştir.</div>
+      <div class="secenekler" data-dogru="C" data-aciklama="Metinde Cumhuriyet ile Devlet Tiyatroları'nın kurulduğu ve yayıldığı belirtilmiş, ancak dünyada en çok oyunu sahneleyen kurum seçildiğine dair bir derece veya bilgi verilmemiştir. Bu nedenle cevap 'Verilmemiş'tir.">
+        <label><input type="radio" name="s9" value="A"> <span>A) Doğru</span></label>
+        <label><input type="radio" name="s9" value="B"> <span>B) Yanlış</span></label>
+        <label><input type="radio" name="s9" value="C"> <span>C) Verilmemiş</span></label>
+      </div>
+      <div class="aciklama" id="aciklamaS9"></div>
+    </div>
+  </div>
+
+  <!-- KONTROL BUTONU -->
+  <div class="cevap-kontrol">
+    <button id="kontrolBtn">✔ KONTROL ET</button>
+  </div>
+
+  <!-- SONUÇ ÖZETİ -->
+  <div id="sonucOzet" class="sonuc-ozet-box">
+    <span></span>
+  </div>
+
+  <div id="uyariMesaj" class="uyari"></div>
+</div>
+
+<footer>
+  <span>✦</span> Hamza Hoca ile Türkçe Öğreniyorum <span>✦</span>
+</footer>
+
+<script>
+(function() {
+  const kontrolBtn = document.getElementById('kontrolBtn');
+  const sonucOzet = document.getElementById('sonucOzet');
+  const uyari = document.getElementById('uyariMesaj');
+
+  function cevaplariGoster() {
+    uyari.textContent = '';
+    let boslukVar = false;
+    let toplamSoru = 0;
+    let dogruSayisi = 0;
+
+    // Tüm soru bloklarını tara
+    const soruBloklari = document.querySelectorAll('.soru-blok');
+    soruBloklari.forEach(blok => {
+      const seceneklerDiv = blok.querySelector('.secenekler');
+      if (!seceneklerDiv) return;
+
+      const inputs = seceneklerDiv.querySelectorAll('input[type="radio"]');
+      const dogruHarf = seceneklerDiv.getAttribute('data-dogru');
+      const aciklamaMetni = seceneklerDiv.getAttribute('data-aciklama') || '';
+      const aciklamaDiv = blok.querySelector('.aciklama');
+
+      // Seçili olanı bul
+      let secili = null;
+      inputs.forEach(inp => {
+        if (inp.checked) secili = inp;
+      });
+
+      if (!secili) {
+        boslukVar = true;
+        return;
+      }
+
+      const secim = secili.value;
+      const isDogru = (secim === dogruHarf);
+      if (isDogru) dogruSayisi++;
+      toplamSoru++;
+
+      // Tüm inputları devre dışı bırak ve renklendir
+      inputs.forEach(inp => {
+        inp.disabled = true;
+        const label = inp.closest('label');
+        if (inp.value === dogruHarf) {
+          label.style.borderColor = '#7bdd7b';
+          label.style.backgroundColor = '#1d3d2a';
+        } else if (inp.checked && inp.value !== dogruHarf) {
+          label.style.borderColor = '#f77b7b';
+          label.style.backgroundColor = '#3d1d1d';
+        }
+      });
+
+      // Açıklamayı göster - tam metin olarak
+      if (aciklamaDiv) {
+        aciklamaDiv.textContent = aciklamaMetni;
+        aciklamaDiv.className = 'aciklama goster';
+        if (isDogru) {
+          aciklamaDiv.classList.add('dogru-aciklama');
+        } else {
+          aciklamaDiv.classList.add('yanlis-aciklama');
+        }
+      }
+    });
+
+    if (boslukVar) {
+      uyari.textContent = '⚠ Lütfen tüm soruları cevaplayın.';
+      sonucOzet.style.display = 'none';
+      return;
+    }
+
+    // Sonuç özetini göster
+    const ozetSpan = sonucOzet.querySelector('span');
+    if (ozetSpan) {
+      ozetSpan.textContent = `${dogruSayisi} / ${toplamSoru} doğru`;
+    }
+    sonucOzet.style.display = 'block';
+  }
+
+  // Kontrol butonu
+  kontrolBtn.addEventListener('click', cevaplariGoster);
+
+  // Her değişiklikte sonucu gizle ve eski renkleri sıfırla (tekrar kontrol için)
+  function resetGeriBildirim() {
+    sonucOzet.style.display = 'none';
+    uyari.textContent = '';
+
+    document.querySelectorAll('.soru-blok').forEach(blok => {
+      const inputs = blok.querySelectorAll('input[type="radio"]');
+      inputs.forEach(inp => {
+        inp.disabled = false;
+        const label = inp.closest('label');
+        if (label) {
+          label.style.borderColor = 'transparent';
+          label.style.backgroundColor = '#1a2332';
+        }
+      });
+
+      const aciklamaDiv = blok.querySelector('.aciklama');
+      if (aciklamaDiv) {
+        aciklamaDiv.className = 'aciklama';
+        aciklamaDiv.textContent = '';
+      }
+    });
+  }
+
+  // Tüm radio değişikliklerinde resetle
+  document.querySelectorAll('input[type="radio"]').forEach(el => {
+    el.addEventListener('change', resetGeriBildirim);
+  });
+
+})();
+</script>
+
+</body>
+</html>
